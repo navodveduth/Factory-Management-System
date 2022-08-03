@@ -1,8 +1,6 @@
-Please go under edit and edit this file as needed for your project
-
-# Project Name - 
-# Batch - 
-### Group Leader - IT20212232 - Mr. Asiri Gamage (asiriRepos)
+# Project Name - Factory Management System ITP Project
+# Batch - WD_B02_ITP_14
+### Group Leader - IT21003028 - Minod Perera (IT21003028)
 ### Member 2 - 
 ### Member 3 - 
 ### Member 4 - 
