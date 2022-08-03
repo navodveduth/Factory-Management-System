@@ -5,7 +5,7 @@
 ### Member 3 - IT21004322 - Chanukya Serasinghe
 ### Member 4 - IT21006166 - Shafa Bishirhafi
 ### Member 5 - IT21110948 - Navod Weerawarna
-### Member 6 - 
+### Member 6 - IT21151392 - Janindu Dissanayake
 ### Member 7 - 
 ### Member 8 - IT21128868 - Devinya Vidanage
 
