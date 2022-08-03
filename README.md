@@ -6,7 +6,7 @@
 ### Member 4 - IT21006166 - Shafa Bishirhafi
 ### Member 5 - IT21110948 - Navod Weerawarna
 ### Member 6 - IT21151392 - Janindu Dissanayake
-### Member 7 - 
+### Member 7 - IT20159030 - Sachini Lekamge
 ### Member 8 - IT21128868 - Devinya Vidanage
 
 #### Brief Description of Project - 
