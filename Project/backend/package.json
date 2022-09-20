@@ -1,0 +1,12 @@
+{
+  "name": "fms",
+  "version": "1.0.0",
+  "description": "Factory Management System",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon run server.js"
+  },
+  "author": "WD_B02_ITP_14",
+  "license": "ISC"
+}
