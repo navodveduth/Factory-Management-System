@@ -54,14 +54,15 @@ function MaintainenceUpdate() {
                   await axios.put("http://localhost:8070/maintainence/update/"+ id, newMaintainence)
                       .then((res)=>{
                           alert("Data updated successfully");
+                          //navigate to the maintainence view page
+                      navigate('/maintainence');
                       })
                       .catch((err)=>{
                           console.log(err);
                           alert("Error occured");
                       })
 
-                      //navigate to the maintainence view page
-                      navigate('/maintainenceView');
+                      
               }}>
 
 
