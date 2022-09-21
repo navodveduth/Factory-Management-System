@@ -31,14 +31,15 @@ import {useNavigate} from 'react-router-dom';
                   await axios.post("http://localhost:8070/maintainence/create", newMachine)
                       .then((res)=>{
                           alert("Data saved successfully");
+                          //navigate to the maintainence view page
+                      navigate('/maintainence');
                       })
                       .catch((err)=>{
                           console.log(err);
                           alert("Error occured");
                       })
 
-                      //navigate to the maintainence view page
-                      navigate('/maintainenceView');
+                      
               }}>
 
 
