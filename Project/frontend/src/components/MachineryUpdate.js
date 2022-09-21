@@ -54,13 +54,14 @@ function MachineryUpdate() {
                   await axios.put("http://localhost:8070/machinery/update/"+ id, newMachine)
                       .then((res)=>{
                           alert("Data updated successfully");
+                          //navigate to the machinery view page
+                      navigate('/machinery');
                       })
                       .catch((err)=>{
                           console.log(err);
                           alert("Error occured");
                       })
-                      //navigate to the machinery view page
-                      navigate('/machineryView');
+                      
               }}>
 
 
