@@ -1,6 +1,5 @@
-import { getAllOrders,createOrder } from "../controllers/Production/Prod.OrderCost.Controller.js";
-import express, { application } from "express";
-
+import { getAllOrders,createOrder } from "../controllers/Production/prod.orderCost.controller.js";
+import express from "express";
 const router = express.Router();
 
 router.post("/orderCreate",createOrder);

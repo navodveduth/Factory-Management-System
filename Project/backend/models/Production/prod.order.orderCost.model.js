@@ -5,7 +5,6 @@ const orderSchema = new Schema({
 
     invoiceNo: {
         type: String,
-        unique: true,
         required:true
     },
     orderName:{

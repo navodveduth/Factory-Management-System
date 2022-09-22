@@ -2,12 +2,13 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 
 
+
 function AllOrders(){
     const [Order,setOrder] = useState([])
 
     useEffect(()=>{
         function getOrders(){
-            axios.get("http://localhost:8070/Production/Order/").then((res)=>{
+            axios.get("http://localhost:8070/Production/order/allOrders").then((res)=>{
                 setOrder(res.data);
             }).catch((err)=>{
                 alert(err.message);
@@ -16,7 +17,7 @@ function AllOrders(){
         getOrders();
     },[])
         return(
-            <div>
+            <div className="container">
             <h1>Order View</h1>
             <table class="table table-striped table-hover">
                 <thead>
@@ -53,7 +54,6 @@ function AllOrders(){
         </div>
         );
 }
-
 export default function AddOrder(){
     const [invoiceNo, setInvoice] = useState("");
     const [orderName,setOrderName] = useState("");
@@ -61,10 +61,12 @@ export default function AddOrder(){
     const [matCost,setMatCost] = useState("");
     const [qty,setQty] = useState("");
     const [total,setTotal]= useState("");
+
   //  total =  matCost * qty;
     const [overhead, setOverhead] = useState("");
+    
 
-    function sendData(e){
+     const sendData = async(e)=>{
         e.preventDefault();
         const newOrder = {
             invoiceNo,
@@ -76,9 +78,9 @@ export default function AddOrder(){
             overhead
         }
         console.log(newOrder);
-        axios.post("http://localhost:8070/Production/Order/create",newOrder).then(()=>{
+        await axios.post("http://localhost:8070/Production/order/orderCreate",newOrder).then(()=>{
             alert("Student Added");
-        }).catcch((error)=>{
+        }).catch((error)=>{
             alert(error);
         })
     }
@@ -123,15 +125,15 @@ export default function AddOrder(){
                                 
                 <div className="mb-3">
                     <label for="address">Total Material Cost</label>
-                    <input type="Number" className="form-control" id="address" placeholder={matCost * qty} onChange={(e)=>{
-                        setTotal(matCost * qty); 
-                    }} readOnly/>
+                    <input type="Number" className="form-control" id="address" placeholder="Total" onChange={(e)=>{
+                        setTotal(e.target.value); 
+                    }} />
                 </div>
 
                 <div className="mb-3">
                     <label for="address">Total overhead Cost</label>
                     <input type="Number" className="form-control" id="address" placeholder="Electricity, Machinery Depreciation etc." onChange={(e)=>{
-                        setOverhead(matCost * qty); 
+                        setOverhead(e.target.value); 
                     }} />
                 </div>
 
