@@ -16,19 +16,19 @@ const orderSchema = new Schema({
         required:true
     },
     materialCost:{
-        type: Number,
+        type: String,
         required:true
     },
     unitQty:{
-        type: Number,
+        type: String,
         required:true
     },
     totalMatCost:{
-      type: Number,
+      type: String,
       required:true
     },
     overHeadCost:{
-        type: Number,
+        type: String,
         required:true
     }
 });

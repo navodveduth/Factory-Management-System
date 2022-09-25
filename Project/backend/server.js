@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 8070;
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use("/Production/order",orderRouter);
+app.use("/production/order",orderRouter);
 
 //connecting to db
 const url = process.env.MONGODBURL;

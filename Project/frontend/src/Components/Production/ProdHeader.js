@@ -16,10 +16,10 @@ function ProdHeader(){
           <Link to="/" className="nav-link">Home</Link>
         </li>
         <li className="nav-item">
-          <Link to="/addOrder" aria-current="page" className="nav-link active">Create an Order</Link>
+          <Link to="/production/order/addOrder" aria-current="page" className="nav-link active">Create an Order</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/AllStudent">Registry</a>
+         <Link to="/production/order/allOrders" aria-current="page" className="nav-link active">Check Orders</Link>
         </li>
 
         <li className="nav-item dropdown">
