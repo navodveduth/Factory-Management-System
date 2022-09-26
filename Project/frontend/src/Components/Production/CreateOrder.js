@@ -3,19 +3,40 @@ import axios from "axios";
 
 
 export default function AddOrder(){
+
     const [invoiceNo, setInvoice] = useState("");
     const [orderName,setOrderName] = useState("");
-    const [date, setDate] = useState("");
-    const [matCost,setMatCost] = useState("");
-    const [qty,setQty] = useState("");
-    const [total,setTotal] = useState("");
+    const [costDate, setDate] = useState("");
+    const [materialCost,setMatCost] = useState("");
+    const [unitQty,setQty] = useState("");
+   // const [totalMatCost,setMatTotal] = useState("");
 
-  //  total =  matCost * qty;
-    const [overhead, setOverhead] = useState("");
+    const totalMatCost = materialCost * unitQty;
+    const [overHeadCost, setOverhead] = useState("");
     return(
         <div className="container">
         <h1 style={{margin: "center"}}>Order Cost Sheet</h1>
-            <form>
+            <form onSubmit={async(e)=>{
+                e.preventDefault();
+                
+                const newOrder = {
+                        invoiceNo,
+                        orderName,
+                        costDate,
+                        materialCost,
+                        unitQty,
+                        totalMatCost,
+                        overHeadCost,
+                }
+                console.log(newOrder);
+                await axios.post("http://localhost:8070/production/order/orderCreate",newOrder).then(()=>{
+                    alert("Order Created");
+                }).catch((error)=>{
+                    console.log(error);
+                    alert(error);
+                })
+                
+            }} >
                 
                 <div className="mb-3">
                     <label for="name" >Enter Invoice Number</label>
@@ -51,12 +72,12 @@ export default function AddOrder(){
                         setQty(e.target.value);
                     }}/>
                 </div>
-                                
+                        
                 <div className="mb-3">
                     <label for="address">Total Material Cost</label>
-                    <input type="Number" className="form-control" id="address" placeholder={matCost * qty} onChange={(e)=>{ 
-                        setTotal(e.target.value);
-                    }} />
+                    <input type="Number" className="form-control" id="address" placeholder={materialCost * unitQty} onChange={(e)=>{ 
+                    //    setMatTotal(e.target.value);
+                    }} readOnly/>
                 </div>
 
                 <div className="mb-3">
@@ -67,27 +88,7 @@ export default function AddOrder(){
                 </div>
 
                 <div>
-                    <button type="submit" onClick={async(e)=>{
-                e.preventDefault();
-
-                const newOrder = {
-                    invoiceNo,
-                    orderName,
-                    date,
-                    matCost,
-                    qty,
-                    total,
-                    overhead
-                }
-                console.log(newOrder);
-                await axios.post("http://localhost:8070/production/order/orderCreate",newOrder).then(()=>{
-                    alert("Order Created");
-                }).catch((error)=>{
-                    console.log(error);
-                    alert(error);
-                })
-                
-            }} className="btn btn-primary">Submit</button>
+                    <button type="submit" className="btn btn-primary">Submit</button>
                 </div>
             </form>
     </div>

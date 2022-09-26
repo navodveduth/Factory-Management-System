@@ -3,6 +3,15 @@ import mongoose from "mongoose";
 const Schema =  mongoose.Schema;
 const orderSchema = new Schema({
 
+    // invoiceNo,
+    // orderName,
+    // date,
+    // materialCost,
+    // qty,
+    // total,
+    // overhead
+
+
     invoiceNo: {
         type: String,
         required:true
@@ -16,19 +25,19 @@ const orderSchema = new Schema({
         required:true
     },
     materialCost:{
-        type: String,
+        type: Number,
         required:true
     },
     unitQty:{
-        type: String,
+        type: Number,
         required:true
     },
     totalMatCost:{
-      type: String,
+      type: Number,
       required:true
     },
     overHeadCost:{
-        type: String,
+        type: Number,
         required:true
     }
 });
