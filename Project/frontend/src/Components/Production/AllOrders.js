@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import {jsPDF} from "jspdf";
 
 export default function AllOrders(){
     const [Order,setOrder] = useState([])
@@ -16,7 +17,15 @@ export default function AllOrders(){
         useEffect(()=>{
             getOrders();
         })
-    
+
+        const createPDF = () => {
+            const pdf = new jsPDF("landscape", "px", "a2",false);
+            const data = document.querySelector("#tableContainer");
+            pdf.html(data).then(() => {
+                pdf.save("shipping_label.pdf");
+               });
+        };
+
         async function deletesOrder(id){
             await axios.delete(`http://localhost:8070/production/order/delete/${id}`).then((res)=>{
                 alert("Order data deleted Successfully");
@@ -28,6 +37,7 @@ export default function AllOrders(){
 
         return(
             <div className="container">
+            <div className="container" id="tableContainer">
             <h1>Order View</h1>
             <table class="table table-striped table-hover">
                 <thead>
@@ -39,7 +49,7 @@ export default function AllOrders(){
                     <th scope="col">Quantity</th>
                     <th scope="col">Total Material Cost</th>
                     <th scope="col">Overhead Cost</th>
-                    <th scope="col">Total Production Cost(Without Labour)</th>
+                    <th scope="col">Total Production Cost</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -66,6 +76,8 @@ export default function AllOrders(){
                     
                 </tbody>
             </table>
+            </div>
+            <button onClick={createPDF} type="button">Download Report</button>
         </div>
         );
 }

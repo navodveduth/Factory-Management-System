@@ -10,6 +10,7 @@
     "file-saver": "^2.0.5",
     "html-pdf": "^3.0.1",
     "jspdf": "^2.5.1",
+    "jspdf-html2canvas": "^1.4.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.1",
