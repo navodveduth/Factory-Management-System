@@ -8,11 +8,16 @@ import {
     MaintainenceSharedLayout,
     MachineryUpdate,
     MaintainenceView,
-    MaintainenceUpdate
-} from "../components/index.js"
+    MaintainenceUpdate,
+    Dashboard,
+    MaintainenceTask,
+    MachineryReport,
+    MaintaenanceReport,
+    DepreCharts
+    
+} from "../components"
 
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
-
 
 
 function AppRoutes() {
@@ -21,12 +26,10 @@ function AppRoutes() {
     <>
     <Router>
         <Routes>
+            <Route path="/" element={<DepreCharts/>} />
+            <Route path="/dashboard" element={<Dashboard/>} />
 
-            <Route path="/" element={<HomeSharedLayout />}>
-                <Route index element={<Home/>} />
-            </Route>
-
-            <Route path="/machinery" element={<MachinerySharedLayout />}>
+             <Route path="/machinery" element={<MachinerySharedLayout />}>
                 <Route index element={<MachineryView />}/>
                 <Route path="machineryAdd" element={<MachineryForm/>} />
                 <Route path="machineryUpdate/:id" element={<MachineryUpdate/>} />
