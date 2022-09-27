@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllMachineryDetails, getOneMachineryDetail,createMachineryDetails, updateMachineryDetails, deleteMachineryDetails} from "../controllers/machinery.controller.js";
+import { getAllMachineryDetails, getOneMachineryDetail,createMachineryDetails, updateMachineryDetails, deleteMachineryDetails} from "../controllers/MachineryAndMaintenance/machinery.controller.js";
 
 const router = express.Router();
 

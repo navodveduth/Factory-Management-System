@@ -1,4 +1,4 @@
-import Machinery from "../models/machinery.model.js";
+import Machinery from "../../models/MachineryAndMaintenance/machinery.model.js";
 
 export const getAllMachineryDetails = async (req, res) => {
     try {
@@ -24,7 +24,7 @@ export const createMachineryDetails = async (req, res) =>{
     try {
         const machinery = req.body;
         const newMachinery = new Machinery(machinery);
-        await newMachinery.save();
+         await newMachinery.save();
         res.status(200).json(newMachinery);
     } catch (error) {
         res.status(404).json({ message : error});
