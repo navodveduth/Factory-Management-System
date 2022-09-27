@@ -1,5 +1,5 @@
 import React from 'react'
-import '../styles/salesStyle/SalesNavbar.css'
+import '../../styles/salesStyle/SalesNavbar.css'
 import {Link} from 'react-router-dom';
 
 function SalesNavbar() {
