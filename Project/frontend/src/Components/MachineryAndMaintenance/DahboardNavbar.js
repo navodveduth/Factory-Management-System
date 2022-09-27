@@ -2,9 +2,10 @@ import React from 'react'
 import '../styles/Chanukya/MachineryNavbar.css'
 import {Link} from 'react-router-dom';
 
-function CommonNavbar() {
+function DahboardNavbar() {
   return (
     <div className='machNavbarContainer'>
+        
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
                 <a className="navbar-brand" href="/">HOME</a>
@@ -22,15 +23,12 @@ function CommonNavbar() {
                     {/* <a className="nav-link" href="machinery">create</a> */}
                     </li>
                 </ul>
-                <form className="d-flex">
-                    <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                    <button className="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                
                 </div>
             </div>
         </nav>
-    </div>
+       </div>
   )
 }
 
-export default CommonNavbar
+export default DahboardNavbar
