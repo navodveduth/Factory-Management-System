@@ -1,4 +1,4 @@
-import FD from "../models/financeManagement.model.js";
+import FD from "../../models/Finance/financeManagement.model.js";
 
 export const viewAllFinancialData = async (req ,res) => {
     try {
