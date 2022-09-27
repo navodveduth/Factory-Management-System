@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllMaintainenceDetails, getOneMaintainenceDetail,createMaintainenceDetails, updateMaintainenceDetails, deleteMaintainenceDetails} from "../controllers/maintainence.controller.js";
+import { getAllMaintainenceDetails, getOneMaintainenceDetail,createMaintainenceDetails, updateMaintainenceDetails, deleteMaintainenceDetails} from "../controllers/MachineryAndMaintenance/maintainence.controller.js";
 
 const router = express.Router();
 

@@ -1,5 +1,5 @@
 
-import Maintainence from "../models/maintainence.model.js";
+import Maintainence from "../../models/MachineryAndMaintenance/maintainence.model.js";
 
 
 export const getAllMaintainenceDetails = async (req, res) => {
