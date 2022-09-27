@@ -19,7 +19,7 @@ app.use("/machinery", machineryRouter);
 app.use("/maintainence", maintainenceRouter);
 app.use("/production/order",orderRouter);
 
-const URL = process.env.MONGODB_URL;
+const URL = process.env.MONGODBURL;
 
 //connect to DB
 mongoose.connect(URL);
