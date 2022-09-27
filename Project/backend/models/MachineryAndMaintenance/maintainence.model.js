@@ -9,19 +9,32 @@ const maintainenceSchema = new Schema({
         required : true
     },
 
+    name: {
+        type: String,
+        required: true,
+    },
+
     Description : {
         type : String,  
         required : true
     },
-
-    LastMaintainedDate : {
-        type : Date
-    },
-    nextServiceDate : {
-        type : Date
-    },
     others:{
-       type: String
+       type: Number
+    },
+
+    status:{
+        type: String
+    },
+
+    lastMaintainedDate : {
+        type : Date,
+        required : true
+
+    },
+
+    nextServiceDate : {
+        type : Date,
+        required : true
     }
 });
 
