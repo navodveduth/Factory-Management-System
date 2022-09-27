@@ -1,6 +1,6 @@
 import {useState} from 'react'; 
 import axios from 'axios';
-import '../styles/Chanukya/MachineryForm.css'
+import '../../styles/Chanukya/MachineryForm.css'
 import {useNavigate} from 'react-router-dom';
 
     function MachineryForm() {

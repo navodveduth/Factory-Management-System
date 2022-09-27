@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import axios from 'axios';
-import '../styles/Chanukya/MaintaineneceForm.css'
+import '../../styles/Chanukya/MaintaineneceForm.css'
 import {useNavigate} from 'react-router-dom';
 
     function MaintainenceForm() {
