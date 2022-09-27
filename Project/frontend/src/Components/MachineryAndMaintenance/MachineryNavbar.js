@@ -1,5 +1,5 @@
 import React from 'react'
-import '../styles/Chanukya/MachineryNavbar.css'
+import '../../styles/Chanukya/MachineryNavbar.css'
 import {Link} from 'react-router-dom';
 
 function MachineryNavbar() {

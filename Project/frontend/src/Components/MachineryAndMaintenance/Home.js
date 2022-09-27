@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import videoBg from '../assests/video.mp4'
-import  '../styles/Chanukya/Home.css'
+import  '../../styles/Chanukya/Home.css'
 import CommonNavbar from './CommonNavbar';
 
 function Home() {
@@ -12,7 +11,7 @@ function Home() {
       
         <div className="overlay">
 
-        <video src={videoBg} autoPlay loop muted />
+        {/* <video src={videoBg} autoPlay loop muted /> */}
         </div>
       
       <div className='content'>
