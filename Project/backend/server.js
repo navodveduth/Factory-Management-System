@@ -8,6 +8,7 @@ import bodyParser from "body-parser";
 import machineryRouter from "./routes/machinery.routes.js";
 import maintainenceRouter from "./routes/maintainence.routes.js";
 import orderRouter from "./routes/prod.routes.js";
+import financeRouter from "./routes/finance.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 8070;
