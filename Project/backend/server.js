@@ -18,6 +18,8 @@ app.use(bodyParser.json());
 app.use("/machinery", machineryRouter);
 app.use("/maintainence", maintainenceRouter);
 app.use("/production/order",orderRouter);
+app.use("/finance",financeRouter);
+
 
 const URL = process.env.MONGODBURL;
 
