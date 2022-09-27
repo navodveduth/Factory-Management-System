@@ -1,0 +1,35 @@
+.screenView{
+    margin-top: 7%;
+    width: 75%;
+    height:100%;
+    position:absolute;
+}
+
+.viewContainer{
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+    border: 1px solid #000000;
+    max-width: 75%;
+    margin: auto;
+    margin-top: 5%;
+}
+
+.invoice-align{
+    text-align: right;
+
+}
+
+.customer-align{
+    text-align: left;   
+}
+
+.factory-details{
+    text-align: center;
+  
+}
+
+.hline{
+    margin-top: 30%;
+}
+
