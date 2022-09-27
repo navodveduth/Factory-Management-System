@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import axios from 'axios';
-import '../index.css'
-import "../styles/salesStyle/SalesForm.css";
+import "../../styles/salesStyle/SalesForm.css";
 import {useNavigate} from 'react-router-dom';
 
 function SalesForm() {
@@ -138,8 +137,3 @@ function SalesForm() {
 }
 
 export default SalesForm
-
-//  {/* input type="text"  className="form-control" id="invoiceNo"  value={inv+count}
-//                 onChange={(e)=>{
-//                     setInvoice({inv,count});
-//                 }}/>

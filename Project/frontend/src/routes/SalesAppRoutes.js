@@ -2,12 +2,10 @@ import {
     SalesForm,
     SalesView,
     SalesUpdate,
-    Home,
-    HomeSharedLayout,
     SalesSharedLayout,
     InvoiceView
     
-} from "../components"
+} from "../components/Sales"
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -18,9 +16,9 @@ function SalesAppRoutes() {
     <>
     <Router>
         <Routes>
-            <Route path = "/" element = {<HomeSharedLayout />}>
+            {/* <Route path = "/" element = {<HomeSharedLayout />}>
                     <Route index element = {<Home/>} />
-            </Route>
+            </Route> */}
             
             <Route path = "/sales" element = {<SalesSharedLayout />}>
                 <Route index element = {<SalesView />}/>
