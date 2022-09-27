@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 
 import machineryRouter from "./routes/machinery.routes.js";
 import maintainenceRouter from "./routes/maintainence.routes.js";
+import orderRouter from "./routes/prod.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 8070;
@@ -16,8 +17,9 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use("/machinery", machineryRouter);
 app.use("/maintainence", maintainenceRouter);
+app.use("/production/order",orderRouter);
 
-const URL = process.env.MONGODB_URL;
+const URL = process.env.MONGODBURL;
 
 //connect to DB
 mongoose.connect(URL);
