@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { GrHostMaintenance } from 'react-icons/gr'
 import { AiOutlinePlus, AiOutlineClose } from 'react-icons/ai'
-import '../styles/Chanukya/taskplanner.css'
+import '../../styles/Chanukya/taskplanner.css'
 
 function MaintainenceTask() {
   const [tasks, setTasks] = useState([])

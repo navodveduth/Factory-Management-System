@@ -15,7 +15,7 @@ import {
     MaintaenanceReport,
     DepreCharts
     
-} from "../components"
+} from "../components/MachineryAndMaintenance"
 
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
