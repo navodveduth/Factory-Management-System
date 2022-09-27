@@ -7,7 +7,7 @@ import {
     SalesSharedLayout,
     InvoiceView
     
-} from "../components"
+} from "../components/Sales"
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
