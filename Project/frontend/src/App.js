@@ -1,10 +1,11 @@
 import React from "react";
 import "./App.css";
 import ProdRoutes from "./routes/ProdAppRoutes";
-
-function App(){
-  return(
-    <div className="Container">
+import AppRoutes from './routes/AppRoutes';
+function App() {
+  return (
+    <div className="App">
+      <AppRoutes />
       <ProdRoutes/>
     </div>
   );
