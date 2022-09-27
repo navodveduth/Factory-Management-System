@@ -3,7 +3,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import {useParams, useNavigate} from 'react-router-dom';
 import { Link } from "react-router-dom"
-import '../styles/salesStyle/Invoice.css'
+import '../../styles/salesStyle/Invoice.css'
 
 function InvoiceView() {
 
