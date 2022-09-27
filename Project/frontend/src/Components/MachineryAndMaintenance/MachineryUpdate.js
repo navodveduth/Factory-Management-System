@@ -9,21 +9,25 @@ function MachineryUpdate() {
     //useNavigate is a hook that is used to navigate to another page
     const navigate = useNavigate();
 
-      const [name, setName] = useState('');
-      const [dateOfPurchased, setPurchasedDate] = useState('');
-      const [depreciation, setDepreciation] = useState('');
-      const [machineryCost, setMachineryCosts] = useState('');
-      const [others, setOthers] = useState('');
+    const [machineID, setMachineID] = useState("");
+    const [name, setName] = useState('');
+    const [dateOfPurchased, setPurchasedDate] = useState('');
+    const [machineryCost, setMachineryCosts] = useState('');
+    const [salvage, setSalvage] = useState('');
+    const [numberOfYrs, setNumberOfYrs] = useState('');
+    const [others, setOthers] = useState('');
 
     const {id} = useParams(); //get the id from the url
 
     const getMachinery = () => {
-        axios.get(`http://localhost:8070/machinery/${id}`)
+        axios.get(`http://localhost:8070/machinery/${id}`)//get the data from the backend
         .then((res) => {
+            setMachineID(res.data.machineID);
             setName(res.data.name);
             setPurchasedDate(res.data.dateOfPurchased);
-            setDepreciation(res.data.depreciation);
             setMachineryCosts(res.data.machineryCost);
+            setSalvage(res.data.salvage);
+            setNumberOfYrs(res.data.numberOfYrs);
             setOthers(res.data.others);
         })
         .catch((err) => {
@@ -37,17 +41,19 @@ function MachineryUpdate() {
 
 
   return (
-    <div className='MachUpdateFormContainer'>
-              <h1>Machinery Update Form</h1>
-              <form onSubmit={async(e)=>{
+    <div className='MachUpdateFormContainer' style={{marginTop:"6%"}}>
+              {/* <h3 style={{color: "#606060"}}>Update Machinery Records</h3> */}
+              <form style={{marginTop:"3%"}} onSubmit={async(e)=>{
                   e.preventDefault();
                   
                   
                   const newMachine = {
+                    machineID,
                     name,     
                     dateOfPurchased,
-                    depreciation,
                     machineryCost,
+                    salvage,
+                    numberOfYrs,
                     others
                   }
 
@@ -65,7 +71,12 @@ function MachineryUpdate() {
               }}>
 
 
-
+              <div className="mb-3">
+                <label className="form-label">Machine ID</label>
+                <input type="text"   className="form-control" value={machineID} id="exampleInputEmail1" aria-describedby="emailHelp"
+                onChange={(e)=>{
+                    setMachineID(e.target.value);
+                }}required/>
 
               <div className="mb-3">
                 <label className="form-label">Name</label>
@@ -82,12 +93,7 @@ function MachineryUpdate() {
                     setPurchasedDate(e.target.value);
               }}/>
               </div>
-              <div className="mb-3">
-                <label className="form-label">Depreciation</label>
-                <input type="text" className="form-control" value={depreciation} id="exampleInputPassword1"
-                onChange={(e)=>{
-                    setDepreciation(e.target.value);
-              }}/>
+              
               </div>
               <div className="mb-3">
                 <label className="form-label">Machinery costs</label>
@@ -97,11 +103,31 @@ function MachineryUpdate() {
               }}/>
               </div>
               <div className="mb-3">
-                <label className="form-label">Others</label>
-                <input type="text" className="form-control"  value={others} id="exampleInputPassword1"
+                <label className="form-label">Salvage</label>
+                <input type="number" className="form-control" value={salvage} id="exampleInputPassword1" min="0"
                 onChange={(e)=>{
+                    setSalvage(e.target.value);
+              }
+              }/>
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Number of years</label>
+                <input type="number" className="form-control" value={numberOfYrs} id="exampleInputPassword1" min="0"
+                onChange={(e)=>{
+                    setNumberOfYrs(e.target.value);
+              }
+              }/>
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Availibility</label>
+                <select class="form-select" aria-label="Default select example" value={others}onChange={(e)=>{
                     setOthers(e.target.value);
-              }}/>
+              }}>
+                                    <option selected></option>
+                                    <option value="Available">Available</option>
+                                    <option value="Unavailable">Unavailable</option>
+                </select>
               </div>
 
           
