@@ -10,6 +10,8 @@ import orderRouter from './routes/prod.routes.js';
 import financeRouter from './routes/finance.routes.js';
 import transportRouter from './routes/transport.routes.js';
 import driverRouter from './routes/driver.routes.js';
+import stockRouter from './routes/stock.routes.js';
+import damagedStockRouter from './routes/damagedStock.routes.js';
 
 const app = express();
 const PORT = process.env.PORT || 8070;
@@ -23,6 +25,8 @@ app.use('/production/order', orderRouter);
 app.use('/finance', financeRouter);
 app.use('/transport', transportRouter);
 app.use('/driver', driverRouter);
+app.use('/stock', stockRouter);
+app.use('/damagedStock', damagedStockRouter);
 
 const URL = process.env.MONGODBURL;
 
