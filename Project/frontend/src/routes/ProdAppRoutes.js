@@ -1,9 +1,9 @@
-import ProdHeader from "../Components/Production/ProdHeader";
-import AddOrder from "../Components/Production/CreateOrder";
-import AllOrders from "../Components/Production/AllOrders";
+import ProdHeader from "../components/Production/ProdHeader";
+import AddOrder from "../components/Production/CreateOrder";
+import AllOrders from "../components/Production/AllOrders";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import UpdateOrder from "../Components/Production/UpdateOrder";
+import UpdateOrder from "../components/Production/UpdateOrder";
 
 export default function ProdRoutes(){
     return(
