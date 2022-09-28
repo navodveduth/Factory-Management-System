@@ -8,6 +8,10 @@ const DriverSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      trim: true,
+      minlength: 10,
+      maxlength: 12,
+      pattern: '^[0-9]{9}[vVxX]$ | ^[0-9]{12}$',
     },
     firstName: {
       type: String,
@@ -26,6 +30,10 @@ const DriverSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      trim: true,
+      minlength: 10,
+      maxlength: 10,
+      pattern: '^[0-9]{10}$',
     },
     vehicleNo: {
       type: String,

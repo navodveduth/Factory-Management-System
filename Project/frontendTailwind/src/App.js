@@ -4,59 +4,106 @@ import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
-import { EmployeeDashboard, Employees, EmployeeViewAll, EmployeeUpdate, EmployeeNew } from './pages';
-import { AttendanceAndLeaveDashboard, AttendanceViewAll, AttendanceUpdate, AttendanceNew } from './pages';
+import {
+  EmployeeDashboard,
+  Employees,
+  EmployeeViewAll,
+  EmployeeUpdate,
+  EmployeeNew,
+} from './pages';
+import {
+  AttendanceAndLeaveDashboard,
+  AttendanceViewAll,
+  AttendanceUpdate,
+  AttendanceNew,
+} from './pages';
 import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
 
 // minod
 
-import { FinanceNew, FinanceDashboard, FinanceViewAll, FinanceUpdate } from './pages';
-import {SalaryDashboard, } from './pages'
-
+import {
+  FinanceNew,
+  FinanceDashboard,
+  FinanceViewAll,
+  FinanceUpdate,
+} from './pages';
+import { SalaryDashboard } from './pages';
 
 // chanukya
 
-import {MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll} from './pages/MachineryAndMaintenance';
-import{MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask} from './pages/MachineryAndMaintenance';
-
-
-
+import {
+  MachineryDashboard,
+  MachineryNew,
+  MachineryUpdate,
+  MachineryViewAll,
+} from './pages/MachineryAndMaintenance';
+import {
+  MaintenanceDashboard,
+  MaintenanceNew,
+  MaintenanceUpdate,
+  MaintenanceViewAll,
+  MaintainenceTask,
+} from './pages/MachineryAndMaintenance';
 
 // navod
-
-
-
-
-
+import {
+  TransportDashboard,
+  TransportViewAll,
+  TransportNew,
+  TransportUpdate,
+  DriverDashboard,
+  DriverViewAll,
+  DriverNew,
+  DriverUpdate,
+} from './pages';
 // shafa
-
-
+import {StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockUtilisation} from './pages';
+import {DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF} from './pages';
 
 
 
 
 // janindu
-import { SalesDashboard, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice } from './pages';
-
-
-
-
+import {
+  SalesDashboard,
+  SalesViewAll,
+  SalesUpdate,
+  SalesNew,
+  SalesInvoice,
+} from './pages';
 
 // devinya
 
-import {SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew} from './pages';
+import {
+  SupplierDashboard,
+  SupplierViewAll,
+  SupplierUpdate,
+  SupplierNew,
+} from './pages';
 
 // devindu
-import { OrderViewAll,ProductionDashBoard,AddOrder, UpdateOrder, PreviewOrder} from './pages/Production/Index';
+import {
+  OrderViewAll,
+  ProductionDashBoard,
+  AddOrder,
+  UpdateOrder,
+  PreviewOrder,
+} from './pages/Production/Index';
 
 import './App.css';
 
 import { useStateContext } from './contexts/ContextProvider';
 
-
-
 const App = () => {
-  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
+  const {
+    setCurrentColor,
+    setCurrentMode,
+    currentMode,
+    activeMenu,
+    currentColor,
+    themeSettings,
+    setThemeSettings,
+  } = useStateContext();
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');
@@ -72,10 +119,7 @@ const App = () => {
       <BrowserRouter>
         <div className="flex relative dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
-            <TooltipComponent
-              content="Settings"
-              position="Top"
-            >
+            <TooltipComponent content="Settings" position="Top">
               <button
                 type="button"
                 onClick={() => setThemeSettings(true)}
@@ -84,7 +128,6 @@ const App = () => {
               >
                 <FiSettings />
               </button>
-
             </TooltipComponent>
           </div>
           {activeMenu ? (
@@ -107,24 +150,38 @@ const App = () => {
               <Navbar />
             </div>
             <div>
-              {themeSettings && (<ThemeSettings />)}
-
+              {themeSettings && <ThemeSettings />}
               <Routes>
                 {/* dashboard  */}
-                <Route path="/" element={(<EmployeeDashboard />)} />
+                <Route path="/" element={<EmployeeDashboard />} />
 
                 {/* employee management  */}
-                <Route path="/EmployeeDashboard" element={<EmployeeDashboard/>} />
-                <Route path="/EmployeeViewAll" element={<EmployeeViewAll/>} />
-                <Route path="/EmployeeCreate" element={<EmployeeNew/>} />
-                <Route path="/EmployeeUpdate/:id" element={<EmployeeUpdate/>} />
+                <Route
+                  path="/EmployeeDashboard"
+                  element={<EmployeeDashboard />}
+                />
+                <Route path="/EmployeeViewAll" element={<EmployeeViewAll />} />
+                <Route path="/EmployeeCreate" element={<EmployeeNew />} />
+                <Route
+                  path="/EmployeeUpdate/:id"
+                  element={<EmployeeUpdate />}
+                />
 
                 {/* attendance management  */}
-                <Route path="/AttendanceAndLeaveDashboard" element={<AttendanceAndLeaveDashboard />} />
-                <Route path="/AttendanceViewAll" element={<AttendanceViewAll />} />
+                <Route
+                  path="/AttendanceAndLeaveDashboard"
+                  element={<AttendanceAndLeaveDashboard />}
+                />
+                <Route
+                  path="/AttendanceViewAll"
+                  element={<AttendanceViewAll />}
+                />
                 <Route path="/AttendanceCreate" element={<AttendanceNew />} />
-                <Route path="/AttendanceUpdate/:id" element={<AttendanceUpdate />} />
-                  
+                <Route
+                  path="/AttendanceUpdate/:id"
+                  element={<AttendanceUpdate />}
+                />
+
                 {/* leave management  */}
                 <Route path="/LeaveViewAll" element={<LeaveViewAll />} />
                 <Route path="/LeaveCreate" element={<LeaveNew />} />
@@ -132,25 +189,17 @@ const App = () => {
 
                 {/* finanace management  */}
 
-                <Route path="/FinanceDashboard" element={<FinanceDashboard/>} />
-                <Route path="/FinanceNew" element={<FinanceNew/>} />
-                <Route path="/FinanceViewAll" element={<FinanceViewAll/>} />
-                <Route path="/FinanceUpdate/:id" element={<FinanceUpdate/>} />
+                <Route
+                  path="/FinanceDashboard"
+                  element={<FinanceDashboard />}
+                />
+                <Route path="/FinanceNew" element={<FinanceNew />} />
+                <Route path="/FinanceViewAll" element={<FinanceViewAll />} />
+                <Route path="/FinanceUpdate/:id" element={<FinanceUpdate />} />
 
-                <Route path="/SalaryDashboard" element={<SalaryDashboard/>} />
-                
-                
-
-
-
+                <Route path="/SalaryDashboard" element={<SalaryDashboard />} />
 
                 {/* salary management  */}
-
-
-
-
-
-
 
                 {/* sales management  */}
                 <Route path="/SalesDashboard" element={<SalesDashboard />} />
@@ -160,48 +209,64 @@ const App = () => {
                 <Route path="/SalesInvoice/:id" element={<SalesInvoice />} />
 
                 {/* machinery management  */}
-                <Route path="/MachineryDashboard" element={<MachineryDashboard />} />
-                <Route path="/MachineryViewAll" element={<MachineryViewAll />} />
+                <Route
+                  path="/MachineryDashboard"
+                  element={<MachineryDashboard />}
+                />
+                <Route
+                  path="/MachineryViewAll"
+                  element={<MachineryViewAll />}
+                />
                 <Route path="/MachineryCreate" element={<MachineryNew />} />
-                <Route path="/MachineryUpdate/:id" element={<MachineryUpdate />} />
-
+                <Route
+                  path="/MachineryUpdate/:id"
+                  element={<MachineryUpdate />}
+                />
 
                 {/* maintenance management  */}
-                <Route path="/MaintenanceDashboard" element={<MaintenanceDashboard />} />
-                <Route path="/MaintenanceViewAll" element={<MaintenanceViewAll />} />
+                <Route
+                  path="/MaintenanceDashboard"
+                  element={<MaintenanceDashboard />}
+                />
+                <Route
+                  path="/MaintenanceViewAll"
+                  element={<MaintenanceViewAll />}
+                />
                 <Route path="/MaintenanceCreate" element={<MaintenanceNew />} />
-                <Route path="/MaintenanceUpdate/:id" element={<MaintenanceUpdate />} />
+                <Route
+                  path="/MaintenanceUpdate/:id"
+                  element={<MaintenanceUpdate />}
+                />
                 {/* <Route path="/MaintainenceTask/" element={<MaintainenceTask />} /> */}
 
-
-
-
-
                 {/* production management  */}
-                <Route path="/vieworders" element={<OrderViewAll/>} />
-                <Route path="/production" element={<ProductionDashBoard/>} />
-                <Route path='/newOrder' element={<AddOrder/>}/>
-                <Route path='/updateCost/:id' element={<UpdateOrder/>}/>
-                <Route path='/costpreview' element ={<PreviewOrder/>}/>
+                <Route path="/vieworders" element={<OrderViewAll />} />
+                <Route path="/production" element={<ProductionDashBoard />} />
+                <Route path="/newOrder" element={<AddOrder />} />
+                <Route path="/updateCost/:id" element={<UpdateOrder />} />
+                <Route path="/costpreview" element={<PreviewOrder />} />
 
                 {/* stocks management  */}
-
-
-
-
-
-
+                <Route path="/StockDashboard" element={<StocksDashboard />}/>
+                <Route path="/StockView" element={<StockView />} />
+                <Route path="/StockAdd" element={<StockAdd />} />
+                <Route path="/StockUpdate/:id" element={<StockUpdate />} />
+                <Route path="/generatePDF" element={<StockPDF/>} />
+                <Route path ="/StockUtilisation" element={<StockUtilisation/>} />
 
                  {/* damaged stocks management  */}
-
-
-
-
-
+                <Route path ="/DamagedStockDashboard" element={<DamagedStockDashboard/>} />
+                <Route path ="/DamagedStockView" element={<DamagedStockView/>} />
+                <Route path ="/DamagedStockAdd" element={<DamagedStockAdd/>} />
+                <Route path="/DamagedStockUpdate/:id" element={<DamagedStockUpdate/>} />
+                <Route path="/generatePDF" element={<DStockPDF/>} />
 
 
                  {/* transportation management  */}
-
+                 <Route path="/TransportDashboard" element={<TransportDashboard />}/>
+                <Route path="/TransportViewAll" element={<TransportViewAll />} />
+                <Route path="/TransportCreate" element={<TransportNew />} />
+                <Route  path="/TransportUpdate/:id" element={<TransportUpdate />} />
 
 
 
@@ -210,7 +275,10 @@ const App = () => {
 
 
                   {/* driver management  */}
-
+                  <Route path="/DriverDashboard" element={<DriverDashboard />} />
+                <Route path="/DriverViewAll" element={<DriverViewAll />} />
+                <Route path="/DriverCreate" element={<DriverNew />} />
+                <Route path="/DriverUpdate/:id" element={<DriverUpdate />} />
 
 
 
@@ -218,26 +286,14 @@ const App = () => {
 
 
                   {/* supplier management  */}
-
-                  {/* dashboard  */}
-                  <Route path="/SupplierDashboard" element={<SupplierDashboard/>} />
-
-                  {/* supplier management  */}
-                  <Route path="/SupplierViewAll" element={<SupplierViewAll/>} />
-                  <Route path="/SupplierCreate" element={<SupplierNew/>} />
-                  <Route path="/SupplierUpdate/:id" element={<SupplierUpdate/>} />
-
-
-
-
-
-
-
-
-
+                  <Route path="/SupplierDashboard" element={<SupplierDashboard />}/>
+                <Route path="/SupplierViewAll" element={<SupplierViewAll />} />
+                <Route path="/SupplierCreate" element={<SupplierNew />} />
+                <Route path="/SupplierUpdate/:id" element={<SupplierUpdate />}/>
+              
               </Routes>
             </div>
-            
+
             <Footer />
           </div>
         </div>
