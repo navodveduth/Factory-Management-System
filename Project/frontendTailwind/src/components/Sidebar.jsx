@@ -5,6 +5,7 @@ import { FiUser, FiCalendar, FiBarChart } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { useStateContext } from '../contexts/ContextProvider';
+import MaintenanceDashboard from './../pages/MachineryAndMaintenance/MaintenanceDashboard';
 
 const Sidebar = () => {
   const { currentColor, activeMenu, setActiveMenu, screenSize } = useStateContext();
@@ -88,7 +89,19 @@ const Sidebar = () => {
 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
                 
-                  <NavLink to="/Employee" onClick={handleCloseSideBar}
+                  <NavLink to="/FinanceDashboard" onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
+                  >
+                    <MdOutlineCancel /> {/*  icon  */}
+                    <span className="capitalize ">Finance Center</span> {/*  link name  */}
+                  </NavLink>
+                
+                {/*  links ---------------------------------------------------------------------------------- links  */}
+
+                  <NavLink to="/SalaryDashboard" onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
                       backgroundColor: isActive ? currentColor : '',
                     })}
@@ -96,18 +109,6 @@ const Sidebar = () => {
                   >
                     <MdOutlineCancel /> {/*  icon  */}
                     <span className="capitalize ">Salary</span> {/*  link name  */}
-                  </NavLink>
-                
-                {/*  links ---------------------------------------------------------------------------------- links  */}
-
-                  <NavLink to="/Attendace and leaves" onClick={handleCloseSideBar}
-                    style={({ isActive }) => ({
-                      backgroundColor: isActive ? currentColor : '',
-                    })}
-                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
-                  >
-                    <MdOutlineCancel /> {/*  icon  */}
-                    <span className="capitalize ">Fin 2</span> {/*  link name  */}
                   </NavLink>
                 {/*  done ---------------------------------------------------------------------------------- done  */}
 
@@ -120,19 +121,19 @@ const Sidebar = () => {
 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
                 
-                  <NavLink to="/Employee" onClick={handleCloseSideBar}
+                  <NavLink to="/SalesDashboard" onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
                       backgroundColor: isActive ? currentColor : '',
                     })}
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}
                   >
                     <MdOutlineCancel /> {/*  icon  */}
-                    <span className="capitalize ">Sales 1</span> {/*  link name  */}
+                    <span className="capitalize ">Sales Management</span> {/*  link name  */}
                   </NavLink>
                 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
 
-                  <NavLink to="/Attendace and leaves" onClick={handleCloseSideBar}
+                  <NavLink to="/SalesDashboard" onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
                       backgroundColor: isActive ? currentColor : '',
                     })}
@@ -152,14 +153,14 @@ const Sidebar = () => {
 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
                 
-                  <NavLink to="/Employee" onClick={handleCloseSideBar}
+                  <NavLink to="/production" onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
                       backgroundColor: isActive ? currentColor : '',
                     })}
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}
                   >
                     <MdOutlineCancel /> {/*  icon  */}
-                    <span className="capitalize ">Product 1</span> {/*  link name  */}
+                    <span className="capitalize ">Production Cost</span> {/*  link name  */}
                   </NavLink>
                 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
@@ -171,7 +172,7 @@ const Sidebar = () => {
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}
                   >
                     <MdOutlineCancel /> {/*  icon  */}
-                    <span className="capitalize ">Product 2</span> {/*  link name  */}
+                    <span className="capitalize ">Order Distribution</span> {/*  link name  */}
                   </NavLink>
                 {/*  done ---------------------------------------------------------------------------------- done  */}
 
@@ -216,14 +217,14 @@ const Sidebar = () => {
 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
                 
-                  <NavLink to="/Employee" onClick={handleCloseSideBar}
+                  <NavLink to="/SupplierDashBoard" onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
                       backgroundColor: isActive ? currentColor : '',
                     })}
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}
                   >
                     <MdOutlineCancel /> {/*  icon  */}
-                    <span className="capitalize ">Supply 1</span> {/*  link name  */}
+                    <span className="capitalize ">Supplier Details</span> {/*  link name  */}
                   </NavLink>
                 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
@@ -235,7 +236,7 @@ const Sidebar = () => {
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}
                   >
                     <MdOutlineCancel /> {/*  icon  */}
-                    <span className="capitalize ">Supply 2</span> {/*  link name  */}
+                    <span className="capitalize ">Supplier Records</span> {/*  link name  */}
                   </NavLink>
                 {/*  done ---------------------------------------------------------------------------------- done  */}
 
@@ -247,7 +248,7 @@ const Sidebar = () => {
 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
                 
-                  <NavLink to="/Employee" onClick={handleCloseSideBar}
+                  <NavLink to="/MachineryDashboard" onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
                       backgroundColor: isActive ? currentColor : '',
                     })}
@@ -259,7 +260,7 @@ const Sidebar = () => {
                 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
 
-                  <NavLink to="/Attendace and leaves" onClick={handleCloseSideBar}
+                  <NavLink to="/MaintenanceDashboard" onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
                       backgroundColor: isActive ? currentColor : '',
                     })}
@@ -271,15 +272,7 @@ const Sidebar = () => {
 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
 
-                <NavLink to="/Attendace and leaves" onClick={handleCloseSideBar}
-                    style={({ isActive }) => ({
-                      backgroundColor: isActive ? currentColor : '',
-                    })}
-                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
-                  >
-                    <MdOutlineCancel /> {/*  icon  */}
-                    <span className="capitalize ">Maintenance</span> {/*  link name  */}
-                  </NavLink>
+                
                 {/*  done ---------------------------------------------------------------------------------- done  */}
 
 

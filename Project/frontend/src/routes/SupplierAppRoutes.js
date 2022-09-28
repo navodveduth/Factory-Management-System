@@ -8,7 +8,7 @@ import SupplierView from '../components/SupplierView'
 import SupplierSharedLayout from '../components/SupplierSharedLayout'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-function AppRoutes() {
+function SupplierAppRoutes() {
     return (
         <>
 
@@ -34,5 +34,5 @@ function AppRoutes() {
         </>)
 }
 
-export default AppRoutes;
+export default SupplierAppRoutes;
 

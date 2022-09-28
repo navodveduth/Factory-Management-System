@@ -3,20 +3,34 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const fmSchema = new Schema({
-    revenue: {
-        type: Number,
-        required: true
+    trnID: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        mixlength: 3,
+        maxlength:4, 
     },
-    expenses: {
-        type: Number,
-        required: true
+    trnDesc: {
+        type: String,
+        required: true,
+        maxlength:200,
     },
-    recordedDate: {
+    trnAmount: {
+        type: Number,
+        required: true,
+    },
+    trnType: {
+        type: String,
+        required: true,
+        maxlength: 10,
+    },
+    trnRecordedDate: {
         type: Date,
-        default: Date.now,
         required: true
-    }
+    },
+
 })
 
-const financeData = mongoose.model("FinanceData", fmSchema)
+const financeData = mongoose.model("finance", fmSchema)
 export default financeData;
