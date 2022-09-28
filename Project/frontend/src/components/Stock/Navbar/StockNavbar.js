@@ -1,5 +1,5 @@
  import React from 'react'
-// import '../../styles/Shafa/StockNavbar.css'
+import '../../styles/Stock/StockNavbar.css'
 import {Link} from 'react-router-dom';
 
 function StockNavbar() {
