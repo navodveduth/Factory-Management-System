@@ -95,7 +95,7 @@ const Sidebar = () => {
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}
                   >
                     <MdOutlineCancel /> {/*  icon  */}
-                    <span className="capitalize ">Fin 1</span> {/*  link name  */}
+                    <span className="capitalize ">Salary</span> {/*  link name  */}
                   </NavLink>
                 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
@@ -260,6 +260,18 @@ const Sidebar = () => {
                 {/*  links ---------------------------------------------------------------------------------- links  */}
 
                   <NavLink to="/Attendace and leaves" onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
+                  >
+                    <MdOutlineCancel /> {/*  icon  */}
+                    <span className="capitalize ">Maintenance</span> {/*  link name  */}
+                  </NavLink>
+
+                {/*  links ---------------------------------------------------------------------------------- links  */}
+
+                <NavLink to="/Attendace and leaves" onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
                       backgroundColor: isActive ? currentColor : '',
                     })}
