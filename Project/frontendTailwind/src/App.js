@@ -5,6 +5,8 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
 import { EmployeeDashboard, Employees, EmployeeViewAll, EmployeeUpdate, EmployeeNew } from './pages';
+import { AttendanceAndLeaveDashboard, AttendanceViewAll, AttendanceUpdate, AttendanceNew } from './pages';
+import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
 import './App.css';
 
 import { useStateContext } from './contexts/ContextProvider';
@@ -73,9 +75,17 @@ const App = () => {
                 <Route path="/EmployeeCreate" element={<EmployeeNew/>} />
                 <Route path="/EmployeeUpdate/:id" element={<EmployeeUpdate/>} />
 
+                {/* attendance management  */}
+                <Route path="/AttendanceAndLeaveDashboard" element={<AttendanceAndLeaveDashboard />} />
+                <Route path="/AttendanceViewAll" element={<AttendanceViewAll />} />
+                <Route path="/AttendanceCreate" element={<AttendanceNew />} />
+                <Route path="/AttendanceUpdate/:id" element={<AttendanceUpdate />} />
+                  
+                {/* leave management  */}
+                <Route path="/LeaveViewAll" element={<LeaveViewAll />} />
+                <Route path="/LeaveCreate" element={<LeaveNew />} />
+                <Route path="/LeaveUpdate/:id" element={<LeaveUpdate />} />
 
-                <Route path="/AttendanceAndLeaves" element={(<Employees />)} />
-                <Route path="/Salary" element={(<Employees />)} />
               </Routes>
             </div>
             
