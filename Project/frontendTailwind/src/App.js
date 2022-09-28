@@ -42,10 +42,7 @@ import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
 
 // devinya
 
-
-
-
-
+import {SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew} from './pages';
 
 // devindu
 
@@ -212,6 +209,15 @@ const App = () => {
 
 
                   {/* supplier management  */}
+
+                  {/* dashboard  */}
+                  <Route path="/SupplierDashboard" element={<SupplierDashboard/>} />
+
+                  {/* supplier management  */}
+                  <Route path="/SupplierViewAll" element={<SupplierViewAll/>} />
+                  <Route path="/SupplierCreate" element={<SupplierNew/>} />
+                  <Route path="/SupplierUpdate/:id" element={<SupplierUpdate/>} />
+
 
 
 
