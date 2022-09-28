@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
@@ -10,12 +10,14 @@ import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
 
 // minod
 
-
-
+import { FinanceNew, FinanceDashboard, FinanceViewAll, FinanceUpdate } from './pages';
+import {SalaryDashboard, } from './pages'
 
 
 // chanukya
 
+import {MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll} from './pages/MachineryAndMaintenance';
+import{MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask} from './pages/MachineryAndMaintenance';
 
 
 
@@ -34,7 +36,7 @@ import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
 
 
 // janindu
-
+import { SalesDashboard, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice } from './pages';
 
 
 
@@ -56,6 +58,8 @@ import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
 import './App.css';
 
 import { useStateContext } from './contexts/ContextProvider';
+
+
 
 const App = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
@@ -134,8 +138,14 @@ const App = () => {
 
                 {/* finanace management  */}
 
+                <Route path="/FinanceDashboard" element={<FinanceDashboard/>} />
+                <Route path="/FinanceNew" element={<FinanceNew/>} />
+                <Route path="/FinanceViewAll" element={<FinanceViewAll/>} />
+                <Route path="/FinanceUpdate/:id" element={<FinanceUpdate/>} />
 
-
+                <Route path="/SalaryDashboard" element={<SalaryDashboard/>} />
+                
+                
 
 
 
@@ -149,23 +159,25 @@ const App = () => {
 
 
                 {/* sales management  */}
-
-
-
-
-
-
+                <Route path="/SalesDashboard" element={<SalesDashboard />} />
+                <Route path="/SalesViewAll" element={<SalesViewAll />} />
+                <Route path="/SalesCreate" element={<SalesNew />} />
+                <Route path="/SalesUpdate/:id" element={<SalesUpdate />} />
+                <Route path="/SalesInvoice/:id" element={<SalesInvoice />} />
 
                 {/* machinery management  */}
-
-
-
-
+                <Route path="/MachineryDashboard" element={<MachineryDashboard />} />
+                <Route path="/MachineryViewAll" element={<MachineryViewAll />} />
+                <Route path="/MachineryCreate" element={<MachineryNew />} />
+                <Route path="/MachineryUpdate/:id" element={<MachineryUpdate />} />
 
 
                 {/* maintenance management  */}
-
-
+                <Route path="/MaintenanceDashboard" element={<MaintenanceDashboard />} />
+                <Route path="/MaintenanceViewAll" element={<MaintenanceViewAll />} />
+                <Route path="/MaintenanceCreate" element={<MaintenanceNew />} />
+                <Route path="/MaintenanceUpdate/:id" element={<MaintenanceUpdate />} />
+                {/* <Route path="/MaintainenceTask/" element={<MaintainenceTask />} /> */}
 
 
 
