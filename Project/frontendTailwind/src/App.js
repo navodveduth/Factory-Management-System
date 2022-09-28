@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
@@ -10,8 +10,8 @@ import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
 
 // minod
 
-
-
+import { FinanceNew, FinanceDashboard, FinanceViewAll, FinanceUpdate } from './pages';
+import {SalaryDashboard, } from './pages'
 
 
 // chanukya
@@ -134,8 +134,14 @@ const App = () => {
 
                 {/* finanace management  */}
 
+                <Route path="/FinanceDashboard" element={<FinanceDashboard/>} />
+                <Route path="/FinanceNew" element={<FinanceNew/>} />
+                <Route path="/FinanceViewAll" element={<FinanceViewAll/>} />
+                <Route path="/FinanceUpdate/:id" element={<FinanceUpdate/>} />
 
-
+                <Route path="/SalaryDashboard" element={<SalaryDashboard/>} />
+                
+                
 
 
 

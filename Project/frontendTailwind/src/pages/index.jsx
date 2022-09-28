@@ -16,10 +16,13 @@ export { default as LeaveViewAll } from './LeaveViewAll';
 
 
 // minod
+export {default as FinanceDashboard} from "./Finance/FinanceDashboard"
+export {default as FinanceNew} from "./Finance/FinanceNew"
+export {default as FinanceViewAll} from "./Finance/FinanceViewAll"
+export {default as FinanceUpdate} from "./Finance/FinanceUpdate"
 
 
-
-
+export {default as SalaryDashboard} from "./Finance/SalaryDashboard"
 
 
 
