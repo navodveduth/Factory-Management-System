@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
@@ -21,7 +21,29 @@ import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
 
 // minod
 
+import {
+  FinanceNew,
+  FinanceDashboard,
+  FinanceViewAll,
+  FinanceUpdate,
+} from './pages';
+import { SalaryDashboard } from './pages';
+
 // chanukya
+
+import {
+  MachineryDashboard,
+  MachineryNew,
+  MachineryUpdate,
+  MachineryViewAll,
+} from './pages/MachineryAndMaintenance';
+import {
+  MaintenanceDashboard,
+  MaintenanceNew,
+  MaintenanceUpdate,
+  MaintenanceViewAll,
+  MaintainenceTask,
+} from './pages/MachineryAndMaintenance';
 
 // navod
 import {
@@ -37,10 +59,31 @@ import {
 // shafa
 
 // janindu
+import {
+  SalesDashboard,
+  SalesViewAll,
+  SalesUpdate,
+  SalesNew,
+  SalesInvoice,
+} from './pages';
 
 // devinya
 
+import {
+  SupplierDashboard,
+  SupplierViewAll,
+  SupplierUpdate,
+  SupplierNew,
+} from './pages';
+
 // devindu
+import {
+  OrderViewAll,
+  ProductionDashBoard,
+  AddOrder,
+  UpdateOrder,
+  PreviewOrder,
+} from './pages/Production/Index';
 
 import './App.css';
 
@@ -141,15 +184,62 @@ const App = () => {
 
                 {/* finanace management  */}
 
+                <Route
+                  path="/FinanceDashboard"
+                  element={<FinanceDashboard />}
+                />
+                <Route path="/FinanceNew" element={<FinanceNew />} />
+                <Route path="/FinanceViewAll" element={<FinanceViewAll />} />
+                <Route path="/FinanceUpdate/:id" element={<FinanceUpdate />} />
+
+                <Route path="/SalaryDashboard" element={<SalaryDashboard />} />
+
                 {/* salary management  */}
 
                 {/* sales management  */}
+                <Route path="/SalesDashboard" element={<SalesDashboard />} />
+                <Route path="/SalesViewAll" element={<SalesViewAll />} />
+                <Route path="/SalesCreate" element={<SalesNew />} />
+                <Route path="/SalesUpdate/:id" element={<SalesUpdate />} />
+                <Route path="/SalesInvoice/:id" element={<SalesInvoice />} />
 
                 {/* machinery management  */}
+                <Route
+                  path="/MachineryDashboard"
+                  element={<MachineryDashboard />}
+                />
+                <Route
+                  path="/MachineryViewAll"
+                  element={<MachineryViewAll />}
+                />
+                <Route path="/MachineryCreate" element={<MachineryNew />} />
+                <Route
+                  path="/MachineryUpdate/:id"
+                  element={<MachineryUpdate />}
+                />
 
                 {/* maintenance management  */}
+                <Route
+                  path="/MaintenanceDashboard"
+                  element={<MaintenanceDashboard />}
+                />
+                <Route
+                  path="/MaintenanceViewAll"
+                  element={<MaintenanceViewAll />}
+                />
+                <Route path="/MaintenanceCreate" element={<MaintenanceNew />} />
+                <Route
+                  path="/MaintenanceUpdate/:id"
+                  element={<MaintenanceUpdate />}
+                />
+                {/* <Route path="/MaintainenceTask/" element={<MaintainenceTask />} /> */}
 
                 {/* production management  */}
+                <Route path="/vieworders" element={<OrderViewAll />} />
+                <Route path="/production" element={<ProductionDashBoard />} />
+                <Route path="/newOrder" element={<AddOrder />} />
+                <Route path="/updateCost/:id" element={<UpdateOrder />} />
+                <Route path="/costpreview" element={<PreviewOrder />} />
 
                 {/* stocks management  */}
 
@@ -178,6 +268,20 @@ const App = () => {
                 {/* driver management  */}
 
                 {/* supplier management  */}
+
+                {/* dashboard  */}
+                <Route
+                  path="/SupplierDashboard"
+                  element={<SupplierDashboard />}
+                />
+
+                {/* supplier management  */}
+                <Route path="/SupplierViewAll" element={<SupplierViewAll />} />
+                <Route path="/SupplierCreate" element={<SupplierNew />} />
+                <Route
+                  path="/SupplierUpdate/:id"
+                  element={<SupplierUpdate />}
+                />
               </Routes>
             </div>
 

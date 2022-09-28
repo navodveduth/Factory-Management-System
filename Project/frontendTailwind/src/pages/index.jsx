@@ -15,6 +15,12 @@ export { default as LeaveUpdate } from './LeaveUpdate';
 export { default as LeaveViewAll } from './LeaveViewAll';
 
 // minod
+export { default as FinanceDashboard } from './Finance/FinanceDashboard';
+export { default as FinanceNew } from './Finance/FinanceNew';
+export { default as FinanceViewAll } from './Finance/FinanceViewAll';
+export { default as FinanceUpdate } from './Finance/FinanceUpdate';
+
+export { default as SalaryDashboard } from './Finance/SalaryDashboard';
 
 // chanukya
 
@@ -33,6 +39,17 @@ export { default as DriverViewAll } from './Driver/DriverViewAll';
 
 // janindu
 
+export { default as SalesDashboard } from './Sales/SalesDashboard';
+export { default as SalesNew } from './Sales/SalesNew';
+export { default as SalesUpdate } from './Sales/SalesUpdate';
+export { default as SalesViewAll } from './Sales/SalesViewAll';
+export { default as SalesInvoice } from './Sales/SalesInvoice';
+
 // devinya
+
+export { default as SupplierDashboard } from './SupplierDashboard';
+export { default as SupplierNew } from './SupplierNew';
+export { default as SupplierUpdate } from './SupplierUpdate';
+export { default as SupplierViewAll } from './SupplierViewAll';
 
 // devindu

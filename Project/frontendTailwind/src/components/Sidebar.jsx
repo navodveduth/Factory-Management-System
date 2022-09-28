@@ -5,6 +5,7 @@ import { FiUser, FiCalendar, FiBarChart } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { useStateContext } from '../contexts/ContextProvider';
+import MaintenanceDashboard from './../pages/MachineryAndMaintenance/MaintenanceDashboard';
 
 const Sidebar = () => {
   const { currentColor, activeMenu, setActiveMenu, screenSize } =
@@ -93,17 +94,44 @@ const Sidebar = () => {
               <span className="capitalize ">Salary</span> {/*  link name  */}
             </NavLink>
 
+<<<<<<< HEAD
             {/*  done ---------------------------------------------------------------------------------- done  */}
 
             {/*  menu ---------------------------------------------------------------------------------- menu  */}
             <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
               Finance management {/*  menu name  */}
             </p>
+=======
+                {/*  links ---------------------------------------------------------------------------------- links  */}
+                
+                  <NavLink to="/FinanceDashboard" onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
+                  >
+                    <MdOutlineCancel /> {/*  icon  */}
+                    <span className="capitalize ">Finance Center</span> {/*  link name  */}
+                  </NavLink>
+                
+                {/*  links ---------------------------------------------------------------------------------- links  */}
+
+                  <NavLink to="/SalaryDashboard" onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
+                  >
+                    <MdOutlineCancel /> {/*  icon  */}
+                    <span className="capitalize ">Salary</span> {/*  link name  */}
+                  </NavLink>
+                {/*  done ---------------------------------------------------------------------------------- done  */}
+>>>>>>> ff21ce7bcb0bff4d9c461c2e5cf484269e150b98
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/Employee"
+              to="/FinanceDashboard"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
@@ -111,7 +139,75 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <MdOutlineCancel /> {/*  icon  */}
-              <span className="capitalize ">Salary</span> {/*  link name  */}
+              <span className="capitalize ">Finance Center</span> {/*  link name  */}
+            </NavLink>
+
+            {/*  links ---------------------------------------------------------------------------------- links  */}
+
+                  <NavLink to="/SalaryDashboard" onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
+                  >
+                    <MdOutlineCancel /> {/*  icon  */}
+                    <span className="capitalize ">Salary</span> {/*  link name  */}
+                  </NavLink>
+                {/*  done ---------------------------------------------------------------------------------- done  */}
+
+
+
+                {/*  menu ---------------------------------------------------------------------------------- menu  */}
+                <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
+                  Sales management {/*  menu name  */}
+                </p>
+
+            {/*  links ---------------------------------------------------------------------------------- links  */}
+
+            <NavLink
+              to="/SalesDashboard"
+              onClick={handleCloseSideBar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : '',
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <MdOutlineCancel /> {/*  icon  */}
+              <span className="capitalize ">Sales Management</span> {/*  link name  */}
+            </NavLink>
+
+            {/*  links ---------------------------------------------------------------------------------- links  */}
+
+                  <NavLink to="/SalesDashboard" onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
+                  >
+                    <MdOutlineCancel /> {/*  icon  */}
+                    <span className="capitalize ">Sales 2</span> {/*  link name  */}
+                  </NavLink>
+                {/*  done ---------------------------------------------------------------------------------- done  */}
+
+
+
+                {/*  menu ---------------------------------------------------------------------------------- menu  */}
+                <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
+                  Production management {/*  menu name  */}
+                </p>
+
+            {/*  links ---------------------------------------------------------------------------------- links  */}
+
+            <NavLink
+              to="/production"
+              onClick={handleCloseSideBar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : '',
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <MdOutlineCancel /> {/*  icon  */}
+              <span className="capitalize ">Production Cost</span> {/*  link name  */}
             </NavLink>
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
@@ -125,75 +221,7 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <MdOutlineCancel /> {/*  icon  */}
-              <span className="capitalize ">Fin 2</span> {/*  link name  */}
-            </NavLink>
-            {/*  done ---------------------------------------------------------------------------------- done  */}
-
-            {/*  menu ---------------------------------------------------------------------------------- menu  */}
-            <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
-              Sales management {/*  menu name  */}
-            </p>
-
-            {/*  links ---------------------------------------------------------------------------------- links  */}
-
-            <NavLink
-              to="/Employee"
-              onClick={handleCloseSideBar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <MdOutlineCancel /> {/*  icon  */}
-              <span className="capitalize ">Sales 1</span> {/*  link name  */}
-            </NavLink>
-
-            {/*  links ---------------------------------------------------------------------------------- links  */}
-
-            <NavLink
-              to="/Attendace and leaves"
-              onClick={handleCloseSideBar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <MdOutlineCancel /> {/*  icon  */}
-              <span className="capitalize ">Sales 2</span> {/*  link name  */}
-            </NavLink>
-            {/*  done ---------------------------------------------------------------------------------- done  */}
-
-            {/*  menu ---------------------------------------------------------------------------------- menu  */}
-            <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
-              Production management {/*  menu name  */}
-            </p>
-
-            {/*  links ---------------------------------------------------------------------------------- links  */}
-
-            <NavLink
-              to="/Employee"
-              onClick={handleCloseSideBar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <MdOutlineCancel /> {/*  icon  */}
-              <span className="capitalize ">Product 1</span> {/*  link name  */}
-            </NavLink>
-
-            {/*  links ---------------------------------------------------------------------------------- links  */}
-
-            <NavLink
-              to="/Attendace and leaves"
-              onClick={handleCloseSideBar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <MdOutlineCancel /> {/*  icon  */}
-              <span className="capitalize ">Product 2</span> {/*  link name  */}
+              <span className="capitalize ">Order Distribution</span> {/*  link name  */}
             </NavLink>
             {/*  done ---------------------------------------------------------------------------------- done  */}
 
@@ -218,6 +246,7 @@ const Sidebar = () => {
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
+<<<<<<< HEAD
             <NavLink
               to="/Attendace and leaves"
               onClick={handleCloseSideBar}
@@ -236,21 +265,59 @@ const Sidebar = () => {
             <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
               Supplier management {/*  menu name  */}
             </p>
+=======
+                {/*  links ---------------------------------------------------------------------------------- links  */}
+                
+                  <NavLink to="/SupplierDashBoard" onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
+                  >
+                    <MdOutlineCancel /> {/*  icon  */}
+                    <span className="capitalize ">Supplier Details</span> {/*  link name  */}
+                  </NavLink>
+                
+                {/*  links ---------------------------------------------------------------------------------- links  */}
 
-            {/*  links ---------------------------------------------------------------------------------- links  */}
+                  <NavLink to="/Attendace and leaves" onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
+                  >
+                    <MdOutlineCancel /> {/*  icon  */}
+                    <span className="capitalize ">Supplier Records</span> {/*  link name  */}
+                  </NavLink>
+                {/*  done ---------------------------------------------------------------------------------- done  */}
+>>>>>>> ff21ce7bcb0bff4d9c461c2e5cf484269e150b98
 
-            <NavLink
-              to="/Employee"
-              onClick={handleCloseSideBar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <MdOutlineCancel /> {/*  icon  */}
-              <span className="capitalize ">Supply 1</span> {/*  link name  */}
-            </NavLink>
+                {/*  links ---------------------------------------------------------------------------------- links  */}
+                
+                  <NavLink to="/SupplierDashBoard" onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
+                  >
+                    <MdOutlineCancel /> {/*  icon  */}
+                    <span className="capitalize ">Supplier Details</span> {/*  link name  */}
+                  </NavLink>
+                
+                {/*  links ---------------------------------------------------------------------------------- links  */}
 
+                  <NavLink to="/Attendace and leaves" onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
+                  >
+                    <MdOutlineCancel /> {/*  icon  */}
+                    <span className="capitalize ">Supplier Records</span> {/*  link name  */}
+                  </NavLink>
+                {/*  done ---------------------------------------------------------------------------------- done  */}
+
+<<<<<<< HEAD
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
@@ -265,45 +332,53 @@ const Sidebar = () => {
               <span className="capitalize ">Supply 2</span> {/*  link name  */}
             </NavLink>
             {/*  done ---------------------------------------------------------------------------------- done  */}
+=======
+                {/*  links ---------------------------------------------------------------------------------- links  */}
+                
+                  <NavLink to="/MachineryDashboard" onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
+                  >
+                    <MdOutlineCancel /> {/*  icon  */}
+                    <span className="capitalize ">Machinery</span> {/*  link name  */}
+                  </NavLink>
+                
+                {/*  links ---------------------------------------------------------------------------------- links  */}
+
+                  <NavLink to="/MaintenanceDashboard" onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
+                  >
+                    <MdOutlineCancel /> {/*  icon  */}
+                    <span className="capitalize ">Maintenance</span> {/*  link name  */}
+                  </NavLink>
+>>>>>>> ff21ce7bcb0bff4d9c461c2e5cf484269e150b98
 
             {/*  menu ---------------------------------------------------------------------------------- menu  */}
             <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
               Machinery and Maintenance management {/*  menu name  */}
             </p>
 
-            {/*  links ---------------------------------------------------------------------------------- links  */}
+                {/*  links ---------------------------------------------------------------------------------- links  */}
+                
+                  <NavLink to="/MachineryDashboard" onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
+                  >
+                    <MdOutlineCancel /> {/*  icon  */}
+                    <span className="capitalize ">Machinery</span> {/*  link name  */}
+                  </NavLink>
+                
+                {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/Employee"
-              onClick={handleCloseSideBar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <MdOutlineCancel /> {/*  icon  */}
-              <span className="capitalize ">Machinery</span> {/*  link name  */}
-            </NavLink>
-
-            {/*  links ---------------------------------------------------------------------------------- links  */}
-
-            <NavLink
-              to="/Attendace and leaves"
-              onClick={handleCloseSideBar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <MdOutlineCancel /> {/*  icon  */}
-              <span className="capitalize ">Maintenance</span>{' '}
-              {/*  link name  */}
-            </NavLink>
-
-            {/*  links ---------------------------------------------------------------------------------- links  */}
-
-            <NavLink
-              to="/Attendace and leaves"
+              to="/MaintenanceDashboard"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
@@ -314,7 +389,11 @@ const Sidebar = () => {
               <span className="capitalize ">Maintenance</span>{' '}
               {/*  link name  */}
             </NavLink>
-            {/*  done ---------------------------------------------------------------------------------- done  */}
+
+            {/*  links ---------------------------------------------------------------------------------- links  */}
+
+                
+                {/*  done ---------------------------------------------------------------------------------- done  */}
 
             {/*  menu ---------------------------------------------------------------------------------- menu  */}
             <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
