@@ -57,7 +57,7 @@ const Sidebar = () => {
                 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
 
-                  <NavLink to="/Attendace and leaves" onClick={handleCloseSideBar}
+                  <NavLink to="/AttendanceAndLeaveDashboard" onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
                       backgroundColor: isActive ? currentColor : '',
                     })}

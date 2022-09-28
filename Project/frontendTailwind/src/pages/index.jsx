@@ -9,7 +9,7 @@ export { default as AttendanceNew } from './AttendanceNew';
 export { default as AttendanceUpdate } from './AttendanceUpdate';
 export { default as AttendanceViewAll } from './AttendanceViewAll';
 
-export { default as LeaveDashboard } from './LeaveDashboard';
+export { default as AttendanceAndLeaveDashboard } from './AttendanceAndLeaveDashboard';
 export { default as LeaveNew } from './LeaveNew';
 export { default as LeaveUpdate } from './LeaveUpdate';
 export { default as LeaveViewAll } from './LeaveViewAll';

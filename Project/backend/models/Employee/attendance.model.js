@@ -9,7 +9,7 @@ const attendanceSchema = new Schema({
         minlength: 4,
         maxlength: 4,
     },
-    attendaceDate: {
+    attendanceDate: {
         type: Date,
         required: true,
     },
@@ -31,7 +31,7 @@ const attendanceSchema = new Schema({
 
         maxlength: 2,
     },
-    attendaceStatus: { //OT, normal, leave
+    attendanceStatus: { //OT, normal, leave
         type: String,
         required: true,
         maxlength: 20,
