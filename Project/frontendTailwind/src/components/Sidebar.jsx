@@ -5,6 +5,7 @@ import { FiUser, FiCalendar, FiBarChart } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { useStateContext } from '../contexts/ContextProvider';
+import MaintenanceDashboard from './../pages/MachineryAndMaintenance/MaintenanceDashboard';
 
 const Sidebar = () => {
   const { currentColor, activeMenu, setActiveMenu, screenSize } = useStateContext();
@@ -247,7 +248,7 @@ const Sidebar = () => {
 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
                 
-                  <NavLink to="/Employee" onClick={handleCloseSideBar}
+                  <NavLink to="/MachineryDashboard" onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
                       backgroundColor: isActive ? currentColor : '',
                     })}
@@ -259,7 +260,7 @@ const Sidebar = () => {
                 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
 
-                  <NavLink to="/Attendace and leaves" onClick={handleCloseSideBar}
+                  <NavLink to="/MaintenanceDashboard" onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
                       backgroundColor: isActive ? currentColor : '',
                     })}
@@ -271,15 +272,7 @@ const Sidebar = () => {
 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
 
-                <NavLink to="/Attendace and leaves" onClick={handleCloseSideBar}
-                    style={({ isActive }) => ({
-                      backgroundColor: isActive ? currentColor : '',
-                    })}
-                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
-                  >
-                    <MdOutlineCancel /> {/*  icon  */}
-                    <span className="capitalize ">Maintenance</span> {/*  link name  */}
-                  </NavLink>
+                
                 {/*  done ---------------------------------------------------------------------------------- done  */}
 
 

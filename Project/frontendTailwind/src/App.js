@@ -16,6 +16,8 @@ import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
 
 // chanukya
 
+import {MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll} from './pages/MachineryAndMaintenance';
+import{MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask} from './pages/MachineryAndMaintenance';
 
 
 
@@ -56,6 +58,8 @@ import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
 import './App.css';
 
 import { useStateContext } from './contexts/ContextProvider';
+
+
 
 const App = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
@@ -157,15 +161,18 @@ const App = () => {
 
 
                 {/* machinery management  */}
-
-
-
-
+                <Route path="/MachineryDashboard" element={<MachineryDashboard />} />
+                <Route path="/MachineryViewAll" element={<MachineryViewAll />} />
+                <Route path="/MachineryCreate" element={<MachineryNew />} />
+                <Route path="/MachineryUpdate/:id" element={<MachineryUpdate />} />
 
 
                 {/* maintenance management  */}
-
-
+                <Route path="/MaintenanceDashboard" element={<MaintenanceDashboard />} />
+                <Route path="/MaintenanceViewAll" element={<MaintenanceViewAll />} />
+                <Route path="/MaintenanceCreate" element={<MaintenanceNew />} />
+                <Route path="/MaintenanceUpdate/:id" element={<MaintenanceUpdate />} />
+                {/* <Route path="/MaintainenceTask/" element={<MaintainenceTask />} /> */}
 
 
 
