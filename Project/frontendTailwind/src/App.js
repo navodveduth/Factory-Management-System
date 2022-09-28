@@ -4,7 +4,7 @@ import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
-import { EmployeeDashboard, Employees, EmployeeViewAll, EmployeeUpdate, EmployeeNew } from './pages';
+import { EmployeeDashboard, Employees, EmployeeViewAll, EmployeeUpdate, EmployeeNew, StockDashboard, StockUtilisation } from './pages';
 import { AttendanceAndLeaveDashboard, AttendanceViewAll, AttendanceUpdate, AttendanceNew } from './pages';
 import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
 
@@ -27,8 +27,8 @@ import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
 
 
 // shafa
-
-
+import {StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF} from './pages';
+import {DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF} from './pages';
 
 
 
@@ -179,19 +179,19 @@ const App = () => {
 
 
                 {/* stocks management  */}
-
-
-
-
-
-
+                <Route path="/StockDashboard" element={<StocksDashboard />}/>
+                <Route path="/StockView" element={<StockView />} />
+                <Route path="/StockAdd" element={<StockAdd />} />
+                <Route path="/StockUpdate/:id" element={<StockUpdate />} />
+                <Route path="/generatePDF" element={<StockPDF/>} />
+                <Route path ="/StockUtilisation" element={<StockUtilisation/>} />
 
                  {/* damaged stocks management  */}
-
-
-
-
-
+                <Route path ="/DamagedStockDashboard" element={<DamagedStockDashboard/>} />
+                <Route path ="/DamagedStockView" element={<DamagedStockView/>} />
+                <Route path ="/DamagedStockAdd" element={<DamagedStockAdd/>} />
+                <Route path="/DamagedStockUpdate/:id" element={<DamagedStockUpdate/>} />
+                <Route path="/generatePDF" element={<DStockPDF/>} />
 
 
                  {/* transportation management  */}

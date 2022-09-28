@@ -55,15 +55,18 @@ export { default as LeaveViewAll } from './LeaveViewAll';
 
 
 // shafa
+export { default as StocksDashboard } from './Stock/StocksDashboard';
+export { default as StockView } from './Stock/StockView';
+export { default as StockAdd } from './Stock/StockAdd';
+export { default as StockUpdate } from './Stock/StockUpdate';
+export { default as StockPDF } from './Stock/StockPDF';
+export { default as StockUtilisation } from './Stock/StockUtilisation';
 
-
-
-
-
-
-
-
-
+export { default as DamagedStockDashboard } from './Stock/DamagedStockDashboard';
+export { default as DamagedStockView } from './Stock/DamagedStockView';
+export { default as DamagedStockAdd } from './Stock/DamagedStockAdd';
+export { default as DamagedStockUpdate } from './Stock/DamagedStockUpdate';
+export { default as DStockPDF } from './Stock/DStockPDF';
 
 
 

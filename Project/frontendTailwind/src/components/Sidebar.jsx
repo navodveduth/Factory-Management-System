@@ -184,7 +184,7 @@ const Sidebar = () => {
 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
                 
-                  <NavLink to="/Employee" onClick={handleCloseSideBar}
+                  <NavLink to="/StockDashboard" onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
                       backgroundColor: isActive ? currentColor : '',
                     })}
@@ -196,7 +196,7 @@ const Sidebar = () => {
                 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
 
-                  <NavLink to="/Attendace and leaves" onClick={handleCloseSideBar}
+                  <NavLink to="/DamagedStockDashboard" onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
                       backgroundColor: isActive ? currentColor : '',
                     })}
