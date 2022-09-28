@@ -36,7 +36,7 @@ function StockView() {
     }, [])
 
     return (
-        <div id="viewpage" className='container' style={{ marginTop: "6%" }}>
+        <div className='container' style={{ marginTop: "6%" }}>
             <Link to={'/generatePDF'}>
                 <button type="button" class="btn btn-secondary" style={{ marginLeft: "89%" }}>Generate PDF</button>
             </Link>
@@ -105,7 +105,7 @@ function StockView() {
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Are you sure to delete?</h5>
+                                                    <h5 class="modal-title" style={{color: "#03C9D7"}} id="exampleModalLabel">Are you sure to delete?</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
