@@ -57,6 +57,11 @@ import {
   DriverUpdate,
 } from './pages';
 // shafa
+import {StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockUtilisation} from './pages';
+import {DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF} from './pages';
+
+
+
 
 // janindu
 import {
@@ -242,46 +247,50 @@ const App = () => {
                 <Route path="/costpreview" element={<PreviewOrder />} />
 
                 {/* stocks management  */}
+                <Route path="/StockDashboard" element={<StocksDashboard />}/>
+                <Route path="/StockView" element={<StockView />} />
+                <Route path="/StockAdd" element={<StockAdd />} />
+                <Route path="/StockUpdate/:id" element={<StockUpdate />} />
+                <Route path="/generatePDF" element={<StockPDF/>} />
+                <Route path ="/StockUtilisation" element={<StockUtilisation/>} />
 
-                {/* damaged stocks management  */}
+                 {/* damaged stocks management  */}
+                <Route path ="/DamagedStockDashboard" element={<DamagedStockDashboard/>} />
+                <Route path ="/DamagedStockView" element={<DamagedStockView/>} />
+                <Route path ="/DamagedStockAdd" element={<DamagedStockAdd/>} />
+                <Route path="/DamagedStockUpdate/:id" element={<DamagedStockUpdate/>} />
+                <Route path="/generatePDF" element={<DStockPDF/>} />
 
-                {/* transportation management  */}
-                <Route
-                  path="/TransportDashboard"
-                  element={<TransportDashboard />}
-                />
-                <Route
-                  path="/TransportViewAll"
-                  element={<TransportViewAll />}
-                />
+
+                 {/* transportation management  */}
+                 <Route path="/TransportDashboard" element={<TransportDashboard />}/>
+                <Route path="/TransportViewAll" element={<TransportViewAll />} />
                 <Route path="/TransportCreate" element={<TransportNew />} />
-                <Route
-                  path="/TransportUpdate/:id"
-                  element={<TransportUpdate />}
-                />
+                <Route  path="/TransportUpdate/:id" element={<TransportUpdate />} />
 
-                <Route path="/DriverDashboard" element={<DriverDashboard />} />
+
+
+
+
+
+
+                  {/* driver management  */}
+                  <Route path="/DriverDashboard" element={<DriverDashboard />} />
                 <Route path="/DriverViewAll" element={<DriverViewAll />} />
                 <Route path="/DriverCreate" element={<DriverNew />} />
                 <Route path="/DriverUpdate/:id" element={<DriverUpdate />} />
 
-                {/* driver management  */}
 
-                {/* supplier management  */}
 
-                {/* dashboard  */}
-                <Route
-                  path="/SupplierDashboard"
-                  element={<SupplierDashboard />}
-                />
 
-                {/* supplier management  */}
+
+
+                  {/* supplier management  */}
+                  <Route path="/SupplierDashboard" element={<SupplierDashboard />}/>
                 <Route path="/SupplierViewAll" element={<SupplierViewAll />} />
                 <Route path="/SupplierCreate" element={<SupplierNew />} />
-                <Route
-                  path="/SupplierUpdate/:id"
-                  element={<SupplierUpdate />}
-                />
+                <Route path="/SupplierUpdate/:id" element={<SupplierUpdate />}/>
+              
               </Routes>
             </div>
 
