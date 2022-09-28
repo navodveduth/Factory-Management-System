@@ -57,7 +57,7 @@ import {
   DriverUpdate,
 } from './pages';
 // shafa
-import {StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF} from './pages';
+import {StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockUtilisation} from './pages';
 import {DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF} from './pages';
 
 
@@ -263,7 +263,10 @@ const App = () => {
 
 
                  {/* transportation management  */}
-
+                 <Route path="/TransportDashboard" element={<TransportDashboard />}/>
+                <Route path="/TransportViewAll" element={<TransportViewAll />} />
+                <Route path="/TransportCreate" element={<TransportNew />} />
+                <Route  path="/TransportUpdate/:id" element={<TransportUpdate />} />
 
 
 
@@ -272,7 +275,10 @@ const App = () => {
 
 
                   {/* driver management  */}
-
+                  <Route path="/DriverDashboard" element={<DriverDashboard />} />
+                <Route path="/DriverViewAll" element={<DriverViewAll />} />
+                <Route path="/DriverCreate" element={<DriverNew />} />
+                <Route path="/DriverUpdate/:id" element={<DriverUpdate />} />
 
 
 
@@ -280,14 +286,11 @@ const App = () => {
 
 
                   {/* supplier management  */}
-
-
-
-
-
-
-
-
+                  <Route path="/SupplierDashboard" element={<SupplierDashboard />}/>
+                <Route path="/SupplierViewAll" element={<SupplierViewAll />} />
+                <Route path="/SupplierCreate" element={<SupplierNew />} />
+                <Route path="/SupplierUpdate/:id" element={<SupplierUpdate />}/>
+              
               </Routes>
             </div>
 

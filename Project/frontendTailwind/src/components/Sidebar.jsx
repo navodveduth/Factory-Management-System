@@ -187,35 +187,29 @@ const Sidebar = () => {
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
-                {/*  links ---------------------------------------------------------------------------------- links  */}
-                
-                  <NavLink to="/StockDashboard" onClick={handleCloseSideBar}
-                    style={({ isActive }) => ({
-                      backgroundColor: isActive ? currentColor : '',
-                    })}
-                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
-                  >
-                    <MdOutlineCancel /> {/*  icon  */}
-                    <span className="capitalize ">Stock</span> {/*  link name  */}
-                  </NavLink>
-                
-                {/*  links ---------------------------------------------------------------------------------- links  */}
+            <NavLink
+              to="/Attendace and leaves"
+              onClick={handleCloseSideBar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : '',
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <MdOutlineCancel /> {/*  icon  */}
+              <span className="capitalize ">Order Distribution</span>{' '}
+              {/*  link name  */}
+            </NavLink>
+            {/*  done ---------------------------------------------------------------------------------- done  */}
 
-                  <NavLink to="/DamagedStockDashboard" onClick={handleCloseSideBar}
-                    style={({ isActive }) => ({
-                      backgroundColor: isActive ? currentColor : '',
-                    })}
-                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
-                  >
-                    <MdOutlineCancel /> {/*  icon  */}
-                    <span className="capitalize ">Damaged stock</span> {/*  link name  */}
-                  </NavLink>
-                {/*  done ---------------------------------------------------------------------------------- done  */}
+            {/*  menu ---------------------------------------------------------------------------------- menu  */}
+            <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
+              Stock management {/*  menu name  */}
+            </p>
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/Employee"
+              to="/StockDashboard"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
@@ -229,7 +223,7 @@ const Sidebar = () => {
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/Attendace and leaves"
+              to="/DamagedStockDashboard"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
