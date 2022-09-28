@@ -39,6 +39,10 @@ const orderSchema = new Schema({
     overHeadCost:{
         type: Number,
         required:true
+    },
+    totalCost:{
+        type: Number,
+        required:true
     }
 });
 

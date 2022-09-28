@@ -50,10 +50,7 @@ import { SalesDashboard, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice } fro
 
 
 // devindu
-
-
-
-
+import { OrderViewAll,ProductionDashBoard,AddOrder, UpdateOrder, PreviewOrder} from './pages/Production/Index';
 
 import './App.css';
 
@@ -184,11 +181,11 @@ const App = () => {
 
 
                 {/* production management  */}
-
-
-
-
-
+                <Route path="/vieworders" element={<OrderViewAll/>} />
+                <Route path="/production" element={<ProductionDashBoard/>} />
+                <Route path='/newOrder' element={<AddOrder/>}/>
+                <Route path='/updateCost/:id' element={<UpdateOrder/>}/>
+                <Route path='/costpreview' element ={<PreviewOrder/>}/>
 
                 {/* stocks management  */}
 
