@@ -51,6 +51,7 @@ function SalesForm() {
                           alert("Error Occured!")
                       }) 
               }}>
+                
               <h1>New Order Form</h1>
               <div className="mb-3">
                 <label className="form-label">Invoice No</label>

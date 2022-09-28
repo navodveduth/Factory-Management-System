@@ -3,9 +3,9 @@ import {createSalary, getAllSalaryDetails, getOneSalaryDetails, updateSalary, de
 
 const router = express.Router();
 
-router.post("/createSalary", createSalary);
-router.get("/viewSalary", getAllSalaryDetails);
-router.get("/viewSalary/:id", getOneSalaryDetails);
+router.post("/SalaryNew", createSalary);
+router.get("/SalaryView", getAllSalaryDetails);
+router.get("/SalaryView/:id", getOneSalaryDetails);
 router.put("/updateSalary/:id", updateSalary);
 router.delete("/deleteSalary/:id", deleteSalary);
 
