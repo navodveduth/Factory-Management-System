@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-// import "../../styles/Shafa/StockForms.css";
+import "../../styles/Stock/StockForms.css";
 
 function DamagedStockAddForm() {
     //useNavigate is a hook that is used to navigate to another page
@@ -15,6 +15,7 @@ function DamagedStockAddForm() {
     const [value, setValue] = useState('');
     var [totalValue, setTotalValue] = useState('');
     const [usability, setUsability] = useState('');
+
 
     return (
         <>
@@ -51,7 +52,7 @@ function DamagedStockAddForm() {
                     <div className="mb-3">
                         <label className="form-label">Stock Code: </label>
                         <input type="text" className="form-control" id="code" placeholder="Enter stock code..." pattern="[A-Z][0-9]{3,7}"
-                            required onChange={(e) => {
+                           required onChange={(e) => {
                                 setStockCode(e.target.value);
                             }} />
                     </div>
