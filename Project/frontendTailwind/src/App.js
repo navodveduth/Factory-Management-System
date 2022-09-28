@@ -1,31 +1,61 @@
-import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
-import { EmployeeDashboard, Employees, EmployeeViewAll, EmployeeUpdate, EmployeeNew, StockDashboard, StockUtilisation } from './pages';
-import { AttendanceAndLeaveDashboard, AttendanceViewAll, AttendanceUpdate, AttendanceNew } from './pages';
+import {
+  EmployeeDashboard,
+  Employees,
+  EmployeeViewAll,
+  EmployeeUpdate,
+  EmployeeNew,
+} from './pages';
+import {
+  AttendanceAndLeaveDashboard,
+  AttendanceViewAll,
+  AttendanceUpdate,
+  AttendanceNew,
+} from './pages';
 import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
 
 // minod
 
-
-
-
+import {
+  FinanceNew,
+  FinanceDashboard,
+  FinanceViewAll,
+  FinanceUpdate,
+} from './pages';
+import { SalaryDashboard } from './pages';
 
 // chanukya
 
-
-
-
+import {
+  MachineryDashboard,
+  MachineryNew,
+  MachineryUpdate,
+  MachineryViewAll,
+} from './pages/MachineryAndMaintenance';
+import {
+  MaintenanceDashboard,
+  MaintenanceNew,
+  MaintenanceUpdate,
+  MaintenanceViewAll,
+  MaintainenceTask,
+} from './pages/MachineryAndMaintenance';
 
 // navod
-
-
-
-
-
+import {
+  TransportDashboard,
+  TransportViewAll,
+  TransportNew,
+  TransportUpdate,
+  DriverDashboard,
+  DriverViewAll,
+  DriverNew,
+  DriverUpdate,
+} from './pages';
 // shafa
 import {StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF} from './pages';
 import {DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF} from './pages';
@@ -34,31 +64,46 @@ import {DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUp
 
 
 // janindu
-
-
-
-
-
+import {
+  SalesDashboard,
+  SalesViewAll,
+  SalesUpdate,
+  SalesNew,
+  SalesInvoice,
+} from './pages';
 
 // devinya
 
-
-
-
-
+import {
+  SupplierDashboard,
+  SupplierViewAll,
+  SupplierUpdate,
+  SupplierNew,
+} from './pages';
 
 // devindu
-
-
-
-
+import {
+  OrderViewAll,
+  ProductionDashBoard,
+  AddOrder,
+  UpdateOrder,
+  PreviewOrder,
+} from './pages/Production/Index';
 
 import './App.css';
 
 import { useStateContext } from './contexts/ContextProvider';
 
 const App = () => {
-  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
+  const {
+    setCurrentColor,
+    setCurrentMode,
+    currentMode,
+    activeMenu,
+    currentColor,
+    themeSettings,
+    setThemeSettings,
+  } = useStateContext();
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');
@@ -74,10 +119,7 @@ const App = () => {
       <BrowserRouter>
         <div className="flex relative dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
-            <TooltipComponent
-              content="Settings"
-              position="Top"
-            >
+            <TooltipComponent content="Settings" position="Top">
               <button
                 type="button"
                 onClick={() => setThemeSettings(true)}
@@ -86,7 +128,6 @@ const App = () => {
               >
                 <FiSettings />
               </button>
-
             </TooltipComponent>
           </div>
           {activeMenu ? (
@@ -109,24 +150,38 @@ const App = () => {
               <Navbar />
             </div>
             <div>
-              {themeSettings && (<ThemeSettings />)}
-
+              {themeSettings && <ThemeSettings />}
               <Routes>
                 {/* dashboard  */}
-                <Route path="/" element={(<EmployeeDashboard />)} />
+                <Route path="/" element={<EmployeeDashboard />} />
 
                 {/* employee management  */}
-                <Route path="/EmployeeDashboard" element={<EmployeeDashboard/>} />
-                <Route path="/EmployeeViewAll" element={<EmployeeViewAll/>} />
-                <Route path="/EmployeeCreate" element={<EmployeeNew/>} />
-                <Route path="/EmployeeUpdate/:id" element={<EmployeeUpdate/>} />
+                <Route
+                  path="/EmployeeDashboard"
+                  element={<EmployeeDashboard />}
+                />
+                <Route path="/EmployeeViewAll" element={<EmployeeViewAll />} />
+                <Route path="/EmployeeCreate" element={<EmployeeNew />} />
+                <Route
+                  path="/EmployeeUpdate/:id"
+                  element={<EmployeeUpdate />}
+                />
 
                 {/* attendance management  */}
-                <Route path="/AttendanceAndLeaveDashboard" element={<AttendanceAndLeaveDashboard />} />
-                <Route path="/AttendanceViewAll" element={<AttendanceViewAll />} />
+                <Route
+                  path="/AttendanceAndLeaveDashboard"
+                  element={<AttendanceAndLeaveDashboard />}
+                />
+                <Route
+                  path="/AttendanceViewAll"
+                  element={<AttendanceViewAll />}
+                />
                 <Route path="/AttendanceCreate" element={<AttendanceNew />} />
-                <Route path="/AttendanceUpdate/:id" element={<AttendanceUpdate />} />
-                  
+                <Route
+                  path="/AttendanceUpdate/:id"
+                  element={<AttendanceUpdate />}
+                />
+
                 {/* leave management  */}
                 <Route path="/LeaveViewAll" element={<LeaveViewAll />} />
                 <Route path="/LeaveCreate" element={<LeaveNew />} />
@@ -134,49 +189,62 @@ const App = () => {
 
                 {/* finanace management  */}
 
+                <Route
+                  path="/FinanceDashboard"
+                  element={<FinanceDashboard />}
+                />
+                <Route path="/FinanceNew" element={<FinanceNew />} />
+                <Route path="/FinanceViewAll" element={<FinanceViewAll />} />
+                <Route path="/FinanceUpdate/:id" element={<FinanceUpdate />} />
 
-
-
-
-
+                <Route path="/SalaryDashboard" element={<SalaryDashboard />} />
 
                 {/* salary management  */}
 
-
-
-
-
-
-
                 {/* sales management  */}
-
-
-
-
-
-
+                <Route path="/SalesDashboard" element={<SalesDashboard />} />
+                <Route path="/SalesViewAll" element={<SalesViewAll />} />
+                <Route path="/SalesCreate" element={<SalesNew />} />
+                <Route path="/SalesUpdate/:id" element={<SalesUpdate />} />
+                <Route path="/SalesInvoice/:id" element={<SalesInvoice />} />
 
                 {/* machinery management  */}
-
-
-
-
-
+                <Route
+                  path="/MachineryDashboard"
+                  element={<MachineryDashboard />}
+                />
+                <Route
+                  path="/MachineryViewAll"
+                  element={<MachineryViewAll />}
+                />
+                <Route path="/MachineryCreate" element={<MachineryNew />} />
+                <Route
+                  path="/MachineryUpdate/:id"
+                  element={<MachineryUpdate />}
+                />
 
                 {/* maintenance management  */}
-
-
-
-
-
-
+                <Route
+                  path="/MaintenanceDashboard"
+                  element={<MaintenanceDashboard />}
+                />
+                <Route
+                  path="/MaintenanceViewAll"
+                  element={<MaintenanceViewAll />}
+                />
+                <Route path="/MaintenanceCreate" element={<MaintenanceNew />} />
+                <Route
+                  path="/MaintenanceUpdate/:id"
+                  element={<MaintenanceUpdate />}
+                />
+                {/* <Route path="/MaintainenceTask/" element={<MaintainenceTask />} /> */}
 
                 {/* production management  */}
-
-
-
-
-
+                <Route path="/vieworders" element={<OrderViewAll />} />
+                <Route path="/production" element={<ProductionDashBoard />} />
+                <Route path="/newOrder" element={<AddOrder />} />
+                <Route path="/updateCost/:id" element={<UpdateOrder />} />
+                <Route path="/costpreview" element={<PreviewOrder />} />
 
                 {/* stocks management  */}
                 <Route path="/StockDashboard" element={<StocksDashboard />}/>
@@ -222,7 +290,7 @@ const App = () => {
 
               </Routes>
             </div>
-            
+
             <Footer />
           </div>
         </div>
