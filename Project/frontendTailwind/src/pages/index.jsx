@@ -74,16 +74,11 @@ export {default as SalaryDashboard} from "./Finance/SalaryDashboard"
 
 // janindu
 
-
-
-
-
-
-
-
-
-
-
+export { default as SalesDashboard } from './Sales/SalesDashboard';
+export { default as SalesNew } from './Sales/SalesNew';
+export { default as SalesUpdate } from './Sales/SalesUpdate';
+export { default as SalesViewAll } from './Sales/SalesViewAll';
+export { default as SalesInvoice } from './Sales/SalesInvoice';
 
 
 // devinya

@@ -34,7 +34,7 @@ import {SalaryDashboard, } from './pages'
 
 
 // janindu
-
+import { SalesDashboard, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice } from './pages';
 
 
 
@@ -155,12 +155,11 @@ const App = () => {
 
 
                 {/* sales management  */}
-
-
-
-
-
-
+                <Route path="/SalesDashboard" element={<SalesDashboard />} />
+                <Route path="/SalesViewAll" element={<SalesViewAll />} />
+                <Route path="/SalesCreate" element={<SalesNew />} />
+                <Route path="/SalesUpdate/:id" element={<SalesUpdate />} />
+                <Route path="/SalesInvoice/:id" element={<SalesInvoice />} />
 
                 {/* machinery management  */}
 
