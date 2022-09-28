@@ -14,59 +14,40 @@ export { default as LeaveNew } from './LeaveNew';
 export { default as LeaveUpdate } from './LeaveUpdate';
 export { default as LeaveViewAll } from './LeaveViewAll';
 
-
 // minod
-export {default as FinanceDashboard} from "./Finance/FinanceDashboard"
-export {default as FinanceNew} from "./Finance/FinanceNew"
-export {default as FinanceViewAll} from "./Finance/FinanceViewAll"
-export {default as FinanceUpdate} from "./Finance/FinanceUpdate"
+export { default as FinanceDashboard } from './Finance/FinanceDashboard';
+export { default as FinanceNew } from './Finance/FinanceNew';
+export { default as FinanceViewAll } from './Finance/FinanceViewAll';
+export { default as FinanceUpdate } from './Finance/FinanceUpdate';
 
-
-export {default as SalaryDashboard} from "./Finance/SalaryDashboard"
-
-
-
-
-
-
+export { default as SalaryDashboard } from './Finance/SalaryDashboard';
 
 // chanukya
 
-
-
-
-
-
-
-
-
-
-
-
 // navod
+export { default as TransportDashboard } from './Transport/TransportDashboard';
+export { default as TransportNew } from './Transport/TransportNew';
+export { default as TransportUpdate } from './Transport/TransportUpdate';
+export { default as TransportViewAll } from './Transport/TransportViewAll';
 
-
-
-
-
-
-
-
-
-
-
-
+export { default as DriverDashboard } from './Driver/DriverDashboard';
+export { default as DriverNew } from './Driver/DriverNew';
+export { default as DriverUpdate } from './Driver/DriverUpdate';
+export { default as DriverViewAll } from './Driver/DriverViewAll';
 
 // shafa
+export { default as StocksDashboard } from './Stock/StocksDashboard';
+export { default as StockView } from './Stock/StockView';
+export { default as StockAdd } from './Stock/StockAdd';
+export { default as StockUpdate } from './Stock/StockUpdate';
+export { default as StockPDF } from './Stock/StockPDF';
+export { default as StockUtilisation } from './Stock/StockUtilisation';
 
-
-
-
-
-
-
-
-
+export { default as DamagedStockDashboard } from './Stock/DamagedStockDashboard';
+export { default as DamagedStockView } from './Stock/DamagedStockView';
+export { default as DamagedStockAdd } from './Stock/DamagedStockAdd';
+export { default as DamagedStockUpdate } from './Stock/DamagedStockUpdate';
+export { default as DStockPDF } from './Stock/DStockPDF';
 
 
 
@@ -80,31 +61,11 @@ export { default as SalesUpdate } from './Sales/SalesUpdate';
 export { default as SalesViewAll } from './Sales/SalesViewAll';
 export { default as SalesInvoice } from './Sales/SalesInvoice';
 
-
 // devinya
 
-
-
-
-
-
-
-
-
-
-
-
-
+export { default as SupplierDashboard } from './SupplierDashboard';
+export { default as SupplierNew } from './SupplierNew';
+export { default as SupplierUpdate } from './SupplierUpdate';
+export { default as SupplierViewAll } from './SupplierViewAll';
 
 // devindu
-
-
-
-
-
-
-
-
-
-
-
