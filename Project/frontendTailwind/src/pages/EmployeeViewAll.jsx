@@ -2,91 +2,97 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Header } from '../components';
-
+import { useStateContext } from '../contexts/ContextProvider';
+import TableData from '../components/Table/TableData';
+import TableHeader from '../components/Table/TableHeader';
 
 const EmployeeViewAll = () => {
+  const { currentColor } = useStateContext();
 
-    const [employee, setEmployee] = useState([]); 
-    const getEmployee = async () => {  
-        axios.get("http://localhost:8070/employee/viewEmployee")
-        .then((res) => { 
-            setEmployee(res.data); 
-        })
-        .catch((err) => { 
-            alert(err.message); 
-        })
-    }
+  const [employee, setEmployee] = useState([]);
 
-    useEffect(() => { 
+  const getEmployee = async () => {
+    axios
+      .get('http://localhost:8070/employee/viewEmployee')
+      .then((res) => {
+        setEmployee(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
+  useEffect(() => {
+    getEmployee();
+  }, []);
+
+  const deleteEmployee = async (id) => {
+    await axios
+      .delete(`http://localhost:8070/employee/deleteEmployee/${id}`)
+      .then((res) => {
+        alert('Data deleted successfully');
         getEmployee();
-    }, [])
-
-    const deleteEmployee = async (id) => {
-        await axios.delete(`http://localhost:8070/employee/deleteEmployee/${id}`)
-        .then((res) => {
-            alert("Data deleted successfully");
-            getEmployee();
-        })
-        .catch((err) => {
-            alert(err.message);
-        })
-    }
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
 
   return (
-    
     <div>
-        <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
+      <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
         <Header category="Table" title="Employees" />
-        <table className="table-fixed w-full border-collapse">
+        <div className="block w-full overflow-x-auto rounded-lg">
+          <table className="w-full rounded-lg">
             <thead>
-                <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                <th>Employee ID</th>
-                <th>Full name</th>
-                <th>NIC</th>
-                <th>Gender</th>
-                <th>Designation</th>
-                <th>Department</th>
-                <th>Edit</th>
-                <th>Delete</th>
-                </tr>
+              <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                <TableHeader value="Employee ID" />
+                <TableHeader value="Full name" />
+                <TableHeader value="NIC" />
+                <TableHeader value="Gender" />
+                <TableHeader value="Designation" />
+                <TableHeader value="Department" />
+                <TableHeader value="Manage" />
+              </tr>
             </thead>
             <tbody>
-                {employee.map((data)=>{
+              {employee.map((data) => (
+                <tr className="text-sm h-10 border dark:border-slate-600">
+                  <TableData value={data.employeeNumber} />
+                  <TableData value={data.employeeFullName} />
+                  <TableData value={data.employeeNIC} />
+                  <TableData value={data.employeeGender} />
+                  <TableData value={data.employeeDesignation} />
+                  <TableData value={data.employeeDepartment} />
 
-                    return ( 
-                        <tr className="text-sm h-10 border dark:border-slate-600">
-                            <td className="text-center">{data.employeeNumber}</td>
-                            <td className="text-center">{data.employeeFullName}</td>
-                            <td className="text-center">{data.employeeNIC}</td>
-                            <td className="text-center">{data.employeeGender}</td>
-                            <td className="text-center">{data.employeeDesignation}</td>
-                            <td className="text-center">{data.employeeDepartment}</td>
-                            <td className="text-center">
-                                <Link to={'/EmployeeUpdate/'+ data._id}>
-                                    <button className="bg-slate-400 text-sm text-white p-1 rounded-lg w-12 hover:bg-slate-600">
-                                        Edit
-                                    </button>
-                                </Link>
-                            </td>
-                            <td className="text-center">
-                                <button onClick={
-                                ()=>{
-                                    deleteEmployee(data._id);
-                                }}
-                                className="bg-red-400 text-sm text-white p-1 rounded-lg w-16 hover:bg-red-600">
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                    )
-                })}
-                
-                
+                  <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                    <Link to={`/EmployeeUpdate/${data._id}`}>
+                      <button
+                        type="button"
+                        className="font-bold py-1 px-4 rounded-full mx-3 text-white"
+                        style={{ background: currentColor }}
+                      >
+                        <i className="fas fa-edit" />
+                      </button>
+                    </Link>
+                    <button
+                      type="button"
+                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
+                      onClick={() => {
+                        deleteEmployee(data._id);
+                      }}
+                    >
+                      <i className="fas fa-trash" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
-        </table>
+          </table>
         </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default EmployeeViewAll
+export default EmployeeViewAll;
