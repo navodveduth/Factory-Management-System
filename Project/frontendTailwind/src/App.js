@@ -4,61 +4,58 @@ import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
-import { EmployeeDashboard, Employees, EmployeeViewAll, EmployeeUpdate, EmployeeNew } from './pages';
-import { AttendanceAndLeaveDashboard, AttendanceViewAll, AttendanceUpdate, AttendanceNew } from './pages';
+import {
+  EmployeeDashboard,
+  Employees,
+  EmployeeViewAll,
+  EmployeeUpdate,
+  EmployeeNew,
+} from './pages';
+import {
+  AttendanceAndLeaveDashboard,
+  AttendanceViewAll,
+  AttendanceUpdate,
+  AttendanceNew,
+} from './pages';
 import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
 
 // minod
 
-
-
-
-
 // chanukya
 
-
-
-
-
 // navod
-
-
-
-
-
+import {
+  TransportDashboard,
+  TransportViewAll,
+  TransportNew,
+  TransportUpdate,
+  DriverDashboard,
+  DriverViewAll,
+  DriverNew,
+  DriverUpdate,
+} from './pages';
 // shafa
-
-
-
-
-
 
 // janindu
 
-
-
-
-
-
 // devinya
 
-
-
-
-
-
 // devindu
-
-
-
-
 
 import './App.css';
 
 import { useStateContext } from './contexts/ContextProvider';
 
 const App = () => {
-  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
+  const {
+    setCurrentColor,
+    setCurrentMode,
+    currentMode,
+    activeMenu,
+    currentColor,
+    themeSettings,
+    setThemeSettings,
+  } = useStateContext();
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');
@@ -74,10 +71,7 @@ const App = () => {
       <BrowserRouter>
         <div className="flex relative dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
-            <TooltipComponent
-              content="Settings"
-              position="Top"
-            >
+            <TooltipComponent content="Settings" position="Top">
               <button
                 type="button"
                 onClick={() => setThemeSettings(true)}
@@ -86,7 +80,6 @@ const App = () => {
               >
                 <FiSettings />
               </button>
-
             </TooltipComponent>
           </div>
           {activeMenu ? (
@@ -109,24 +102,38 @@ const App = () => {
               <Navbar />
             </div>
             <div>
-              {themeSettings && (<ThemeSettings />)}
-
+              {themeSettings && <ThemeSettings />}
               <Routes>
                 {/* dashboard  */}
-                <Route path="/" element={(<EmployeeDashboard />)} />
+                <Route path="/" element={<EmployeeDashboard />} />
 
                 {/* employee management  */}
-                <Route path="/EmployeeDashboard" element={<EmployeeDashboard/>} />
-                <Route path="/EmployeeViewAll" element={<EmployeeViewAll/>} />
-                <Route path="/EmployeeCreate" element={<EmployeeNew/>} />
-                <Route path="/EmployeeUpdate/:id" element={<EmployeeUpdate/>} />
+                <Route
+                  path="/EmployeeDashboard"
+                  element={<EmployeeDashboard />}
+                />
+                <Route path="/EmployeeViewAll" element={<EmployeeViewAll />} />
+                <Route path="/EmployeeCreate" element={<EmployeeNew />} />
+                <Route
+                  path="/EmployeeUpdate/:id"
+                  element={<EmployeeUpdate />}
+                />
 
                 {/* attendance management  */}
-                <Route path="/AttendanceAndLeaveDashboard" element={<AttendanceAndLeaveDashboard />} />
-                <Route path="/AttendanceViewAll" element={<AttendanceViewAll />} />
+                <Route
+                  path="/AttendanceAndLeaveDashboard"
+                  element={<AttendanceAndLeaveDashboard />}
+                />
+                <Route
+                  path="/AttendanceViewAll"
+                  element={<AttendanceViewAll />}
+                />
                 <Route path="/AttendanceCreate" element={<AttendanceNew />} />
-                <Route path="/AttendanceUpdate/:id" element={<AttendanceUpdate />} />
-                  
+                <Route
+                  path="/AttendanceUpdate/:id"
+                  element={<AttendanceUpdate />}
+                />
+
                 {/* leave management  */}
                 <Route path="/LeaveViewAll" element={<LeaveViewAll />} />
                 <Route path="/LeaveCreate" element={<LeaveNew />} />
@@ -134,95 +141,46 @@ const App = () => {
 
                 {/* finanace management  */}
 
-
-
-
-
-
-
                 {/* salary management  */}
-
-
-
-
-
-
 
                 {/* sales management  */}
 
-
-
-
-
-
-
                 {/* machinery management  */}
-
-
-
-
-
 
                 {/* maintenance management  */}
 
-
-
-
-
-
-
                 {/* production management  */}
-
-
-
-
-
 
                 {/* stocks management  */}
 
+                {/* damaged stocks management  */}
 
+                {/* transportation management  */}
+                <Route
+                  path="/TransportDashboard"
+                  element={<TransportDashboard />}
+                />
+                <Route
+                  path="/TransportViewAll"
+                  element={<TransportViewAll />}
+                />
+                <Route path="/TransportCreate" element={<TransportNew />} />
+                <Route
+                  path="/TransportUpdate/:id"
+                  element={<TransportUpdate />}
+                />
 
+                <Route path="/DriverDashboard" element={<DriverDashboard />} />
+                <Route path="/DriverViewAll" element={<DriverViewAll />} />
+                <Route path="/DriverCreate" element={<DriverNew />} />
+                <Route path="/DriverUpdate/:id" element={<DriverUpdate />} />
 
+                {/* driver management  */}
 
-
-
-                 {/* damaged stocks management  */}
-
-
-
-
-
-
-
-                 {/* transportation management  */}
-
-
-
-
-
-
-
-
-                  {/* driver management  */}
-
-
-
-
-
-
-
-                  {/* supplier management  */}
-
-
-
-
-
-
-
-
+                {/* supplier management  */}
               </Routes>
             </div>
-            
+
             <Footer />
           </div>
         </div>

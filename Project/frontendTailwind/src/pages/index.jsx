@@ -14,99 +14,25 @@ export { default as LeaveNew } from './LeaveNew';
 export { default as LeaveUpdate } from './LeaveUpdate';
 export { default as LeaveViewAll } from './LeaveViewAll';
 
-
 // minod
-
-
-
-
-
-
-
-
-
-
 
 // chanukya
 
-
-
-
-
-
-
-
-
-
-
-
 // navod
+export { default as TransportDashboard } from './Transport/TransportDashboard';
+export { default as TransportNew } from './Transport/TransportNew';
+export { default as TransportUpdate } from './Transport/TransportUpdate';
+export { default as TransportViewAll } from './Transport/TransportViewAll';
 
-
-
-
-
-
-
-
-
-
-
-
+export { default as DriverDashboard } from './Driver/DriverDashboard';
+export { default as DriverNew } from './Driver/DriverNew';
+export { default as DriverUpdate } from './Driver/DriverUpdate';
+export { default as DriverViewAll } from './Driver/DriverViewAll';
 
 // shafa
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // janindu
-
-
-
-
-
-
-
-
-
-
-
-
 
 // devinya
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // devindu
-
-
-
-
-
-
-
-
-
-
-
