@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 
 function StockView() {
     const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
+    const [searchTerm, setSearchTerm] = useState("");
 
     const getStock = async () => {  //getStock is the function to get the data from the backend
         axios.get("http://localhost:8070/stock")
@@ -35,10 +36,16 @@ function StockView() {
     }, [])
 
     return (
-        <div className='container' style={{ marginTop: "6%" }}>
+        <div id="viewpage" className='container' style={{ marginTop: "6%" }}>
             <Link to={'/generatePDF'}>
                 <button type="button" class="btn btn-secondary" style={{ marginLeft: "89%" }}>Generate PDF</button>
             </Link>
+            <div class="" style={{ width: "20%", marginRight: "85%", marginTop: "5%" }}>
+                <input type="search" class="form-control rounded" placeholder="Type here ...." aria-label="Search" aria-describedby="search-addon" onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                }} />
+                {/* <button type="button" style={{marginLeft:"120%", marginTop:"-22%"}} class="btn btn-outline-secondary">search</button> */}
+            </div>
             <h1>Stocks Details</h1>
             <table className="table table-striped table-hover">
                 <thead>
@@ -58,7 +65,13 @@ function StockView() {
                     </tr>
                 </thead>
                 <tbody>
-                    {stock.map((data) => {
+                    {stock.filter((data) => {
+                        if (searchTerm == "") {
+                            return data;
+                        } else if (data.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                            return data;
+                        }
+                    }).map((data, key) => {//map is used to iterate the array
                         const date = new Date(data.lastUpdated).toLocaleDateString();
 
                         return (
@@ -79,9 +92,37 @@ function StockView() {
                                     </Link>
                                 </td>
                                 <td>
-                                    <button type="button" className="btn btn-danger"
+                                    {/* {<button type="button" className="btn btn-danger"
                                         onClick={() => deleteStock(data._id)
-                                        }>Delete</button>
+                                        }>Delete</button>} */}
+
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        Delete
+                                    </button>
+
+                                    {/* {<!-- Modal -->} */}
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Are you sure to delete?</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    You are about to delete a stock item. Once deleted it cannot be undone!
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                                        onClick={
+                                                            
+                                                            () => deleteStock(data._id)
+                                                           
+                                                        }>Confirm</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                 </td>
                             </tr>

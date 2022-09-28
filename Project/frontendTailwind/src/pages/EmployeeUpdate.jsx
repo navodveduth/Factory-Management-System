@@ -49,7 +49,7 @@ function EmployeeUpdate() {
 
     useEffect(() => {
         getEmployee();
-    })
+    }, [])
 
 
   return (
