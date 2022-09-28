@@ -44,10 +44,7 @@ import { SalesDashboard, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice } fro
 
 // devinya
 
-
-
-
-
+import {SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew} from './pages';
 
 // devindu
 import { OrderViewAll,ProductionDashBoard,AddOrder, UpdateOrder, PreviewOrder} from './pages/Production/Index';
@@ -221,6 +218,15 @@ const App = () => {
 
 
                   {/* supplier management  */}
+
+                  {/* dashboard  */}
+                  <Route path="/SupplierDashboard" element={<SupplierDashboard/>} />
+
+                  {/* supplier management  */}
+                  <Route path="/SupplierViewAll" element={<SupplierViewAll/>} />
+                  <Route path="/SupplierCreate" element={<SupplierNew/>} />
+                  <Route path="/SupplierUpdate/:id" element={<SupplierUpdate/>} />
+
 
 
 

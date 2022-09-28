@@ -83,17 +83,10 @@ export { default as SalesInvoice } from './Sales/SalesInvoice';
 
 // devinya
 
-
-
-
-
-
-
-
-
-
-
-
+export { default as SupplierDashboard } from './SupplierDashboard';
+export { default as SupplierNew } from './SupplierNew';
+export { default as SupplierUpdate } from './SupplierUpdate';
+export { default as SupplierViewAll } from './SupplierViewAll';
 
 
 // devindu

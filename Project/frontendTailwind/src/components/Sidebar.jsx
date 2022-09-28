@@ -217,14 +217,14 @@ const Sidebar = () => {
 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
                 
-                  <NavLink to="/Employee" onClick={handleCloseSideBar}
+                  <NavLink to="/SupplierDashBoard" onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
                       backgroundColor: isActive ? currentColor : '',
                     })}
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}
                   >
                     <MdOutlineCancel /> {/*  icon  */}
-                    <span className="capitalize ">Supply 1</span> {/*  link name  */}
+                    <span className="capitalize ">Supplier Details</span> {/*  link name  */}
                   </NavLink>
                 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
@@ -236,7 +236,7 @@ const Sidebar = () => {
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}
                   >
                     <MdOutlineCancel /> {/*  icon  */}
-                    <span className="capitalize ">Supply 2</span> {/*  link name  */}
+                    <span className="capitalize ">Supplier Records</span> {/*  link name  */}
                   </NavLink>
                 {/*  done ---------------------------------------------------------------------------------- done  */}
 
