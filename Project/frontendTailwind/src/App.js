@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
@@ -10,8 +10,8 @@ import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
 
 // minod
 
-
-
+import { FinanceNew, FinanceDashboard, FinanceViewAll, FinanceUpdate } from './pages';
+import {SalaryDashboard, } from './pages'
 
 
 // chanukya
@@ -36,7 +36,7 @@ import{MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewA
 
 
 // janindu
-
+import { SalesDashboard, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice } from './pages';
 
 
 
@@ -138,8 +138,14 @@ const App = () => {
 
                 {/* finanace management  */}
 
+                <Route path="/FinanceDashboard" element={<FinanceDashboard/>} />
+                <Route path="/FinanceNew" element={<FinanceNew/>} />
+                <Route path="/FinanceViewAll" element={<FinanceViewAll/>} />
+                <Route path="/FinanceUpdate/:id" element={<FinanceUpdate/>} />
 
-
+                <Route path="/SalaryDashboard" element={<SalaryDashboard/>} />
+                
+                
 
 
 
@@ -153,12 +159,11 @@ const App = () => {
 
 
                 {/* sales management  */}
-
-
-
-
-
-
+                <Route path="/SalesDashboard" element={<SalesDashboard />} />
+                <Route path="/SalesViewAll" element={<SalesViewAll />} />
+                <Route path="/SalesCreate" element={<SalesNew />} />
+                <Route path="/SalesUpdate/:id" element={<SalesUpdate />} />
+                <Route path="/SalesInvoice/:id" element={<SalesInvoice />} />
 
                 {/* machinery management  */}
                 <Route path="/MachineryDashboard" element={<MachineryDashboard />} />

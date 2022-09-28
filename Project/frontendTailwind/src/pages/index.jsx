@@ -16,10 +16,13 @@ export { default as LeaveViewAll } from './LeaveViewAll';
 
 
 // minod
+export {default as FinanceDashboard} from "./Finance/FinanceDashboard"
+export {default as FinanceNew} from "./Finance/FinanceNew"
+export {default as FinanceViewAll} from "./Finance/FinanceViewAll"
+export {default as FinanceUpdate} from "./Finance/FinanceUpdate"
 
 
-
-
+export {default as SalaryDashboard} from "./Finance/SalaryDashboard"
 
 
 
@@ -71,16 +74,11 @@ export { default as LeaveViewAll } from './LeaveViewAll';
 
 // janindu
 
-
-
-
-
-
-
-
-
-
-
+export { default as SalesDashboard } from './Sales/SalesDashboard';
+export { default as SalesNew } from './Sales/SalesNew';
+export { default as SalesUpdate } from './Sales/SalesUpdate';
+export { default as SalesViewAll } from './Sales/SalesViewAll';
+export { default as SalesInvoice } from './Sales/SalesInvoice';
 
 
 // devinya
