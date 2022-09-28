@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-// import "../../styles/Shafa/StockForms.css";
+import "../../styles/Stock/StockForms.css";
 
 function DamagedStockUpdate() {
 
@@ -40,7 +40,7 @@ function DamagedStockUpdate() {
 
     useEffect(() => { //this will run when the page is loaded
         getDamagedStock();
-    }, []);
+    }, []); 
 
 
 
@@ -54,8 +54,8 @@ function DamagedStockUpdate() {
 
 
                     var total = quantity * value;
-                    { totalValue = total }
-
+                    {totalValue = total}
+                    
                     const newDamagedStock = {
                         stockCode,
                         damagedStockName,
@@ -81,7 +81,7 @@ function DamagedStockUpdate() {
 
                 }}>
 
-                    <div className="mb-3">
+<div className="mb-3">
                         <label className="form-label">Stock Code: </label>
                         <input type="text" className="form-control" value={stockCode} id="stockCode" readOnly />
                     </div>

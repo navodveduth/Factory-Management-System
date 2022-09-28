@@ -7,6 +7,52 @@ import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
 import { EmployeeDashboard, Employees, EmployeeViewAll, EmployeeUpdate, EmployeeNew } from './pages';
 import { AttendanceAndLeaveDashboard, AttendanceViewAll, AttendanceUpdate, AttendanceNew } from './pages';
 import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
+
+// minod
+
+
+
+
+
+// chanukya
+
+
+
+
+
+// navod
+
+
+
+
+
+// shafa
+
+
+
+
+
+
+// janindu
+
+
+
+
+
+
+// devinya
+
+
+
+
+
+
+// devindu
+
+
+
+
+
 import './App.css';
 
 import { useStateContext } from './contexts/ContextProvider';
@@ -85,6 +131,94 @@ const App = () => {
                 <Route path="/LeaveViewAll" element={<LeaveViewAll />} />
                 <Route path="/LeaveCreate" element={<LeaveNew />} />
                 <Route path="/LeaveUpdate/:id" element={<LeaveUpdate />} />
+
+                {/* finanace management  */}
+
+
+
+
+
+
+
+                {/* salary management  */}
+
+
+
+
+
+
+
+                {/* sales management  */}
+
+
+
+
+
+
+
+                {/* machinery management  */}
+
+
+
+
+
+
+                {/* maintenance management  */}
+
+
+
+
+
+
+
+                {/* production management  */}
+
+
+
+
+
+
+                {/* stocks management  */}
+
+
+
+
+
+
+
+                 {/* damaged stocks management  */}
+
+
+
+
+
+
+
+                 {/* transportation management  */}
+
+
+
+
+
+
+
+
+                  {/* driver management  */}
+
+
+
+
+
+
+
+                  {/* supplier management  */}
+
+
+
+
+
+
+
 
               </Routes>
             </div>
