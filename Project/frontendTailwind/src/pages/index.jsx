@@ -13,3 +13,100 @@ export { default as AttendanceAndLeaveDashboard } from './AttendanceAndLeaveDash
 export { default as LeaveNew } from './LeaveNew';
 export { default as LeaveUpdate } from './LeaveUpdate';
 export { default as LeaveViewAll } from './LeaveViewAll';
+
+
+// minod
+
+
+
+
+
+
+
+
+
+
+
+// chanukya
+
+
+
+
+
+
+
+
+
+
+
+
+// navod
+
+
+
+
+
+
+
+
+
+
+
+
+
+// shafa
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// janindu
+
+
+
+
+
+
+
+
+
+
+
+
+
+// devinya
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// devindu
+
+
+
+
+
+
+
+
+
+
+
