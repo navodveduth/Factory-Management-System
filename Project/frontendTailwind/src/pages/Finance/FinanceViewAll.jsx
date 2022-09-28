@@ -66,7 +66,7 @@ const FinanceViewAll = () => {
                   <TableData value={data.trnDesc} />
                   <TableData value={data.trnAmount} />
                   <TableData value={data.trnType} />
-                  <TableData value={data.trnRecordedDate} /> 
+                  <TableData value={new Date(data.trnRecordedDate).toISOString().split('T')[0]} /> 
 
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                     <Link to={`/FinanceUpdate/${data._id}`}>
