@@ -1,0 +1,54 @@
+.addstock {
+  background-image: url("https://thumbs.dreamstime.com/z/tools-handicraft-sewing-thread-needle-fashion-designer-studio-textile-material-scissors-cutting-fabric-clothes-machine-175888291.jpg");
+  margin-top: 0%;
+  opacity: 20%;
+  min-height:151vh;
+}
+
+.updatestock {
+  background-image: url("https://thumbs.dreamstime.com/z/tools-handicraft-sewing-thread-needle-fashion-designer-studio-textile-material-scissors-cutting-fabric-clothes-machine-175888291.jpg");
+  margin-top: 0%;
+  opacity: 20%;
+  min-height:166vh;
+}
+
+.addDamagedstock {
+  background-image: url("https://thumbs.dreamstime.com/z/tools-handicraft-sewing-thread-needle-fashion-designer-studio-textile-material-scissors-cutting-fabric-clothes-machine-175888291.jpg");
+  margin-top: 0%;
+  opacity: 20%;
+  min-height:151vh;
+}
+
+.addDamagedstock{
+  background-image: url("https://thumbs.dreamstime.com/z/tools-handicraft-sewing-thread-needle-fashion-designer-studio-textile-material-scissors-cutting-fabric-clothes-machine-175888291.jpg");
+  margin-top: 0%;
+  opacity: 20%;
+  min-height:137vh;
+}
+
+#stockform{
+  background-color: white;
+  opacity: 100%;
+  position: absolute;
+  width:1000px;
+  height: fit-content;
+  top:110px;
+  left:130px;
+  bottom:40px;
+  border-style: solid;
+  box-shadow: 2px 2px 5px 5px darkgray;
+  border-radius: 40px;
+  padding-top:20px;
+  padding-bottom: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+  border-color: darkgray;
+}
+
+#stockform h1{
+    color:black;
+}
+
+#stockform label{
+    color:black;
+}

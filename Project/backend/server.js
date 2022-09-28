@@ -13,6 +13,13 @@ import driverRouter from './routes/driver.routes.js';
 import stockRouter from './routes/stock.routes.js';
 import damagedStockRouter from './routes/damagedStock.routes.js';
 import supplierRouter from './routes/supplierDetails.route.js';
+import salesRouter from './routes/sales.routes.js';
+import employeeRouter from "./routes/employee.routes.js";
+import attendanceRouter from "./routes/attendance.routes.js";
+import payrollRouter from "./routes/payroll.routes.js";
+import leaveRouter from "./routes/leaves.routes.js";
+import salaryRouter from "./routes/salary.routes.js";
+import welfareFacilityRouter from "./routes/welfareFacility.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 8070;
@@ -29,6 +36,13 @@ app.use('/driver', driverRouter);
 app.use('/stock', stockRouter);
 app.use('/damagedStock', damagedStockRouter);
 app.use('/supplier', supplierRouter);
+app.use('/sales', salesRouter);
+app.use("/employee", employeeRouter);
+app.use("/attendance", attendanceRouter);
+app.use("/payroll", payrollRouter);
+app.use("/leave", leaveRouter);
+app.use("/salary", salaryRouter);
+app.use("/welfareFacility", welfareFacilityRouter);
 
 const URL = process.env.MONGODBURL;
 
