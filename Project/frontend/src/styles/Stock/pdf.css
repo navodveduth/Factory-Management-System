@@ -1,0 +1,20 @@
+.pdf {
+    margin-top: 10px;
+    margin-left: 80px;
+}
+
+.pdf th{
+    border: 1px solid black;
+    border-collapse: collapse;
+    min-width: 150px;
+    min-height: fit-content;
+    align-items: center;
+}
+
+.pdf td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    min-width: 150px;
+    min-height: fit-content;
+    align-items: center;
+}
