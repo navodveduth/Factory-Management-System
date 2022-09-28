@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 
 function DamagedStockView() {
     const [damagedStock, setDamagedStock] = useState([]); //damagedStock is the state variable and setDamagedStock is the function to update the state variable
+    const [searchTerm, setSearchTerm] = useState("");
 
     const getdamagedStock = async () => {  //getdamagedStock is the function to get the data from the backend
         axios.get("http://localhost:8070/damagedStock/")
@@ -40,6 +41,12 @@ function DamagedStockView() {
             <Link to={'/generateDSPDF'}>
             <button type="button" class="btn btn-secondary" style={{marginLeft:"89%"}}>Generate PDF</button>
             </Link>
+            <div class="" style={{ width: "20%", marginRight: "85%", marginTop: "5%" }}>
+                <input type="search" class="form-control rounded" placeholder="Type here ...." aria-label="Search" aria-describedby="search-addon" onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                }} />
+                {/* <button type="button" style={{marginLeft:"120%", marginTop:"-22%"}} class="btn btn-outline-secondary">search</button> */}
+            </div>
             <h1>Damaged Stock Details</h1>
             <table class="table table-striped table-hover">
                 <thead>
@@ -57,7 +64,13 @@ function DamagedStockView() {
                     </tr>
                 </thead>
                 <tbody>
-                    {damagedStock.map((data) => {
+                {damagedStock.filter((data) => {
+                        if (searchTerm == "") {
+                            return data;
+                        } else if (data.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                            return data;
+                        }
+                    }).map((data, key) => {
                         const date = new Date(data.updatedDate).toLocaleDateString();
 
                         return (
@@ -76,9 +89,33 @@ function DamagedStockView() {
                                     </Link>
                                 </td>
                                 <td>
-                                 <button type="button" class="btn btn-danger"
-                                 onClick={ () => deleteStock(data._id)  
-                                 }>Delete</button>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        Delete
+                                    </button>
+
+                                    {/* {<!-- Modal -->} */}
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Are you sure to delete?</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    You are about to delete a stock item. Once deleted it cannot be undone!
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                                        onClick={
+                                                            
+                                                            () => deleteStock(data._id)
+                                                           
+                                                        }>Confirm</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     
                                 </td>
                             </tr>
