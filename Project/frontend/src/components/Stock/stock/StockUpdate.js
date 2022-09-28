@@ -1,7 +1,7 @@
 import { useNavigate, useParams, Link } from "react-router-dom"
 import { useState, useEffect } from 'react'
 import axios from "axios"
-// import "../../styles/Shafa/StockForms.css";
+import "../../styles/Stock/StockForms.css";
 
 function StockUpdate() {
 
@@ -35,6 +35,7 @@ function StockUpdate() {
     }
 
     useEffect(() => { getStock() }, []);
+
 
     return (
         <>
