@@ -11,6 +11,7 @@ export default function UpdateOrder(){
     const [qty,setQty] = useState("");
     const [total,setTotal] = useState("");
 
+
   //  total =  matCost * qty;
     const [overhead, setOverhead] = useState("");
 
@@ -83,29 +84,29 @@ export default function UpdateOrder(){
 
                 <div className="mb-3">
                     <label for="address">Enter the Material Cost</label>
-                    <input type="Number" className="form-control" id="" placeholder={matCost} onChange={(e)=>{
-                        setMatCost(parseFloat(e.target.value));
+                    <input type="Number" className="form-control" id="" value={matCost} onChange={(e)=>{
+                        setMatCost(e.target.value);
                     }}/>
                 </div>
                 
                 <div className="mb-3">
                     <label for="address">Enter the Quantity</label>
-                    <input type="Number" className="form-control" id="address" placeholder={qty} onChange={(e)=>{
-                        setQty(parseInt(e.target.value));
+                    <input type="Number" className="form-control" id="address" value={qty} onChange={(e)=>{
+                        setQty(e.target.value);
                     }}/>
                 </div>
                                 
                 <div className="mb-3">
                     <label for="address">Total Material Cost</label>
-                    <input type="Number" className="form-control" id="address" placeholder={matCost * qty} onChange={(e)=>{ 
-                        setTotal(parseFloat(e.target.value));
+                    <input type="Number" className="form-control" id="address" value={matCost * qty} onChange={(e)=>{ 
+                        setTotal(e.target.value);
                     }} />
                 </div>
 
                 <div className="mb-3">
                     <label for="address">Total overhead Cost</label>
-                    <input type="Number" className="form-control" id="address" placeholder={overhead}  onChange={(e)=>{
-                        setOverhead(parseFloat(e.target.value)); 
+                    <input type="Number" className="form-control" id="address" value={overhead}  onChange={(e)=>{
+                        setOverhead(e.target.value); 
                     }} />
                 </div>
 
