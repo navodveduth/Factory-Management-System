@@ -120,19 +120,19 @@ const Sidebar = () => {
 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
                 
-                  <NavLink to="/Employee" onClick={handleCloseSideBar}
+                  <NavLink to="/SalesDashboard" onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
                       backgroundColor: isActive ? currentColor : '',
                     })}
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}
                   >
                     <MdOutlineCancel /> {/*  icon  */}
-                    <span className="capitalize ">Sales 1</span> {/*  link name  */}
+                    <span className="capitalize ">Sales Management</span> {/*  link name  */}
                   </NavLink>
                 
                 {/*  links ---------------------------------------------------------------------------------- links  */}
 
-                  <NavLink to="/Attendace and leaves" onClick={handleCloseSideBar}
+                  <NavLink to="/SalesDashboard" onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
                       backgroundColor: isActive ? currentColor : '',
                     })}
