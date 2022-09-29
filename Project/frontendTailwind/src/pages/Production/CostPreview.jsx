@@ -34,7 +34,10 @@ export default function PreviewOrder(){
         return(
             <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
             <Header category="Table" title="Production Cost" />
-            <button onClick={createPDF} type="button" style={{margin: 10}} className="font-bold py-1 px-4 rounded-full mx-3 text-white">Download Report</button>
+            {/* <div className="w-full h-5"> */}
+                <button onClick={createPDF} type="button"  className="font-bold py-1 px-4 rounded-full m-3 text-white absolute top-40 right-20 hover:bg-slate-700 bg-slate-500" >Download Report</button>
+            {/* </div> */}
+    
             <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
             <table className="w-full rounded-lg">
                 <thead>

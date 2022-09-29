@@ -29,7 +29,7 @@ function SalaryCreateForm() {
                       .then((res)=>{
                           alert("Data saved successfully");
                              
-                      navigate('/SalaryView');
+                      navigate('/SalaryViewAll');
                       })
                       .catch((err)=>{
                           console.log(err);
