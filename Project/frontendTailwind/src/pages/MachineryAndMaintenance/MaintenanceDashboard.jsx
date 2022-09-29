@@ -11,6 +11,29 @@ import { useStateContext } from '../../contexts/ContextProvider';
 const MaintenanceDashboard = () => {
   const { currentColor, currentMode } = useStateContext();
 
+  const [maintainence, setMaintainence] = useState([]);
+
+  const getMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+    axios.get("http://localhost:8070/maintainence/")
+    .then((res) => { 
+        setMaintainence (res.data); //setMaintainence  is used to update the state variable
+      
+    })
+    .catch((err) => {
+        alert(err.message);
+    })
+}
+
+useEffect(() => { //useEffect is used to call the function getMaintainence 
+    getMaintainence ();
+}, [])
+
+const maintCount = maintainence.length;
+const maintprog = maintainence.filter((maint) => maint.status === "In progress").length;
+const maintcomp = maintainence.filter((maint) => maint.status === "Completed").length;
+
+
+
   return (
     <div className="mt-5">
 
@@ -23,19 +46,18 @@ const MaintenanceDashboard = () => {
           <Link to="/MaintenanceCreate">
             <DashTopButton value="Add new Maintenance" />
           </Link>
-          {/* <Link to="/MaintainenceTask">
+          <Link to="/MaintainenceTask">
             <DashTopButton value="Tasks For today" />
-          </Link> */}
+          </Link>
         </div>
       </div>
 
       <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-          <DashTopBox icon={<GrVmMaintenance />} label="Total Maintenance" data="100" />
-          <DashTopBox icon={<GrVmMaintenance />} label="Total Maintenance" data="100" />
-          <DashTopBox icon={<GrVmMaintenance />} label="Total Maintenance" data="100" />
-          <DashTopBox icon={<GrVmMaintenance />} label="Total Maintenance" data="100" />       
+          <DashTopBox icon={<GrVmMaintenance />} label="Maintenances records" data={maintCount} />
+          <DashTopBox icon={<GrVmMaintenance />} label="Completed Maintenances" data={maintcomp} />
+          <DashTopBox icon={<GrVmMaintenance />} label="Maintenances in progress" data={maintprog} />      
         </div>
       </div>
     </div>
