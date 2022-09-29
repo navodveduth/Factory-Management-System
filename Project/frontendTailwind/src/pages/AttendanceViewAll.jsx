@@ -10,6 +10,7 @@ const AttendanceViewAll = () => {
   const { currentColor } = useStateContext();
 
   const [attendance, setAttendance] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");  //add this state to save filter word
 
   const getAttendance = async () => {
     axios
@@ -41,6 +42,21 @@ const AttendanceViewAll = () => {
     <div>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
         <Header category="Table" title="Attendance" />
+
+        <div className=" flex items-center mb-5 ">
+          <div>
+            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }} />
+          </div>
+          <div className="mr-0 ml-auto">
+            <Link to={"/AttendanceReport"}> {/* change this link your preview page */}
+              <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+            </Link>
+          </div>
+        </div>
+
         <div className="block w-full overflow-x-auto rounded-lg">
           <table className="w-full rounded-lg">
             <thead>
@@ -53,11 +69,26 @@ const AttendanceViewAll = () => {
                 <TableHeader value="Manage" />
               </tr>
             </thead>
+
             <tbody>
-              {attendance.map((data) => (
+            {attendance.filter((data) => {
+              const date = new Date(data.employeeInTime).toISOString().split('T')[0];
+              const inTime = new Date(data.employeeInTime).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+              const outTime = new Date(data.employeeOutTime).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+                if(searchTerm == ""){
+                  return data;
+                }else if((data.employeeNumber.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
+                  (date.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                  (inTime.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                  (outTime.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                  (data.attendanceStatus.toLowerCase().includes(searchTerm.toLowerCase()))) 
+                {
+                  return data;
+                      }
+              }).map((data) => (
                 <tr className="text-sm h-10 border dark:border-slate-600">
                   <TableData value={data.employeeNumber} />
-                  <TableData value={new Date(data.attendanceDate).toISOString().split('T')[0]} />
+                  <TableData value={new Date(data.employeeInTime).toISOString().split('T')[0]} />
                   <TableData value={new Date(data.employeeInTime).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })} />
                   <TableData value={new Date(data.employeeOutTime).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })} />
                   <TableData value={data.attendanceStatus} />
