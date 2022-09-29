@@ -1,0 +1,62 @@
+import React, { useState, useEffect }from 'react'
+import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective, Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip } from '@syncfusion/ej2-react-charts';
+import axios from 'axios';
+import Header from './Header';
+
+const SalesChart = () => {
+    const [sales, setSales] = useState([]);
+
+    const getSales = async () => {
+      axios
+        .get('http://localhost:8070/sales/')
+        .then((res) => {
+          setSales(res.data);
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    };
+  
+    useEffect(() => {
+      getSales();
+    }, []);
+  
+    const salesCount = sales.length;
+    const finishedOrders= sales.filter((sale) => sale.status === 'Finished').length;
+    const ongoingOrders= sales.filter((sale) => sale.status === 'Pending').length;
+    const newOrders= sales.filter((sale) => sale.status === 'Placed').length;
+
+  return (
+    <div>
+        <AccumulationChartComponent title='Invoices' legendSettings={{position:"Bottom"}} tooltip={{enable:true}}>
+            <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]} />
+            <AccumulationSeriesCollectionDirective>
+                <AccumulationSeriesDirective 
+                    type="Pie"
+                    innerRadius="50%"
+                    dataSource={
+                        [
+                            { x: 'Finished', y: (newOrders/salesCount*100).toPrecision(4), text: (newOrders/salesCount*100).toPrecision(2) + '%'},
+                            { x: 'Pending', y: (ongoingOrders/salesCount*100).toPrecision(4), text: (ongoingOrders/salesCount*100).toPrecision(2) + '%'},
+                            { x: 'Placed', y: (finishedOrders/salesCount*100).toPrecision(4), text: (finishedOrders/salesCount*100).toPrecision(2) + '%'}
+                            
+                        ]
+                    }
+                    xName="x"
+                    yName="y"
+                    dataLabel={{
+                        visible: true,
+                        position: 'Outside',
+                        name: 'text',
+                    }}
+                    >
+                    
+                </AccumulationSeriesDirective>
+            </AccumulationSeriesCollectionDirective>
+
+        </AccumulationChartComponent>
+    </div>
+  )
+}
+
+export default SalesChart
