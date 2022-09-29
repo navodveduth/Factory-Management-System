@@ -38,6 +38,7 @@ import {
   MachineryNew,
   MachineryUpdate,
   MachineryViewAll,
+  MachineryReport,
 } from './pages/MachineryAndMaintenance';
 import {
   MaintenanceDashboard,
@@ -45,6 +46,7 @@ import {
   MaintenanceUpdate,
   MaintenanceViewAll,
   MaintainenceTask,
+  MaintainenceReport,
 } from './pages/MachineryAndMaintenance';
 
 // navod
@@ -231,7 +233,7 @@ const App = () => {
                   path="/MachineryUpdate/:id"
                   element={<MachineryUpdate />}
                 />
-
+                <Route path="/MachineryReport/" element={<MachineryReport />} />
                 {/* maintenance management  */}
                 <Route
                   path="/MaintenanceDashboard"
@@ -247,6 +249,7 @@ const App = () => {
                   element={<MaintenanceUpdate />}
                 />
                 <Route path="/MaintainenceTask/" element={<MaintainenceTask />} />
+                <Route path="/MaintainenceReport" element={<MaintainenceReport />} />
 
                 {/* production management  */}
                 <Route path="/vieworders" element={<OrderViewAll />} />
