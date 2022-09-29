@@ -9,6 +9,7 @@ import TableHeader from '../../components/Table/TableHeader';
 const MaintenanceViewAll = () => {
     const [maintainence, setMaintainence] = useState([]);
     const { currentColor } = useStateContext();
+    const [searchTerm, setSearchTerm] = useState("");
 
 
   var TotalCost = 0;
@@ -46,6 +47,24 @@ const MaintenanceViewAll = () => {
     <div>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
         <Header category="Table" title="Maintenance Details" />
+
+        <div className=" flex items-center mb-5 ">
+          <div>
+            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }} />
+          </div>
+          <div className="mr-0 ml-auto">
+            <Link to={"/MaintainenceReport"}> {/* change this link your preview page */}
+              <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+            </Link>
+          </div>
+
+          </div>
+
+
+
         <div className="block w-full overflow-x-auto rounded-lg">
           <table className="w-full rounded-lg" >
             <thead>
@@ -61,14 +80,27 @@ const MaintenanceViewAll = () => {
               </tr>
             </thead>
             <tbody>
-              {maintainence.map((data) => (
+              {maintainence.filter((data) => {
+                    if(searchTerm == ""){
+                        return data;
+                    }else if((data.Type.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                      (data.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                      (data.Description.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                      (data.status.toLowerCase().includes(searchTerm.toLowerCase())))
+                      
+                      {
+                      return data;
+                      }
+                  }).map((data, key) => {
+                  
+                  return (
 
                     // const LMdate = new Date(data.lastMaintainedDate).toLocaleDateString();
                     // const NSdate = new Date(data.nextServiceDate).toLocaleDateString();
                 TotalCost = TotalCost + data.others,
                 
 
-                <tr className="text-sm h-10 border dark:border-slate-600">
+                <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
 
 
                   <TableData value={data.Type} />
@@ -100,7 +132,8 @@ const MaintenanceViewAll = () => {
                     </button>
                   </td>
                 </tr>
-                    ))}
+                    )
+                    })}
             </tbody>
           </table><br></br><br></br>
           <span className="text-xs font-semibold inline-block py-2 px-2 uppercase rounded text-red-600 bg-red-200 uppercase last:mr-0 mr-1">
