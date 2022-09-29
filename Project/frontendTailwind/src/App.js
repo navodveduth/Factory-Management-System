@@ -57,7 +57,7 @@ import {
   DriverUpdate,
 } from './pages';
 // shafa
-import {StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockUtilisation} from './pages';
+import {StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockUtilisation, StockUtilUpdate} from './pages';
 import {DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF} from './pages';
 
 
@@ -79,6 +79,7 @@ import {
   SupplierViewAll,
   SupplierUpdate,
   SupplierNew,
+
 } from './pages';
 
 // devindu
@@ -237,7 +238,7 @@ const App = () => {
                   path="/MaintenanceUpdate/:id"
                   element={<MaintenanceUpdate />}
                 />
-                {/* <Route path="/MaintainenceTask/" element={<MaintainenceTask />} /> */}
+                <Route path="/MaintainenceTask/" element={<MaintainenceTask />} />
 
                 {/* production management  */}
                 <Route path="/vieworders" element={<OrderViewAll />} />
@@ -253,6 +254,9 @@ const App = () => {
                 <Route path="/StockUpdate/:id" element={<StockUpdate />} />
                 <Route path="/generatePDF" element={<StockPDF/>} />
                 <Route path ="/StockUtilisation" element={<StockUtilisation/>} />
+                <Route path ="/StockUtilUpdate" element={<StockUtilUpdate/>} />
+
+
 
                  {/* damaged stocks management  */}
                 <Route path ="/DamagedStockDashboard" element={<DamagedStockDashboard/>} />
@@ -290,6 +294,10 @@ const App = () => {
                 <Route path="/SupplierViewAll" element={<SupplierViewAll />} />
                 <Route path="/SupplierCreate" element={<SupplierNew />} />
                 <Route path="/SupplierUpdate/:id" element={<SupplierUpdate />}/>
+
+                <Route path="/SupplierRecordsDashboard" element={<SupplierRecordsDashboard />}/>
+
+
               
               </Routes>
             </div>

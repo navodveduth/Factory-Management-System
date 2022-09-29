@@ -112,6 +112,7 @@ function MachineryCreateForm() {
                             onChange={(e) =>{
                                 setOthers(e.target.value);
                             }}>
+                                <option selected>Choose...</option>
                                 <option value="Available">Available</option>
                                 <option value="Unavailable">Unavailable</option>
                             </select>
