@@ -71,7 +71,7 @@ function StockAdd() {
 
                     <div className="mb-3">
                         <label for="category" className="form-label">Category: </label>
-                        < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"  id="category" required onChange={(e) => {
+                        < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"  id="category" title="Please choose one of the options" required onChange={(e) => {
                             setStockCategory(e.target.value);
                         }}>
                             <option selected  >Select option...</option>
@@ -92,7 +92,7 @@ function StockAdd() {
                     <div className="mb-3">
                         <label for="quantity" className="form-label">Quantity: </label>
                         <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" placeholder="Enter quantity..." min="1"
-                            required onChange={(e) => {
+                            title="If there is no stock please input 0" required onChange={(e) => {
                                 setQuantity(e.target.value);
                             }} />
                     </div>
@@ -100,7 +100,7 @@ function StockAdd() {
                     <div className="mb-3">
                         <label for="unitPrice" className="form-label">Unit price: </label>
                         <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice" placeholder='Enter price per unit...'
-                            min="0" onChange={(e) => {
+                            min="0" title="If the unit price is not avilable please enter 0" step="0.01" onChange={(e) => {
                                 setUnitPrice(e.target.value);
                             }} />
                     </div>
@@ -115,7 +115,7 @@ function StockAdd() {
 
                     <div className="mb-3">
                         <label for="totalValue" className="form-label">Total Value: </label>
-                        <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="totalCost" value={quantity * unitPrice} readOnly />
+                        <input type="number" step="0.01" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="totalCost" value={quantity * unitPrice} readOnly />
                     </div>
 
                     <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Add new stock</button>

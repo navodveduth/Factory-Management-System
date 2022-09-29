@@ -49,6 +49,7 @@ export { default as StockUpdate } from './Stock/StockUpdate';
 export { default as StockPDF } from './Stock/StockPDF';
 export { default as StockUtilisation } from './Stock/StockUtilisation';
 export { default as StockUtilUpdate } from './Stock/StockUtilUpdate';
+export { default as StockUtilPDF} from './Stock/StockUtilPDF';
 
 export { default as DamagedStockDashboard } from './Stock/DamagedStockDashboard';
 export { default as DamagedStockView } from './Stock/DamagedStockView';
@@ -70,7 +71,10 @@ export { default as SupplierDashboard } from './SupplierDashboard';
 export { default as SupplierNew } from './SupplierNew';
 export { default as SupplierUpdate } from './SupplierUpdate';
 export { default as SupplierViewAll } from './SupplierViewAll';
+export {default as SupplierDetailsPreview} from './SupplierDetailsPreview';
+export { default as SupplierRecordsDashboard} from './SupplierRecordsDashboard';
 
-export { default as SupplierRecordsDashboard } from './SupplierRecordsDashboard';
+
+
 
 // devindu
