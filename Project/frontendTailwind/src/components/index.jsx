@@ -13,4 +13,7 @@ export { default as EmployeePieChart } from './EmployeePieChart';
 export { default as MachineryPieChart} from './MachineryPieChart';
 export { default as MaintainChart} from './MaintainChart';
 export {default as ProductionPieChart} from './ProductionPieChart';
+export { default as TransactionPieChart} from './TransactionPieChart';
+
+
 

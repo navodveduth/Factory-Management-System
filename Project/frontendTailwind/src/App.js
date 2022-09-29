@@ -26,6 +26,7 @@ import {
   FinanceDashboard,
   FinanceViewAll,
   FinanceUpdate,
+  FinancePreview,
 } from './pages';
 import { SalaryDashboard, SalaryViewAll, SalaryNew, SalaryUpdate } from './pages';
 
@@ -204,6 +205,7 @@ const App = () => {
                 <Route path="/FinanceNew" element={<FinanceNew />} />
                 <Route path="/FinanceViewAll" element={<FinanceViewAll />} />
                 <Route path="/FinanceUpdate/:id" element={<FinanceUpdate />} />
+                <Route path="/FinancePreview/" element={<FinancePreview />} />
 
                 {/* salary management  */}
 
