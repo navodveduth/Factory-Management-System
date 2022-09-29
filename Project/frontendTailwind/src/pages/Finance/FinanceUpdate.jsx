@@ -59,8 +59,7 @@ function TransactionUpdate() {
                             })
                             .catch((err)=>{
                                 console.log(err);
-                                alert("Data updated successfully");
-                            navigate('/FinanceViewAll');
+                                alert("Error 404");
                             })
                             
                     }}>
