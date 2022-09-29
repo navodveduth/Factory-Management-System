@@ -35,12 +35,12 @@ const TransportNew = () => {
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
       <Header category="Form" title="New Transport" />
-      <div className=" flex items-center justify-center ">
+      <div className="flex items-center justify-center ">
         <form
           onSubmit={async (e) => {
             e.preventDefault();
 
-            const newEmployee = {
+            const newTransport = {
               type,
               destinationAddress,
               date,
@@ -52,7 +52,7 @@ const TransportNew = () => {
             };
 
             await axios
-              .post('http://localhost:8070/transport/create', newEmployee)
+              .post('http://localhost:8070/transport/create', newTransport)
               .then((res) => {
                 alert('Transport Details Added');
                 navigate('/TransportViewAll');
@@ -105,6 +105,19 @@ const TransportNew = () => {
               }}
             />
           </div>
+
+          <div className="mb-3">
+            <label className="form-label">Time Of Dispatch</label>
+            <input
+              type="time"
+              className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+              id="time"
+              required
+              onChange={(e) => {
+                setTimeOfDispatch(e.target.value);
+              }}
+            />
+          </div>
           <div className="mb-3">
             <label className="form-label">Distance (Km)</label>
             <input
@@ -115,19 +128,7 @@ const TransportNew = () => {
               min="0"
               onChange={(e) => {
                 setDistance(e.target.value);
-                setTransportCost((e.target.value * 100 + 250).toFixed(2));
-              }}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Time Of Dispatch</label>
-            <input
-              type="time"
-              className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-              id="time"
-              required
-              onChange={(e) => {
-                setTimeOfDispatch(e.target.value);
+                setTransportCost(e.target.value * 100 + 250);
               }}
             />
           </div>
@@ -142,9 +143,10 @@ const TransportNew = () => {
                 setDriver(e.target.value);
               }}
             >
+              <option selected>Select...</option>
               {drivers.map((item, index) => (
-                <option value={item.firstName} key={index}>
-                  {item.firstName}
+                <option value={item.fullName} key={index}>
+                  {item.fullName}
                 </option>
               ))}
             </select>
