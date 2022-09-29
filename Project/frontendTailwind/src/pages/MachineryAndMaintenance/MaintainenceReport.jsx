@@ -27,10 +27,11 @@ const MaintainenceReport = () => {
     }, [])
     
     const createPDF = () => {
+        const date = new Date(Date.now()).toISOString().split('T')[0];
         const pdf = new jsPDF("landscape", "px", "a1",false);
         const data = document.querySelector("#tableContainer");
         pdf.html(data).then(() => {
-            pdf.save("Maintenance Report.pdf");
+            pdf.save("MaintenanceReport-" +date + ".pdf");
            });
     };
 
