@@ -5,19 +5,19 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
 import {
-  EmployeeDashboard,
+  EmployeeDashboard,EmployeeReport,
   Employees,
   EmployeeViewAll,
   EmployeeUpdate,
   EmployeeNew,
 } from './pages';
 import {
-  AttendanceAndLeaveDashboard,
+  AttendanceAndLeaveDashboard,AttendanceReport,
   AttendanceViewAll,
   AttendanceUpdate,
   AttendanceNew,
 } from './pages';
-import { LeaveViewAll, LeaveUpdate, LeaveNew } from './pages';
+import { LeaveViewAll, LeaveUpdate, LeaveNew,LeaveReport } from './pages';
 
 // minod
 
@@ -175,7 +175,8 @@ const App = () => {
                   path="/EmployeeUpdate/:id"
                   element={<EmployeeUpdate />}
                 />
-
+                <Route path="/EmployeeReport" element={<EmployeeReport />} />
+                {/* attendance and leave management  */}
                 {/* attendance management  */}
                 <Route
                   path="/AttendanceAndLeaveDashboard"
@@ -190,12 +191,12 @@ const App = () => {
                   path="/AttendanceUpdate/:id"
                   element={<AttendanceUpdate />}
                 />
-
+                <Route path="/AttendanceReport" element={<AttendanceReport />} />
                 {/* leave management  */}
                 <Route path="/LeaveViewAll" element={<LeaveViewAll />} />
                 <Route path="/LeaveCreate" element={<LeaveNew />} />
                 <Route path="/LeaveUpdate/:id" element={<LeaveUpdate />} />
-
+                <Route path="/LeaveReport" element={<LeaveReport />} />
                 {/* finanace management  */}
 
                 <Route
