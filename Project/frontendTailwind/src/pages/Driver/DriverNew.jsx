@@ -8,8 +8,7 @@ const DriverView = () => {
   const navigate = useNavigate(); // This is a hook that allows us to navigate to a different route
 
   const [nic, setNic] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [drivingLicenseNo, setDrivingLicenseNo] = useState('');
   const [contactNo, setContactNo] = useState('');
   const [vehicleNo, setVehicleNo] = useState('');
@@ -25,8 +24,7 @@ const DriverView = () => {
 
             const newDriver = {
               nic,
-              firstName,
-              lastName,
+              fullName,
               drivingLicenseNo,
               contactNo,
               vehicleNo,
@@ -51,6 +49,9 @@ const DriverView = () => {
               type="text"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
               id="nic"
+              placeholder="Enter nic number..."
+              // pattern="[0-9]{9}[vVxX] | [0-9]{12}"
+              title="You entered an invalid NIC number format which must be 9 digits and a letter or 12 digits"
               required
               onChange={(e) => {
                 setNic(e.target.value);
@@ -58,35 +59,26 @@ const DriverView = () => {
             />
           </div>
           <div className="mb-3">
-            <label className="form-label">First Name</label>
+            <label className="form-label">Full Name</label>
             <input
               type="text"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-              id="firstName"
+              id="fullName"
+              placeholder="Enter full name..."
               required
               onChange={(e) => {
-                setFirstName(e.target.value);
+                setFullName(e.target.value);
               }}
             />
           </div>
-          <div className="mb-3">
-            <label className="form-label">Last Name</label>
-            <input
-              type="text"
-              className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-              id="lastName"
-              required
-              onChange={(e) => {
-                setLastName(e.target.value);
-              }}
-            />
-          </div>
+
           <div className="mb-3">
             <label className="form-label">Driving License Number</label>
             <input
               type="text"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
               id="drivingLicenseNo"
+              placeholder="Enter driving license..."
               required
               onChange={(e) => {
                 setDrivingLicenseNo(e.target.value);
@@ -96,9 +88,12 @@ const DriverView = () => {
           <div className="mb-3">
             <label className="form-label">Contact Number</label>
             <input
-              type="number"
+              type="tel"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
               id="contactNo"
+              placeholder="Enter contact number..."
+              pattern="[0-9]{10}"
+              title="You entered an invalid contact number format which must be 10 digits"
               required
               onChange={(e) => {
                 setContactNo(e.target.value);
@@ -111,6 +106,7 @@ const DriverView = () => {
               type="text"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
               id="vehicleNo"
+              placeholder="Enter vehicle number..."
               required
               onChange={(e) => {
                 setVehicleNo(e.target.value);
@@ -123,6 +119,7 @@ const DriverView = () => {
               type="text"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
               id="vehicleModel"
+              placeholder="Enter vehicle model..."
               required
               onChange={(e) => {
                 setVehicleModel(e.target.value);

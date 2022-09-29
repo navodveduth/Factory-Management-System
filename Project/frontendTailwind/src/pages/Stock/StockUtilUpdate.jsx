@@ -36,7 +36,7 @@ function StockUtilUpdate() {
     }
 
     useEffect(() => { getStock() }, []);
-
+    var date = new Date().toISOString().split('T')[0];
 
 
     return (
@@ -76,12 +76,12 @@ function StockUtilUpdate() {
                             alert("Data updated successfully");
                             console.log(newStock);
                             //navigate to the stock view page
-                            navigate('/StockView');
+                            navigate('/StockUtilisation');
                         })
                         .catch((err) => {
                             console.log(err);
                             alert("ERROR: Could not update stock");
-                            navigate('/StockUpdate');
+                            navigate('/StockUtilUpdate');
                         })
 
                 }}>
@@ -104,14 +104,14 @@ function StockUtilUpdate() {
 
                     <div className="mb-3">
                         <label htmlFor="date" className="form-label">Date: </label>
-                        <input type="date" value={lastUpdated} className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date" required onChange={(e) => {
+                        <input type="date" min="2010-01-01" max={date} value={lastUpdated} className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date" required onChange={(e) => {
                             setLastUpdated(e.target.value);
                         }} />
 
                     </div>
                     <div className="mb-3">
                         <label htmlFor="quantity" className="form-label">Quantity: </label>
-                        <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" value={quantity} min="1"
+                        <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" value={quantity} min="0"
                             onChange={(e) => {
                                 setQuantity(e.target.value);
                             }} />
@@ -125,26 +125,26 @@ function StockUtilUpdate() {
                             }} />
                     </div>
 
-                    <div className="mb-3">
+                    {/* <div className="mb-3">
                         <label htmlFor="unitPrice" className="form-label">Unit price: </label>
                         <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice" value={unitPrice}
                             onChange={(e) => {
                                 setUnitPrice(e.target.value);
                             }} />
-                    </div>
+                    </div> */}
 
-                    <div className="mb-3">
+                    {/* <div className="mb-3">
                         <label htmlFor="supplier" className="form-label">Supplier: </label>
                         <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white
                          dark:text-black"  id="supplier" value={supplier}
                             readOnly />
-                    </div>
+                    </div> */}
 
-                    <div className="mb-3">
+                    {/* <div className="mb-3">
                         <label htmlFor="totalValue" className="form-label">Total Value: </label>
                         <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white
                          dark:text-black" value={quantity * unitPrice} id="totalValue" readOnly />
-                    </div>
+                    </div> */}
 
                     <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Submit</button>
                 </form>

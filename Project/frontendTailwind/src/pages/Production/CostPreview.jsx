@@ -24,7 +24,7 @@ export default function PreviewOrder(){
         })
 
         const createPDF = () => {
-            const pdf = new jsPDF("landscape", "px", "a1",false);
+            const pdf = new jsPDF("landscape", "px", "B2",false);
             const data = document.querySelector("#tableContainer");
             pdf.html(data).then(() => {
                 pdf.save("orders.pdf");
@@ -43,7 +43,7 @@ export default function PreviewOrder(){
                 <thead>
                     <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                     <TableHeader value ="Invoice No"></TableHeader>
-                    <TableHeader value ="Description"></TableHeader>
+                    <TableHeader value ="Product"></TableHeader>
                     <TableHeader value ="Date"></TableHeader>
                     <TableHeader value ="Material Cost"></TableHeader>
                     <TableHeader value ="Quantity"></TableHeader>
@@ -59,11 +59,11 @@ export default function PreviewOrder(){
                                 <TableData value={data.invoiceNo}/>
                                 <TableData value={data.orderName}/>
                                 <TableData value={data.costDate}/>
-                                <TableData value={data.materialCost}/>
+                                <TableData value={"Rs." + data.materialCost}/>
                                 <TableData value={data.unitQty}/>
-                                <TableData value={data.totalMatCost}/>
-                                <TableData value={data.overHeadCost}/>
-                                <TableData value={data.totalCost}/>
+                                <TableData value={"Rs." + data.totalMatCost}/>
+                                <TableData value={"Rs." + data.overHeadCost}/>
+                                <TableData value={"Rs." + data.totalCost}/>
                             </tr>
                         )
                     })}
