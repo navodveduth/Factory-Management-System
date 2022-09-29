@@ -51,12 +51,12 @@ const TransportViewAll = () => {
                 <TableHeader value="Type" />
                 <TableHeader value="Destination Address" />
                 <TableHeader value="Date" />
-                <TableHeader value="Distance (Km)" />
                 <TableHeader value="Time" />
-                <TableHeader value="Transport Cost (Rs.)" />
-                <TableHeader value="Status" />
-                <TableHeader value="Description" />
+                <TableHeader value="Distance" />
+                <TableHeader value="Transport Cost" />
                 <TableHeader value="Driver" />
+                <TableHeader value="Description" />
+                <TableHeader value="Status" />
                 <TableHeader value="Manage" />
               </tr>
             </thead>
@@ -69,12 +69,12 @@ const TransportViewAll = () => {
                   <TableData value={data.type} />
                   <TableData value={data.destinationAddress} />
                   <TableData value={data.date.substring(0, 10)} />
-                  <TableData value={data.distance} />
                   <TableData value={data.timeOfDispatch} />
-                  <TableData value={(data.distance * 1.5 + 50).toFixed(2)} />
-                  <TableData value={data.status} />
+                  <TableData value={`${data.distance} km`} />
+                  <TableData value={`Rs. ${data.transportCost.toFixed(2)}`} />
                   <TableData value={data.driver} />
                   <TableData value={data.description} />
+                  <TableData value={data.status} />
 
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                     <Link to={`/transportUpdate/${data._id}`}>
