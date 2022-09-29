@@ -19,6 +19,7 @@ export { default as FinanceDashboard } from './Finance/FinanceDashboard';
 export { default as FinanceNew } from './Finance/FinanceNew';
 export { default as FinanceViewAll } from './Finance/FinanceViewAll';
 export { default as FinanceUpdate } from './Finance/FinanceUpdate';
+export { default as FinancePreview} from "./Finance/FinancePreview";
 
 export { default as SalaryDashboard } from './Finance/SalaryDashboard';
 export { default as SalaryViewAll } from './Finance/SalaryViewAll';
