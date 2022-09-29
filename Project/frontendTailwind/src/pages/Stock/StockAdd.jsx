@@ -17,7 +17,8 @@ function StockAdd() {
     const [supplier, setSupplier] = useState('');
     var [totalValue, setTotalValue] = useState('');
 
-
+    //gets the current date
+    var date = new Date().toISOString().split('T')[0];
 
     return (
         <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
@@ -54,8 +55,8 @@ function StockAdd() {
 
                     <div className="mb-3">
                         <label for="stockCode" className="form-label">Stock Code: </label>
-                        <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="code" placeholder="Enter stock code..." pattern="[A-Z][0-9]{3,7}"
-                            required onChange={(e) => {
+                        <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="code" placeholder="Enter stock code..." pattern="[A-Z]{1}[0-9]{3,7}"
+                           title="The code needs to start with one uppercase letter, atleast 3 digits and should not exceed 8 characters" required onChange={(e) => {
                                 setStockCode(e.target.value);
                             }} />
                     </div>
@@ -79,10 +80,11 @@ function StockAdd() {
                             <option value="Finished goods">Finished goods</option>
                         </select>
                     </div>
+                    {/* max uses the above date variable and sets the max date to select from*/}
                     <div className="mb-3">
                         <label for="date" className="form-label">Date: </label>
                         <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date"
-                            required onChange={(e) => {
+                            min="2010-01-01" max={date} required onChange={(e) => {
                                 setLastUpdated(e.target.value);
                             }} />
                     </div>
