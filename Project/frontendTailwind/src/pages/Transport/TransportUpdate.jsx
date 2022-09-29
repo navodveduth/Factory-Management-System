@@ -135,6 +135,7 @@ const TransportUpdate = () => {
               min="0"
               onChange={(e) => {
                 setDistance(e.target.value);
+                setTransportCost(e.target.value * 100 + 250);
               }}
             />
           </div>
@@ -163,8 +164,8 @@ const TransportUpdate = () => {
               }}
             >
               {drivers.map((item, index) => (
-                <option value={item.firstName} key={index}>
-                  {item.firstName}
+                <option value={item.fullName} key={index}>
+                  {item.fullName}
                 </option>
               ))}
             </select>
