@@ -24,10 +24,11 @@ const TransportReport = () => {
   }, []);
 
   const createPDF = () => {
+    const date = new Date(Date.now()).toISOString().split('T')[0];
     const pdf = new jsPDF('landscape', 'px', 'a1', false);
     const data = document.querySelector('#tableContainer');
     pdf.html(data).then(() => {
-      pdf.save('Transportation Report.pdf');
+      pdf.save(`Transportation Report-${date}.pdf`);
     });
   };
 
@@ -43,7 +44,7 @@ const TransportReport = () => {
               type="button"
               className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500"
             >
-              Generate Report
+              Download Report
             </button>
           </div>
         </div>
