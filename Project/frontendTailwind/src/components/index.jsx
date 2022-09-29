@@ -12,4 +12,5 @@ export { default as DashTopButton } from './DashTopButton';
 export { default as EmployeePieChart } from './EmployeePieChart';
 export { default as MachineryPieChart} from './MachineryPieChart';
 export { default as MaintainChart} from './MaintainChart';
+export {default as ProductionPieChart} from './ProductionPieChart';
 
