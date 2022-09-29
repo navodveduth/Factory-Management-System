@@ -21,6 +21,9 @@ export { default as FinanceViewAll } from './Finance/FinanceViewAll';
 export { default as FinanceUpdate } from './Finance/FinanceUpdate';
 
 export { default as SalaryDashboard } from './Finance/SalaryDashboard';
+export { default as SalaryViewAll } from './Finance/SalaryViewAll';
+export { default as SalaryNew } from './Finance/SalaryNew';
+export { default as SalaryUpdate } from './Finance/SalaryUpdate';
 
 // chanukya
 
