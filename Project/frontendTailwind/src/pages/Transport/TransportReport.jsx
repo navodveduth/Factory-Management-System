@@ -24,10 +24,11 @@ const TransportReport = () => {
   }, []);
 
   const createPDF = () => {
+    const date = new Date(Date.now()).toISOString().split.T[0];
     const pdf = new jsPDF('landscape', 'px', 'a1', false);
     const data = document.querySelector('#tableContainer');
     pdf.html(data).then(() => {
-      pdf.save('Transportation Report.pdf');
+      pdf.save(`Transportation Report-${date}.pdf`);
     });
   };
 
