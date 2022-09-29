@@ -8,7 +8,7 @@ import TableHeader from '../../components/Table/TableHeader';
 
 const MachineryViewAll = () => {
   const { currentColor } = useStateContext();
-
+  const [searchTerm, setSearchTerm] = useState("");
   const [machinery, setMachinery] = useState([]);
 
    var TotalDepreciation = 0;
@@ -45,6 +45,28 @@ const deleteMachinery = async (id) => {
     <div>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
         <Header category="Table" title="Machinery Details" />
+
+        <div className=" flex items-center mb-5 ">
+          <div>
+            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }} />
+          </div>
+          <div className="mr-0 ml-auto">
+            <Link to={"/MachineryReport"}> {/* change this link your preview page */}
+              <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+            </Link>
+          </div>
+
+          </div>
+
+
+
+
+
+
+
         <div className="block w-full overflow-x-auto rounded-lg">
           <table className="w-full rounded-lg" >
             <thead>
@@ -61,7 +83,19 @@ const deleteMachinery = async (id) => {
               </tr>
             </thead>
             <tbody>
-              {machinery.map((data) => (
+              {machinery.filter((data) => {
+                    if(searchTerm == ""){
+                        return data;
+                    }else if((data.machineID.toLowerCase().toLowerCase().includes(searchTerm.toLowerCase())) ||
+                      (data.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                      (data.others.toLowerCase().includes(searchTerm.toLowerCase())))
+      
+                      {
+                      return data;
+                      }
+                  }).map((data, key) => {
+
+                    return(
 
                 // const purchasedDate = new Date(data.dateOfPurchased ).toLocaleDateString();
                 TotalDepreciation = TotalDepreciation + parseFloat(parseFloat((data.machineryCost-data.salvage)/data.numberOfYrs).toFixed(2)),
@@ -100,18 +134,19 @@ const deleteMachinery = async (id) => {
                     </button>
                   </td>
                 </tr>
-                ))}
+                )
+                    })}
             </tbody>
           </table><br></br><br></br>
 
-          <span className="text-xs font-semibold inline-block py-2 px-2 uppercase rounded text-red-600 bg-red-200 uppercase last:mr-0 mr-1">
+          <span className="text-xs font-semibold inline-block py-2 px-2 uppercase rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
             Total Depreciation : {TotalDepreciation.toFixed(2)}
             
-          </span>
+          </span><br></br>
 
-          <span className="text-xs font-semibold inline-block py-2 px-2 uppercase rounded text-red-600 bg-red-200 uppercase last:mr-0 mr-1">
+          <span className="text-xs font-semibold inline-block py-2 px-2 uppercase rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
             
-            TotalCost : {TotalCost.toFixed(2)}
+            TotalCost : {"Rs  "+TotalCost.toFixed(2)}
           </span>
                 
         </div>
