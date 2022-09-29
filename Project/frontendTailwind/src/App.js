@@ -79,6 +79,7 @@ import {
   SupplierViewAll,
   SupplierUpdate,
   SupplierNew,
+  SupplierRecordsDashboard,
 
 } from './pages';
 
@@ -294,7 +295,6 @@ const App = () => {
                 <Route path="/SupplierViewAll" element={<SupplierViewAll />} />
                 <Route path="/SupplierCreate" element={<SupplierNew />} />
                 <Route path="/SupplierUpdate/:id" element={<SupplierUpdate />}/>
-
                 <Route path="/SupplierRecordsDashboard" element={<SupplierRecordsDashboard />}/>
 
 
