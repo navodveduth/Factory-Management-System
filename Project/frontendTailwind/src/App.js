@@ -82,6 +82,7 @@ import {
   SupplierUpdate,
   SupplierNew,
   SupplierRecordsDashboard,
+  SupplierDetailsPreview
 
 } from './pages';
 
@@ -303,6 +304,7 @@ const App = () => {
                 <Route path="/SupplierCreate" element={<SupplierNew />} />
                 <Route path="/SupplierUpdate/:id" element={<SupplierUpdate />}/>
                 <Route path="/SupplierRecordsDashboard" element={<SupplierRecordsDashboard />}/>
+                <Route path="/SupplierDetailsPreview" element={<SupplierDetailsPreview />}/>
 
 
               

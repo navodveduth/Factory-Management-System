@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { MdOutlineCancel } from 'react-icons/md';
-import { FiUser, FiCalendar, FiBarChart } from 'react-icons/fi';
+import { FiUser, FiCalendar, FiBarChart, FiUsers, FiFileText } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { useStateContext } from '../contexts/ContextProvider';
@@ -237,8 +237,8 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineCancel /> {/*  icon  */}
-              <span className="capitalize ">Supplier Dashboard</span> {/*  link name  */}
+              <FiUsers /> {/*  icon  */}
+              <span className="capitalize ">Supplier Details</span> {/*  link name  */}
             </NavLink>
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
@@ -251,7 +251,7 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineCancel /> {/*  icon  */}
+              <FiFileText /> {/*  icon  */}
               <span className="capitalize ">Supplier Records</span> {/*  link name  */}
             </NavLink>
             {/*  done ---------------------------------------------------------------------------------- done  */}
