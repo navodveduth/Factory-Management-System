@@ -44,12 +44,24 @@ function StockUtilisation() {
 
     return (
 
-        <div>
-            {/* <Link to={'/generatePDF'}>
-                <button type="button" class="btn btn-primary" style={{ marginLeft: "89%" }}>Generate PDF</button>
-            </Link> */}
             <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
                 <Header category="Table" title="Stocks Utilisation" />
+
+                <div className=" flex items-center mb-5 ">
+          <div>
+            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }} />
+          </div>
+          <div className="mr-0 ml-auto">
+            <Link to={"/generateSUPDF"}> {/* change this link your preview page */}
+              <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+            </Link>
+          </div>
+
+          </div>
+
                 <div className="block w-full overflow-x-auto rounded-lg">
                     <table className="w-full rounded-lg">
                         <thead>
@@ -66,13 +78,27 @@ function StockUtilisation() {
                         </thead>
                         <tbody>
                             {stock.filter((data) => {
-                                if (searchTerm == "") {
+                                if(searchTerm == ""){
                                     return data;
-                                } else if (data.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                    return data;
-                                }
-                            }).map((data, key) => {//map is used to iterate the array
+                                }else if((data.stockCode.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                  (data.stockName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                  (data.stockCategory.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                  (data.sufficientStock.toLowerCase().includes(searchTerm.toLowerCase())))
+                                  
+                                  {
+                                  return data;
+                                  }
+                              }).map((data, key) => {//map is used to iterate the array
                                 const date = new Date(data.lastUpdated).toISOString().split('T')[0];
+
+                                //var datacolor = "black";
+                                if (data.sufficientStock === "Available") {
+                                    var datacolor = "text-green font-bold";
+                                } else if (data.sufficientStock === "-") {
+                                    var datacolor = "text-black font-bold";
+                                } else {
+                                    var datacolor = "text-red font-bold";
+                                }
 
                                 return (
                                     <tr className="text-sm h-10 border dark:border-slate-600">
@@ -82,10 +108,10 @@ function StockUtilisation() {
                                         <TableData value={date} />
                                         <TableData value={data.quantity} />
                                         <TableData value={data.reorderLevel} />
-                                        <TableData value={data.sufficientStock} />
+                                        <TableData className="text-red font-extrabold" value={data.sufficientStock} />
 
                                         <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                            <Link to={`/StockUpdate/${data._id}`}>
+                                            <Link to={`/StockUtilUpdate/${data._id}`}>
                                                 <button
                                                     type="button"
                                                     className="font-bold py-1 px-4 rounded-full mx-3 text-white"
@@ -111,7 +137,6 @@ function StockUtilisation() {
                     </table>
                 </div>
             </div>
-        </div>
 
     )
 }
