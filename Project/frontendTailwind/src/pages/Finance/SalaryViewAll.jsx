@@ -10,45 +10,21 @@ const FinanceViewAll = () => {
   const { currentColor } = useStateContext();
 
   const [Salary, setSalary] = useState([]);
-  const [Employee, setEmployee] = useState([]);
-  //const [recordedDate, setRecDate] = useState(' ');
 
   const getSalary = async () => {
     axios
       .get('http://localhost:8070/salary/SalaryView')
       .then((res) => {
         setSalary(res.data);
-       // const date = new Date(res.data.trnRecordedDate);
-       // setRecDate(date)
       })
       .catch((err) => {
         alert(err.message);
       });
   };
-
-  const getEmployee = async () => {
-    axios
-      .get('http://localhost:8070/employee/viewEmployee')
-      .then((res) => {
-        setEmployee(res.data);
-       // const date = new Date(res.data.trnRecordedDate);
-       // setRecDate(date)
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-  };
-
-
 
   useEffect(() => {
     getSalary();
   }, []);
-
-  useEffect(() => {
-    getEmployee();
-  }, []);
-
 
   const deleteFinance = async (id) => {
     await axios
@@ -72,26 +48,25 @@ const FinanceViewAll = () => {
             <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                 <TableHeader value="Employee Number" />
-                <TableHeader value="Employee Name" />
-                <TableHeader value="Employee Designation" />
                 <TableHeader value="Basic Salary" />
                 <TableHeader value="Allowance" />
                 <TableHeader value="Incentives" />
                 <TableHeader value="Employee Nett Salary" />
+                <TableHeader value="Modify" />
               </tr>
             </thead>
             <tbody>
-              {Employee.map((data) => (
+              {Salary.map((data) => (
                 <tr className="text-sm h-10 border dark:border-slate-600">
 
-                    <TableData value={data.employeeNumber} />
-                    <TableData value={data.employeeFullName} />
-                    <TableData value={data.employeeDesignation} />
-                    <TableData value={data.employeeDesignation} />
-                  
+                    <TableData value={data.employeeNumber}/>
+                    <TableData value={"Rs." + data.employeeBasicSalary} />
+                    <TableData value={"Rs." + data.employeeAllowance} />
+                    <TableData value={"Rs." + data.employeeIncentive} />
+                    <TableData value={"Rs." + (data.employeeIncentive + data.employeeAllowance + data.employeeBasicSalary)}/>
 
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                    <Link to={`/FinanceUpdate/${data._id}`}>
+                    <Link to={`/SalaryUpdate/${data._id}`}>
                       <button
                         type="button"
                         className="font-bold py-1 px-4 rounded-full mx-3 text-white"
