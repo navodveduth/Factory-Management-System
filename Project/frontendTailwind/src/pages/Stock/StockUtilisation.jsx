@@ -91,13 +91,13 @@ function StockUtilisation() {
                               }).map((data, key) => {//map is used to iterate the array
                                 const date = new Date(data.lastUpdated).toISOString().split('T')[0];
 
-                                //var datacolor = "black";
+                                var datacolor = "text-black";
                                 if (data.sufficientStock === "Available") {
-                                    var datacolor = "text-green font-bold";
+                                    datacolor = "text-green-500font-bold";
                                 } else if (data.sufficientStock === "-") {
-                                    var datacolor = "text-black font-bold";
+                                    datacolor = "text-black font-bold";
                                 } else {
-                                    var datacolor = "text-red font-bold";
+                                    datacolor = "text-red-600 font-bold";
                                 }
 
                                 return (
@@ -108,7 +108,7 @@ function StockUtilisation() {
                                         <TableData value={date} />
                                         <TableData value={data.quantity} />
                                         <TableData value={data.reorderLevel} />
-                                        <TableData className="text-red font-extrabold" value={data.sufficientStock} />
+                                        <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.sufficientStock} </td>
 
                                         <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                                             <Link to={`/StockUtilUpdate/${data._id}`}>

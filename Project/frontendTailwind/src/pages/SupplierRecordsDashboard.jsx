@@ -29,7 +29,8 @@ const SupplierRecordsDashboard = () => {
       <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-          <DashTopBox icon={<FiUser />} label="Total Supplier records" data="60" />      
+          <DashTopBox icon={<FiUser />} label="Total Supplier records" data="0" />      
+          
         </div>
       </div>
     </div>

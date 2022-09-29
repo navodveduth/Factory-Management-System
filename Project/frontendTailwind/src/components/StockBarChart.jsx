@@ -66,7 +66,7 @@ const StockBarChart = () => {
       type: 'Column',
       marker: {
         dataLabel: {
-          visible: true,
+          visible: false,
           position: 'Top',
           font: { fontWeight: '600', color: '#ffffff' },
         },
@@ -80,7 +80,7 @@ const StockBarChart = () => {
       type: 'Column',
       marker: {
         dataLabel: {
-          visible: true,
+          visible: false,
           position: 'Top',
           font: { fontWeight: '600', color: '#ffffff' },
         },
@@ -94,7 +94,7 @@ const StockBarChart = () => {
       type: 'Column',
       marker: {
         dataLabel: {
-          visible: true,
+          visible: false,
           position: 'Top',
           font: { fontWeight: '600', color: '#ffffff' },
         },
@@ -108,7 +108,7 @@ const StockBarChart = () => {
         type: 'Column',
         marker: {
           dataLabel: {
-            visible: true,
+            visible: false,
             position: 'Top',
             font: { fontWeight: '600', color: '#ffffff' },
           },
@@ -118,8 +118,8 @@ const StockBarChart = () => {
 
 
   return (
-    <div className="m-4 md:m-10 mt-24 p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl">
-      <ChartsHeader category="Bar" title="StockInformation" />
+    <div className="m-0 md:m-10 mt-0 p-0 max-h-22 bg-white dark:bg-secondary-dark-bg rounded-3xl">
+      <ChartsHeader category="Stock Information"  />
       <div className=" w-full">
         <ChartComponent
         

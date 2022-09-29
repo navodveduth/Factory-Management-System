@@ -112,7 +112,7 @@ function StockUtilUpdate() {
                     <div className="mb-3">
                         <label htmlFor="quantity" className="form-label">Quantity: </label>
                         <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" value={quantity} min="0"
-                            onChange={(e) => {
+                            required title="If there is no stock please enter 0" onChange={(e) => {
                                 setQuantity(e.target.value);
                             }} />
                     </div>
@@ -120,7 +120,7 @@ function StockUtilUpdate() {
                     <div className="mb-3">
                         <label htmlFor="reorderLevel" className="form-label">Reorder Level: </label>
                         <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="reorder" value={reorderLevel} min="0"
-                            onChange={(e) => {
+                            required title="If there is no stock please input 0" onChange={(e) => {
                                 setReorderLevel(e.target.value);
                             }} />
                     </div>
