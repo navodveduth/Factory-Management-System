@@ -53,7 +53,7 @@ const EmployeeViewAll = () => {
             }} />
           </div>
           <div className="mr-0 ml-auto">
-            <Link to={"/"}> {/* change this link your preview page */}
+            <Link to={"/EmployeeReport"}> {/* change this link your preview page */}
               <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
             </Link>
           </div>
