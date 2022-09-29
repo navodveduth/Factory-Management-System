@@ -37,7 +37,7 @@ function TransactionUpdate() {
 
   return (
     <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '>
-        <Header category="Form" title="Update Employee" />
+        <Header category="Form" title="Update Cash Transaction Entry" />
                 <div className=" flex items-center justify-center">
 
                     <form className="" onSubmit={async(e)=>{
@@ -65,7 +65,7 @@ function TransactionUpdate() {
                     }}>
 
                         <div className="mb-3">
-                            <label htmlFor="trnNumber" className="text-md">Employee Number : </label>
+                            <label htmlFor="trnNumber" className="text-md">Transaction Number : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="trnNumber" defaultValue={trnID} placeholder="Enter Transaction ID" required 
                                 onChange={(e)=>{
@@ -73,7 +73,7 @@ function TransactionUpdate() {
                                 }}/>
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="trnDescription" className="form-label">Full name : </label>
+                            <label htmlFor="trnDescription" className="form-label">Description : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="trnDescription" defaultValue={trnDesc} placeholder="Enter Transaction Description" required 
                                 onChange={(e)=>{
@@ -82,7 +82,7 @@ function TransactionUpdate() {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="trnAmount" className="form-label">Name with initials : </label>
+                            <label htmlFor="trnAmount" className="form-label">Amount : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="trnAmount" defaultValue={trnAmount} placeholder="Enter Amount" required 
                                 onChange={(e) =>{
@@ -91,7 +91,7 @@ function TransactionUpdate() {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="trnType" className="form-label">Gender : </label>
+                            <label htmlFor="trnType" className="form-label">Type of Transaction: </label>
                             <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="trnType" defaultValue={trnType} aria-label="Default select example" required
                                 onChange={(e) =>{
@@ -103,7 +103,7 @@ function TransactionUpdate() {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="trnDate" className="form-label">Date of Birth : </label>
+                            <label htmlFor="trnDate" className="form-label">Transaction Date : </label>
                             <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="trnDate" defaultValue={trnRecordedDate} placeholder="Enter your birthday"required 
                                 onChange={(e) =>{

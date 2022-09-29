@@ -2,6 +2,10 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { MdOutlineCancel } from 'react-icons/md';
 import { FiUser, FiCalendar, FiBarChart, FiUsers, FiFileText } from 'react-icons/fi';
+import { GiSewingMachine } from 'react-icons/gi';
+import { GrVmMaintenance } from 'react-icons/gr';
+import { TbBuildingWarehouse } from 'react-icons/tb';
+import { FaHouseDamage } from 'react-icons/fa';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { useStateContext } from '../contexts/ContextProvider';
@@ -202,7 +206,7 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineCancel /> {/*  icon  */}
+              <TbBuildingWarehouse /> {/*  icon  */}
               <span className="capitalize ">Stock</span> {/*  link name  */}
             </NavLink>
 
@@ -216,7 +220,7 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineCancel /> {/*  icon  */}
+              <FaHouseDamage /> {/*  icon  */}
               <span className="capitalize ">Damaged stock</span>{' '}
               {/*  link name  */}
             </NavLink>
@@ -271,7 +275,7 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineCancel /> {/*  icon  */}
+              <GiSewingMachine /> {/*  icon  */}
               <span className="capitalize ">Machinery</span> {/*  link name  */}
             </NavLink>
 
@@ -285,7 +289,7 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineCancel /> {/*  icon  */}
+              <GrVmMaintenance /> {/*  icon  */}
               <span className="capitalize ">Maintenance</span>{' '}
               {/*  link name  */}
             </NavLink>
@@ -309,7 +313,7 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineCancel /> {/*  icon  */}
+              <TbTruckDelivery /> {/*  icon  */}
               <span className="capitalize ">Transport</span> {/*  link name  */}
             </NavLink>
 
@@ -323,7 +327,7 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineCancel /> {/*  icon  */}
+              <GiSteeringWheel /> {/*  icon  */}
               <span className="capitalize ">Driver</span> {/*  link name  */}
             </NavLink>
             {/*  done ---------------------------------------------------------------------------------- done  */}

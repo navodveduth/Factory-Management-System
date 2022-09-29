@@ -127,12 +127,12 @@ function EmployeeUpdate() {
                         <div className="mb-3">
                             <label htmlFor="employeeGender" className="form-label">Gender : </label>
                             <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="employeeGender" defaultValue={employeeGender} aria-label="Default select example" required
+                                id="employeeGender" value={employeeGender} aria-label="Default select example" required
                                 onChange={(e) =>{
                                     setEmployeeGender(e.target.value);
                                 }}>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
                             </select>
                         </div>
 
@@ -165,17 +165,24 @@ function EmployeeUpdate() {
 
                         <div className="mb-3">
                             <label htmlFor="employeeDepartment" className="form-label">Department : </label>
-                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="employeeDepartment" defaultValue={employeeDepartment} placeholder="Enter your department"required
+                            <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                id="employeeDepartment" value={employeeDepartment} placeholder="Enter your department"required
                                 onChange={(e) =>{
                                     setEmployeeDepartment(e.target.value);
-                                }}/>
+                                }}>
+                                <option value="Finance">Finance</option>
+                                <option value="Sales">Sales</option>
+                                <option value="Human Resources">Human Resources</option>
+                                <option value="Production">Production</option>
+                                <option value="Transportation">Transportation</option>
+                                <option value="Maintenance">Maintenance</option>
+                            </select>
                         </div>
 
                         <div className="mb-3">
                             <label for="employeeType" className="form-label">Employee Type : </label>
                             <select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                            id="employeeType" aria-label="Default select example" defaultValue={employeeType} required
+                            id="employeeType" aria-label="Default select example" value={employeeType} required
                             onChange={(e) =>{
                                 setEmployeeType(e.target.value);
                             }}>

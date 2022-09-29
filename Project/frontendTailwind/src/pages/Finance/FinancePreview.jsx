@@ -9,31 +9,32 @@ import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function PreviewOrder(){
     const { currentColor } = useStateContext();
-    const [Order,setOrder] = useState([])
+    const [transactions, setTransactions] = useState([])
 
-        async function getOrders(){
-            await axios.get("http://localhost:8070/production/order/allOrders").then((res)=>{
-                setOrder(res.data);
+        async function getFinance(){
+            await axios.get("http://localhost:8070/finance/viewTransaction").then((res)=>{
+                setTransactions(res.data);
             }).catch((err)=>{
                 alert(err.message);
             })
         }
 
         useEffect(()=>{
-            getOrders();
+            getFinance();
         })
 
         const createPDF = () => {
-            const pdf = new jsPDF("landscape", "px", "B2",false);
+            const date = new Date(Date.now()).toISOString().split('T')[0];
+            const pdf = new jsPDF("landscape", "px", "a1",false);
             const data = document.querySelector("#tableContainer");
             pdf.html(data).then(() => {
-                pdf.save("orders.pdf");
+                pdf.save("CashTransactions-"+ date + ".pdf");
                });
         };
 
         return(
             <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-            <Header category="Table" title="Production Cost" />
+            <Header category="Table" title="CashTransactions" />
             {/* <div className="w-full h-5"> */}
                 <button onClick={createPDF} type="button"  className="font-bold py-1 px-4 rounded-full m-3 text-white absolute top-40 right-20 hover:bg-slate-700 bg-slate-500" >Download Report</button>
             {/* </div> */}
@@ -42,28 +43,22 @@ export default function PreviewOrder(){
             <table className="w-full rounded-lg">
                 <thead>
                     <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                    <TableHeader value ="Invoice No"></TableHeader>
-                    <TableHeader value ="Product"></TableHeader>
-                    <TableHeader value ="Date"></TableHeader>
-                    <TableHeader value ="Material Cost"></TableHeader>
-                    <TableHeader value ="Quantity"></TableHeader>
-                    <TableHeader value ="Total Material Cost"></TableHeader>
-                    <TableHeader value ="Overhead Cost"></TableHeader>
-                    <TableHeader value="Total Cost"></TableHeader>
+                    <TableHeader value="Transaction ID" />
+                    <TableHeader value="Description" />
+                    <TableHeader value="Amount" />
+                    <TableHeader value="Type" />
+                    <TableHeader value="Date of Transaction" />
                     </tr>
                 </thead>
                 <tbody>
-                    { Order.map((data)=>{
+                    { transactions.map((data)=>{
                         return ( 
                             <tr className="text-sm h-10 border dark:border-slate-600">
-                                <TableData value={data.invoiceNo}/>
-                                <TableData value={data.orderName}/>
-                                <TableData value={data.costDate}/>
-                                <TableData value={"Rs." + data.materialCost}/>
-                                <TableData value={data.unitQty}/>
-                                <TableData value={"Rs." + data.totalMatCost}/>
-                                <TableData value={"Rs." + data.overHeadCost}/>
-                                <TableData value={"Rs." + data.totalCost}/>
+                                <TableData value={data.trnID} />
+                                <TableData value={data.trnDesc} />
+                                <TableData value={data.trnAmount} />
+                                <TableData value={data.trnType} />
+                                <TableData value={new Date(data.trnRecordedDate).toISOString().split('T')[0]} /> 
                             </tr>
                         )
                     })}

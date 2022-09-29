@@ -13,11 +13,7 @@ const DriverSchema = new Schema(
       maxlength: 12,
       pattern: '^[0-9]{9}[vVxX]$ | ^[0-9]{12}$',
     },
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
+    fullName: {
       type: String,
       required: true,
     },
@@ -47,6 +43,11 @@ const DriverSchema = new Schema(
     vehicleModel: {
       type: String,
       required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+      default: 'Available',
     },
   },
   {
