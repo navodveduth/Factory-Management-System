@@ -6,7 +6,7 @@ import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 import { jsPDF } from "jspdf";
 
-function StockPDF() {
+function StockUtilPDF() {
 
     const { currentColor } = useStateContext();
 
@@ -30,7 +30,7 @@ function StockPDF() {
         const pdf = new jsPDF("landscape", "px", "a2", false);
         const data = await document.querySelector("#tblPDF");
         pdf.html(data).then(() => {
-            pdf.save("stocks.pdf");
+            pdf.save("stocksUtil.pdf");
         });
     };
 
@@ -49,14 +49,22 @@ function StockPDF() {
                             <TableHeader value="Category" />
                             <TableHeader value="Last updated" />
                             <TableHeader value="Quantity" />
-                            <TableHeader value="Unit price" />
-                            <TableHeader value="Supplier" />
-                            <TableHeader value="Total value" />
+                            <TableHeader value="Reorder level" />
+                            <TableHeader value="Availability" />
                         </tr>
                     </thead>
                     <tbody>
                         {stock.map((data) => {//map is used to iterate the array
                             const date = new Date(data.lastUpdated).toISOString().split('T')[0];
+
+                            var datacolor = "black";
+                            if (data.sufficientStock === "Available") {
+                                datacolor = "green";
+                            } else if (data.sufficientStock === "-") {
+                                datacolor = "black";
+                            } else {
+                                datacolor = "red";
+                            }
 
                             return (
                                 <tr className="text-sm h-10 border dark:border-slate-600">
@@ -65,9 +73,8 @@ function StockPDF() {
                                     <TableData value={data.stockCategory} />
                                     <TableData value={date} />
                                     <TableData value={data.quantity} />
-                                    <TableData value={data.unitPrice} />
-                                    <TableData value={data.supplier} />
-                                    <TableData value={data.totalValue} />
+                                    <TableData value={data.reorderLevel} />
+                                    <TableData value={data.sufficientStock} />
                                 </tr>
                             )
                         })}
@@ -79,4 +86,4 @@ function StockPDF() {
     )
 }
 
-export default StockPDF
+export default StockUtilPDF
