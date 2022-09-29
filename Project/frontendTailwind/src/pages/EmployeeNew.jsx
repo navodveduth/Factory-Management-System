@@ -135,11 +135,19 @@ function EmployeeCreateForm() {
 
                 <div className="mb-3">
                   <label for="employeeDepartment" className="form-label">Department : </label>
-                  <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="employeeDepartment" placeholder="Enter your department"required
+                  <select type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                  id="employeeDepartment" required
                   onChange={(e) =>{
                       setEmployeeDepartment(e.target.value);
-                  }}/>
+                  }}>
+                    <option selected>Select Department</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Human Resources">Human Resources</option>
+                    <option value="Production">Production</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Maintenance">Maintenance</option>
+                  </select>
                 </div>
 
                 <div className="mb-3">

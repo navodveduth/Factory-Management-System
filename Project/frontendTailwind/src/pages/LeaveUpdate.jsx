@@ -96,11 +96,15 @@ const LeaveUpdate = () => {
 
                         <div className="mb-3">
                             <label htmlFor="leaveType" className="text-md">Leave Type : </label>
-                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="leaveType" defaultValue={leaveType} placeholder="Enter the leave type" required 
+                            <select type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                id="leaveType" value={leaveType} placeholder="Enter the leave type" required 
                                 onChange={(e)=>{
                                     setLeaveType(e.target.value);
-                                }}/>
+                            }}>
+                                <option value="Regular">Regular</option>
+                                <option value="Half Day">Half Day</option>
+                                <option value="Short Leave">Short Leave</option>
+                            </select>
                         </div>
 
                         <div className="mb-3">
@@ -114,11 +118,15 @@ const LeaveUpdate = () => {
 
                         <div className="mb-3">
                             <label htmlFor="leaveStatus" className="text-md">Leave Status : </label>
-                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="leaveStatus" defaultValue={leaveStatus} placeholder="Enter the leave status" required 
+                            <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                id="leaveStatus" value={leaveStatus} required 
                                 onChange={(e)=>{
                                     setLeaveStatus(e.target.value);
-                                }}/>
+                                }}>
+                                <option value="Pending">Pending</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
                         </div>
 
                     <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Submit</button>
