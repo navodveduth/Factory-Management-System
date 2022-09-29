@@ -15,6 +15,8 @@ function MaintenanceCreateForm() {
   const [status, setStatus] = useState('');
   const [lastMaintainedDate, setLastMaintainedDate] = useState('');
   const [nextServiceDate, setNextServiceDate] = useState('');
+
+  var date = new Date().toISOString().split('T')[0];
  
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
@@ -106,7 +108,7 @@ function MaintenanceCreateForm() {
                         <div className="mb-3">
                             <label htmlFor="employeeDOB" className="form-label">Last Maintained Date : </label>
                             <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="employeeDOB"  min="0" required 
+                                id="employeeDOB"  min="2010-01-01" max={date} required 
                                 onChange={(e) =>{
                                     setLastMaintainedDate(e.target.value);
                                 }}/>
@@ -115,7 +117,7 @@ function MaintenanceCreateForm() {
                         <div className="mb-3">
                             <label htmlFor="employeeDOB" className="form-label">Next Due : </label>
                             <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="employeeDOB"  min="0" required 
+                                id="employeeDOB"   min={date} required 
                                 onChange={(e) =>{
                                     setNextServiceDate(e.target.value);
                                 }}/>
