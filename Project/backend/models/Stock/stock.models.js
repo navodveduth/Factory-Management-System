@@ -45,7 +45,7 @@ const stockSchema = new Schema({
     },
     supplier: {
         type: String,
-        required: true,
+        default: "-",
     },
     totalValue: {
         type: Number,
