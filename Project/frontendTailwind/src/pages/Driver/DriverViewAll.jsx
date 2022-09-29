@@ -62,7 +62,7 @@ const DriverViewViewAll = () => {
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
         <Header category="Table" title="Driver" />
 
-        <div className=" flex items-center mb-5 ">
+        <div className="flex items-center mb-5 ">
           <div>
             <input
               type="text"
@@ -73,8 +73,7 @@ const DriverViewViewAll = () => {
             />
           </div>
           <div className="mr-0 ml-auto">
-            <Link to="/">
-              {' '}
+            <Link to="/DriverReport">
               {/* change this link your preview page */}
               <button
                 type="button"

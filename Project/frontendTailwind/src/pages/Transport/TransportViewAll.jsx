@@ -73,8 +73,7 @@ const TransportViewAll = () => {
             />
           </div>
           <div className="mr-0 ml-auto">
-            <Link to="/">
-              {' '}
+            <Link to="/TransportReport">
               {/* change this link your preview page */}
               <button
                 type="button"
