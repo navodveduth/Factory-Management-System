@@ -24,10 +24,11 @@ const DriverReport = () => {
   }, []);
 
   const createPDF = () => {
+    const date = new Date(Date.now()).toISOString().split.T[0];
     const pdf = new jsPDF('landscape', 'px', 'a1', false);
     const data = document.querySelector('#tableContainer');
     pdf.html(data).then(() => {
-      pdf.save('Drivers Report.pdf');
+      pdf.save(`Drivers Report-${date}.pdf`);
     });
   };
 
