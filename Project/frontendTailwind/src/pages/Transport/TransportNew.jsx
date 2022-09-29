@@ -105,6 +105,19 @@ const TransportNew = () => {
               }}
             />
           </div>
+
+          <div className="mb-3">
+            <label className="form-label">Time Of Dispatch</label>
+            <input
+              type="time"
+              className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+              id="time"
+              required
+              onChange={(e) => {
+                setTimeOfDispatch(e.target.value);
+              }}
+            />
+          </div>
           <div className="mb-3">
             <label className="form-label">Distance (Km)</label>
             <input
@@ -116,18 +129,6 @@ const TransportNew = () => {
               onChange={(e) => {
                 setDistance(e.target.value);
                 setTransportCost(e.target.value * 100 + 250);
-              }}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Time Of Dispatch</label>
-            <input
-              type="time"
-              className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-              id="time"
-              required
-              onChange={(e) => {
-                setTimeOfDispatch(e.target.value);
               }}
             />
           </div>

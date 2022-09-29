@@ -57,10 +57,14 @@ const DriverDashboard = () => {
             label="Total Drivers"
             data={totDrivers}
           />
-          <DashTopBox icon={<FiUser />} label="Available" data={available} />
           <DashTopBox
             icon={<FiUser />}
-            label="Unavailable"
+            label="Available Drivers"
+            data={available}
+          />
+          <DashTopBox
+            icon={<FiUser />}
+            label="Unavailable Drivers"
             data={unavailable}
           />
         </div>
