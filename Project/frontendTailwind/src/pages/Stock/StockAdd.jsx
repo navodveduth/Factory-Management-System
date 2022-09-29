@@ -64,14 +64,14 @@ function StockAdd() {
                     <div className="mb-3">
                         <label for="stockName" className="form-label">Stock Name: </label>
                         <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" placeholder="Enter stock name..."
-                            required onChange={(e) => {
+                            pattern="[A-z]" title="The name can contain only alphabets" required onChange={(e) => {
                                 setStockName(e.target.value);
                             }} />
                     </div>
 
                     <div className="mb-3">
                         <label for="category" className="form-label">Category: </label>
-                        < select class="form-select" id="category" onChange={(e) => {
+                        < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"  id="category" required onChange={(e) => {
                             setStockCategory(e.target.value);
                         }}>
                             <option selected  >Select option...</option>
@@ -127,4 +127,4 @@ function StockAdd() {
     )
 }
 
-export default StockAdd
+export default StockAdd;
