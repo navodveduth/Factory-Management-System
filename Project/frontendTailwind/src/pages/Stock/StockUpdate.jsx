@@ -36,8 +36,8 @@ function StockUpdate() {
     }
 
     useEffect(() => { getStock() }, []);
-
-
+ 
+    var date = new Date().toISOString().split('T')[0];
 
     return (
 
@@ -104,31 +104,31 @@ function StockUpdate() {
 
                     <div className="mb-3">
                         <label htmlFor="date" className="form-label">Date: </label>
-                        <input type="date" value={lastUpdated} className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date" required onChange={(e) => {
+                        <input type="date" min="2010-01-01" max={date} value={lastUpdated} className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date" required onChange={(e) => {
                             setLastUpdated(e.target.value);
                         }} />
 
                     </div>
                     <div className="mb-3">
                         <label htmlFor="quantity" className="form-label">Quantity: </label>
-                        <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" value={quantity} min="1"
-                            onChange={(e) => {
+                        <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" value={quantity} min="0"
+                            required title="If there is no stock please input 0" onChange={(e) => {
                                 setQuantity(e.target.value);
                             }} />
                     </div>
 
-                    <div className="mb-3">
+                    {/* <div className="mb-3">
                         <label htmlFor="reorderLevel" className="form-label">Reorder Level: </label>
                         <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="reorder" value={reorderLevel} min="0"
                             onChange={(e) => {
                                 setReorderLevel(e.target.value);
                             }} />
-                    </div>
+                    </div> */}
 
                     <div className="mb-3">
                         <label htmlFor="unitPrice" className="form-label">Unit price: </label>
                         <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice" value={unitPrice}
-                            onChange={(e) => {
+                            required title="If the unit price is not avilable please enter 0" step="0.01" onChange={(e) => {
                                 setUnitPrice(e.target.value);
                             }} />
                     </div>
@@ -142,7 +142,7 @@ function StockUpdate() {
 
                     <div className="mb-3">
                         <label htmlFor="totalValue" className="form-label">Total Value: </label>
-                        <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white
+                        <input type="number" step="0.01" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white
                          dark:text-black" value={quantity * unitPrice} id="totalValue" readOnly />
                     </div>
 

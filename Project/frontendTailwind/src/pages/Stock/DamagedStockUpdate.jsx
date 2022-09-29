@@ -18,6 +18,7 @@ function DamagedStockUpdate() {
     const [usability, setUsability] = useState('');
 
     const { id } = useParams(); //get the id from the url
+    var date = new Date().toISOString().split('T')[0];
 
     const getDamagedStock = () => {
         axios.get(`http://localhost:8070/damagedStock/${id}`)
@@ -94,7 +95,7 @@ function DamagedStockUpdate() {
 
                     <div className="mb-3">
                         <label for="quantity" className="form-label">Quantity: </label>
-                        <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" value={quantity} min="0"
+                        <input type="number" required title="If there is no stock please input 0" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" value={quantity} min="0"
                             onChange={(e) => {
                                 setQuantity(e.target.value);
                             }} />
@@ -102,14 +103,14 @@ function DamagedStockUpdate() {
 
                     <div className="mb-3">
                         <label for="date" className="form-label">Date: </label>
-                        <input type="date" value={updatedDate} className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date"
+                        <input type="date" min="2010-01-01" max={date} value={updatedDate} className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date"
                             required onChange={(e) => {
                                 setUpdatedDate(e.target.value);
                             }} />
                     </div>
                     <div className="mb-3">
                         <label for="value" className="form-label">Value: </label>
-                        <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="value" value={value}
+                        <input type="number" min="0" title="If the unit price is not avilable please enter 0" step="0.01" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="value" value={value}
                             onChange={(e) => {
                                 setValue(e.target.value);
                             }} />
@@ -117,7 +118,7 @@ function DamagedStockUpdate() {
 
                     <div className="mb-3">
                         <label for="totalValue" className="form-label">Total Value: </label>
-                        <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="totalCost" value={quantity * value} readOnly
+                        <input type="number" min="0" step="0.01" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="totalCost" value={quantity * value} readOnly
                             onChange={(e) => {
                                 setTotalValue(e.target.value);
                             }} />
@@ -125,7 +126,7 @@ function DamagedStockUpdate() {
 
                     <div className="mb-3">
                         <label for="usability" className="form-label">Usability: </label>
-                        < select class="form-select" id="usability" value={usability} onChange={(e) => {
+                        < select class="form-select" id="usability" title="Please choose a valid option" required value={usability} onChange={(e) => {
                             setUsability(e.target.value);
                         }}>
                             <option selected  >Select option...</option>

@@ -64,15 +64,14 @@ import {
   DriverReport,
 } from './pages';
 // shafa
-import {StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockUtilisation, StockUtilUpdate} from './pages';
+import {StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockUtilisation, StockUtilUpdate, StockUtilPDF} from './pages';
 import {DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF} from './pages';
-
 
 
 
 // janindu
 import {
-  SalesDashboard,
+  SalesDashboard, SalesPreview,
   SalesViewAll,
   SalesUpdate,
   SalesNew,
@@ -87,6 +86,7 @@ import {
   SupplierUpdate,
   SupplierNew,
   SupplierRecordsDashboard,
+  SupplierDetailsPreview
 
 } from './pages';
 
@@ -222,7 +222,7 @@ const App = () => {
                 <Route path="/SalesCreate" element={<SalesNew />} />
                 <Route path="/SalesUpdate/:id" element={<SalesUpdate />} />
                 <Route path="/SalesInvoice/:id" element={<SalesInvoice />} />
-
+                <Route path="/SalesPreview" element={<SalesPreview />} />
                 {/* machinery management  */}
                 <Route
                   path="/MachineryDashboard"
@@ -267,10 +267,10 @@ const App = () => {
                 <Route path="/StockView" element={<StockView />} />
                 <Route path="/StockAdd" element={<StockAdd />} />
                 <Route path="/StockUpdate/:id" element={<StockUpdate />} />
-                <Route path="/generatePDF" element={<StockPDF/>} />
+                <Route path="/generateSPDF" element={<StockPDF/>} />
                 <Route path ="/StockUtilisation" element={<StockUtilisation/>} />
-                <Route path ="/StockUtilUpdate" element={<StockUtilUpdate/>} />
-
+                <Route path ="/StockUtilUpdate/:id" element={<StockUtilUpdate/>} />
+                <Route path ="/generateSUPDF" element={<StockUtilPDF/>} />
 
 
                  {/* damaged stocks management  */}
@@ -278,7 +278,7 @@ const App = () => {
                 <Route path ="/DamagedStockView" element={<DamagedStockView/>} />
                 <Route path ="/DamagedStockAdd" element={<DamagedStockAdd/>} />
                 <Route path="/DamagedStockUpdate/:id" element={<DamagedStockUpdate/>} />
-                <Route path="/generatePDF" element={<DStockPDF/>} />
+                <Route path="/generateDPDF" element={<DStockPDF/>} />
 
 
                  {/* transportation management  */}
@@ -313,6 +313,7 @@ const App = () => {
                 <Route path="/SupplierCreate" element={<SupplierNew />} />
                 <Route path="/SupplierUpdate/:id" element={<SupplierUpdate />}/>
                 <Route path="/SupplierRecordsDashboard" element={<SupplierRecordsDashboard />}/>
+                <Route path="/SupplierDetailsPreview" element={<SupplierDetailsPreview />}/>
 
 
               
