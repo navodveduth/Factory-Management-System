@@ -19,6 +19,7 @@ export { default as FinanceDashboard } from './Finance/FinanceDashboard';
 export { default as FinanceNew } from './Finance/FinanceNew';
 export { default as FinanceViewAll } from './Finance/FinanceViewAll';
 export { default as FinanceUpdate } from './Finance/FinanceUpdate';
+export { default as FinancePreview} from "./Finance/FinancePreview";
 
 export { default as SalaryDashboard } from './Finance/SalaryDashboard';
 export { default as SalaryViewAll } from './Finance/SalaryViewAll';
@@ -56,7 +57,7 @@ export { default as DamagedStockUpdate } from './Stock/DamagedStockUpdate';
 export { default as DStockPDF } from './Stock/DStockPDF';
 
 // janindu
-
+export { default as SalesPreview } from './Sales/SalesPreview';
 export { default as SalesDashboard } from './Sales/SalesDashboard';
 export { default as SalesNew } from './Sales/SalesNew';
 export { default as SalesUpdate } from './Sales/SalesUpdate';
