@@ -15,6 +15,6 @@ export { default as SalesChart} from './SalesChart';
 export { default as MaintainChart} from './MaintainChart';
 export {default as ProductionPieChart} from './ProductionPieChart';
 export { default as TransactionPieChart} from './TransactionPieChart';
-
+export { default as AttendanceChart} from './AttendanceChart';
 
 
