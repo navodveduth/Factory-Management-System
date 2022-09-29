@@ -136,8 +136,8 @@ const MaintenanceViewAll = () => {
                     })}
             </tbody>
           </table><br></br><br></br>
-          <span className="text-xs font-semibold inline-block py-2 px-2 uppercase rounded text-red-600 bg-red-200 uppercase last:mr-0 mr-1">
-            Total Cost of Maintenance : {TotalCost.toFixed(2)}
+          <span className="text-xs font-semibold inline-block py-2 px-2 uppercase rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+            Total Cost of Maintenance : {"Rs"+TotalCost.toFixed(2)}
             
           </span>
 
