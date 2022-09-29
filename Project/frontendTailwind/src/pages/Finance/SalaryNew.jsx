@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Header } from '../../components';
 
-function FinanceCreateForm() {
+function SalaryCreateForm() {
   const navigate = useNavigate(); //useNavigate hook to redirect to another page after form submission is successful 
 
   const [employeeNumber, setEmpNumber] = useState('');
@@ -29,7 +29,7 @@ function FinanceCreateForm() {
                       .then((res)=>{
                           alert("Data saved successfully");
                              
-                      navigate('/FinanceViewAll');
+                      navigate('/SalaryView');
                       })
                       .catch((err)=>{
                           console.log(err);
@@ -40,43 +40,40 @@ function FinanceCreateForm() {
               }}>
 
                 <div className="mb-3">
-                  <label for="transactionID" className="form-label">Transaction ID : </label>
+                  <label for="employeeNumber" className="form-label">Employee Number : </label>
                   <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="transactionID" placeholder="Enter the Transaction ID" required 
+                  id="employeeNumber" placeholder="Enter the Employee Number" required 
                   onChange={(e)=>{
                     setEmpNumber(e.target.value);
                   }}/>
                 </div>
 
                 <div className="mb-3">
-                  <label for="TransactionDescription" className="form-label">Description : </label>
+                  <label for="employeeBasicSalary" className="form-label">Basic Salary : </label>
                   <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="TransactionDescription" placeholder="Enter a Description for the Transaction" required 
+                  id="employeeBasicSalary" placeholder="Enter a Basic Salary" required 
                   onChange={(e)=>{
                     setEmpBasic(e.target.value);
                   }}/>
                 </div>
 
                 <div className="mb-3">
-                  <label for="trnAmount" className="form-label">Amount : </label>
+                  <label for="employeeAllowance" className="form-label">Allowance : </label>
                   <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="trnAmount" placeholder="Enter the Amount" required 
+                  id="employeeAllowance" placeholder="Enter the Allowance" required 
                   onChange={(e) =>{
                     setEmpAllowance(e.target.value);
                   }}/>
                 </div>
 
                 <div className="mb-3">
-                  <label for="trnType" className="form-label">Type : </label>
-                  <select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="trnType" aria-label="Default select example" required
-                   onChange={(e) =>{
+                  <label for="employeeIncentive" className="form-label">Incentive : </label>
+                  <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                  id="employeeIncentive" placeholder="Enter the Incentive" required 
+                  onChange={(e) =>{
                     setEmpIncentive(e.target.value);
-                  }}>
-                      <option selected>Select Transaction Type</option>
-                      <option value="Expense">Expense</option>
-                      <option value="Revenue">Revenue</option>
-                  </select>
+                  }}/>
+
                 </div>
                 <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Submit Transaction</button>
               </form>
@@ -86,4 +83,4 @@ function FinanceCreateForm() {
 
   );
 }
-  export default FinanceCreateForm;
+  export default SalaryCreateForm;
