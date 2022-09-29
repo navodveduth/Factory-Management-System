@@ -56,7 +56,7 @@ export { default as DStockPDF } from './Stock/DStockPDF';
 
 
 // janindu
-
+export { default as SalesPreview } from './Sales/SalesPreview';
 export { default as SalesDashboard } from './Sales/SalesDashboard';
 export { default as SalesNew } from './Sales/SalesNew';
 export { default as SalesUpdate } from './Sales/SalesUpdate';
