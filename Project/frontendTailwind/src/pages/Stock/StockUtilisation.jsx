@@ -45,9 +45,9 @@ function StockUtilisation() {
     return (
 
         <div>
-            {/* <Link to={'/generatePDF'}>
+            <Link to={'/generateSUPDF'}>
                 <button type="button" class="btn btn-primary" style={{ marginLeft: "89%" }}>Generate PDF</button>
-            </Link> */}
+            </Link>
             <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
                 <Header category="Table" title="Stocks Utilisation" />
                 <div className="block w-full overflow-x-auto rounded-lg">
@@ -74,6 +74,15 @@ function StockUtilisation() {
                             }).map((data, key) => {//map is used to iterate the array
                                 const date = new Date(data.lastUpdated).toISOString().split('T')[0];
 
+                                //var datacolor = "black";
+                                if (data.sufficientStock === "Available") {
+                                    var datacolor = "text-green font-bold";
+                                } else if (data.sufficientStock === "-") {
+                                    var datacolor = "text-black font-bold";
+                                } else {
+                                    var datacolor = "text-red font-bold";
+                                }
+
                                 return (
                                     <tr className="text-sm h-10 border dark:border-slate-600">
                                         <TableData value={data.stockCode} />
@@ -82,10 +91,10 @@ function StockUtilisation() {
                                         <TableData value={date} />
                                         <TableData value={data.quantity} />
                                         <TableData value={data.reorderLevel} />
-                                        <TableData value={data.sufficientStock} />
+                                        <TableData className="text-red font-extrabold" value={data.sufficientStock} />
 
                                         <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                            <Link to={`/StockUpdate/${data._id}`}>
+                                            <Link to={`/StockUtilUpdate/${data._id}`}>
                                                 <button
                                                     type="button"
                                                     className="font-bold py-1 px-4 rounded-full mx-3 text-white"
