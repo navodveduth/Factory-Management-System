@@ -2,9 +2,9 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { MdOutlineCancel } from 'react-icons/md';
 import { FiUser, FiCalendar, FiBarChart, FiUsers, FiFileText } from 'react-icons/fi';
-import { GiSewingMachine } from 'react-icons/gi';
+import { GiSewingMachine , GiSteeringWheel} from 'react-icons/gi';
 import { GrVmMaintenance } from 'react-icons/gr';
-import { TbBuildingWarehouse } from 'react-icons/tb';
+import { TbBuildingWarehouse, TbTruckDelivery } from 'react-icons/tb';
 import { FaHouseDamage } from 'react-icons/fa';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
