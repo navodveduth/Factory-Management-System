@@ -65,7 +65,7 @@ export default function AddOrder(){
                 </div>
 
                 <div className="mb-3">
-                    <label for="age">Enter Order Description</label>
+                    <label for="age">Material Description</label>
                     <input type="text" 
                     className="mt-1 block w-800 rounded-md bg-gray-    100 focus:bg-white dark:text-black" 
                     id="age" 
