@@ -9,6 +9,28 @@ import { useStateContext } from '../../contexts/ContextProvider';
 
 const StocksDashboard = () => {
   const { currentColor, currentMode } = useStateContext();
+  const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
+
+  const getStock = async () => {  //getStock is the function to get the data from the backend
+      axios.get("http://localhost:8070/stock/")
+          .then((res) => {
+              setStock(res.data); //setStock is used to update the state variable
+          })
+          .catch((err) => {
+              alert(err.message);
+          })
+  }
+
+  useEffect(() => { //useEffect is used to call the function getStock
+      getStock();
+  }, [])
+
+
+  const itemCount = stock.length;
+  const countRawMaterials= stock.filter((stk) => stk.stockCategory === 'Raw materials').length;
+  const countWorkInProgress= stock.filter((stk) => stk.stockCategory === 'Work in progress').length;
+  const countFinishedGoods= stock.filter((stk) => stk.stockCategory === 'Finished goods').length;
+
 
   return (
     <div className="mt-5">
@@ -33,10 +55,11 @@ const StocksDashboard = () => {
       <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-          <DashTopBox icon={<FiUser />} label="Total Employees" data="100" />
-          <DashTopBox icon={<FiUser />} label="Total Employees" data="100" />
-          <DashTopBox icon={<FiUser />} label="Total Employees" data="100" />
-          <DashTopBox icon={<FiUser />} label="Total Employees" data="100" />       
+          {/* <DashTopBox icon={<FiUser />} label="Total Stocks Value" data={total} />  */}
+          <DashTopBox icon={<FiUser />} label="Total Items" data={itemCount} />
+          <DashTopBox icon={<FiUser />} label="Total Raw Materials" data={countRawMaterials}/>
+          <DashTopBox icon={<FiUser />} label="Total Work In Progress" data={countWorkInProgress} />
+          <DashTopBox icon={<FiUser />} label="Total Finished Goods" data={countFinishedGoods} />       
         </div>
       </div>
     </div>
