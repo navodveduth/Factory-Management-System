@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {  GiRolledCloth, GiSewingNeedle, GiClothes } from 'react-icons/gi';
-import { GrMoney } from 'react-icons/gr';
+import { FaCoins } from 'react-icons/fa';
 import { AiOutlineStock } from 'react-icons/ai';
 import { DashTopBox, DashTopButton } from '../../components';
 
@@ -61,7 +61,7 @@ const StocksDashboard = () => {
       <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-          <DashTopBox icon={<GrMoney />} label="Total Stocks Value" data={total} />  
+          <DashTopBox icon={<FaCoins />} label="Total Stocks Value" data={total} />  
           <DashTopBox icon={<AiOutlineStock />} label="Total Items" data={itemCount} />
           <DashTopBox icon={<GiRolledCloth />} label="Total Raw Materials" data={countRawMaterials}/>
           <DashTopBox icon={<GiSewingNeedle />} label="Total Work In Progress" data={countWorkInProgress} />
