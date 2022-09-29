@@ -78,25 +78,6 @@ const employeeSchema = new Schema({
         trim: true,
         maxlength: 100,
         pattern: "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$",
-    },
-    employeeSal : {
-        employeeBasicSalary: {
-            type: Number,
-            required: true,
-            maxlength: 10,
-        },
-        
-        employeeAllowance: {
-            type: Number,
-            required: true,
-            maxlength: 10,
-        },
-    
-        employeeIncentive: {
-            type: Number,
-            required: true,
-            maxlength: 10,
-        },
     }
     
 });
