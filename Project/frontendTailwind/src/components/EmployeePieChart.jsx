@@ -1,6 +1,7 @@
 import React, { useState, useEffect }from 'react'
 import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective, Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip } from '@syncfusion/ej2-react-charts';
 import axios from 'axios';
+import Header from './Header';
 
 const EmployeePieChart = () => {
     const [employee, setEmployee] = useState([]);
@@ -28,7 +29,8 @@ const EmployeePieChart = () => {
 
   return (
     <div>
-        <AccumulationChartComponent title='Employee Distribution by Departments' legendSettings={{position:"Bottom"}} tooltip={{enable:true}}>
+      <Header category="Chart" title="Employee Pie Chart" />
+        <AccumulationChartComponent title='Employee Distribution by Departments' legendSettings={{position:"Right"}} tooltip={{enable:true}}>
             <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]} />
             <AccumulationSeriesCollectionDirective>
                 <AccumulationSeriesDirective 

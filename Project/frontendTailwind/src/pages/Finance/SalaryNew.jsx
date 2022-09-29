@@ -13,7 +13,7 @@ function SalaryCreateForm() {
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-              <Header category="Form" title=" New Cash Transaction" />
+              <Header category="Form" title=" New Salary Entry" />
               <div className=" flex items-center justify-center "> 
               <form onSubmit={async(e)=>{
                   e.preventDefault();
@@ -29,7 +29,7 @@ function SalaryCreateForm() {
                       .then((res)=>{
                           alert("Data saved successfully");
                              
-                      navigate('/SalaryView');
+                      navigate('/SalaryViewAll');
                       })
                       .catch((err)=>{
                           console.log(err);
@@ -75,7 +75,7 @@ function SalaryCreateForm() {
                   }}/>
 
                 </div>
-                <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Submit Transaction</button>
+                <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Submit Salary</button>
               </form>
               </div>
               

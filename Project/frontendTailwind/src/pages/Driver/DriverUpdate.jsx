@@ -8,24 +8,24 @@ const DriverUpdate = () => {
   const navigate = useNavigate();
 
   const [nic, setNic] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [drivingLicenseNo, setDrivingLicenseNo] = useState('');
   const [contactNo, setContactNo] = useState('');
   const [vehicleNo, setVehicleNo] = useState('');
   const [vehicleModel, setVehicleModel] = useState('');
+  const [status, setStatus] = useState('');
 
   useEffect(() => {
     axios
       .get(`http://localhost:8070/driver/${id}`)
       .then((res) => {
         setNic(res.data.nic);
-        setFirstName(res.data.firstName);
-        setLastName(res.data.lastName);
+        setFullName(res.data.fullName);
         setDrivingLicenseNo(res.data.drivingLicenseNo);
         setContactNo(res.data.contactNo);
         setVehicleNo(res.data.vehicleNo);
         setVehicleModel(res.data.vehicleModel);
+        setStatus(res.data.status);
       })
       .catch((err) => {
         alert(err.message);
@@ -42,16 +42,16 @@ const DriverUpdate = () => {
 
             const newDriver = {
               nic,
-              firstName,
-              lastName,
+              fullName,
               drivingLicenseNo,
               contactNo,
               vehicleNo,
               vehicleModel,
+              status,
             };
 
             await axios
-              .put('http://localhost:8070/driver/update/' + id, newDriver)
+              .put(`http://localhost:8070/driver/update/${id}`, newDriver)
               .then((res) => {
                 alert('Driver Details Updated');
                 navigate('/DriverViewAll');
@@ -75,26 +75,14 @@ const DriverUpdate = () => {
             />
           </div>
           <div className="mb-3">
-            <label className="form-label">First Name</label>
+            <label className="form-label">Full Name</label>
             <input
               type="text"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-              id="firstName"
-              value={firstName}
+              id="fullName"
+              value={fullName}
               onChange={(e) => {
-                setFirstName(e.target.value);
-              }}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Last Name</label>
-            <input
-              type="text"
-              className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-              id="lastName"
-              value={lastName}
-              onChange={(e) => {
-                setLastName(e.target.value);
+                setFullName(e.target.value);
               }}
             />
           </div>
@@ -145,6 +133,22 @@ const DriverUpdate = () => {
                 setVehicleModel(e.target.value);
               }}
             />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Status</label>
+            <select
+              id="status"
+              name="status"
+              className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+              value={status}
+              required
+              onChange={(e) => {
+                setStatus(e.target.value);
+              }}
+            >
+              <option value="Available">Available</option>
+              <option value="Unavailable">Unavailable</option>
+            </select>
           </div>
           <button
             type="submit"

@@ -9,6 +9,8 @@ export {default as MaintenanceNew}  from './MaintenanceNew';
 export {default as MaintenanceUpdate}  from './MaintenanceUpdate';
 
 export {default as MaintainenceTask}  from './MaintainenceTask';
+export {default as MaintainenceReport} from './MaintainenceReport';
+export {default as MachineryReport} from './MachineryReport';
 
 
 

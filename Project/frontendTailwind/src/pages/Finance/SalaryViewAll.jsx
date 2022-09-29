@@ -10,45 +10,22 @@ const FinanceViewAll = () => {
   const { currentColor } = useStateContext();
 
   const [Salary, setSalary] = useState([]);
-  const [Employee, setEmployee] = useState([]);
-  //const [recordedDate, setRecDate] = useState(' ');
+  const [searchTerm, setSearchTerm] = useState("");  
 
   const getSalary = async () => {
     axios
       .get('http://localhost:8070/salary/SalaryView')
       .then((res) => {
         setSalary(res.data);
-       // const date = new Date(res.data.trnRecordedDate);
-       // setRecDate(date)
       })
       .catch((err) => {
         alert(err.message);
       });
   };
-
-  const getEmployee = async () => {
-    axios
-      .get('http://localhost:8070/employee/viewEmployee')
-      .then((res) => {
-        setEmployee(res.data);
-       // const date = new Date(res.data.trnRecordedDate);
-       // setRecDate(date)
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-  };
-
-
 
   useEffect(() => {
     getSalary();
   }, []);
-
-  useEffect(() => {
-    getEmployee();
-  }, []);
-
 
   const deleteFinance = async (id) => {
     await axios
@@ -64,34 +41,56 @@ const FinanceViewAll = () => {
 
 
   return (
-    <div>
+<div>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-        <Header category="Table" title="Employees" />
+
+        <Header category="Table" title="Cash Transactions" />
+
+        <div className=" flex items-center mb-5 ">
+          <div>
+            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }} />
+          </div>
+          <div className="mr-0 ml-auto">
+            <Link to={"/financePreview"}> {/* change this link your preview page */}
+              <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+            </Link>
+          </div>
+
+          </div>
+
         <div className="block w-full overflow-x-auto rounded-lg">
           <table className="w-full rounded-lg">
             <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                 <TableHeader value="Employee Number" />
-                <TableHeader value="Employee Name" />
-                <TableHeader value="Employee Designation" />
                 <TableHeader value="Basic Salary" />
                 <TableHeader value="Allowance" />
                 <TableHeader value="Incentives" />
                 <TableHeader value="Employee Nett Salary" />
+                <TableHeader value="Modify" />
               </tr>
             </thead>
             <tbody>
-              {Employee.map((data) => (
+            {Salary.filter((data) => {
+                    if(searchTerm == ""){
+                        return data;
+                    }else if(data.employeeNumber.toString().toLowerCase().includes(searchTerm.toLowerCase())){
+                        return data;
+                    }
+                }).map((data) => (
                 <tr className="text-sm h-10 border dark:border-slate-600">
 
-                    <TableData value={data.employeeNumber} />
-                    <TableData value={data.employeeFullName} />
-                    <TableData value={data.employeeDesignation} />
-                    <TableData value={data.employeeDesignation} />
-                  
+                    <TableData value={data.employeeNumber}/>
+                    <TableData value={"Rs." + data.employeeBasicSalary} />
+                    <TableData value={"Rs." + data.employeeAllowance} />
+                    <TableData value={"Rs." + data.employeeIncentive} />
+                    <TableData value={"Rs." + (data.employeeIncentive + data.employeeAllowance + data.employeeBasicSalary)}/>
 
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                    <Link to={`/FinanceUpdate/${data._id}`}>
+                    <Link to={`/SalaryUpdate/${data._id}`}>
                       <button
                         type="button"
                         className="font-bold py-1 px-4 rounded-full mx-3 text-white"
