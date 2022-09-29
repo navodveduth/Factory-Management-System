@@ -54,6 +54,7 @@ function MaintenanceCreateForm() {
                             onChange={(e) =>{
                                 setType(e.target.value);
                             }}>
+                                <option selected>Choose...</option>
                                 <option value="Vehicle">Vehicle</option>
                                     <option value="Machinery">Machinery</option>
                                     <option value="Building">Building</option>
@@ -96,7 +97,7 @@ function MaintenanceCreateForm() {
                             onChange={(e) =>{
                                 setStatus(e.target.value);
                             }}>
-                                <option value="Just scheduled">Just scheduled</option>
+                                <option selected>Choose...</option>
                                     <option value="In progress">In progress</option>
                                     <option value="Completed">Completed</option>
                             </select>
