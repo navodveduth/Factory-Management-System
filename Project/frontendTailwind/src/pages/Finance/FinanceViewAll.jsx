@@ -17,7 +17,6 @@ const FinanceViewAll = () => {
       .get('http://localhost:8070/finance/viewTransaction')
       .then((res) => {
         setTransactions(res.data);
-
       })
       .catch((err) => {
         alert(err.message);
@@ -27,6 +26,7 @@ const FinanceViewAll = () => {
 
   useEffect(() => {
     getFinance();
+    console.log(transactions.length)
   }, []);
 
   const deleteFinance = async (id) => {
@@ -44,15 +44,26 @@ const FinanceViewAll = () => {
 
   return (
 
-    //add lines 49 to 53 to add the search bar to the page
-    //add lines 69 to 75 and adapt them to your view, or copy the entire return and change the variables
-
+    <div>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-        <div><div class="" style={{width:"70%", marginLeft:"85%", marginBottom:"-5%"}}>
-    <input type="search" class="form-control rounded" placeholder="Search Here" aria-label="Search" aria-describedby="search-addon" onChange={(e) => {
-    setSearchTerm(e.target.value);
-    }} /></div> 
-        <Header category="Table" title="Transactions" />
+
+        <Header category="Table" title="Cash Transactions" />
+
+        <div className=" flex items-center mb-5 ">
+          <div>
+            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }} />
+          </div>
+          <div className="mr-0 ml-auto">
+            <Link to={"/financePreview"}> {/* change this link your preview page */}
+              <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+            </Link>
+          </div>
+
+          </div>
+
         <div className="block w-full overflow-x-auto rounded-lg">
           <table className="w-full rounded-lg">
             <thead>

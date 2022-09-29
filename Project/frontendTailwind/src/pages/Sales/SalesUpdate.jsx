@@ -20,10 +20,9 @@ function SalesUpdate() {
     const getSale = () => {
         axios.get(`http://localhost:8070/sales/${id}`)
         .then((res) => {
-            const ordDate = new Date(res.data.orderDate).toISOString().split('T')[0];
-
+            
             setInvoice(res.data.invoiceNo);
-            setOrderDate(res.data.ordDate);
+            setOrderDate(res.data.orderDate);
             setCustomerName(res.data.customerName);
             setCustomerContactNo(res.data.customerContactNo);
             setMaterialsSupplied(res.data.materialsSupplied);
@@ -42,7 +41,7 @@ function SalesUpdate() {
 
   return (
     <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '>
-        <Header category="Form" title="Update Order" />
+        <Header category="Form" title="Update Invoice" />
                 <div className=" flex items-center justify-center">
 
                     <form className="" onSubmit={async(e)=>{
@@ -119,7 +118,7 @@ function SalesUpdate() {
                         <div className="mb-3">
                             <label htmlFor="totalAmount" className="form-label">Total Amount of Order</label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="totalAmount" value={totalAmount} required 
+                                id="totalAmount" value={totalAmount} required
                                 onChange={(e) =>{
                                     setTotalAmount(e.target.value);
                                 }}/>

@@ -11,7 +11,7 @@ const salesSchema = new Schema({
     },
 
     orderDate : {
-        type: Date,
+        type: String,
         required: true,
     },
 

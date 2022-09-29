@@ -35,7 +35,7 @@ function SalaryUpdate() {
 
   return (
     <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '>
-        <Header category="Form" title="Update Employee" />
+        <Header category="Form" title="Update Salary Entry" />
                 <div className=" flex items-center justify-center">
 
                     <form className="" onSubmit={async(e)=>{
@@ -70,7 +70,7 @@ function SalaryUpdate() {
                                 }}/>
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="trnDescription" className="form-label">Full name : </label>
+                            <label htmlFor="trnDescription" className="form-label">Basic Salary : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="trnDescription" defaultValue={employeeBasicSalary} placeholder="Enter Transaction Description" required 
                                 onChange={(e)=>{
@@ -79,7 +79,7 @@ function SalaryUpdate() {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="trnAmount" className="form-label">Name with initials : </label>
+                            <label htmlFor="trnAmount" className="form-label">Allowance : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="trnAmount" defaultValue={employeeAllowance} placeholder="Enter Amount" required 
                                 onChange={(e) =>{
@@ -88,7 +88,7 @@ function SalaryUpdate() {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="trnAmount" className="form-label">Name with initials : </label>
+                            <label htmlFor="trnAmount" className="form-label">Incentives : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="trnAmount" defaultValue={employeeIncentive} placeholder="Enter Amount" required 
                                 onChange={(e) =>{

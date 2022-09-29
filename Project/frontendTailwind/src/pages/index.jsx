@@ -19,6 +19,7 @@ export { default as FinanceDashboard } from './Finance/FinanceDashboard';
 export { default as FinanceNew } from './Finance/FinanceNew';
 export { default as FinanceViewAll } from './Finance/FinanceViewAll';
 export { default as FinanceUpdate } from './Finance/FinanceUpdate';
+export { default as FinancePreview} from "./Finance/FinancePreview";
 
 export { default as SalaryDashboard } from './Finance/SalaryDashboard';
 export { default as SalaryViewAll } from './Finance/SalaryViewAll';
@@ -48,6 +49,7 @@ export { default as StockUpdate } from './Stock/StockUpdate';
 export { default as StockPDF } from './Stock/StockPDF';
 export { default as StockUtilisation } from './Stock/StockUtilisation';
 export { default as StockUtilUpdate } from './Stock/StockUtilUpdate';
+export { default as StockUtilPDF} from './Stock/StockUtilPDF';
 
 export { default as DamagedStockDashboard } from './Stock/DamagedStockDashboard';
 export { default as DamagedStockView } from './Stock/DamagedStockView';
@@ -56,7 +58,7 @@ export { default as DamagedStockUpdate } from './Stock/DamagedStockUpdate';
 export { default as DStockPDF } from './Stock/DStockPDF';
 
 // janindu
-
+export { default as SalesPreview } from './Sales/SalesPreview';
 export { default as SalesDashboard } from './Sales/SalesDashboard';
 export { default as SalesNew } from './Sales/SalesNew';
 export { default as SalesUpdate } from './Sales/SalesUpdate';
@@ -69,7 +71,10 @@ export { default as SupplierDashboard } from './SupplierDashboard';
 export { default as SupplierNew } from './SupplierNew';
 export { default as SupplierUpdate } from './SupplierUpdate';
 export { default as SupplierViewAll } from './SupplierViewAll';
+export {default as SupplierDetailsPreview} from './SupplierDetailsPreview';
+export { default as SupplierRecordsDashboard} from './SupplierRecordsDashboard';
 
-export { default as SupplierRecordsDashboard } from './SupplierRecordsDashboard';
+
+
 
 // devindu
