@@ -34,7 +34,7 @@ const TransportNew = () => {
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-      <Header category="Form" title="New Transport" />
+      <Header category="Form" title="Create New Transport Record" />
       <div className="flex items-center justify-center ">
         <form
           onSubmit={async (e) => {
@@ -87,6 +87,7 @@ const TransportNew = () => {
               type="text"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
               id="address"
+              placeholder="Enter destination..."
               required
               onChange={(e) => {
                 setDestinationAddress(e.target.value);
@@ -124,6 +125,7 @@ const TransportNew = () => {
               type="text"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
               id="distance"
+              placeholder="Enter distance..."
               required
               min="0"
               onChange={(e) => {
@@ -157,6 +159,7 @@ const TransportNew = () => {
               type="text"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
               id="description"
+              placeholder="Enter description..."
               required
               onChange={(e) => {
                 setDescription(e.target.value);
@@ -183,7 +186,7 @@ const TransportNew = () => {
             type="submit"
             className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600"
           >
-            Create
+            Add Transport Record
           </button>
         </form>
       </div>

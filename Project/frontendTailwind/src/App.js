@@ -55,10 +55,12 @@ import {
   TransportViewAll,
   TransportNew,
   TransportUpdate,
+  TransportReport,
   DriverDashboard,
   DriverViewAll,
   DriverNew,
   DriverUpdate,
+  DriverReport,
 } from './pages';
 // shafa
 import {StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockUtilisation, StockUtilUpdate} from './pages';
@@ -282,6 +284,7 @@ const App = () => {
                 <Route path="/TransportViewAll" element={<TransportViewAll />} />
                 <Route path="/TransportCreate" element={<TransportNew />} />
                 <Route  path="/TransportUpdate/:id" element={<TransportUpdate />} />
+                <Route path="/TransportReport" element={<TransportReport />} />
 
 
 
@@ -294,6 +297,8 @@ const App = () => {
                 <Route path="/DriverViewAll" element={<DriverViewAll />} />
                 <Route path="/DriverCreate" element={<DriverNew />} />
                 <Route path="/DriverUpdate/:id" element={<DriverUpdate />} />
+                <Route path="/DriverReport" element={<DriverReport />} />
+
 
 
 
