@@ -44,14 +44,24 @@ function StockView() {
 
     return (
 
-        <div>
-            <Link to={'/generatePDF'}>
-                <button type="button" class="inline-block px-6 py-2 border-2 border-blue-400 text-blue-400 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black 
-                hover:bg-opacity-5 focus:outline-none focus:ring-0 transition 
-                duration-150 ease-in-out" style={{ marginLeft: "85%" }}>Generate PDF</button>
-            </Link>
             <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
                 <Header category="Table" title="Stocks" />
+
+                <div className=" flex items-center mb-5 ">
+          <div>
+            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }} />
+          </div>
+          <div className="mr-0 ml-auto">
+            <Link to={"/generateSPDF"}> {/* change this link your preview page */}
+              <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+            </Link>
+          </div>
+
+          </div>
+
                 <div className="block w-full overflow-x-auto rounded-lg">
                     <table className="w-full rounded-lg">
                         <thead>
@@ -69,12 +79,17 @@ function StockView() {
                         </thead>
                         <tbody>
                             {stock.filter((data) => {
-                                if (searchTerm == "") {
+                                if(searchTerm == ""){
                                     return data;
-                                } else if (data.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                    return data;
-                                }
-                            }).map((data, key) => {//map is used to iterate the array
+                                }else if((data.stockCode.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                  (data.stockName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                  (data.stockCategory.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                  (data.supplier.toLowerCase().includes(searchTerm.toLowerCase())))
+                                  
+                                  {
+                                  return data;
+                                  }
+                              }).map((data, key) => {//map is used to iterate the array
                                 const date = new Date(data.lastUpdated).toISOString().split('T')[0];
 
                                 return (
@@ -84,7 +99,7 @@ function StockView() {
                                         <TableData value={data.stockCategory} />
                                         <TableData value={date} />
                                         <TableData value={data.quantity} />
-                                        <TableData value={data.unitPrice} />
+                                        <TableData value={"Rs." + data.unitPrice} />
                                         <TableData value={data.supplier} />
                                         <TableData value={data.totalValue} />
 
@@ -115,7 +130,6 @@ function StockView() {
                     </table>
                 </div>
             </div>
-        </div>
 
     )
 }
