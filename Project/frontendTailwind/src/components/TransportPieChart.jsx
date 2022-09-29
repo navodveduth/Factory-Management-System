@@ -66,7 +66,7 @@ const TransportPieChart = () => {
               },
               {
                 x: 'Goods',
-                y: ((staffTr / totTransport) * 100).toPrecision(4),
+                y: ((goodsTr / totTransport) * 100).toPrecision(4),
                 text: `${((goodsTr / totTransport) * 100).toPrecision(2)}%`,
               },
             ]}
