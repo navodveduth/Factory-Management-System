@@ -9,14 +9,28 @@ import TableHeader from '../../components/Table/TableHeader';
 const FinanceViewAll = () => {
   const { currentColor } = useStateContext();
 
-  const [transactions, setTransactions] = useState([]);
+  const [Salary, setSalary] = useState([]);
+  const [Employee, setEmployee] = useState([]);
   //const [recordedDate, setRecDate] = useState(' ');
 
-  const getFinance = async () => {
+  const getSalary = async () => {
     axios
-      .get('http://localhost:8070/finance/viewTransaction')
+      .get('http://localhost:8070/salary/SalaryView')
       .then((res) => {
-        setTransactions(res.data);
+        setSalary(res.data);
+       // const date = new Date(res.data.trnRecordedDate);
+       // setRecDate(date)
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
+  const getEmployee = async () => {
+    axios
+      .get('http://localhost:8070/employee/viewEmployee')
+      .then((res) => {
+        setEmployee(res.data);
        // const date = new Date(res.data.trnRecordedDate);
        // setRecDate(date)
       })
@@ -26,16 +40,22 @@ const FinanceViewAll = () => {
   };
 
 
+
   useEffect(() => {
-    getFinance();
+    getSalary();
   }, []);
+
+  useEffect(() => {
+    getEmployee();
+  }, []);
+
 
   const deleteFinance = async (id) => {
     await axios
-      .delete(`http://localhost:8070/finance/deleteTransaction/${id}`)
+      .delete(`http://localhost:8070/salary/deleteSalary/${id}`)
       .then((res) => {
-        alert('Transaction Deleted Sucessfully');
-        getFinance();
+        alert('Salary Data Deleted Sucessfully');
+        getSalary();
       })
       .catch((err) => {
         alert(err.message);
@@ -51,22 +71,24 @@ const FinanceViewAll = () => {
           <table className="w-full rounded-lg">
             <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                <TableHeader value="Transaction ID" />
-                <TableHeader value="Description" />
-                <TableHeader value="Amount" />
-                <TableHeader value="Type" />
-                <TableHeader value="Date of Transaction" />
-                <TableHeader value="Manage" />
+                <TableHeader value="Employee Number" />
+                <TableHeader value="Employee Name" />
+                <TableHeader value="Employee Designation" />
+                <TableHeader value="Basic Salary" />
+                <TableHeader value="Allowance" />
+                <TableHeader value="Incentives" />
+                <TableHeader value="Employee Nett Salary" />
               </tr>
             </thead>
             <tbody>
-              {transactions.map((data) => (
+              {Employee.map((data) => (
                 <tr className="text-sm h-10 border dark:border-slate-600">
-                  <TableData value={data.trnID} />
-                  <TableData value={data.trnDesc} />
-                  <TableData value={data.trnAmount} />
-                  <TableData value={data.trnType} />
-                  <TableData value={data.trnRecordedDate} /> 
+
+                    <TableData value={data.employeeNumber} />
+                    <TableData value={data.employeeFullName} />
+                    <TableData value={data.employeeDesignation} />
+                    <TableData value={data.employeeDesignation} />
+                  
 
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                     <Link to={`/FinanceUpdate/${data._id}`}>
