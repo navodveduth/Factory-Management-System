@@ -7,7 +7,9 @@ export {default as MaintenanceDashboard}  from './MaintenanceDashboard';
 export {default as MaintenanceViewAll}  from './MaintenanceViewAll';
 export {default as MaintenanceNew}  from './MaintenanceNew';
 export {default as MaintenanceUpdate}  from './MaintenanceUpdate';
-// export {default as MaintainenceTask}  from './MaintainenceTasks';
+
+export {default as MaintainenceTask}  from './MaintainenceTask';
+
 
 
 
