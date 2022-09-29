@@ -42,7 +42,7 @@ const MaintainenceReport = () => {
 
                 <div className=" flex items-center mb-5 ">
                     <div className="mr-0 ml-auto">
-                        <button onClick={createPDF} type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+                        <button onClick={createPDF} type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
                     </div>
                 </div>
 
