@@ -16,6 +16,8 @@ function MachineryCreateForm() {
   const [numberOfYrs, setNumberOfYrs] = useState('');
   const [others, setOthers] = useState('');
 
+  var date = new Date().toISOString().split('T')[0];
+
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
               <Header category="Form" title=" Add New Machinery" />
@@ -52,7 +54,7 @@ function MachineryCreateForm() {
 
                 <div className="mb-3">
                             <label htmlFor="employeeNumber" className="text-md">Machine ID : </label>
-                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" pattern="[A-Z]{1}[0-9]{3,7}"
                                 id="employeeNumber"  required 
                                 onChange={(e)=>{
                                     setMachineID(e.target.value);
@@ -70,7 +72,7 @@ function MachineryCreateForm() {
                         <div className="mb-3">
                             <label htmlFor="employeeNameWithInitials" className="form-label">Purchased date : </label>
                             <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="employeeNameWithInitials"   required 
+                                id="employeeNameWithInitials"   min="2010-01-01" max={date}  required 
                                 onChange={(e) =>{
                                     setPurchasedDate(e.target.value);
                                 }}/>
