@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { GrVmMaintenance } from 'react-icons/gr';
-import { DashTopBox, DashTopButton } from '../../components';
-
+import { DashTopBox, DashTopButton, MaintainChart, ChartsHeader } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 
 
@@ -60,12 +59,14 @@ const maintcomp = maintainence.filter((maint) => maint.status === "Completed").l
           <DashTopBox icon={<GrVmMaintenance />} label="Maintenances in progress" data={maintprog} />      
         </div>
       </div>
+
+      <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+          < MaintainChart/>
+      </div>
+
     </div>
 
-    /* <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-        ----------use this div to create your graphs.--------------
-        ----------one div per graph -------------------------------
-       <div>*/
+  
   );
 };
 

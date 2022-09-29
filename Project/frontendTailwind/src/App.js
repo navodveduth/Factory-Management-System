@@ -26,8 +26,11 @@ import {
   FinanceDashboard,
   FinanceViewAll,
   FinanceUpdate,
+  FinancePreview,
 } from './pages';
-import { SalaryDashboard } from './pages';
+import { SalaryDashboard, SalaryViewAll, SalaryNew, SalaryUpdate } from './pages';
+
+
 
 // chanukya
 
@@ -36,6 +39,7 @@ import {
   MachineryNew,
   MachineryUpdate,
   MachineryViewAll,
+  MachineryReport,
 } from './pages/MachineryAndMaintenance';
 import {
   MaintenanceDashboard,
@@ -43,6 +47,7 @@ import {
   MaintenanceUpdate,
   MaintenanceViewAll,
   MaintainenceTask,
+  MaintainenceReport,
 } from './pages/MachineryAndMaintenance';
 
 // navod
@@ -51,10 +56,12 @@ import {
   TransportViewAll,
   TransportNew,
   TransportUpdate,
+  TransportReport,
   DriverDashboard,
   DriverViewAll,
   DriverNew,
   DriverUpdate,
+  DriverReport,
 } from './pages';
 // shafa
 import {StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockUtilisation, StockUtilUpdate} from './pages';
@@ -198,10 +205,16 @@ const App = () => {
                 <Route path="/FinanceNew" element={<FinanceNew />} />
                 <Route path="/FinanceViewAll" element={<FinanceViewAll />} />
                 <Route path="/FinanceUpdate/:id" element={<FinanceUpdate />} />
-
-                <Route path="/SalaryDashboard" element={<SalaryDashboard />} />
+                <Route path="/FinancePreview/" element={<FinancePreview />} />
 
                 {/* salary management  */}
+
+                <Route path="/SalaryDashboard" element={<SalaryDashboard />} />
+                <Route path="/SalaryViewAll" element={<SalaryViewAll />} />
+                <Route path="/SalaryNew" element={<SalaryNew />} />
+                <Route path="/SalaryUpdate/:id" element={<SalaryUpdate />} />
+                
+                
 
                 {/* sales management  */}
                 <Route path="/SalesDashboard" element={<SalesDashboard />} />
@@ -224,7 +237,7 @@ const App = () => {
                   path="/MachineryUpdate/:id"
                   element={<MachineryUpdate />}
                 />
-
+                <Route path="/MachineryReport/" element={<MachineryReport />} />
                 {/* maintenance management  */}
                 <Route
                   path="/MaintenanceDashboard"
@@ -240,6 +253,7 @@ const App = () => {
                   element={<MaintenanceUpdate />}
                 />
                 <Route path="/MaintainenceTask/" element={<MaintainenceTask />} />
+                <Route path="/MaintainenceReport" element={<MaintainenceReport />} />
 
                 {/* production management  */}
                 <Route path="/vieworders" element={<OrderViewAll />} />
@@ -272,6 +286,7 @@ const App = () => {
                 <Route path="/TransportViewAll" element={<TransportViewAll />} />
                 <Route path="/TransportCreate" element={<TransportNew />} />
                 <Route  path="/TransportUpdate/:id" element={<TransportUpdate />} />
+                <Route path="/TransportReport" element={<TransportReport />} />
 
 
 
@@ -284,6 +299,8 @@ const App = () => {
                 <Route path="/DriverViewAll" element={<DriverViewAll />} />
                 <Route path="/DriverCreate" element={<DriverNew />} />
                 <Route path="/DriverUpdate/:id" element={<DriverUpdate />} />
+                <Route path="/DriverReport" element={<DriverReport />} />
+
 
 
 
