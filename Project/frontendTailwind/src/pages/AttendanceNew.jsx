@@ -8,7 +8,6 @@ function AttendanceNew() {
   const navigate = useNavigate();
 
   const [employeeNumber, setEmployeeNumber] = useState('');
-  const [attendanceDate, setAttendanceDate] = useState('');
   const [employeeInTime, setEmployeeInTime] = useState('');
   const [attendanceStatus, setAttendanceStatus] = useState('');
 
@@ -21,7 +20,6 @@ function AttendanceNew() {
                   
                   const newAttendance = {
                       employeeNumber,
-                      attendanceDate,
                       employeeInTime,
                       attendanceStatus
                   }
@@ -46,15 +44,6 @@ function AttendanceNew() {
                   id="employeeNumber" placeholder="Enter the employee number" required 
                   onChange={(e)=>{
                       setEmployeeNumber(e.target.value);
-                  }}/>
-                </div>
-
-                <div className="mb-3">
-                  <label for="attendanceDate" className="form-label">Attendance Date : </label>
-                  <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="attendanceDate" placeholder="Enter the attendance date" required 
-                  onChange={(e)=>{
-                      setAttendanceDate(e.target.value);
                   }}/>
                 </div>
 

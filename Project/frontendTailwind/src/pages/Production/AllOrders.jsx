@@ -65,7 +65,7 @@ export default function AllOrders(){
                 <thead>
                     <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                     <TableHeader value ="Invoice No"></TableHeader>
-                    <TableHeader value ="Material"></TableHeader>
+                    <TableHeader value ="Product"></TableHeader>
                     <TableHeader value ="Date"></TableHeader>
                     <TableHeader value ="Material Cost"></TableHeader>
                     <TableHeader value ="Quantity"></TableHeader>
@@ -89,11 +89,11 @@ export default function AllOrders(){
                                 <TableData value={data.invoiceNo}/>
                                 <TableData value={data.orderName}/>
                                 <TableData value={data.costDate}/>
-                                <TableData value={data.materialCost}/>
+                                <TableData value={"Rs." + data.materialCost}/>
                                 <TableData value={data.unitQty}/>
-                                <TableData value={data.totalMatCost}/>
-                                <TableData value={data.overHeadCost}/>
-                                <TableData value={data.totalCost}/>
+                                <TableData value={"Rs." +data.totalMatCost}/>
+                                <TableData value={"Rs." +data.overHeadCost}/>
+                                <TableData value={"Rs." +data.totalCost}/>
                                 <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                                     <Link to={"/updateCost/" +data._id }>
                                         <button 

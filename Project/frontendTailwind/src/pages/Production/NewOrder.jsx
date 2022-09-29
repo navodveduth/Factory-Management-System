@@ -65,16 +65,17 @@ export default function AddOrder(){
                 </div>
 
                 <div className="mb-3">
-                    <label for="age">Material Description</label>
-                    <input type="text" 
-                    className="mt-1 block w-800 rounded-md bg-gray-    100 focus:bg-white dark:text-black" 
-                    id="age" 
-                    placeholder="Description" 
-                    onChange={(e)=>{
-                         setOrderName(e.target.value);   
-                    }}
-                    required/>
-                </div>
+                        <label for="category" className="form-label">Select the Product</label>
+                        < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"  id="category" required onChange={(e) => {
+                            setOrderName(e.target.value);  
+                        }}>
+                            <option placeholder>Select option</option>
+                            <option value="T-Shirts">T-Shirts</option>
+                            <option value="Collars">Collars</option>
+                            <option value="Trousers">Trousers</option>
+                            <option value="Shirts">Shirts</option>
+                        </select>
+                    </div>
 
                 <div className="mb-3">
                     <label for="address">Enter the date</label>

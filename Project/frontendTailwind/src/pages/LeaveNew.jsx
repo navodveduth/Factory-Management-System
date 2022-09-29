@@ -63,9 +63,14 @@ return (
               </div>
               <div className="mb-3">
                 <label htmlFor="leaveType" className="form-label">Leave Type</label>
-                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="leaveType" placeholder="Enter Leave Type" value={leaveType} onChange={(e)=>{
+                <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="leaveType" placeholder="Enter Leave Type" value={leaveType} onChange={(e)=>{
                     setLeaveType(e.target.value);
-                }}/>
+                }}>
+                  <option selected>Select leave type</option>
+                  <option value="Regular">Regular</option>
+                  <option value="Half Day">Half Day</option>
+                  <option value="Short Leave">Short Leave</option>
+                </select>
               </div>
               <div className="mb-3">
                 <label htmlFor="leaveReason" className="form-label">Leave Reason</label>
@@ -80,7 +85,7 @@ return (
                 onChange={(e)=>{
                   setLeaveStatus(e.target.value);
                 }}>
-                  <option selected>Select Status</option>
+                  <option selected>Select leave status</option>
                   <option value="Pending">Pending</option>
                 </select>
               </div>
