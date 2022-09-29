@@ -91,14 +91,14 @@ function StockUtilisation() {
                               }).map((data, key) => {//map is used to iterate the array
                                 const date = new Date(data.lastUpdated).toISOString().split('T')[0];
 
-                                // var datacolor = "text-black";
-                                // if (data.sufficientStock === "Available") {
-                                //     datacolor = "text-green-500font-bold";
-                                // } else if (data.sufficientStock === "-") {
-                                //     datacolor = "text-black font-bold";
-                                // } else {
-                                //     datacolor = "text-red-600 font-bold";
-                                // }
+                                var datacolor = "text-black";
+                                if (data.sufficientStock === "Available") {
+                                    datacolor = "text-green-500font-bold";
+                                } else if (data.sufficientStock === "-") {
+                                    datacolor = "text-black font-bold";
+                                } else {
+                                    datacolor = "text-red-600 font-bold";
+                                }
 
                                 return (
                                     <tr className="text-sm h-10 border dark:border-slate-600">
@@ -108,7 +108,7 @@ function StockUtilisation() {
                                         <TableData value={date} />
                                         <TableData value={data.quantity} />
                                         <TableData value={data.reorderLevel} />
-                                        <TableData value={data.sufficientStock} />
+                                        <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.sufficientStock} </td>
 
                                         <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                                             <Link to={`/StockUtilUpdate/${data._id}`}>
