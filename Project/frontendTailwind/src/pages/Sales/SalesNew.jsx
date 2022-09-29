@@ -112,7 +112,7 @@ const navigate = useNavigate();    //useNavigate hook to redirect to another pag
                    onChange={(e) =>{
                     setStatus(e.target.value);
                   }}>
-                      <option selected>Select Order Status</option>
+                      
                       <option value="Placed">Placed</option>
                      {/* <option value='Pending'>Pending</option>
                     <option value='Finished'>Finished</option> */}
