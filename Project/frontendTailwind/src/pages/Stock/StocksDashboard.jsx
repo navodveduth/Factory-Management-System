@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { FiUser } from 'react-icons/fi';
+import {  GiRolledCloth, GiSewingNeedle, GiClothes } from 'react-icons/gi';
+import { GrMoney } from 'react-icons/gr';
+import { AiOutlineStock } from 'react-icons/ai';
 import { DashTopBox, DashTopButton } from '../../components';
 
 import { useStateContext } from '../../contexts/ContextProvider';
+import StockBarChart from '../../components/StockBarChart';
 
 
 const StocksDashboard = () => {
@@ -30,7 +33,10 @@ const StocksDashboard = () => {
   const countRawMaterials= stock.filter((stk) => stk.stockCategory === 'Raw materials').length;
   const countWorkInProgress= stock.filter((stk) => stk.stockCategory === 'Work in progress').length;
   const countFinishedGoods= stock.filter((stk) => stk.stockCategory === 'Finished goods').length;
-
+  var total = 0;
+   for (let index = 0; index < itemCount; index++) {
+      total = total + stock[index].totalValue; 
+ }
 
   return (
     <div className="mt-5">
@@ -55,19 +61,19 @@ const StocksDashboard = () => {
       <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-          {/* <DashTopBox icon={<FiUser />} label="Total Stocks Value" data={total} />  */}
-          <DashTopBox icon={<FiUser />} label="Total Items" data={itemCount} />
-          <DashTopBox icon={<FiUser />} label="Total Raw Materials" data={countRawMaterials}/>
-          <DashTopBox icon={<FiUser />} label="Total Work In Progress" data={countWorkInProgress} />
-          <DashTopBox icon={<FiUser />} label="Total Finished Goods" data={countFinishedGoods} />       
+          <DashTopBox icon={<GrMoney />} label="Total Stocks Value" data={total} />  
+          <DashTopBox icon={<AiOutlineStock />} label="Total Items" data={itemCount} />
+          <DashTopBox icon={<GiRolledCloth />} label="Total Raw Materials" data={countRawMaterials}/>
+          <DashTopBox icon={<GiSewingNeedle />} label="Total Work In Progress" data={countWorkInProgress} />
+          <DashTopBox icon={<GiClothes />} label="Total Finished Goods" data={countFinishedGoods} />       
         </div>
       </div>
-    </div>
+    
 
-    /* <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-        ----------use this div to create your graphs.--------------
-        ----------one div per graph -------------------------------
-       <div>*/
+    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+        <StockBarChart/>
+       </div>
+       </div>
   );
 };
 

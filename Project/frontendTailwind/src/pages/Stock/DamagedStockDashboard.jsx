@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { FiUser } from 'react-icons/fi';
+import {  GiRolledCloth, GiSewingNeedle, GiClothes } from 'react-icons/gi';
+import { GrMoney } from 'react-icons/gr';
+import { AiOutlineStock } from 'react-icons/ai';
 import { DashTopBox, DashTopButton } from '../../components';
 
 import { useStateContext } from '../../contexts/ContextProvider';
@@ -58,11 +60,11 @@ const DamagedStockDashboard = () => {
       <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-          <DashTopBox icon={<FiUser />} label="Total Stocks Value" data={total} /> 
-          <DashTopBox icon={<FiUser />} label="Total Items" data={itemCount} />
-          <DashTopBox icon={<FiUser />} label="Total Raw Materials" data={countRawMaterials} />
-          <DashTopBox icon={<FiUser />} label="Total Work in progress" data={countWorkInProgress} />
-          <DashTopBox icon={<FiUser />} label="Total Finished Goods" data={countFinishedGoods} />
+          <DashTopBox icon={<GrMoney />} label="Total Stocks Value" data={total} /> 
+          <DashTopBox icon={<AiOutlineStock />} label="Total Items" data={itemCount} />
+          <DashTopBox icon={<GiRolledCloth />} label="Total Raw Materials" data={countRawMaterials} />
+          <DashTopBox icon={<GiSewingNeedle />} label="Total Work in progress" data={countWorkInProgress} />
+          <DashTopBox icon={<GiClothes />} label="Total Finished Goods" data={countFinishedGoods} />
         </div>
       </div>
 
