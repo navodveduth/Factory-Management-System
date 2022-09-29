@@ -72,7 +72,7 @@ export const updateFinancialData = async (req, res) => {
         const financedata = req.body;
         const ID = req.params.id;
         await FD.findByIdAndUpdate(ID, financedata);
-        res.status(400).json({
+        res.status(200).json({
             status : "Financial Data Updated"
         })
     } catch (error) {
