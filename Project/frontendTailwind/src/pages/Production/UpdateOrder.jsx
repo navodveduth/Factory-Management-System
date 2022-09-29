@@ -52,10 +52,10 @@ export default function UpdateOrder(){
                             invoiceNo,
                             orderName,
                             costDate,
-                            parseMaterialCost,
-                            parseUnitQty,
+                            materialCost,
+                            unitQty,
                             totalMatCost,
-                            parseOverhead,
+                            overHeadCost,
                             totalCost,
 
                         }
@@ -76,11 +76,18 @@ export default function UpdateOrder(){
                 </div>
 
                 <div className="mb-3">
-                    <label for="age" className="text-md">Enter the Description</label>
-                    <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="age" placeholder={orderName} onChange={(e)=>{
-                         setOrderName(e.target.value);   
-                    }}/>
-                </div>
+                        <label for="category" className="form-label">Select the Product</label>
+                        < select placeholder={orderName} class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"  id="category" required onChange={(e) => {
+                            setOrderName(e.target.value);  
+                        }}>
+                            <option selected value={orderName}>{orderName}</option>
+                            <option value="T-Shirts">T-Shirts</option>
+                            <option value="Collars">Collars</option>
+                            <option value="Trousers">Trousers</option>
+                            <option value="Shirts">Shirts</option>
+                        </select>
+                    </div>
+
 
                 <div className="mb-3">
                     <label for="date" className="text-md" >Enter the date</label>

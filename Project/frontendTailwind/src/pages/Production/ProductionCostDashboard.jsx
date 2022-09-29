@@ -2,11 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FiUser } from 'react-icons/fi';
-import { DashTopBox, DashTopButton } from '../../components';
+import { DashTopBox, DashTopButton, ProductionPieChart } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 
 const ProductionDashBoard = () => {
   const { currentColor, currentMode } = useStateContext();
+  const [Order,setOrder] = useState([]);
+
+  async function getOrders(){
+      await axios.get("http://localhost:8070/production/order/allOrders").then((res)=>{
+          setOrder(res.data);
+      }).catch((err)=>{
+          alert(err.message);
+      })
+  }
+
+  useEffect(() => {
+    getOrders();
+  }, []);
+
+  const prodCount = Order.length;
+  const prodT= Order.filter((Order) => Order.orderName == 'T-Shirts').length;
+  const prodCollars= Order.filter((Order) => Order.orderName == 'Collars').length;
+  const prodTrousers= Order.filter((Order) => Order.orderName == 'Trousers').length;
+  const prodShirts= Order.filter((Order) => Order.orderName == 'Shirts').length;
   return (
 
     <div className="mt-5">
@@ -25,18 +44,19 @@ const ProductionDashBoard = () => {
       <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-          <DashTopBox icon={<FiUser />} label="Total Orders" data="100" />
-          <DashTopBox icon={<FiUser />} label="Total Employees" data="100" />
-          <DashTopBox icon={<FiUser />} label="Total Employees" data="100" />
-          <DashTopBox icon={<FiUser />} label="Total Employees" data="100" />       
+          <DashTopBox icon={<FiUser />} label="Total Products" data={prodCount} />
+          <DashTopBox icon={<FiUser />} label="Total T-shirts" data={prodT} />
+          <DashTopBox icon={<FiUser />} label="Total Collars" data={prodCollars} />
+          <DashTopBox icon={<FiUser />} label="Total Trousers" data={prodTrousers} />
+          <DashTopBox icon={<FiUser />} label="Total Shirts" data={prodShirts} />       
         </div>
       </div>
-    </div>
+  
 
-    /* <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-        ----------use this div to create your graphs.--------------
-        ----------one div per graph -------------------------------
-       <div>*/
+        <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+         <ProductionPieChart/>
+        </div>
+      </div>
   );
 };
 

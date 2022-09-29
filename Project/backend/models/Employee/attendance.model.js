@@ -9,10 +9,6 @@ const attendanceSchema = new Schema({
         minlength: 4,
         maxlength: 4,
     },
-    attendanceDate: {
-        type: Date,
-        required: true,
-    },
     employeeInTime: {
         type: Date,
         required: true,
