@@ -81,20 +81,6 @@ const Sidebar = () => {
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
-            <NavLink
-              to="/Salary"
-              onClick={handleCloseSideBar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <FiBarChart /> {/*  icon  */}
-              <span className="capitalize ">Salary</span> {/*  link name  */}
-            </NavLink>
-
-            {/*  done ---------------------------------------------------------------------------------- done  */}
-
             {/*  menu ---------------------------------------------------------------------------------- menu  */}
             <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
               Finance management {/*  menu name  */}
