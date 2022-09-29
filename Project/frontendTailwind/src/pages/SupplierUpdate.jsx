@@ -7,6 +7,7 @@ function SupplierUpdate() {
 
     const navigate = useNavigate();
 
+    const [supplierId, setSupplierId] = useState('');
     const [companyname, setCompanyname] = useState("");
     const [contactPerson, setContactPerson] = useState("");
     const [email, setEmail] = useState("");
@@ -22,6 +23,7 @@ function SupplierUpdate() {
 
         axios.get(`http://localhost:8070/supplier/${id}`)
         .then((res) => {
+            setSupplierId(res.data.supplierId);
             setCompanyname(res.data.companyname);
             setContactPerson(res.data.contactPerson);
             setEmail(res.data.email);
@@ -51,6 +53,7 @@ function SupplierUpdate() {
                     e.preventDefault();
 
                     const updatedSupplier = {
+                        supplierId,
                         companyname,
                         contactPerson,
                         email,
@@ -72,7 +75,17 @@ function SupplierUpdate() {
                         alert(err.message);
                     })
     
-                }}>                  
+                }}>              
+
+                        <div className="mb-3">
+                            <label htmlFor="supplierId" className="form-label">Supplier ID</label>
+                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                             id="supplierId" defaultValue={supplierId} placeholder="Enter the Supplier ID" required 
+                                onChange={(e) => {
+                                setSupplierId(e.target.value);
+                            }}/>
+                        </div>
+                    
                             
                         <div className="mb-3">
                             <label htmlFor="companyname" className="text-md">Company Name : </label>
