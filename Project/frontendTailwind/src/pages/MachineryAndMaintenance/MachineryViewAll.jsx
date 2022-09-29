@@ -18,6 +18,8 @@ const MachineryViewAll = () => {
     axios.get("http://localhost:8070/machinery/")
     .then((res) => { 
         setMachinery(res.data); //setMachinery is used to update the state variable
+       
+
     })
     .catch((err) => {
         alert(err.message);
@@ -48,7 +50,7 @@ const deleteMachinery = async (id) => {
             <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                 <TableHeader value="ID" />
-                <TableHeader value="Name & Model" />
+                <TableHeader value="Name" />
                 <TableHeader value="Purchased date" />
                 <TableHeader value="Purchased Cost" />
                 {/* <TableHeader value="Salvage value" />
@@ -62,9 +64,8 @@ const deleteMachinery = async (id) => {
               {machinery.map((data) => (
 
                 // const purchasedDate = new Date(data.dateOfPurchased ).toLocaleDateString();
-                // const  depreciation = parseFloat((data.machineryCost-data.salvage)/data.numberOfYrs).toFixed(2);
-                // TotalDepreciation = TotalDepreciation + parseFloat(depreciation);
-                // TotalCost = TotalCost + parseFloat(data.machineryCost);
+                TotalDepreciation = TotalDepreciation + parseFloat(parseFloat((data.machineryCost-data.salvage)/data.numberOfYrs).toFixed(2)),
+                 TotalCost = TotalCost + parseFloat(data.machineryCost),
 
 
                 <tr className="text-sm h-10 border dark:border-slate-600">
@@ -76,6 +77,7 @@ const deleteMachinery = async (id) => {
                   <TableData value={data.numberOfYrs +"yrs"} /> */}
                   <TableData value={parseFloat((data.machineryCost-data.salvage)/data.numberOfYrs).toFixed(2)} /> 
                     <TableData value={data.others} />
+                    
 
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                   <Link to={`/MachineryUpdate/${data._id}`}>
@@ -100,10 +102,26 @@ const deleteMachinery = async (id) => {
                 </tr>
                 ))}
             </tbody>
-          </table>
+          </table><br></br><br></br>
+
+          <span className="text-xs font-semibold inline-block py-2 px-2 uppercase rounded text-red-600 bg-red-200 uppercase last:mr-0 mr-1">
+            Total Depreciation : {TotalDepreciation.toFixed(2)}
+            
+          </span>
+
+          <span className="text-xs font-semibold inline-block py-2 px-2 uppercase rounded text-red-600 bg-red-200 uppercase last:mr-0 mr-1">
+            
+            TotalCost : {TotalCost.toFixed(2)}
+          </span>
+                
         </div>
       </div>
+
+
+      
     </div>
+
+
   );
 };
 
