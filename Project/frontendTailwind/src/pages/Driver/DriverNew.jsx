@@ -49,6 +49,9 @@ const DriverView = () => {
               type="text"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
               id="nic"
+              placeholder="Enter nic number..."
+              // pattern="[0-9]{9}[vVxX] | [0-9]{12}"
+              title="You entered an invalid NIC number format which must be 9 digits and a letter or 12 digits"
               required
               onChange={(e) => {
                 setNic(e.target.value);
@@ -61,6 +64,7 @@ const DriverView = () => {
               type="text"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
               id="fullName"
+              placeholder="Enter full name..."
               required
               onChange={(e) => {
                 setFullName(e.target.value);
@@ -74,6 +78,7 @@ const DriverView = () => {
               type="text"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
               id="drivingLicenseNo"
+              placeholder="Enter driving license..."
               required
               onChange={(e) => {
                 setDrivingLicenseNo(e.target.value);
@@ -83,9 +88,12 @@ const DriverView = () => {
           <div className="mb-3">
             <label className="form-label">Contact Number</label>
             <input
-              type="number"
+              type="tel"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
               id="contactNo"
+              placeholder="Enter contact number..."
+              pattern="[0-9]{10}"
+              title="You entered an invalid contact number format which must be 10 digits"
               required
               onChange={(e) => {
                 setContactNo(e.target.value);
@@ -98,6 +106,7 @@ const DriverView = () => {
               type="text"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
               id="vehicleNo"
+              placeholder="Enter vehicle number..."
               required
               onChange={(e) => {
                 setVehicleNo(e.target.value);
@@ -110,6 +119,7 @@ const DriverView = () => {
               type="text"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
               id="vehicleModel"
+              placeholder="Enter vehicle model..."
               required
               onChange={(e) => {
                 setVehicleModel(e.target.value);

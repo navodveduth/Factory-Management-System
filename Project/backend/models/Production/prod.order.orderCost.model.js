@@ -14,7 +14,8 @@ const orderSchema = new Schema({
 
     invoiceNo: {
         type: String,
-        required:true
+        required:true,
+        unique:true
     },
     orderName:{
         type: String,
