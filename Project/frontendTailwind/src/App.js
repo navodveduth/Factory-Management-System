@@ -72,7 +72,7 @@ import {DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUp
 
 // janindu
 import {
-  SalesDashboard,
+  SalesDashboard, SalesPreview,
   SalesViewAll,
   SalesUpdate,
   SalesNew,
@@ -222,7 +222,7 @@ const App = () => {
                 <Route path="/SalesCreate" element={<SalesNew />} />
                 <Route path="/SalesUpdate/:id" element={<SalesUpdate />} />
                 <Route path="/SalesInvoice/:id" element={<SalesInvoice />} />
-
+                <Route path="/SalesPreview" element={<SalesPreview />} />
                 {/* machinery management  */}
                 <Route
                   path="/MachineryDashboard"
