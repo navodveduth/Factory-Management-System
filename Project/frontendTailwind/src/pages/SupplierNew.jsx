@@ -6,6 +6,7 @@ import { Header } from '../components';
 function AddSupplierDetails() {
     const navigate = useNavigate(); //useNavigate hook to redirect to another page after form submission is successful 
     
+    const [supplierId, setSupplierId] = useState('');
     const [companyname, setCompanyname] = useState('');
     const [contactPerson, setContactPerson] = useState('');
     const [email, setEmail] = useState('');
@@ -23,6 +24,7 @@ function AddSupplierDetails() {
                     e.preventDefault();
                     
                     const newSupplier = {
+                        supplierId,
                         companyname,
                         contactPerson,
                         email,
@@ -44,6 +46,15 @@ function AddSupplierDetails() {
                         
                      
                 }}>
+
+    <div className="mb-3">         
+                    <label for="supplierId" className="form-label">Supplier ID : </label>
+                    <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                    id="supplierId" placeholder="Enter the supplier ID" required 
+                    onChange={(e)=>{
+                        setSupplierId(e.target.value);
+                    }}/>
+                </div>
     
     <div className="mb-3">
                   <label for="companyname" className="form-label">Company Name : </label>
