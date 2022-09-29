@@ -4,6 +4,11 @@ import axios from 'axios';
 import { FiUser } from 'react-icons/fi';
 import { DashTopBox, DashTopButton, ProductionPieChart } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
+import {RiShirtFill} from "react-icons/ri"
+import {FaTshirt} from "react-icons/fa"
+import {SiSpreadshirt} from "react-icons/si"
+import {GiArmoredPants} from "react-icons/gi"
+import {CgBox} from "react-icons/cg"
 
 const ProductionDashBoard = () => {
   const { currentColor, currentMode } = useStateContext();
@@ -44,11 +49,11 @@ const ProductionDashBoard = () => {
       <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-          <DashTopBox icon={<FiUser />} label="Total Products" data={prodCount} />
-          <DashTopBox icon={<FiUser />} label="Total T-shirts" data={prodT} />
-          <DashTopBox icon={<FiUser />} label="Total Collars" data={prodCollars} />
-          <DashTopBox icon={<FiUser />} label="Total Trousers" data={prodTrousers} />
-          <DashTopBox icon={<FiUser />} label="Total Shirts" data={prodShirts} />       
+          <DashTopBox icon={<CgBox />} label="Total Products" data={prodCount} />
+          <DashTopBox icon={<FaTshirt />} label="Total T-shirts" data={prodT} />
+          <DashTopBox icon={<SiSpreadshirt/>} label="Total Collars" data={prodCollars} />
+          <DashTopBox icon={<GiArmoredPants/>} label="Total Trousers" data={prodTrousers} />
+          <DashTopBox icon={<RiShirtFill />} label="Total Shirts" data={prodShirts} />       
         </div>
       </div>
   
