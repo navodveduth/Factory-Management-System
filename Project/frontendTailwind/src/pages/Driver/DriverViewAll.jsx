@@ -49,12 +49,12 @@ const DriverViewViewAll = () => {
             <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                 <TableHeader value="NIC" />
-                <TableHeader value="First Name" />
-                <TableHeader value="Last Name" />
+                <TableHeader value="Full Name" />
                 <TableHeader value="Driving License No" />
                 <TableHeader value="Contact No" />
                 <TableHeader value="Vehicle Number" />
                 <TableHeader value="Vehicle Model" />
+                <TableHeader value="Status" />
                 <TableHeader value="Manage" />
               </tr>
             </thead>
@@ -65,12 +65,12 @@ const DriverViewViewAll = () => {
                   key={data._id}
                 >
                   <TableData value={data.nic} />
-                  <TableData value={data.firstName} />
-                  <TableData value={data.lastName} />
+                  <TableData value={data.fullName} />
                   <TableData value={data.drivingLicenseNo} />
                   <TableData value={data.contactNo} />
                   <TableData value={data.vehicleNo} />
                   <TableData value={data.vehicleModel} />
+                  <TableData value={data.status} />
 
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                     <Link to={`/driverUpdate/${data._id}`}>
