@@ -27,7 +27,9 @@ import {
   FinanceViewAll,
   FinanceUpdate,
 } from './pages';
-import { SalaryDashboard } from './pages';
+import { SalaryDashboard, SalaryViewAll, SalaryNew, SalaryUpdate } from './pages';
+
+
 
 // chanukya
 
@@ -199,9 +201,14 @@ const App = () => {
                 <Route path="/FinanceViewAll" element={<FinanceViewAll />} />
                 <Route path="/FinanceUpdate/:id" element={<FinanceUpdate />} />
 
-                <Route path="/SalaryDashboard" element={<SalaryDashboard />} />
-
                 {/* salary management  */}
+
+                <Route path="/SalaryDashboard" element={<SalaryDashboard />} />
+                <Route path="/SalaryViewAll" element={<SalaryViewAll />} />
+                <Route path="/SalaryNew" element={<SalaryNew />} />
+                <Route path="/SalaryUpdate/:id" element={<SalaryUpdate />} />
+                
+                
 
                 {/* sales management  */}
                 <Route path="/SalesDashboard" element={<SalesDashboard />} />
