@@ -45,7 +45,7 @@ function MaintainenceTask() {
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
       <div ><GrHostMaintenance />
       {days[date.getDay()]}  {date.getDate()}  {months[date.getMonth()]}  {date.getFullYear()}
-        <Header category="Form" title="Maintainence Tasks"/> 
+        <Header title="Service reminders"/> 
 
          <form onSubmit={handleSubmit}>
           <div className="flex items-center justify-center">
