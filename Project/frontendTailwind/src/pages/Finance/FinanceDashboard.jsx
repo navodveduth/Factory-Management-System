@@ -28,7 +28,7 @@ const FinanceDashboard = () => {
     getFinance();
   }, []);
 
-  var totalRev = 0, totalExp = 0;
+  var totalRev = 0, totalExp = 0, exp2022 =0;
 
   return (
 
@@ -37,9 +37,9 @@ const FinanceDashboard = () => {
       {TRN.filter((TRN) => TRN.trnType === 'Revenue').map((TRN) => {
         totalRev += TRN.trnAmount;
         })}
-        {TRN.filter((TRN) => TRN.trnType === 'Expense').map((TRN) => {
-          totalExp += TRN.trnAmount;
-          })}
+      {TRN.filter((TRN) => TRN.trnType === 'Expense').map((TRN) => {
+        totalExp += TRN.trnAmount;
+        })}
 
       <div className="flex flex-wrap lg:flex-nowrap justify-left ml-10 mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
@@ -58,8 +58,6 @@ const FinanceDashboard = () => {
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
           <DashTopBox icon={<RiMoneyDollarCircleFill />} label="Revenue Total" data= {"Rs."+totalRev} />
           <DashTopBox icon={<RiMoneyDollarCircleFill />} label="Expenses Total" data={"Rs."+totalExp} />
-          <DashTopBox icon={<RiMoneyDollarCircleFill />} label="Total Employees" data="100" />
-          <DashTopBox icon={<RiMoneyDollarCircleFill />} label="Total Employees" data="100" />       
         </div>
       </div>
 

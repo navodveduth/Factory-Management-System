@@ -12,6 +12,8 @@ function FinanceCreateForm() {
   const [trnType, setTransactionType] = useState('');
   const [trnRecordedDate, setTransactionDate] = useState('');
 
+  var date = new Date().toISOString().split('T')[0];
+
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
               <Header category="Form" title=" New Cash Transaction" />
@@ -44,7 +46,8 @@ function FinanceCreateForm() {
                 <div className="mb-3">
                   <label for="transactionID" className="form-label">Transaction ID : </label>
                   <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="transactionID" placeholder="Enter the Transaction ID" required 
+                  id="transactionID" placeholder="Enter the Transaction ID" pattern="[A-Z]{1}[0-9]{3}"
+                  title="The Transaction ID must start with one uppercase character, followed by 3 Numeric digits" required 
                   onChange={(e)=>{
                     setTransactionNumber(e.target.value);
                   }}/>
@@ -53,7 +56,7 @@ function FinanceCreateForm() {
                 <div className="mb-3">
                   <label for="TransactionDescription" className="form-label">Description : </label>
                   <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="TransactionDescription" placeholder="Enter a Description for the Transaction" required 
+                  id="TransactionDescription" placeholder="Enter a Description for the Transaction" Zrequired 
                   onChange={(e)=>{
                     setDescription(e.target.value);
                   }}/>
@@ -61,8 +64,8 @@ function FinanceCreateForm() {
 
                 <div className="mb-3">
                   <label for="trnAmount" className="form-label">Amount : </label>
-                  <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="trnAmount" placeholder="Enter the Amount" required 
+                  <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                  id="trnAmount" placeholder="Enter the Amount"  min="1" title="Please enter a valid amount" required 
                   onChange={(e) =>{
                     setAmount(e.target.value);
                   }}/>
@@ -84,7 +87,8 @@ function FinanceCreateForm() {
                 <div className="mb-3">
                   <label for="trnDate" className="form-label">Date of Transaction : </label>
                   <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="trnDate" placeholder="Enter the Date of Transaction" required 
+                  id="trnDate" placeholder="Enter the Date of Transaction"  min="2010-01-01" max={date}
+                  required 
                   onChange={(e) =>{
                     setTransactionDate(e.target.value);
                   }}/>

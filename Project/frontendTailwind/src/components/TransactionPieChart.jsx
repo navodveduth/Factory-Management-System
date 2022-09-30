@@ -20,11 +20,21 @@ const TransactionPieChart = () => {
       getFinance();
     }, []);
   
-    const trnCount = TRN.length;
-    const trnRev= TRN.filter((trn) => trn.trnType === 'Revenue').length;
-    const trnExpenses= TRN.filter((trn) => trn.trnType === 'Expense').length;
+    var totalRev = 0, totalExp = 0, total = 0;;
+
   return (
     <div >
+
+      {TRN.filter((TRN) => TRN.trnType === 'Revenue').map((TRN) => {
+        totalRev += TRN.trnAmount;
+        total += TRN.trnAmount; 
+        })}
+        {TRN.filter((TRN) => TRN.trnType === 'Expense').map((TRN) => {
+          totalExp += TRN.trnAmount;
+          total += TRN.trnAmount; 
+          })}
+          
+
         <AccumulationChartComponent title='Transaction Distribution by Type' legendSettings={{position:"Bottom"}} tooltip={{enable:true}}>
             <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]} />
             <AccumulationSeriesCollectionDirective>
@@ -33,8 +43,8 @@ const TransactionPieChart = () => {
                     innerRadius="50%"
                     dataSource={
                         [
-                            { x: 'Revenue', y: (trnRev/trnCount*100).toPrecision(4), text: (trnRev/trnCount*100).toPrecision(2) + '%'},
-                            { x: 'Expenses', y: (trnExpenses/trnCount*100).toPrecision(4), text: (trnExpenses/trnCount*100).toPrecision(2) + '%'},
+                            { x: 'Revenue', y: (totalRev), text: (totalRev/total*100).toPrecision(2) + '%'},
+                            { x: 'Expenses', y: (totalExp), text: (totalExp/total*100).toPrecision(2) + '%'},
                         ]
                     }
                     xName="x"

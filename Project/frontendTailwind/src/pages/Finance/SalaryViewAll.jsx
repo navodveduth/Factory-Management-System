@@ -44,7 +44,7 @@ const FinanceViewAll = () => {
 <div>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
 
-        <Header category="Table" title="Cash Transactions" />
+        <Header category="Table" title="Salary List" />
 
         <div className=" flex items-center mb-5 ">
           <div>
@@ -54,7 +54,7 @@ const FinanceViewAll = () => {
             }} />
           </div>
           <div className="mr-0 ml-auto">
-            <Link to={"/financePreview"}> {/* change this link your preview page */}
+            <Link to={"/SalaryPreview"}> {/* change this link your preview page */}
               <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
             </Link>
           </div>
