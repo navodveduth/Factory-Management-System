@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { MdOutlineCancel } from 'react-icons/md';
-import { FiUser, FiCalendar, FiBarChart, FiUsers, FiFileText } from 'react-icons/fi';
+import { FiUser, FiCalendar, FiBarChart, FiUsers, FiFileText, FiTool, FiPackage } from 'react-icons/fi';
 import { GiSewingMachine , GiSteeringWheel} from 'react-icons/gi';
-import { GrVmMaintenance } from 'react-icons/gr';
-import { TbBuildingWarehouse, TbTruckDelivery } from 'react-icons/tb';
-import { FaHouseDamage } from 'react-icons/fa';
+import { IoBagHandleOutline } from 'react-icons/io5';
+import { TbBuildingWarehouse, TbTruckDelivery, TbReportMoney, TbBuildingFactory2 } from 'react-icons/tb';
+import { FaHouseDamage, FaRegMoneyBillAlt } from 'react-icons/fa';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { useStateContext } from '../contexts/ContextProvider';
@@ -100,7 +100,7 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineCancel /> {/*  icon  */}
+              <TbReportMoney/> {/*  icon  */}
               <span className="capitalize ">Finance Center</span>{' '}
               {/*  link name  */}
             </NavLink>
@@ -115,7 +115,7 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineCancel /> {/*  icon  */}
+              <FaRegMoneyBillAlt/> {/*  icon  */}
               <span className="capitalize ">Salary</span> {/*  link name  */}
             </NavLink>
             {/*  done ---------------------------------------------------------------------------------- done  */}
@@ -135,13 +135,13 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineCancel /> {/*  icon  */}
+              <IoBagHandleOutline /> {/*  icon  */}
               <span className="capitalize ">Order Handling</span>{' '}
               {/*  link name  */}
             </NavLink>
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
-
+            {/*
             <NavLink
               to="/SalesDashboard"
               onClick={handleCloseSideBar}
@@ -150,9 +150,10 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineCancel /> {/*  icon  */}
-              <span className="capitalize ">Sales Analytics</span> {/*  link name  */}
-            </NavLink>
+              <MdOutlineCancel /> */}{/*  icon  */}
+              {/*<span className="capitalize ">Sales Analytics</span> {/*  link name  */}
+               {/* </NavLink> */}
+
             {/*  done ---------------------------------------------------------------------------------- done  */}
 
             {/*  menu ---------------------------------------------------------------------------------- menu  */}
@@ -170,7 +171,7 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineCancel /> {/*  icon  */}
+              <TbBuildingFactory2 /> {/*  icon  */}
               <span className="capitalize ">Production Cost</span>{' '}
               {/*  link name  */}
             </NavLink>
@@ -185,7 +186,7 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineCancel /> {/*  icon  */}
+              <FiPackage /> {/*  icon  */}
               <span className="capitalize ">Order Distribution</span>{' '}
               {/*  link name  */}
             </NavLink>
@@ -289,7 +290,7 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <GrVmMaintenance /> {/*  icon  */}
+              <FiTool /> {/*  icon  */}
               <span className="capitalize ">Maintenance</span>{' '}
               {/*  link name  */}
             </NavLink>
