@@ -25,21 +25,31 @@ export default function AllOrders(){
             getOrders();
         })
 
-        const createPDF = () => {
-            const pdf = new jsPDF("landscape", "px", "a1",false);
-            const data = document.querySelector("#tableContainer");
-            pdf.html(data).then(() => {
-                pdf.save("orders.pdf");
-               });
-        };
+        // const createPDF = () => {
+        //     const pdf = new jsPDF("landscape", "px", "a1",false);
+        //     const data = document.querySelector("#tableContainer");
+        //     pdf.html(data).then(() => {
+        //         pdf.save("orders.pdf");
+        //        });
+        // };
 
         async function deletesOrder(id){
             await axios.delete(`http://localhost:8070/production/order/delete/${id}`).then((res)=>{
-                alert("Order data deleted Successfully");
+                alert("Production cost data deleted Successfully");
                getOrders();
             }).catch((err)=>{
                 alert(err.message);
             })
+        }
+
+        const confirmFunc = (id)=>{
+
+            if (confirm("Do you want to delete?") == true) {
+                deletesOrder(id);
+            } else {
+                navigate('/vieworders');
+            }
+    
         }
 
 
@@ -104,7 +114,7 @@ export default function AllOrders(){
                                     </Link>
                                 
                                     <button onClick={()=>{
-                                    deletesOrder(data._id);
+                                    confirmFunc(data._id);
                                     }}
                                     type="button" 
                                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full">
