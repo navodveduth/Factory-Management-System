@@ -41,7 +41,15 @@ const MaintenanceViewAll = () => {
       })
   }
 
-  
+  const confirmFunc = (id)=>{
+
+		if (confirm("Do you want to delete?") == true) {
+      deleteMaintainence(id);
+		} else {
+			navigate('/MaintenanceViewAll');
+		}
+
+    }
   
   return (
     <div>
@@ -125,7 +133,7 @@ const MaintenanceViewAll = () => {
                       type="button"
                       className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
                       onClick={() => {
-                        deleteMaintainence(data._id);
+                        confirmFunc(data._id);
                       }}
                     >
                       <i className="fas fa-trash" />
