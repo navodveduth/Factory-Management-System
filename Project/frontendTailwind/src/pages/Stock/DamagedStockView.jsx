@@ -43,7 +43,7 @@ function DamagedStockView() {
     const confirmFunc = (id)=>{
 
 		if (confirm("Do you want to delete?") == true) {
-            deleteStock(id);
+            deleteDamagedStock(id);
 		} else {
 			navigate('/DamagedStockView');
 		}
@@ -92,7 +92,7 @@ function DamagedStockView() {
                                 }else if((data.stockCode.toLowerCase().includes(searchTerm.toLowerCase())) ||
                                   (data.damagedStockName.toLowerCase().includes(searchTerm.toLowerCase())) ||
                                   (data.damagedStockCategory.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                  (data.usability.toLowerCase().includes(searchTerm.toLowerCase())))
+                                  (data.usability.includes(searchTerm)))
                                   
                                   {
                                   return data;

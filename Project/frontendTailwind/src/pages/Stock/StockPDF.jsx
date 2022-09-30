@@ -27,10 +27,11 @@ function StockPDF() {
     }, [])
 
     const createPDF = async () => {
+        const date = new Date().toISOString().split('T')[0];
         const pdf = new jsPDF("landscape", "px", "a2", false);
         const data = await document.querySelector("#tblPDF");
         pdf.html(data).then(() => {
-            pdf.save("stocks.pdf");
+            pdf.save("stocks_"+ date +".pdf");
         });
     };
 
