@@ -27,7 +27,7 @@ const ProductionPieChart = () => {
 
   return (
     <div>
-        <Header category="Chart" title="Employee Distribution by Departments" />
+        <Header category="Chart" title="Costed product distribution" />
          <AccumulationChartComponent legendSettings={{position:"Right", background: "white"}} tooltip={{enable:true}} background={currentMode == 'Dark' ? '#3f434c' : '#f2f2f2'}>
          <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]}/>
             <AccumulationSeriesCollectionDirective>
