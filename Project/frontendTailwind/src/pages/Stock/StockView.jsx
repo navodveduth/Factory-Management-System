@@ -40,6 +40,15 @@ function StockView() {
         getStock();
     }, [])
 
+    const confirmFunc = (id)=>{
+
+		if (confirm("Do you want to delete?") == true) {
+            deleteStock(id);
+		} else {
+			navigate('/StockView');
+		}
+
+    }
 
 
     return (
@@ -101,7 +110,7 @@ function StockView() {
                                         <TableData value={data.quantity} />
                                         <TableData value={"Rs." + data.unitPrice} />
                                         <TableData value={data.supplier} />
-                                        <TableData value={data.totalValue} />
+                                        <TableData value={"Rs." + data.totalValue} />
 
                                         <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                                             <Link to={`/StockUpdate/${data._id}`}>
@@ -117,7 +126,7 @@ function StockView() {
                       type="button"
                       className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
                       onClick={() => {
-                        deleteStock(data._id);
+                        confirmFunc(data._id);
                       }}
                     >
                       <i className="fas fa-trash" />
