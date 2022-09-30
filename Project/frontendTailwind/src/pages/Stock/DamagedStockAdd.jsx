@@ -83,7 +83,7 @@ function DamagedStockAdd() {
 
                     <div className="mb-3">
                         <label for="quantity" className="form-label">Quantity: </label>
-                        <input type="number" title="If there is no stock please input 0" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" min="1"
+                        <input type="number" title="If there is no stock please input 0" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" min="0"
                             required onChange={(e) => {
                                 setQuantity(e.target.value);
                             }} />
@@ -106,7 +106,7 @@ function DamagedStockAdd() {
 
                     <div className="mb-3">
                         <label for="totalValue" className="form-label">Total Value: </label>
-                        <input type="number" step="0.01" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="totalValue" value={quantity * value} readOnly
+                        <input type="number" min="0" step="0.01" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="totalValue" value={quantity * value} readOnly
                         onChange={(e) => {
                             //setTotalValue(e.target.value)
                         }}/>
