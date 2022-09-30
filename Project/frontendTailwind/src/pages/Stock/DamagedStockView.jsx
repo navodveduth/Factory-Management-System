@@ -40,6 +40,15 @@ function DamagedStockView() {
         getdamagedStock();
     }, [])
 
+    const confirmFunc = (id)=>{
+
+		if (confirm("Do you want to delete?") == true) {
+            deleteDamagedStock(id);
+		} else {
+			navigate('/DamagedStockView');
+		}
+
+    }
 
     return (
        
@@ -83,7 +92,7 @@ function DamagedStockView() {
                                 }else if((data.stockCode.toLowerCase().includes(searchTerm.toLowerCase())) ||
                                   (data.damagedStockName.toLowerCase().includes(searchTerm.toLowerCase())) ||
                                   (data.damagedStockCategory.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                  (data.usability.toLowerCase().includes(searchTerm.toLowerCase())))
+                                  (data.usability.includes(searchTerm)))
                                   
                                   {
                                   return data;
@@ -98,8 +107,8 @@ function DamagedStockView() {
                                         <TableData value={data.damagedStockCategory} />
                                         <TableData value={data.quantity} />
                                         <TableData value={date} />
-                                        <TableData value={data.value} />
-                                        <TableData value={data.totalValue} />
+                                        <TableData value={"Rs." + data.value} />
+                                        <TableData value={"Rs." + data.totalValue} />
                                         <TableData value={data.usability} />
 
                                         <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
@@ -116,7 +125,7 @@ function DamagedStockView() {
                                                 type="button"
                                                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
                                                 onClick={() => {
-                                                    deleteDamagedStock(data._id);
+                                                    confirmFunc(data._id);
                                                 }}
                                             >
                                                 <i className="fas fa-trash" />
