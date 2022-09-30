@@ -3,16 +3,19 @@ export { default as Employees } from './Employees';
 export { default as EmployeeNew } from './EmployeeNew';
 export { default as EmployeeUpdate } from './EmployeeUpdate';
 export { default as EmployeeViewAll } from './EmployeeViewAll';
+export { default as EmployeeReport } from './EmployeeReport';
 
 export { default as AttendanceDashboard } from './AttendanceDashboard';
 export { default as AttendanceNew } from './AttendanceNew';
 export { default as AttendanceUpdate } from './AttendanceUpdate';
 export { default as AttendanceViewAll } from './AttendanceViewAll';
+export { default as AttendanceReport } from './AttendanceReport';
 
 export { default as AttendanceAndLeaveDashboard } from './AttendanceAndLeaveDashboard';
 export { default as LeaveNew } from './LeaveNew';
 export { default as LeaveUpdate } from './LeaveUpdate';
 export { default as LeaveViewAll } from './LeaveViewAll';
+export { default as LeaveReport } from './LeaveReport';
 
 // minod
 export { default as FinanceDashboard } from './Finance/FinanceDashboard';

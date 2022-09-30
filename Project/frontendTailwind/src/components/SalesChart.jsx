@@ -1,6 +1,7 @@
 import React, { useState, useEffect }from 'react'
+import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective, Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip } from '@syncfusion/ej2-react-charts';
 import axios from 'axios';
-import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, Legend, Category, StackingColumnSeries, Tooltip } from '@syncfusion/ej2-react-charts';
+import Header from './Header';
 
 const SalesChart = () => {
     const [sales, setSales] = useState([]);
@@ -25,25 +26,37 @@ const SalesChart = () => {
     const ongoingOrders= sales.filter((sale) => sale.status === 'Pending').length;
     const newOrders= sales.filter((sale) => sale.status === 'Placed').length;
 
-    return (
-      <ChartComponent
-        id="charts"
-        primaryXAxis={stackedPrimaryXAxis}
-        primaryYAxis={stackedPrimaryYAxis}
-        width={width}
-        height={height}
-        chartArea={{ border: { width: 0 } }}
-        tooltip={{ enable: true }}
-        background={currentMode === 'Dark' ? '#33373E' : '#fff'}
-        legendSettings={{ background: 'white' }}
-      >
-        <Inject services={[StackingColumnSeries, Category, Legend, Tooltip]} />
-        <SeriesCollectionDirective>
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-          {sales.map((item, index) => <SeriesDirective key={salesCount} {...item} />)}
-        </SeriesCollectionDirective>
-      </ChartComponent>
-    );
-  };
+  return (
+    <div>
+        <AccumulationChartComponent title='Invoices' legendSettings={{position:"Bottom"}} tooltip={{enable:true}}>
+            <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]} />
+            <AccumulationSeriesCollectionDirective>
+                <AccumulationSeriesDirective 
+                    type="Pie"
+                    innerRadius="50%"
+                    dataSource={
+                        [
+                            { x: 'Finished', y: (newOrders/salesCount*100).toPrecision(4), text: (newOrders/salesCount*100).toPrecision(2) + '%'},
+                            { x: 'Pending', y: (ongoingOrders/salesCount*100).toPrecision(4), text: (ongoingOrders/salesCount*100).toPrecision(2) + '%'},
+                            { x: 'Placed', y: (finishedOrders/salesCount*100).toPrecision(4), text: (finishedOrders/salesCount*100).toPrecision(2) + '%'}
+                            
+                        ]
+                    }
+                    xName="x"
+                    yName="y"
+                    dataLabel={{
+                        visible: true,
+                        position: 'Outside',
+                        name: 'text',
+                    }}
+                    >
+                    
+                </AccumulationSeriesDirective>
+            </AccumulationSeriesCollectionDirective>
+
+        </AccumulationChartComponent>
+    </div>
+  )
+}
 
 export default SalesChart
