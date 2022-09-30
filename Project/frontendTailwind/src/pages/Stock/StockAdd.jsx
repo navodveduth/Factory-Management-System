@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Header } from '../../components';
+import { isNullOrUndefined } from '@syncfusion/ej2-base';
 
 function StockAdd() {
 
@@ -14,11 +15,21 @@ function StockAdd() {
     const [lastUpdated, setLastUpdated] = useState('');
     const [quantity, setQuantity] = useState('');
     const [unitPrice, setUnitPrice] = useState('');
-    const [supplier, setSupplier] = useState('');
+    var [supplier, setSupplier] = useState('');
     var [totalValue, setTotalValue] = useState('');
 
     //gets the current date
     var date = new Date().toISOString().split('T')[0];
+    console.log(date)
+
+    var displayM = true;
+    if (stockCategory === ''){
+        displayM = true;
+    }
+    else if (stockCategory != "Finished goods") {
+        displayM = false;
+    } else
+        displayM = true;
 
     return (
         <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
@@ -29,6 +40,11 @@ function StockAdd() {
                     e.preventDefault();
 
                     totalValue = quantity * unitPrice;
+
+                    if(supplier === '')
+                    {
+                        supplier = "-";
+                    }
 
                     const newStock = {
                         stockCode,
@@ -56,7 +72,7 @@ function StockAdd() {
                     <div className="mb-3">
                         <label for="stockCode" className="form-label">Stock Code: </label>
                         <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="code" placeholder="Enter stock code..." pattern="[A-Z]{1}[0-9]{3,7}"
-                           title="The code needs to start with one uppercase letter, atleast 3 digits and should not exceed 8 characters" required onChange={(e) => {
+                            title="The code needs to start with one uppercase letter, atleast 3 digits and should not exceed 8 characters" required onChange={(e) => {
                                 setStockCode(e.target.value);
                             }} />
                     </div>
@@ -64,15 +80,16 @@ function StockAdd() {
                     <div className="mb-3">
                         <label for="stockName" className="form-label">Stock Name: </label>
                         <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" placeholder="Enter stock name..."
-                            pattern="[A-z]" title="The name can contain only alphabets" required onChange={(e) => {
+                            title="The name can contain only alphabets" required onChange={(e) => {
                                 setStockName(e.target.value);
                             }} />
                     </div>
 
                     <div className="mb-3">
                         <label for="category" className="form-label">Category: </label>
-                        < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"  id="category" title="Please choose one of the options" required onChange={(e) => {
+                        < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="stockCategory" title="Please choose one of the options" required onChange={(e) => {
                             setStockCategory(e.target.value);
+                            //myFunction();
                         }}>
                             <option selected  >Select option...</option>
                             <option value="Raw materials">Raw materials</option>
@@ -91,7 +108,7 @@ function StockAdd() {
 
                     <div className="mb-3">
                         <label for="quantity" className="form-label">Quantity: </label>
-                        <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" placeholder="Enter quantity..." min="1"
+                        <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" placeholder="Enter quantity..." min="0"
                             title="If there is no stock please input 0" required onChange={(e) => {
                                 setQuantity(e.target.value);
                             }} />
@@ -105,17 +122,17 @@ function StockAdd() {
                             }} />
                     </div>
 
-                    <div className="mb-3">
+                    <div className="mb-3" >
                         <label for="supplier" className="form-label">Materials provided by: </label>
                         <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="supplier" placeholder="Enter supplier name..."
-                            required onChange={(e) => {
+                            disabled={displayM} onChange={(e) => {
                                 setSupplier(e.target.value);
                             }} />
                     </div>
 
                     <div className="mb-3">
                         <label for="totalValue" className="form-label">Total Value: </label>
-                        <input type="number" step="0.01" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="totalCost" value={quantity * unitPrice} readOnly />
+                        <input type="number" min="0" step="0.01" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="totalCost" value={quantity * unitPrice} readOnly />
                     </div>
 
                     <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Add new stock</button>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
@@ -8,6 +8,7 @@ import TableHeader from '../../components/Table/TableHeader';
 
 function StockUtilisation() {
     const { currentColor } = useStateContext();
+    const navigate = useNavigate();
 
     const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
     const [searchTerm, setSearchTerm] = useState("");
@@ -40,6 +41,15 @@ function StockUtilisation() {
         getStock();
     }, [])
 
+    const confirmFunc = (id)=>{
+
+		if (confirm("Do you want to delete?") == true) {
+            deleteStock(id);
+		} else {
+			navigate('/StockUtilisation');
+		}
+
+    }
 
 
     return (
@@ -72,7 +82,7 @@ function StockUtilisation() {
                                 <TableHeader value="Last updated" />
                                 <TableHeader value="Quantity" />
                                 <TableHeader value="Reorder level" />
-                                <TableHeader value="Availability" />
+                                <TableHeader value="Buffer Stock" />
                                 <TableHeader value="Manage" />
                             </tr>
                         </thead>
@@ -93,7 +103,7 @@ function StockUtilisation() {
 
                                 var datacolor = "text-black";
                                 if (data.sufficientStock === "Available") {
-                                    datacolor = "text-green-500font-bold";
+                                    datacolor = "text-green-500 font-bold";
                                 } else if (data.sufficientStock === "-") {
                                     datacolor = "text-black font-bold";
                                 } else {
@@ -124,7 +134,7 @@ function StockUtilisation() {
                                                 type="button"
                                                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
                                                 onClick={() => {
-                                                    deleteStock(data._id);
+                                                   confirmFunc(data._id);
                                                 }}
                                             >
                                                 <i className="fas fa-trash" />

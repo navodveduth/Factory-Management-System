@@ -27,6 +27,16 @@ const AttendanceViewAll = () => {
     getAttendance();
   }, []);
 
+  const confirmFunc = (id)=>{
+
+		if (confirm("Do you want to delete?") == true) {
+      deleteAttendance(id);
+		} else {
+			navigate('/AttendanceViewAll');
+		}
+
+  }
+
   const deleteAttendance = async (id) => {
     await axios
       .delete(`http://localhost:8070/attendance/deleteAttendance/${id}`)
@@ -107,7 +117,7 @@ const AttendanceViewAll = () => {
                       type="button"
                       className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
                       onClick={() => {
-                        deleteAttendance(data._id);
+                        confirmFunc(data._id);
                       }}
                     >
                       <i className="fas fa-trash" />

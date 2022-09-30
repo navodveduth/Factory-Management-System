@@ -1,6 +1,7 @@
 import React, { useState, useEffect }from 'react'
 import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective, Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip } from '@syncfusion/ej2-react-charts';
 import axios from 'axios';
+import ChartsHeader from './ChartsHeader';
 
 const MaintainChart = () => {
     const [maintainence, setMaintainence] = useState([]);
@@ -27,12 +28,12 @@ const MaintainChart = () => {
 
   return (
     <div>
-        <AccumulationChartComponent title='Maintenance Progression' legendSettings={{position:"Bottom"}} tooltip={{enable:true}}>
+        <ChartsHeader category="Chart" title='Maintenance Progression' />
+        <AccumulationChartComponent   legendSettings={{position:"Right", background: "white"}} tooltip={{enable:true}} >
             <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]} />
             <AccumulationSeriesCollectionDirective>
                 <AccumulationSeriesDirective 
                     type="Pie"
-                    innerRadius="50%"
                     dataSource={
                         [
                             { x: 'In progress', y: (maintprog/maintCount*100).toPrecision(4), text: (maintprog/maintCount*100).toPrecision(2) + '%'},
@@ -43,10 +44,20 @@ const MaintainChart = () => {
                     }
                     xName="x"
                     yName="y"
+                    innerRadius="40%"
+                    startAngle={0}
+                    endAngle={360}
+                    radius="70%"
+                    explode
+                    explodeOffset="10%"
+                    explodeIndex={2}
                     dataLabel={{
                         visible: true,
                         position: 'Outside',
                         name: 'text',
+                        font: {
+                          fontWeight: '600',
+                        },
                     }}
                     >
                     

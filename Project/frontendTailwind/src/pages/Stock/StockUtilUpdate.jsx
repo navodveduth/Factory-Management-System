@@ -38,6 +38,14 @@ function StockUtilUpdate() {
     useEffect(() => { getStock() }, []);
     var date = new Date().toISOString().split('T')[0];
 
+    var displayM = true;
+    if (stockCategory == ''){
+        displayM = true;
+    }
+    else if (stockCategory != "Finished goods") {
+        displayM = false;
+    } else
+        displayM = true;
 
     return (
 
@@ -120,7 +128,7 @@ function StockUtilUpdate() {
                     <div className="mb-3">
                         <label htmlFor="reorderLevel" className="form-label">Reorder Level: </label>
                         <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="reorder" value={reorderLevel} min="0"
-                            required title="If there is no stock please input 0" onChange={(e) => {
+                            disabled={displayM} title="If there is no stock please input 0" onChange={(e) => {
                                 setReorderLevel(e.target.value);
                             }} />
                     </div>
