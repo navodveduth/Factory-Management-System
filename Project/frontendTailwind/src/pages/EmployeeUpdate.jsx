@@ -7,6 +7,8 @@ function EmployeeUpdate() {
     //useNavigate is a hook that is used to navigate to another page
     const navigate = useNavigate();
 
+    var date = new Date().toISOString().split('T')[0];
+
     const [employeeNumber, setEmployeeNumber] = useState('');
     const [employeeFullName, setEmployeeFullName] = useState('');
     const [employeeNameWithInitials, setEmployeeNameWithInitials] = useState('');
@@ -92,7 +94,8 @@ function EmployeeUpdate() {
                         <div className="mb-3">
                             <label htmlFor="employeeNumber" className="text-md">Employee Number : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="employeeNumber" defaultValue={employeeNumber} placeholder="Enter the employee number" required 
+                                id="employeeNumber" defaultValue={employeeNumber} placeholder="Enter the employee number" 
+                                pattern="[0-9]{4}" maxLength={4} title= {"The Employee Number requires a 4 digit number"} required 
                                 onChange={(e)=>{
                                     setEmployeeNumber(e.target.value);
                                 }}/>
@@ -101,6 +104,7 @@ function EmployeeUpdate() {
                             <label htmlFor="employeeFullName" className="form-label">Full name : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="employeeFullName" defaultValue={employeeFullName} placeholder="Enter your full name" required 
+                                pattern="[A-Za-z ]{3,}" title= {"The Full Name requires a minimum of 3 characters"}
                                 onChange={(e)=>{
                                     setEmployeeFullName(e.target.value);
                                 }}/>
@@ -110,15 +114,18 @@ function EmployeeUpdate() {
                             <label htmlFor="employeeNameWithInitials" className="form-label">Name with initials : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="employeeNameWithInitials" defaultValue={employeeNameWithInitials} placeholder="Enter your name with Initials" required 
+                                
                                 onChange={(e) =>{
                                     setEmployeeNameWithInitials(e.target.value);
-                                }}/>
+                                }}
+                                pattern="[A-Za-z ]{3,}" title= {"The Name with Initials requires a minimum of 3 characters"}/>
                         </div>
 
                         <div className="mb-3">
                             <label htmlFor="employeeNIC" className="form-label">NIC number : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="employeeNIC" defaultValue={employeeNIC} placeholder="Enter your NIC number" required 
+                                pattern="[0-9vVxX]{12}" maxLength={12} title= {"The NIC number requires a 9 digit number and a letter at the end or a 12 digit number"}
                                 onChange={(e) =>{
                                     setEmployeeNIC(e.target.value);
                                 }}/>
@@ -140,6 +147,7 @@ function EmployeeUpdate() {
                             <label htmlFor="employeeDOB" className="form-label">Date of Birth : </label>
                             <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="employeeDOB" defaultValue={employeeDOB} placeholder="Enter your birthday"required 
+                                max={date}
                                 onChange={(e) =>{
                                     setEmployeeDOB(e.target.value);
                                 }}/>
@@ -149,6 +157,7 @@ function EmployeeUpdate() {
                             <label htmlFor="employeeDateOfJoin" className="form-label">Date joined : </label>
                             <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="employeeDateOfJoin" defaultValue={employeeDateOfJoin} placeholder="Enter your date of join"required
+                                max={date}
                                 onChange={(e) =>{
                                     setEmployeeDateOfJoin(e.target.value);
                                 }}/>
@@ -158,6 +167,7 @@ function EmployeeUpdate() {
                             <label htmlFor="employeeDesignation" className="form-label">Designation : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="employeeDesignation" defaultValue={employeeDesignation} placeholder="Enter your designation"required
+                                pattern="[A-Za-z ]{3,}" title= {"The Designation requires a minimum of 3 characters"} 
                                 onChange={(e) =>{
                                     setEmployeeDesignation(e.target.value);
                                 }}/>
@@ -195,6 +205,7 @@ function EmployeeUpdate() {
                             <label htmlFor="employeeAddress" className="form-label">Address : </label>
                                 <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="employeeAddress" defaultValue={employeeAddress} placeholder="Enter your home address"required
+                                pattern="[A-Za-z0-9 ,.-]{3,}" title= {"The Address requires a minimum of 3 characters"}
                                 onChange={(e) =>{
                                     setEmployeeAddress(e.target.value);
                                 }}/>
@@ -204,6 +215,7 @@ function EmployeeUpdate() {
                             <label htmlFor="employeeContactNumber" className="form-label">Contact Number : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="employeeContactNumber" defaultValue={employeeContactNumber} placeholder="Enter your contact number"required
+                                pattern="[0-9]{10}" maxLength={10} title= {"The Contact Number requires a 10 digit number"}
                                 onChange={(e) =>{
                                     setEmployeeContactNumber(e.target.value);
                                 }}/>
@@ -213,6 +225,7 @@ function EmployeeUpdate() {
                             <label htmlFor="employeeEmail" className="form-label">Email : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="employeeEmail" defaultValue={employeeEmail} placeholder="Enter your email"required
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title= {"The Email requires a valid email address"}
                                 onChange={(e) =>{
                                     setEmployeeEmail(e.target.value);
                                 }}/>
