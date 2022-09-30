@@ -17,11 +17,16 @@ const AttendanceUpdate = () => {
   const getAttendance = () => {
     axios.get(`http://localhost:8070/attendance/viewAttendance/${id}`)
     .then((res) => {
-      
-      const startTime = Date.parseLocale(res.data.employeeInTime, 'yyyy-MM-dd HH:mm');
+ 
+      const date = new Date(res.data.employeeInTime);
+      const startTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().slice(0, -8);
+
+      const dateOut = new Date(res.data.employeeOutTime);
+      const endTime = new Date(dateOut.getTime() - (dateOut.getTimezoneOffset() * 60000)).toISOString().slice(0, -8);
       
       setEmployeeNumber(res.data.employeeNumber);
       setEmployeeInTime(startTime);
+      setEmployeeOutTime(endTime);
       setAttendanceStatus(res.data.attendanceStatus);
     })
     .catch((err) => {
@@ -76,7 +81,8 @@ const AttendanceUpdate = () => {
                         <div className="mb-3">
                             <label htmlFor="employeeOutTime" className="text-md">Employee Out Time : </label>
                             <input type="datetime-local" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="employeeOutTime" placeholder="Enter the employee out time" required 
+                                id="employeeOutTime" placeholder="Enter the employee out time" value={employeeOutTime} 
+                                required 
                                 onChange={(e)=>{
                                     setEmployeeOutTime(e.target.value);
                                 }}/>
