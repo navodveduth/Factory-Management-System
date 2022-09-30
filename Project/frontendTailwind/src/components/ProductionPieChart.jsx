@@ -2,6 +2,7 @@ import React, { useState, useEffect }from 'react'
 import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective, Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip } from '@syncfusion/ej2-react-charts';
 import axios from 'axios';
 import Header from './Header';
+import ChartsHeader from './ChartsHeader';
 import { useStateContext } from '../contexts/ContextProvider';
 const ProductionPieChart = () => {
     const [Order,setOrder] = useState([]);
@@ -27,7 +28,7 @@ const ProductionPieChart = () => {
 
   return (
     <div>
-        <Header category="Chart" title="Costed Product Distribution" />
+        <ChartsHeader category="Chart" title="Costed Product Distribution" />
          <AccumulationChartComponent legendSettings={{position:"Right", background: "white"}} tooltip={{enable:true}} background={currentMode == 'Dark' ? '#3f434c' : '#f2f2f2'}>
          <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]}/>
             <AccumulationSeriesCollectionDirective>
