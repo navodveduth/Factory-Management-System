@@ -5,6 +5,7 @@ import { Header } from '../components';
 
 function EmployeeCreateForm() {
   const navigate = useNavigate(); //useNavigate hook to redirect to another page after form submission is successful 
+  var date = new Date().toISOString().split('T')[0];
 
   const [employeeNumber, setEmployeeNumber] = useState('');
   const [employeeFullName, setEmployeeFullName] = useState('');
@@ -59,8 +60,9 @@ function EmployeeCreateForm() {
 
                 <div className="mb-3">
                   <label for="employeeNumber" className="form-label">Employee Number : </label>
-                  <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="employeeNumber" placeholder="Enter the employee number" required 
+                  <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                  id="employeeNumber" placeholder="Enter the employee number" 
+                  pattern="[0-9]{4}" maxLength={4} title= {"The Employee Number requires a 4 digit number"} required 
                   onChange={(e)=>{
                       setEmployeeNumber(e.target.value);
                   }}/>
@@ -72,7 +74,8 @@ function EmployeeCreateForm() {
                   id="employeeFullName" placeholder="Enter your full name" required 
                   onChange={(e)=>{
                       setEmployeeFullName(e.target.value);
-                  }}/>
+                  }}
+                  pattern="[A-Za-z ]{3,}" title= {"The Full Name requires a minimum of 3 characters"} />
                 </div>
 
                 <div className="mb-3">
@@ -81,7 +84,8 @@ function EmployeeCreateForm() {
                   id="employeeNameWithInitials" placeholder="Enter your name with Initials" required 
                   onChange={(e) =>{
                       setEmployeeNameWithInitials(e.target.value);
-                  }}/>
+                  }}
+                  pattern="[A-Za-z ]{3,}" title= {"The Name with Initials requires a minimum of 3 characters"}/>
                 </div>
 
                 <div className="mb-3">
@@ -90,7 +94,8 @@ function EmployeeCreateForm() {
                   id="employeeNIC" placeholder="Enter your NIC number" required 
                   onChange={(e) =>{
                       setEmployeeNIC(e.target.value);
-                  }}/>
+                  }}
+                  pattern="[0-9vVxX]{12}" maxLength={12} title= {"The NIC number requires a 9 digit number and a letter at the end or a 12 digit number"}  />
                 </div>
 
                 <div className="mb-3">
@@ -109,7 +114,7 @@ function EmployeeCreateForm() {
                 <div className="mb-3">
                   <label for="employeeDOB" className="form-label">Date of Birth : </label>
                   <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="employeeDOB" placeholder="Enter your birthday"required 
+                  id="employeeDOB" placeholder="Enter your birthday"required max={date}
                   onChange={(e) =>{
                       setEmployeeDOB(e.target.value);
                   }}/>
@@ -118,7 +123,7 @@ function EmployeeCreateForm() {
                 <div className="mb-3">
                   <label for="employeeDateOfJoin" className="form-label">Date joined : </label>
                   <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="employeeDateOfJoin" placeholder="Enter your date of join"required
+                  id="employeeDateOfJoin" placeholder="Enter your date of join"required max={date}
                   onChange={(e) =>{
                       setEmployeeDateOfJoin(e.target.value);
                   }}/>
@@ -130,7 +135,8 @@ function EmployeeCreateForm() {
                   id="employeeDesignation" placeholder="Enter your designation"required
                   onChange={(e) =>{
                       setEmployeeDesignation(e.target.value);
-                  }}/>
+                  }}
+                  pattern="[A-Za-z ]{3,}" title= {"The Designation requires a minimum of 3 characters"} />
                 </div>
 
                 <div className="mb-3">
@@ -169,7 +175,8 @@ function EmployeeCreateForm() {
                   id="employeeAddress" placeholder="Enter your home address"required
                   onChange={(e) =>{
                       setEmployeeAddress(e.target.value);
-                  }}/>
+                  }}
+                  pattern="[A-Za-z0-9 ,.-]{3,}" title= {"The Address requires a minimum of 3 characters"} />
                 </div>
 
                 <div className="mb-3">
@@ -178,7 +185,8 @@ function EmployeeCreateForm() {
                   id="employeeContactNumber" placeholder="Enter your contact number"required
                   onChange={(e) =>{
                       setEmployeeContactNumber(e.target.value);
-                  }}/>
+                  }}
+                  pattern="[0-9]{10}" maxLength={10} title= {"The Contact Number requires a 10 digit number"} />
                 </div>
 
                 <div className="mb-3">
@@ -187,7 +195,8 @@ function EmployeeCreateForm() {
                   id="employeeEmail" placeholder="Enter your email"required
                   onChange={(e) =>{
                       setEmployeeEmail(e.target.value);
-                  }}/>
+                  }}
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title= {"The Email requires a valid email address"} />
                 </div>
                 
                 <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Create Employee</button>
