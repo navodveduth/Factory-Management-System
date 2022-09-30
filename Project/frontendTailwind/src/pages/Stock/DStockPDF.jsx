@@ -27,16 +27,17 @@ function DStockPDF() {
     }, [])
 
     const createPDF = async () => {
+        const date = new Date().toISOString().split('T')[0];
         const pdf = new jsPDF("landscape", "px", "a2", false);
         const data = await document.querySelector("#tblPDF");
         pdf.html(data).then(() => {
-            pdf.save("Damagedstocks.pdf");
+            pdf.save("Damagedstocks_" + date + ".pdf");
         });
     };
 
     return (
             <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                <Header category="Table" title="Damaged Stocks" />
+                <Header category="Table" title="Preview" />
                 
                 <div className=" flex items-center mb-5 ">
                     <div className="mr-0 ml-auto">
