@@ -1,7 +1,7 @@
 import React, { useState, useEffect }from 'react'
 import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective, Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip } from '@syncfusion/ej2-react-charts';
 import axios from 'axios';
-import Header from './Header';
+import ChartsHeader from './ChartsHeader';
 
 const MaintainChart = () => {
     const [maintainence, setMaintainence] = useState([]);
@@ -28,7 +28,7 @@ const MaintainChart = () => {
 
   return (
     <div>
-        <Header category="Chart" title='Maintenance Progression' />
+        <ChartsHeader category="Chart" title='Maintenance Progression' />
         <AccumulationChartComponent   legendSettings={{position:"Right", background: "white"}} tooltip={{enable:true}} >
             <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]} />
             <AccumulationSeriesCollectionDirective>
