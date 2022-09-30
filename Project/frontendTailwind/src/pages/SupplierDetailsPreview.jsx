@@ -42,7 +42,7 @@ const SupplierDetailsPreview = () => {
 				<Header category="Table" title="Supplier Details" />
 
 				  {/* <div className="w-full h-5"> */}
-					<button type="button"  onClick={createPDF} className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download Report</button>
+                  <button onClick={createPDF} type="button"  className="font-bold py-1 px-4 rounded-full m-3 text-white absolute top-40 right-20 hover:bg-slate-700 bg-slate-500" >Download Report</button>
 				 {/* </div> */}
 
 	  
