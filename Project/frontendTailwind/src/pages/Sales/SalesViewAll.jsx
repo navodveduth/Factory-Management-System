@@ -40,6 +40,16 @@ const SalesViewAll = () => {
       });
   };
 
+  const confirmFunc = (id)=>{
+
+		if (confirm("Do you want to delete?") == true) {
+        deleteSale(id);
+		} else {
+			  navigate('/SalesViewAll');
+		}
+
+    }
+
   return (
     <div>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
@@ -97,7 +107,7 @@ const SalesViewAll = () => {
                   <TableData value={new Date(data.orderDate).toISOString().split('T')[0]} />
                   <TableData value={data.customerName} />
                   <TableData value={data.customerContactNo} />
-                  <TableData value={data.totalAmount} />
+                  <TableData value={"Rs."+data.totalAmount} />
                   <TableData value={data.status} />
                   <TableData value={data.materialsSupplied} />
 
@@ -126,7 +136,7 @@ const SalesViewAll = () => {
                       type="button"
                       className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
                       onClick={() => {
-                        deleteSale(data._id);
+                        confirmFunc(data._id);
                       }}
                     >
                       <i className="fas fa-trash" />

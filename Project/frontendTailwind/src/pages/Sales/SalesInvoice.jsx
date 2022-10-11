@@ -93,7 +93,7 @@ function SalesInvoice() {
                 <tr className="text-sm h-10 border dark:border-slate-600">
                   <TableData value={invoiceNo} />
                   <TableData value={status} />
-                  <TableData value={totalAmount} />
+                  <TableData value={"Rs." + totalAmount} />
                 </tr>
             </tbody>
             </table>
