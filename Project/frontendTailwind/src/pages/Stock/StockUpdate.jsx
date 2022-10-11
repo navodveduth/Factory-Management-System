@@ -128,7 +128,7 @@ function StockUpdate() {
                     <div className="mb-3">
                         <label htmlFor="unitPrice" className="form-label">Unit price: </label>
                         <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice" value={unitPrice}
-                            required title="If the unit price is not avilable please enter 0" step="0.01" onChange={(e) => {
+                            required min="0" title="If the unit price is not avilable please enter 0" step="0.01" onChange={(e) => {
                                 setUnitPrice(e.target.value);
                             }} />
                     </div>
@@ -142,7 +142,7 @@ function StockUpdate() {
 
                     <div className="mb-3">
                         <label htmlFor="totalValue" className="form-label">Total Value: </label>
-                        <input type="number" step="0.01" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white
+                        <input type="number" min="0" step="0.01" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white
                          dark:text-black" value={quantity * unitPrice} id="totalValue" readOnly />
                     </div>
 
