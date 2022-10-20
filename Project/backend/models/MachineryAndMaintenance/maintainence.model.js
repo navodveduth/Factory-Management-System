@@ -9,6 +9,11 @@ const maintainenceSchema = new Schema({
         required : true
     },
 
+    machineID:{
+        type: String,
+        required: true
+    },
+
     name: {
         type: String,
         required: true,
