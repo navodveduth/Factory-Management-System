@@ -4,7 +4,24 @@ import Maintainence from "../../models/MachineryAndMaintenance/maintainence.mode
 
 export const getAllMaintainenceDetails = async (req, res) => {
     try {
-        const maintainence = await Maintainence.find();
+        const maintainence = await Maintainence.aggregate([
+            {
+                $lookup: 
+                {
+                    from: "machinery",
+                    localField: "machineID" ,
+                    foreignField: "machineID",
+                    as: "machineDetails"
+                }
+
+                // $lookup:{
+                //     from: "driver",
+                //     localField: "vehicleNo" ,
+                //     foreignField: "vehicleNo",
+                //     as: "vehicleDetails"
+                // }
+            }
+        ]);
         res.status(200).json(maintainence);    
     } catch (error) {
         res.status(404).json({ message : error});
