@@ -119,7 +119,17 @@ const MaintenanceViewAll = () => {
 
 
                   <TableData value={data.Type} />
-                  <TableData value={data.name} />
+                  <TableData value={data.machineDetails.map((data3) => {
+                  
+                                return (
+                                  <div>
+                                    <TableData value = {data3.name} /> 
+                                  </div>
+                                )
+
+                              
+                
+                 })} />
                   <TableData value={data.Description} />
                   <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
                   <TableData value={data.nextServiceDate.toString().split('T')[0]} />
