@@ -100,6 +100,13 @@ const MaintenanceViewAll = () => {
                       return data;
                       }
                   }).map((data, key) => {
+
+                    var datacolor = "text-black";
+                                if (data.status === "Completed") {
+                                    datacolor = "text-green-500 font-bold";
+                                } else {
+                                    datacolor = "text-red-600 font-bold";
+                                }
                   
                   return (
 
@@ -117,7 +124,8 @@ const MaintenanceViewAll = () => {
                   <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
                   <TableData value={data.nextServiceDate.toString().split('T')[0]} />
                     <TableData value={data.others} />
-                    <TableData value={data.status} />
+                    <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
+                   
 
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                   <Link to={`/MaintenanceUpdate/${data._id}`}>
