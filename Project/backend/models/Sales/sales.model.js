@@ -11,23 +11,23 @@ const salesSchema = new Schema({
     },
 
     orderDate : {
+        type: Date,
+        required: true,
+    },
+
+    customerID : {
+        type: String,
+        required: true
+    },
+
+    itemName : {
         type: String,
         required: true,
     },
 
-    customerName : {
-        type: String,
+    quantity : {
+        type: Number,
         required: true,
-    },
-
-    customerContactNo : {
-        type: String,
-        required: true,
-    },
-
-    materialsSupplied : {
-        type: String,
-        
     },
 
     totalAmount : {
@@ -36,8 +36,7 @@ const salesSchema = new Schema({
     },
 
     status : {
-        type: String,
-        
+        type: String, 
     }
 
 
