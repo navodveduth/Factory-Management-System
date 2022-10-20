@@ -85,14 +85,16 @@ export default function AddOrder(){
                         setDate(e.target.value);
                     }}
                     max={date}
-                    mix="2010-01-01"/>
+                    min="2010-01-01"/>
                 </div>
 
                 <div className="mb-3">
                     <label for="address">Enter the Material Cost</label>
                     <input type="Number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="" placeholder="Material Cost" onChange={(e)=>{
                         setMatCost(e.target.value);
-                    }}/>
+                    }}
+                    min={0}
+                    />
                 </div>
                 
                 <div className="mb-3">
@@ -100,8 +102,8 @@ export default function AddOrder(){
                     <input type="Number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="address" placeholder="Quantity" onChange={(e)=>{
                         setQty(e.target.value);
                     }}
-                    min={1}
-                    title="Minimum quantity should be 1"/>
+                    min={0}
+                    title="Minimum quantity should not be less than 0"/>
                 </div>
                         
                 <div className="mb-3">
