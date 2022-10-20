@@ -2,8 +2,11 @@ import React, { useState, useEffect }from 'react'
 import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective, Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip } from '@syncfusion/ej2-react-charts';
 import axios from 'axios';
 import Header from './Header';
+import ChartsHeader from './ChartsHeader'
+import { useStateContext } from '../contexts/ContextProvider';
 
 const SalesChart = () => {
+  const { currentMode } = useStateContext();
     const [sales, setSales] = useState([]);
 
     const getSales = async () => {
@@ -22,13 +25,14 @@ const SalesChart = () => {
     }, []);
   
     const salesCount = sales.length;
-    const finishedOrders= sales.filter((sale) => sale.status === 'Finished').length;
-    const ongoingOrders= sales.filter((sale) => sale.status === 'Pending').length;
-    const newOrders= sales.filter((sale) => sale.status === 'Placed').length;
+    const finishedOrders= sales.filter((sale) => sale.totalAmount > 50000).length;
+    const ongoingOrders= sales.filter((sale) => sale.totalAmount < 50000).length;
+    const newOrders= sales.filter((sale) => sale.totalAmount > 100000).length;
 
   return (
     <div>
-        <AccumulationChartComponent title='Invoices' legendSettings={{position:"Bottom"}} tooltip={{enable:true}}>
+      <ChartsHeader category="Chart" title="Invoices Distribution by Amount" />
+      <AccumulationChartComponent legendSettings={{position:"Right", background: "white"}} tooltip={{enable:true}} background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'}>
             <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]} />
             <AccumulationSeriesCollectionDirective>
                 <AccumulationSeriesDirective 
@@ -36,9 +40,9 @@ const SalesChart = () => {
                     innerRadius="50%"
                     dataSource={
                         [
-                            { x: 'Finished', y: (newOrders/salesCount*100).toPrecision(4), text: (newOrders/salesCount*100).toPrecision(2) + '%'},
-                            { x: 'Pending', y: (ongoingOrders/salesCount*100).toPrecision(4), text: (ongoingOrders/salesCount*100).toPrecision(2) + '%'},
-                            { x: 'Placed', y: (finishedOrders/salesCount*100).toPrecision(4), text: (finishedOrders/salesCount*100).toPrecision(2) + '%'}
+                            { x: 'Orders > Rs.100,000', y: (newOrders/salesCount*100).toPrecision(4), text: (newOrders/salesCount*100).toPrecision(2) + '%'},
+                            { x: 'Orders < Rs.50,000', y: (ongoingOrders/salesCount*100).toPrecision(4), text: (ongoingOrders/salesCount*100).toPrecision(2) + '%'},
+                            { x: 'Orders > Rs.50,000', y: (finishedOrders/salesCount*100).toPrecision(4), text: (finishedOrders/salesCount*100).toPrecision(2) + '%'}
                             
                         ]
                     }

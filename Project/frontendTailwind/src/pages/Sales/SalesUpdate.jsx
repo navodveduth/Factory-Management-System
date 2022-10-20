@@ -9,9 +9,9 @@ function SalesUpdate() {
 
     const [invoiceNo, setInvoice] =useState('');
     const [orderDate, setOrderDate] =useState('');
-    const [customerName, setCustomerName] =useState('');
-    const [customerContactNo, setCustomerContactNo] =useState('');
-    const [materialsSupplied, setMaterialsSupplied] =useState('');
+    const [customerID, setCustomerID] =useState('');
+    const [itemName, setItemName] =useState('');
+    const [quantity, setQuantity] =useState('');
     const [totalAmount, setTotalAmount] =useState('');
     const [status, setStatus] =useState('');
 
@@ -23,9 +23,9 @@ function SalesUpdate() {
             
             setInvoice(res.data.invoiceNo);
             setOrderDate(res.data.orderDate);
-            setCustomerName(res.data.customerName);
-            setCustomerContactNo(res.data.customerContactNo);
-            setMaterialsSupplied(res.data.materialsSupplied);
+            setCustomerID(res.data.customerID);
+            setItemName(res.data.itemName);
+            setQuantity(res.data.quantity);
             setTotalAmount(res.data.totalAmount);
             setStatus(res.data.status);
             })
@@ -46,13 +46,15 @@ function SalesUpdate() {
 
                     <form className="" onSubmit={async(e)=>{
                         e.preventDefault();
-                        
-                        
+
                         const newOrder = {
-                            invoiceNo, orderDate,
-                            customerName, customerContactNo, 
-                            materialsSupplied, totalAmount, status
-                            
+                            invoiceNo, 
+                            orderDate,
+                            customerID,  
+                            itemName, 
+                            quantity, 
+                            totalAmount, 
+                            status   
                         }
 
                         await axios.put(`http://localhost:8070/sales/update/` + id, newOrder)
@@ -63,18 +65,18 @@ function SalesUpdate() {
                             .catch((err)=>{
                                 console.log(err);
                                 alert("Error Occured!");
-                            })
-                            
+                            })   
                     }}>
 
                         <div className="mb-3">
                             <label htmlFor="invoiceNo" className="text-md">Invoice Number</label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="invoiceNo" value={invoiceNo} required disabled
+                                id="invoiceNo" value={invoiceNo}  disabled
                                 onChange={(e)=>{
                                     setInvoice(e.target.value);
                                 }}/>
                         </div>
+
                         <div className="mb-3">
                             <label htmlFor="orderDate" className="form-label">Date of Order</label>
                             <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
@@ -85,38 +87,34 @@ function SalesUpdate() {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="customerName" className="form-label">Customer Name</label>
+                            <label htmlFor="customerID" className="form-label">Customer ID</label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="customerName" value={customerName} required 
+                                id="customerID" value={customerID} required disabled
                                 onChange={(e) =>{
-                                    setCustomerName(e.target.value);
+                                    setCustomerID(e.target.value);
                                 }}/>
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="customerContactNo" className="form-label">Contact Number</label>
+                            <label htmlFor="itemName" className="form-label">Item Name</label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="customerContactNo" value={customerContactNo} required pattern="[0-9]{10}"
+                                id="itemName" value={itemName} required 
                                 onChange={(e) =>{
-                                    setCustomerContactNo(e.target.value);
+                                    setItemName(e.target.value);
                                 }}/>
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="materialsSupplied" className="form-label">Materials</label>
-                            <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="materialsSupplied" value={materialsSupplied} aria-label="Default select example" required
+                            <label htmlFor="quantity" className="form-label">Quantity</label>
+                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                id="quantity" value={quantity} required 
                                 onChange={(e) =>{
-                                    setMaterialsSupplied(e.target.value);
-                                }}>
-                                    <option value=''>Select...</option>
-                                    <option value='With Materials'>With Materials</option>
-                                    <option value='Without Materials'>Without Materials</option>
-                            </select>
+                                    setQuantity(e.target.value);
+                                }}/>
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="totalAmount" className="form-label">Total Amount of Order</label>
+                            <label htmlFor="totalAmount" className="form-label">Total Amount of Invoice</label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="totalAmount" value={totalAmount} required
                                 onChange={(e) =>{
@@ -134,8 +132,8 @@ function SalesUpdate() {
                                 setStatus(e.target.value);
                             }}>
                                 <option value=''>Select...</option>
-                                <option value='Placed'>Placed</option>
                                 <option value='Pending'>Pending</option>
+                                <option value='Pending'>Processing</option>
                                 <option value='Finished'>Finished</option>
                             </select>
                         </div>
