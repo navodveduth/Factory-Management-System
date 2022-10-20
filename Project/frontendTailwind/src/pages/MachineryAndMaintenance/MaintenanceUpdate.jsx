@@ -11,6 +11,7 @@ function MaintenanceUpdate() {
  
 
   const [Type, setType] = useState('');
+  const[machineID, setmachineID] = useState("");
   const[name, setName] = useState("");
   const [Description, setDescription] = useState('');
   const [others, setOthers] = useState('');
@@ -28,6 +29,7 @@ function MaintenanceUpdate() {
         const doj = new Date(res.data.nextServiceDate).toISOString().split('T')[0];
 
           setType(res.data.Type);
+          setmachineID(res.data.machineID);
           setName(res.data.name);
           setDescription(res.data.Description);
           setLastMaintainedDate(dob);
@@ -57,6 +59,7 @@ function MaintenanceUpdate() {
                         
                         const newMaintenance = {
                             Type, 
+                            machineID,
                             name,
                             Description,
                             others,
@@ -90,6 +93,15 @@ function MaintenanceUpdate() {
                                     <option value="Machinery">Machinery</option>
                                     <option value="Building">Building</option>
                             </select>
+                        </div>
+
+                        <div className="mb-3">
+                            <label htmlFor="employeeNumber" className="text-md">ID : </label>
+                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                id="employeeNumber"  defaultValue={machineID} required 
+                                onChange={(e)=>{
+                                    setmachineID(e.target.value);
+                                }}/>
                         </div>
 
 
