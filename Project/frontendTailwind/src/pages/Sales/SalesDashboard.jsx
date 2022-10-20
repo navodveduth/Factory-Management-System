@@ -29,8 +29,8 @@ const SalesDashboard = () => {
 
   const salesCount = sales.length;
   const finishedOrders= sales.filter((sale) => sale.status === 'Finished').length;
-  const ongoingOrders= sales.filter((sale) => sale.status === 'Pending').length;
-  const newOrders= sales.filter((sale) => sale.status === 'Placed').length;
+  const ongoingOrders= sales.filter((sale) => sale.status === 'Processing').length;
+  const pendingOrders= sales.filter((sale) => sale.status === 'Pending').length;
   return (
     <div className="mt-5">
 
@@ -38,10 +38,10 @@ const SalesDashboard = () => {
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* top buttons in the dashboard */} {/* use for navigation buttons*/}
           <Link to="/SalesViewAll">
-            <DashTopButton value="View All Orders"/>
+            <DashTopButton value="Invoices"/>
           </Link>
           <Link to="/SalesCreate">
-            <DashTopButton value="Create New Order"/>
+            <DashTopButton value="New Invoice"/>
           </Link>
         </div>
       </div>
@@ -50,8 +50,8 @@ const SalesDashboard = () => {
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
           <DashTopBox icon={<FiPackage />} label="Total Sales" data={salesCount} />
-          <DashTopBox icon={<FiPackage />} label="Ongoing Orders" data={ongoingOrders} />
-          <DashTopBox icon={<FiPackage />} label="Placed Orders" data={newOrders} />
+          <DashTopBox icon={<FiPackage />} label="Pending Orders" data={pendingOrders} />
+          <DashTopBox icon={<FiPackage />} label="Processing Orders" data={ongoingOrders} />
           <DashTopBox icon={<FiPackage />} label="Finished Orders" data={finishedOrders} />       
         </div>
       </div>

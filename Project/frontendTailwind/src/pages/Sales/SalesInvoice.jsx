@@ -14,8 +14,10 @@ function SalesInvoice() {
       const [orderDate, setOrderDate] =useState('');
       const [customerName, setCustomerName] =useState('');
       const [customerContactNo, setCustomerContactNo] =useState('');
+      const [customerID, setCustomerID] =useState('');
+      const [itemName, setItemName] =useState('');
+      const [quantity, setQuantity] =useState('');
       const [totalAmount, setTotalAmount] =useState('');
-      const [status, setStatus] =useState('');
   
       const current = new Date();
       const currentdate = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}`;
@@ -30,13 +32,15 @@ function SalesInvoice() {
           setOrderDate(res.data.orderDate);
           setCustomerName(res.data.customerName);
           setCustomerContactNo(res.data.customerContactNo);
+          setItemName(res.data.itemName);
+          setQuantity(res.data.quantity);
           setTotalAmount(res.data.totalAmount);
-          setStatus(res.data.status);
         })
         .catch(err => {
           alert(err.message);
         });
       }, [id]);
+
 
       const createPDF = () => {
         const pdf = new jsPDF("portrait", "px", "b1", false)
@@ -76,8 +80,8 @@ function SalesInvoice() {
   
           <div className="mt-5 text-left">
               <p className="text-xl mb-3">Billed to:</p>
-              <p>Name: {customerName}</p>
-              <p>PhoneNo: {customerContactNo}</p>
+              <p>Name: {}</p>
+              <p>PhoneNo: {}</p>
          </div>
   
           <div>
@@ -85,14 +89,16 @@ function SalesInvoice() {
             <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                 <TableHeader value="Invoice No." />
-                <TableHeader value="Status" />
+                <TableHeader value="Item Name" />
+                <TableHeader value="Quantity" />
                 <TableHeader value="Total Amount" />
               </tr>
             </thead>
             <tbody>
                 <tr className="text-sm h-10 border dark:border-slate-600">
                   <TableData value={invoiceNo} />
-                  <TableData value={status} />
+                  <TableData value={itemName} />
+                  <TableData value={quantity} />
                   <TableData value={"Rs." + totalAmount} />
                 </tr>
             </tbody>

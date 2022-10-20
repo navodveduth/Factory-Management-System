@@ -79,10 +79,10 @@ const SalesViewAll = () => {
                 <TableHeader value="Invoice No." />
                 <TableHeader value="Date of Order" />
                 <TableHeader value="Customer Name" />
-                <TableHeader value="Contact No." />
+                <TableHeader value="Item Name" />
+                <TableHeader value="Quantity" />
                 <TableHeader value="Total Amount" />
                 <TableHeader value="Status" />
-                <TableHeader value="Materials" />
                 <TableHeader value="Manage" />
               </tr>
             </thead>
@@ -93,23 +93,32 @@ const SalesViewAll = () => {
                         return data;
                     }else if(
                       (data.invoiceNo.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
-                      (data.customerContactNo.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                      (data.customerName.toLowerCase().includes(searchTerm.toLowerCase())))
-                      {
+                      (data.orderDate.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                      (data.itemName.toLowerCase().includes(searchTerm.toLowerCase())))
+                      {     
                       return data;
                       }
                   }).map((data, key) => {
-                    return(
+                    return( 
 
-                <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
 
-                  <TableData value={data.invoiceNo} />
-                  <TableData value={new Date(data.orderDate).toISOString().split('T')[0]} />
-                  <TableData value={data.customerName} />
-                  <TableData value={data.customerContactNo} />
-                  <TableData value={"Rs."+data.totalAmount} />
-                  <TableData value={data.status} />
-                  <TableData value={data.materialsSupplied} />
+                          <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
+
+                            <TableData value={data.invoiceNo} />
+                            <TableData value={new Date(data.orderDate).toISOString().split('T')[0]} />
+                            <TableData value={data.customerDetailss.map((data3) => {
+                                return (
+                                  <div>
+                                    <TableData value = {data3.customerName} /> 
+                                  </div>
+                                )
+                              
+                            })} />
+            
+                            <TableData value={data.itemName} />
+                            <TableData value={data.quantity} />
+                            <TableData value={"Rs."+data.totalAmount} />
+                            <TableData value={data.status} />
 
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                     <Link to={`/SalesUpdate/${data._id}`}>
