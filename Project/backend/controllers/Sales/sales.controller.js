@@ -1,5 +1,4 @@
 import Sales from "../../models/Sales/sales.model.js";
-import Customer from "../../models/Sales/customer.model.js";
 import mongoose from "mongoose";
 
 export const getAllSalesDetails = async (req, res) => {
