@@ -9,6 +9,7 @@ function MaintenanceCreateForm() {
   const navigate = useNavigate(); //useNavigate hook to redirect to another page after form submission is successful 
 
   const [Type, setType] = useState('');
+    const[machineID, setmachineID] = useState("");
   const[name, setName] = useState("");
   const [Description, setDescription] = useState('');
   const [others, setOthers] = useState('');
@@ -20,13 +21,14 @@ function MaintenanceCreateForm() {
  
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-              <Header category="Form" title=" Add New Machinery" />
+              <Header category="Form" title=" Add New Maintenance" />
               <div className=" flex items-center justify-center "> 
               <form onSubmit={async(e)=>{
                   e.preventDefault();
                   
                   const newMaintenance = {
                     Type, 
+                    machineID,
                     name,
                     Description,
                     others,
@@ -63,7 +65,14 @@ function MaintenanceCreateForm() {
                             </select>
                         </div>
 
-
+                        <div className="mb-3">
+                            <label htmlFor="employeeNumber" className="text-md">ID : </label>
+                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                id="employeeNumber"   required 
+                                onChange={(e)=>{
+                                    setmachineID (e.target.value);
+                                }}/>
+                        </div>
             
 
                 <div className="mb-3">
