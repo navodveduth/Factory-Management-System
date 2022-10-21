@@ -11,13 +11,12 @@ function MaintenanceUpdate() {
  
 
   const [Type, setType] = useState('');
-  const[machineID, setmachineID] = useState("");
-  const[name, setName] = useState("");
   const [Description, setDescription] = useState('');
   const [others, setOthers] = useState('');
   const [status, setStatus] = useState('');
   const [lastMaintainedDate, setLastMaintainedDate] = useState('');
   const [nextServiceDate, setNextServiceDate] = useState('');
+  const[name, setName] = useState("");
 
   const {id} = useParams(); //get the id from the url
 
@@ -29,13 +28,13 @@ function MaintenanceUpdate() {
         const doj = new Date(res.data.nextServiceDate).toISOString().split('T')[0];
 
           setType(res.data.Type);
-          setmachineID(res.data.machineID);
-          setName(res.data.name);
           setDescription(res.data.Description);
           setLastMaintainedDate(dob);
           setNextServiceDate(doj);
           setOthers(res.data.others);
           setStatus(res.data.status);
+          setName(res.data.name);
+          
 
       })
       .catch((err) => {
@@ -58,14 +57,13 @@ function MaintenanceUpdate() {
                         
                         
                         const newMaintenance = {
-                            Type, 
-                            machineID,
-                            name,
+                            Type,
                             Description,
                             others,
                             status,
                             lastMaintainedDate,
-                            nextServiceDate
+                            nextServiceDate, 
+                    name
                         }
 
                         await axios.put("http://localhost:8070/maintainence/update/"+ id, newMaintenance)
@@ -89,32 +87,17 @@ function MaintenanceUpdate() {
                             onChange={(e) =>{
                                 setType(e.target.value);
                             }}>
-                                <option value="Vehicle">Vehicle</option>
-                                    <option value="Machinery">Machinery</option>
-                                    <option value="Building">Building</option>
+                               <option selected>Choose...</option>
+                                <option value="Plumbing">Plumbing</option>
+                                    <option value="HVAC">HVAC</option>
+                                    <option value="Flooring">Flooring</option>
+                                    <option value="Electrical">Electrical</option>
+                                    <option value="Painting">Painting</option>
+                                    <option value="Buildings">Buildings</option>
+
                             </select>
                         </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="employeeNumber" className="text-md">ID : </label>
-                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="employeeNumber"  defaultValue={machineID} required 
-                                onChange={(e)=>{
-                                    setmachineID(e.target.value);
-                                }}/>
-                        </div>
-
-
-            
-
-                <div className="mb-3">
-                            <label htmlFor="employeeNumber" className="text-md">Name : </label>
-                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="employeeNumber"  defaultValue={name} required 
-                                onChange={(e)=>{
-                                    setName(e.target.value);
-                                }}/>
-                        </div>
                         <div className="mb-3">
                             <label htmlFor="employeeFullName" className="form-label">Service task & schedule : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
@@ -140,9 +123,11 @@ function MaintenanceUpdate() {
                             onChange={(e) =>{
                                 setStatus(e.target.value);
                             }}>
-                                <option value="Just scheduled">Just scheduled</option>
-                                    <option value="In progress">In progress</option>
+                                <option selected>Choose...</option>
                                     <option value="Completed">Completed</option>
+                                    <option value="In progress">In progress</option>
+                                    
+
                             </select>
                         </div>
 
@@ -161,6 +146,15 @@ function MaintenanceUpdate() {
                                 id="employeeDOB"  defaultValue={nextServiceDate}  required 
                                 onChange={(e) =>{
                                     setNextServiceDate(e.target.value);
+                                }}/>
+                        </div>
+
+                        <div className="mb-3">
+                            <label htmlFor="employeeNumber" className="text-md">Comment : </label>
+                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                id="employeeNumber"  defaultValue={name} required 
+                                onChange={(e)=>{
+                                    setName(e.target.value);
                                 }}/>
                         </div>
 

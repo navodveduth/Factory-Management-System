@@ -48,6 +48,9 @@ import {
   MaintenanceViewAll,
   MaintainenceTask,
   MaintainenceReport,
+  MachMaintenanceViewAll,
+  MachMaintenanceNew,
+  MachMaintenanceUpdate
 } from './pages/MachineryAndMaintenance';
 
 // navod
@@ -248,6 +251,7 @@ const App = () => {
                   path="/MaintenanceViewAll"
                   element={<MaintenanceViewAll />}
                 />
+               
                 <Route path="/MaintenanceCreate" element={<MaintenanceNew />} />
                 <Route
                   path="/MaintenanceUpdate/:id"
@@ -255,6 +259,10 @@ const App = () => {
                 />
                 <Route path="/MaintainenceTask/" element={<MaintainenceTask />} />
                 <Route path="/MaintainenceReport" element={<MaintainenceReport />} />
+
+                <Route path="/MachMaintenanceViewAll" element={<MachMaintenanceViewAll />} />
+                <Route path="/MachMaintenanceNew" element={<MachMaintenanceNew />} />
+                <Route path="/MachMaintenanceUpdate/:id" element={<MachMaintenanceUpdate />} />
 
                 {/* production management  */}
                 <Route path="/vieworders" element={<OrderViewAll />} />
