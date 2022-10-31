@@ -6,8 +6,9 @@ import { useStateContext } from '../../contexts/ContextProvider.js';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 
-const MaintenanceViewAll = () => {
-    const [maintainence, setMaintainence] = useState([]);
+
+const MachMaintenanceViewAll = () => {
+    const [maintainenceMachine, setMaintainenceMachine] = useState([]);
     const { currentColor } = useStateContext();
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -15,10 +16,10 @@ const MaintenanceViewAll = () => {
   var TotalCost = 0;
   
 
-  const getMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-      axios.get("http://localhost:8070/maintainence/")
+  const getMMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+      axios.get("http://localhost:8070/maintainenceMachine/")
       .then((res) => { 
-          setMaintainence (res.data); //setMaintainence  is used to update the state variable
+        setMaintainenceMachine (res.data); //setMaintainence  is used to update the state variable
         
       })
       .catch((err) => {
@@ -27,14 +28,14 @@ const MaintenanceViewAll = () => {
   }
 
   useEffect(() => { //useEffect is used to call the function getMaintainence 
-      getMaintainence ();
+    getMMaintainence ();
   }, [])
 
-  const deleteMaintainence  = async (id) => {
-      await axios.delete(`http://localhost:8070/maintainence/delete/${id}`)
+  const deleteMMaintainence  = async (id) => {
+      await axios.delete(`http://localhost:8070/maintainenceMachine/delete/${id}`)
       .then((res) => {
           alert("Data deleted successfully");
-          getMaintainence ();
+          getMMaintainence ();
       })
       .catch((err) => {
           alert(err.message);
@@ -44,9 +45,9 @@ const MaintenanceViewAll = () => {
   const confirmFunc = (id)=>{
 
 		if (confirm("Do you want to delete?") == true) {
-      deleteMaintainence(id);
+            deleteMMaintainence(id);
 		} else {
-			navigate('/MaintenanceViewAll');
+			navigate('/MachMaintenanceViewAll');
 		}
 
     }
@@ -54,7 +55,7 @@ const MaintenanceViewAll = () => {
   return (
     <div>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-        <Header category="Table" title="Property Maintenance " />
+        <Header category="Table" title="Machinery Maintenance " />
 
         <div className=" flex items-center mb-5 ">
           <div>
@@ -77,37 +78,39 @@ const MaintenanceViewAll = () => {
           <table className="w-full rounded-lg" >
             <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                <TableHeader value="Type" />
-                <TableHeader value="Service task & Shedule" />
+                <TableHeader value="ID" />
+                <TableHeader value="Item" />
+                <TableHeader value="Repair needed" />
                 <TableHeader value="Last Maintained Date" />
                 <TableHeader value="Next due" />
+                <TableHeader value="Repair company" />
+                <TableHeader value="R.C ContactNO" />
                 <TableHeader value="Status" />
                 <TableHeader value="Total Cost" />
-                <TableHeader value="Comments" />
                 <TableHeader value="Manage" />
               </tr>
             </thead>
             <tbody>
-              {maintainence.filter((data) => {
+              {maintainenceMachine.filter((data) => {
                     if(searchTerm == ""){
                         return data;
-                    }else if((data.Type.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                    }else if((data.machineID.toLowerCase().includes(searchTerm.toLowerCase())) ||
                       (data.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
                       (data.Description.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                      (data.status.toLowerCase().includes(searchTerm.toLowerCase())))
-                      
+                      (data.status.toLowerCase().includes(searchTerm.toLowerCase()))||
+                      (data.Location.toLowerCase().includes(searchTerm.toLowerCase())))
                       {
                       return data;
                       }
                   }).map((data, key) => {
 
                     var datacolor = "text-black";
-                    if (data.status === "In progress") {
-                      datacolor = "text-red-600 font-bold";
+                                if (data.status === "In progress") {
+                                  datacolor = "text-red-600 font-bold";
 
-                    } else {
-                      datacolor = "text-green-500 font-bold";
-                    }
+                                } else {
+                                  datacolor = "text-green-500 font-bold";
+                                }
                   
                   return (
 
@@ -119,19 +122,35 @@ const MaintenanceViewAll = () => {
                 <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
 
 
-                  <TableData value={data.Type} />
+                  <TableData value={data.machineDetails.map((data1)=>{
+                    return(
+                        <div>
+                            <TableData value={data1.machineID} />
+                        </div>
+                    )
+                  })} />
+                  <TableData value={data.machineDetails.map((data1)=>{
+                    return(
+                        <div>
+                            <TableData value={data1.name} />
+                        </div>
+                    )
+                  })} />
                   <TableData value={data.Description} />
                   <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
                   <TableData value={data.nextServiceDate.toString().split('T')[0]} />
-                  
+                  <TableData value={data.Location} />
+                    <TableData value={data.contactNo} />
+                    
+                    
                     
                     <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
                     <TableData value={data.others} />
-                    <TableData value={data.name} />
+                   
                   
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                    
-                  <Link to={`/MaintenanceUpdate/${data._id}`}>
+                  <Link to={`/MachMaintenanceUpdate/${data._id}`}>
                       <button
                         type="button"
                         className="font-bold py-1 px-4 rounded-full mx-3 text-white"
@@ -166,4 +185,4 @@ const MaintenanceViewAll = () => {
   );
 };
 
-export default MaintenanceViewAll;
+export default MachMaintenanceViewAll;

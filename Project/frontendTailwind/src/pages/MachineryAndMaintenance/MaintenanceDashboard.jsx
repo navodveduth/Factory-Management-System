@@ -39,15 +39,24 @@ const maintcomp = maintainence.filter((maint) => maint.status === "Completed").l
       <div className="flex flex-wrap lg:flex-nowrap justify-left ml-10 mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* top buttons in the dashboard */} {/* use for navigation buttons*/}
+          <Link to="/">
+            <DashTopButton value="Vehicles" />
+          </Link>
+          <Link to="/MachMaintenanceViewAll">
+            <DashTopButton value="Machines" />
+          </Link>
           <Link to="/MaintenanceViewAll">
-            <DashTopButton value="View All Maintenance activities" />
+            <DashTopButton value="Property" />
+          </Link>
+          <Link to="/MachMaintenanceNew">
+            <DashTopButton value="Add machinery maintenance" />
           </Link>
           <Link to="/MaintenanceCreate">
-            <DashTopButton value="Add new Maintenance" />
+            <DashTopButton value="Add property maintenance" />
           </Link>
-          <Link to="/MaintainenceTask">
+          {/* <Link to="/MaintainenceTask">
             <DashTopButton value="Tasks For today" />
-          </Link>
+          </Link> */}
         </div>
       </div>
 
