@@ -1,4 +1,4 @@
-import StockUtilisation from "../../models/Stock/stockUtilisation.models";  //always add the file extension .js
+import StockUtilisation from "../../models/Stock/stockUtilisation.models.js";  //always add the file extension .js
 
 //includes all CRUD operations
 
