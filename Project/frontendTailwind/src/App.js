@@ -50,7 +50,8 @@ import {
   MaintainenceReport,
   MachMaintenanceViewAll,
   MachMaintenanceNew,
-  MachMaintenanceUpdate
+  MachMaintenanceUpdate,
+  MachMaintenanceReport
 } from './pages/MachineryAndMaintenance';
 
 // navod
@@ -263,7 +264,7 @@ const App = () => {
                 <Route path="/MachMaintenanceViewAll" element={<MachMaintenanceViewAll />} />
                 <Route path="/MachMaintenanceNew" element={<MachMaintenanceNew />} />
                 <Route path="/MachMaintenanceUpdate/:id" element={<MachMaintenanceUpdate />} />
-
+                <Route path="/MachMaintenanceReport" element={<MachMaintenanceReport />} />
                 {/* production management  */}
                 <Route path="/vieworders" element={<OrderViewAll />} />
                 <Route path="/production" element={<ProductionDashBoard />} />
