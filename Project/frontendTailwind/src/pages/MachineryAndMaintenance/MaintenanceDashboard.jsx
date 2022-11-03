@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { GrVmMaintenance } from 'react-icons/gr';
+import { VscSymbolProperty } from 'react-icons/vsc';
+import { MdOutlineDirectionsBusFilled } from 'react-icons/md';
+import { BiBuildingHouse } from 'react-icons/bi';
+import { GiSewingMachine } from 'react-icons/gi';
+import { GiMoneyStack } from 'react-icons/gi';
 import { DashTopBox, DashTopButton, MaintainChart, ChartsHeader } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 
@@ -66,9 +70,12 @@ const maintcomp = maintainence.filter((maint) => maint.status === "Completed").l
       <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-          <DashTopBox icon={<GrVmMaintenance />} label="Maintenances records" data={maintCount} />
-          <DashTopBox icon={<GrVmMaintenance />} label="Completed Maintenances" data={maintcomp} />
-          <DashTopBox icon={<GrVmMaintenance />} label="Maintenances in progress" data={maintprog} />      
+          <DashTopBox icon={<VscSymbolProperty />} label="Maintenances records" data={maintCount} />
+          <DashTopBox icon={<MdOutlineDirectionsBusFilled />} label="Vehicles under maintenance" data={maintCount} />
+          <DashTopBox icon={<BiBuildingHouse />} label="Property under maintenance" data={maintCount} />
+          <DashTopBox icon={<GiSewingMachine />} label="Machines under maintenance" data={maintCount} />
+          <DashTopBox icon={<GiMoneyStack />} label="Total cost" data={maintprog} /> 
+               
         </div>
       </div>
 
