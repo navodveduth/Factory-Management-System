@@ -31,7 +31,7 @@ const MachMaintenanceReport = () => {
         const pdf = new jsPDF("landscape", "px", "a1",false);
         const data = document.querySelector("#tableContainer");
         pdf.html(data).then(() => {
-            pdf.save("MachineryMaintenanceReport-" +date + ".pdf");
+            pdf.save("Machinery-Maintenance-Report-" +date + ".pdf");
            });
     };
 
