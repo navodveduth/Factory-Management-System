@@ -26,22 +26,20 @@ const DriverUpdate = () => {
     setThemeSettings,
   } = useStateContext();
 
-  const [nic, setNic] = useState('');
   const [fullName, setFullName] = useState('');
   const [drivingLicenseNo, setDrivingLicenseNo] = useState('');
-  const [contactNo, setContactNo] = useState('');
   const [vehicleNo, setVehicleNo] = useState('');
   const [vehicleModel, setVehicleModel] = useState('');
   const [status, setStatus] = useState('');
+
+  const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
     axios
       .get(`http://localhost:8070/driver/${id}`)
       .then((res) => {
-        setNic(res.data.nic);
         setFullName(res.data.fullName);
         setDrivingLicenseNo(res.data.drivingLicenseNo);
-        setContactNo(res.data.contactNo);
         setVehicleNo(res.data.vehicleNo);
         setVehicleModel(res.data.vehicleModel);
         setStatus(res.data.status);
@@ -50,6 +48,21 @@ const DriverUpdate = () => {
         alert(err.message);
       });
   }, [id]);
+
+  const getEmployees = async () => {
+    axios
+      .get('http://localhost:8070/employee/viewEmployee')
+      .then((res) => {
+        setEmployees(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
+  useEffect(() => {
+    getEmployees();
+  }, []);
 
   return (
     <div>
@@ -97,17 +110,15 @@ const DriverUpdate = () => {
               {themeSettings && <ThemeSettings />}
               <div>
                 <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-                  <Header category="Form" title="Update Driver" />
+                  <Header category="Form" title="Update Driver Details" />
                   <div className="flex items-center justify-center">
                     <form
                       onSubmit={async (e) => {
                         e.preventDefault();
 
                         const newDriver = {
-                          nic,
                           fullName,
                           drivingLicenseNo,
-                          contactNo,
                           vehicleNo,
                           vehicleModel,
                           status,
@@ -129,28 +140,27 @@ const DriverUpdate = () => {
                       }}
                     >
                       <div className="mb-3">
-                        <label className="form-label">NIC</label>
-                        <input
-                          type="text"
-                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                          id="nic"
-                          value={nic}
-                          onChange={(e) => {
-                            setNic(e.target.value);
-                          }}
-                        />
-                      </div>
-                      <div className="mb-3">
                         <label className="form-label">Full Name</label>
-                        <input
-                          type="text"
-                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                        <select
                           id="fullName"
-                          value={fullName}
+                          name="fullName"
+                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                          required
                           onChange={(e) => {
                             setFullName(e.target.value);
                           }}
-                        />
+                        >
+                          <option selected>Select...</option>
+                          {employees.map((item, index) =>
+                            item.employeeDesignation === 'Driver' ? (
+                              <option value={item.employeeFullName} key={index}>
+                                {item.employeeFullName}
+                              </option>
+                            ) : (
+                              ''
+                            )
+                          )}
+                        </select>
                       </div>
                       <div className="mb-3">
                         <label className="form-label">
@@ -166,18 +176,7 @@ const DriverUpdate = () => {
                           }}
                         />
                       </div>
-                      <div className="mb-3">
-                        <label className="form-label">Contact Number</label>
-                        <input
-                          type="number"
-                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                          id="contactNo"
-                          value={contactNo}
-                          onChange={(e) => {
-                            setContactNo(e.target.value);
-                          }}
-                        />
-                      </div>
+
                       <div className="mb-3">
                         <label className="form-label">Vehicle Number</label>
                         <input
