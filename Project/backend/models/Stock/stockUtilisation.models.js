@@ -7,53 +7,47 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 //defining the structure of the schema
-const damagedStockSchema = new Schema({
+const stockUtilSchema = new Schema({
     //backend validations are done here
     stockCode: {
         type: String,
-        unique:true,
         min:5,
         max:8,
         required:true,
     },
-    damagedStockName: {
-        type: String,
-        required: true,
-    },
-    damagedStockCategory: {
-        type: String,
-        required: true,
-        enum: ['Raw materials', 'Work in progress', 'Finished goods'],
-    },
-    quantity: {
-        type: Number,
-        min: 0,
-        required: true,
-    },
-    updatedDate: {
+    date: {
         type: Date,
-        default: Date.now,
     },
-    value: {
+    type: {
+        type: String,
+        required: true,
+        enum: ['Additions', 'Issues'],
+    },
+    supplier: {
+        type: String,
+        default: "-",
+    },
+    unitPrice: {
         type: Number,
         required: true,
         min: 0.0,
         default: 0.0,
     },
-    totalValue: {
+    quantity: {
         type: Number,
-        min: 0,
+        required: true,
         default: 0.0,
     },
-    usability: {
-        type: String,
+    totalValue:{
+        type: Number,
         required: true,
-        enum: ['Usable', 'Not usable']
-    },
+        min: 0.0,
+        default: 0.0,
+    }
 })
 
 //DamagedStock is inside the schema -> DamagedStock is part of the collections
-const DamagedStock = mongoose.model("damagedStock", damagedStockSchema); //stockschema is the object of stock schema and stock is stockSchema
+const StockUtilisation = mongoose.model("stockUtilisation", stockUtilSchema); //stockschema is the object of stock schema and stock is stockSchema
 
 
-export default DamagedStock;
+export default StockUtilisation;
