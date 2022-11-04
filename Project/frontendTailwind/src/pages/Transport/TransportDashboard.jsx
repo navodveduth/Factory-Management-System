@@ -105,7 +105,7 @@ const TransportDashboard = () => {
               {themeSettings && <ThemeSettings />}
               <div>
                 <div className="mt-5">
-                  <div className="flex flex-wrap lg:flex-nowrap justify-left ml-10 mt-5">
+                  <div className="flex flex-wrap lg:flex-nowrap justify-left ml-5 mt-5">
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                       {/* top buttons in the dashboard */}{' '}
                       {/* use for navigation buttons */}
@@ -134,12 +134,12 @@ const TransportDashboard = () => {
                         data={totTransport}
                       />
                       <DashTopBox
-                        icon={<i className="fa-solid fa-hourglass px-2" />}
+                        icon={<i className="fa-solid fa-hourglass px-1" />}
                         label="Pending Transports"
                         data={pendingTr}
                       />
                       <DashTopBox
-                        icon={<i className="fa-solid fa-circle-check p-1" />}
+                        icon={<i className="fa-solid fa-circle-check" />}
                         label="Completed Transports"
                         data={completeTr}
                       />
