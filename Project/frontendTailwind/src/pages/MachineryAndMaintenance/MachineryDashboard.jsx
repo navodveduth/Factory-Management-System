@@ -148,8 +148,9 @@ const MachineryDashboard = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT 
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
   
-          <DashTopBox icon={<GiMoneyStack />} label="Total Machinery Depreciation " data={"Rs." + prototal} />
+         
           <DashTopBox icon={<GiMoneyStack />} label="Total Machiery purchase Cost          " data={"Rs." + total+".00"} />
+          <DashTopBox icon={<GiMoneyStack />} label="Total Machinery Depreciation " data={"Rs." + prototal} />
           <DashTopBox icon={<FaChartBar />} label="Average Depreciation rate" data={rate + " %"} />  
           
         </div>
