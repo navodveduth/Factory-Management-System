@@ -173,10 +173,33 @@ const DriverViewViewAll = () => {
                                   className="text-sm h-10 border dark:border-slate-600"
                                   key={data._id}
                                 >
-                                  <TableData value={data.nic} />
+                                  <TableData
+                                    value={data.driverDetails.map(
+                                      (driverData) => (
+                                        <div>
+                                          <TableData
+                                            value={driverData.employeeNIC}
+                                          />
+                                        </div>
+                                      )
+                                    )}
+                                  />
+
                                   <TableData value={data.fullName} />
                                   <TableData value={data.drivingLicenseNo} />
-                                  <TableData value={data.contactNo} />
+                                  <TableData
+                                    value={data.driverDetails.map(
+                                      (driverData) => (
+                                        <div>
+                                          <TableData
+                                            value={
+                                              driverData.employeeContactNumber
+                                            }
+                                          />
+                                        </div>
+                                      )
+                                    )}
+                                  />
                                   <TableData value={data.vehicleNo} />
                                   <TableData value={data.vehicleModel} />
                                   <TableData value={data.status} />
@@ -208,10 +231,33 @@ const DriverViewViewAll = () => {
                                   className="text-sm h-10 border dark:border-slate-600"
                                   key={data._id}
                                 >
-                                  <TableData value={data.nic} />
+                                  <TableData
+                                    value={data.driverDetails.map(
+                                      (driverData) => (
+                                        <div>
+                                          <TableData
+                                            value={driverData.employeeNIC}
+                                          />
+                                        </div>
+                                      )
+                                    )}
+                                  />
+
                                   <TableData value={data.fullName} />
                                   <TableData value={data.drivingLicenseNo} />
-                                  <TableData value={data.contactNo} />
+                                  <TableData
+                                    value={data.driverDetails.map(
+                                      (driverData) => (
+                                        <div>
+                                          <TableData
+                                            value={
+                                              driverData.employeeContactNumber
+                                            }
+                                          />
+                                        </div>
+                                      )
+                                    )}
+                                  />
                                   <TableData value={data.vehicleNo} />
                                   <TableData value={data.vehicleModel} />
                                   <TableData value={data.status} />
