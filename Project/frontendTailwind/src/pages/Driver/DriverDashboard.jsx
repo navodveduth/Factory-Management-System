@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { FiUser, FiSettings } from 'react-icons/fi';
+import { AiOutlineUserAdd } from 'react-icons/ai';
+import { FiSettings } from 'react-icons/fi';
+import { HiUserGroup } from 'react-icons/hi';
+import { FaUsers, FaUserCheck, FaUserTimes } from 'react-icons/fa';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import {
   DashTopBox,
@@ -105,10 +108,16 @@ const DriverDashboard = () => {
                       {/* top buttons in the dashboard */}
                       {/* use for navigation buttons */}
                       <Link to="/DriverViewAll">
-                        <DashTopButton value="View All Drivers Details" />
+                        <DashTopButton
+                          value="All Drivers Details"
+                          icon={<HiUserGroup />}
+                        />
                       </Link>
                       <Link to="/DriverCreate">
-                        <DashTopButton value="New Driver" />
+                        <DashTopButton
+                          value="New Driver"
+                          icon={<AiOutlineUserAdd />}
+                        />
                       </Link>
                     </div>
                   </div>
@@ -118,17 +127,17 @@ const DriverDashboard = () => {
                       {/* small top boxes in the dashboard */}
                       {/* use minimum 3, maximum 5 */}
                       <DashTopBox
-                        icon={<FiUser />}
+                        icon={<FaUsers />}
                         label="Total Drivers"
                         data={totDrivers}
                       />
                       <DashTopBox
-                        icon={<FiUser />}
+                        icon={<FaUserCheck />}
                         label="Available Drivers"
                         data={available}
                       />
                       <DashTopBox
-                        icon={<FiUser />}
+                        icon={<FaUserTimes />}
                         label="Unavailable Drivers"
                         data={unavailable}
                       />
