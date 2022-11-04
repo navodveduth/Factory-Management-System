@@ -10,26 +10,17 @@ const maintainenceVehicleSchema = new Schema({
     },
 
     name: {
-        type: String,
-        required: true,
+        type: String
     },
 
+    mileage: {  
+        type: Number,
+        required: true,
+    },
+    
     Description : {
         type : String,  
         required : true
-    },
-
-    performedBy : {
-        type : String,  
-        required : true
-    },
-    
-    others:{
-       type: Number
-    },
-
-    status:{
-        type: String
     },
 
     lastMaintainedDate : {
@@ -41,7 +32,22 @@ const maintainenceVehicleSchema = new Schema({
     nextServiceDate : {
         type : Date,
         required : true
-    }
+    },
+
+    performedBy : {
+        type : String,  
+        required : true
+    },
+
+    
+
+     status:{
+        type: String
+    },
+
+    others:{
+        type: Number
+     }
 });
 
 const MaintainenceVehicle = mongoose.model("maintainenceVehicle" , maintainenceVehicleSchema);
