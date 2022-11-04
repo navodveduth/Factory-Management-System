@@ -82,20 +82,24 @@ const maintainenceMachinep = maintainenceMachine.filter((maint) => maint.status 
 
 var prototal = 0;
    for (let index = 0; index < maintCount; index++) {
-      prototal = prototal + maintainence[index].totalValue; 
+      prototal = prototal + maintainence[index].others; 
+
  }
 
 
  var vehitotal = 0;
    for (let index = 0; index < vehiMaintCount; index++) {
-    vehitotal = vehitotal + maintainenceVehi[index].totalValue; 
+    vehitotal = vehitotal + maintainenceVehi[index].others; 
  }
 
 
  var machtotal = 0;
    for (let index = 0; index < machineMaintCount; index++) {
-    machtotal = machtotal + maintainenceMachine[index].totalValue; 
+    machtotal = machtotal + maintainenceMachine[index].others; 
  }
+
+ var total = vehitotal + machtotal + prototal;
+ total = Math.round(total * 100) / 100;
 
   return (
     <div className="mt-5">
@@ -130,11 +134,20 @@ var prototal = 0;
       <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-          <DashTopBox icon={<VscSymbolProperty />} label="Total Maintenances records" data={maintCount+machineMaintCount+vehiMaintCount} />
+          
           <DashTopBox icon={<MdOutlineDirectionsBusFilled />} label="Vehicles under maintenance" data={maintainenceVehip} />
           <DashTopBox icon={<BiBuildingHouse />} label="Property under maintenance" data={maintprog} />
           <DashTopBox icon={<GiSewingMachine />} label="Machines under maintenance" data={maintainenceMachinep} />
-          <DashTopBox icon={<GiMoneyStack />} label="Total cost" data={prototal} /> 
+          
+        </div>
+      </div>
+
+
+      <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+        <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
+          {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
+          <DashTopBox icon={<VscSymbolProperty />} label="Total Maintenances records" data={maintprog+machineMaintCount+vehiMaintCount} />
+          <DashTopBox icon={<GiMoneyStack />} label="Total cost" data={"Rs. "+total+".00"} /> 
                
         </div>
       </div>
