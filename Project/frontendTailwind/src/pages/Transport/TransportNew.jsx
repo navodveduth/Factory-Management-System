@@ -102,8 +102,7 @@ const TransportNew = () => {
               type="date"
               className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
               id="date"
-              min="2010-01-01"
-              max={currentDate}
+              min={currentDate}
               required
               onChange={(e) => {
                 setDate(e.target.value);
