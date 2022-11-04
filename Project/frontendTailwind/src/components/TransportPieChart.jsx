@@ -10,8 +10,11 @@ import {
   AccumulationTooltip,
 } from '@syncfusion/ej2-react-charts';
 import axios from 'axios';
+import ChartsHeader from './ChartsHeader';
+import { useStateContext } from '../contexts/ContextProvider';
 
 const TransportPieChart = () => {
+  const { currentMode } = useStateContext();
   const [transport, setTransport] = useState([]);
 
   const getTransport = async () => {
@@ -36,10 +39,11 @@ const TransportPieChart = () => {
 
   return (
     <div>
+      <ChartsHeader category="Chart" title="Transport Distribution" />
       <AccumulationChartComponent
-        title="Transport Distribution"
-        legendSettings={{ position: 'Bottom' }}
+        legendSettings={{ position: 'Right', background: 'white' }}
         tooltip={{ enable: true }}
+        background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'}
       >
         <Inject
           services={[
