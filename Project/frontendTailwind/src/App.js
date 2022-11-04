@@ -100,6 +100,7 @@ import {
   AddOrder,
   UpdateOrder,
   PreviewOrder,
+  PendingOrders,
 } from './pages/Production/Index';
 
 import './App.css';
@@ -270,7 +271,7 @@ const App = () => {
                 <Route path="/newOrder" element={<AddOrder />} />
                 <Route path="/updateCost/:id" element={<UpdateOrder />} />
                 <Route path="/costpreview" element={<PreviewOrder />} />
-
+                <Route path="/pendingOrders" element={<PendingOrders/>} />
                 {/* stocks management  */}
                 <Route path="/StockDashboard" element={<StocksDashboard />}/>
                 <Route path="/StockView" element={<StockView />} />
