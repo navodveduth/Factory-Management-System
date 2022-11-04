@@ -9,7 +9,7 @@ import { GiMoneyStack } from 'react-icons/gi';
 import { DashTopBox, DashTopButton, MaintainChart, ChartsHeader } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 
-
+//property
 
 const MaintenanceDashboard = () => {
   const { currentColor, currentMode } = useStateContext();
@@ -31,11 +31,71 @@ useEffect(() => { //useEffect is used to call the function getMaintainence
     getMaintainence ();
 }, [])
 
+//vehicles
+const [maintainenceVehi, setMaintainenceVehi] = useState([]);
+    
+    const [searchTerm, setSearchTerm] = useState("");
+
+  const getVMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+      axios.get("http://localhost:8070/maintainenceVehicle/")
+      .then((res) => { 
+        setMaintainenceVehi (res.data); //setMaintainence  is used to update the state variable
+        
+      })
+      .catch((err) => {
+          alert(err.message);
+      })
+  }
+
+  useEffect(() => { //useEffect is used to call the function getMaintainence 
+      getVMaintainence ();
+  }, [])
+
+
+
+//machines
+  const [maintainenceMachine, setMaintainenceMachine] = useState([]);
+   
+  const getMMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+      axios.get("http://localhost:8070/maintainenceMachine/")
+      .then((res) => { 
+        setMaintainenceMachine (res.data); //setMaintainence  is used to update the state variable
+        
+      })
+      .catch((err) => {
+          alert(err.message);
+      })
+  }
+
+  useEffect(() => { //useEffect is used to call the function getMaintainence 
+    getMMaintainence ();
+  }, [])
+
+
+
 const maintCount = maintainence.length;
+const vehiMaintCount = maintainenceVehi.length;
+const machineMaintCount = maintainenceMachine.length;
 const maintprog = maintainence.filter((maint) => maint.status === "In progress").length;
-const maintcomp = maintainence.filter((maint) => maint.status === "Completed").length;
+const maintainenceVehip = maintainenceVehi.filter((maint) => maint.status === "In progress").length;
+const maintainenceMachinep = maintainenceMachine.filter((maint) => maint.status === "In progress").length;
+
+var prototal = 0;
+   for (let index = 0; index < maintCount; index++) {
+      prototal = prototal + maintainence[index].totalValue; 
+ }
 
 
+ var vehitotal = 0;
+   for (let index = 0; index < vehiMaintCount; index++) {
+    vehitotal = vehitotal + maintainenceVehi[index].totalValue; 
+ }
+
+
+ var machtotal = 0;
+   for (let index = 0; index < machineMaintCount; index++) {
+    machtotal = machtotal + maintainenceMachine[index].totalValue; 
+ }
 
   return (
     <div className="mt-5">
@@ -70,11 +130,11 @@ const maintcomp = maintainence.filter((maint) => maint.status === "Completed").l
       <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-          <DashTopBox icon={<VscSymbolProperty />} label="Maintenances records" data={maintCount} />
-          <DashTopBox icon={<MdOutlineDirectionsBusFilled />} label="Vehicles under maintenance" data={maintCount} />
-          <DashTopBox icon={<BiBuildingHouse />} label="Property under maintenance" data={maintCount} />
-          <DashTopBox icon={<GiSewingMachine />} label="Machines under maintenance" data={maintCount} />
-          <DashTopBox icon={<GiMoneyStack />} label="Total cost" data={maintprog} /> 
+          <DashTopBox icon={<VscSymbolProperty />} label="Total Maintenances records" data={maintCount+machineMaintCount+vehiMaintCount} />
+          <DashTopBox icon={<MdOutlineDirectionsBusFilled />} label="Vehicles under maintenance" data={maintainenceVehip} />
+          <DashTopBox icon={<BiBuildingHouse />} label="Property under maintenance" data={maintprog} />
+          <DashTopBox icon={<GiSewingMachine />} label="Machines under maintenance" data={maintainenceMachinep} />
+          <DashTopBox icon={<GiMoneyStack />} label="Total cost" data={prototal} /> 
                
         </div>
       </div>
