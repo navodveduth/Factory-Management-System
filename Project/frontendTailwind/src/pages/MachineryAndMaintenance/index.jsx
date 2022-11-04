@@ -11,6 +11,10 @@ export {default as MaintenanceUpdate}  from './MaintenanceUpdate';
 export {default as MachMaintenanceViewAll}  from './MachMaintenanceViewAll';
 export {default as MachMaintenanceNew}  from './MachMaintenanceNew';
 export {default as MachMaintenanceUpdate}  from './MachMaintenanceUpdate';
+export {default as MachMaintenanceReport}  from './MachMaintenanceReport';
+
+export {default as VehiMaintenanceViewAll}  from './VehiMaintenanceViewAll';
+export {default as VehiMaintenanceNew}  from './VehiMaintenanceNew';
 
 export {default as MaintainenceTask}  from './MaintainenceTask';
 export {default as MaintainenceReport} from './MaintainenceReport';

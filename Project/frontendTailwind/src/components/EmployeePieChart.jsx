@@ -34,46 +34,43 @@ const EmployeePieChart = () => {
   return (
     <div>
       <ChartsHeader category="Chart" title="Employee Distribution by Departments" />
-        <AccumulationChartComponent legendSettings={{position:"Right", background: "white"}} tooltip={{enable:true}} background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'}>
+        <AccumulationChartComponent legendSettings={{position:"Right", background: "white"}} tooltip={{enable:true}} background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'} >
             <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]} />
             <AccumulationSeriesCollectionDirective>
                 <AccumulationSeriesDirective 
-                    type="Pie"
-                    dataSource={
-                        [
-                            { x: 'Finance', y: (empFin/empCount*100).toPrecision(4), text: (empFin/empCount*100).toPrecision(2) + '%'},
-                            { x: 'Sales', y: (empSales/empCount*100).toPrecision(4), text: (empSales/empCount*100).toPrecision(2) + '%'},
-                            { x: 'Transportation', y: (empTrans/empCount*100).toPrecision(4), text: (empTrans/empCount*100).toPrecision(2) + '%'},
-                            { x: 'Production', y: (empProd/empCount*100).toPrecision(4), text: (empProd/empCount*100).toPrecision(2) + '%'},
-                            { x: 'Maintenance', y: (empMaint/empCount*100).toPrecision(4), text: (empMaint/empCount*100).toPrecision(2) + '%'},
-                            { x: 'Human Resources', y: (empHR/empCount*100).toPrecision(4), text: (empHR/empCount*100).toPrecision(2) + '%'},
-                        ]
-                    }
-                    xName="x"
-                    yName="y"
-                    innerRadius="40%"
-                    startAngle={0}
-                    endAngle={360}
-                    radius="70%"
-                    explode
-                    explodeOffset="10%"
-                    explodeIndex={2}
-                    dataLabel={{
-                        visible: true,
-                        position: 'Outside',
-                        name: 'text',
-                        font: {
-                          fontWeight: '600',
-                        },
-                    }}
-                    >
-                    
-                </AccumulationSeriesDirective>
+                  type="Pie"
+                  dataSource={
+                      [
+                          { x: 'Finance', y: (empFin/empCount*100).toPrecision(4), text: (empFin/empCount*100).toPrecision(2) + '%'},
+                          { x: 'Sales', y: (empSales/empCount*100).toPrecision(4), text: (empSales/empCount*100).toPrecision(2) + '%'},
+                          { x: 'Transportation', y: (empTrans/empCount*100).toPrecision(4), text: (empTrans/empCount*100).toPrecision(2) + '%'},
+                          { x: 'Production', y: (empProd/empCount*100).toPrecision(4), text: (empProd/empCount*100).toPrecision(2) + '%'},
+                          { x: 'Maintenance', y: (empMaint/empCount*100).toPrecision(4), text: (empMaint/empCount*100).toPrecision(2) + '%'},
+                          { x: 'Human Resources', y: (empHR/empCount*100).toPrecision(4), text: (empHR/empCount*100).toPrecision(2) + '%'},
+                      ]
+                  }
+                  xName="x"
+                  yName="y"
+                  innerRadius="40%"
+                  startAngle={0}
+                  endAngle={360}
+                  radius="70%"
+                  explode
+                  explodeOffset="10%"
+                  explodeIndex={2}
+                  dataLabel={{
+                    visible: true,
+                    position: 'Outside',
+                    name: 'text',
+                    font: {
+                      fontWeight: '600',
+                    },
+                  }}
+                />
             </AccumulationSeriesCollectionDirective>
-
         </AccumulationChartComponent>
     </div>
-  )
-}
+  );
+};
 
-export default EmployeePieChart
+export default EmployeePieChart;
