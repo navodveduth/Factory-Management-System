@@ -19,13 +19,9 @@ const attendanceSchema = new Schema({
     },
     employeeTotalHours: {
         type: Number,
- 
-        maxlength: 2,
     },
     employeeOTHours: {
         type: Number,
-
-        maxlength: 2,
     },
     attendanceStatus: { //OT, normal, leave
         type: String,

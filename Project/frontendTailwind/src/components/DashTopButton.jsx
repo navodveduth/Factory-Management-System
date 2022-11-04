@@ -1,17 +1,20 @@
 import React from 'react'
 import { useStateContext } from '../contexts/ContextProvider';
 
-const DashTopButton = ({value}) => {
+const DashTopButton = ({value, icon}) => {
     const { currentColor } = useStateContext();
   return (
-    <button
+    <div>
+      <button
         type="button"
-        className="text-md text-white opacity-0.9 p-4 hover:drop-shadow-xl rounded-full m-1" 
+        className="flex text-md text-white opacity-0.9 p-4 hover:drop-shadow-xl rounded-2xl m-1" 
         style={{ background: currentColor }} 
-    >
-    {value}
-    </button>
-  )
-}
+      >
+        <div className=" text-2xl mr-2 "> {icon} </div>
+        {value}
+      </button>
+    </div>
+  );
+};
 
-export default DashTopButton
+export default DashTopButton;
