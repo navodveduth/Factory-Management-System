@@ -31,7 +31,7 @@ const MaintainenceReport = () => {
         const pdf = new jsPDF("landscape", "px", "a1",false);
         const data = document.querySelector("#tableContainer");
         pdf.html(data).then(() => {
-            pdf.save("MaintenanceReport-" +date + ".pdf");
+            pdf.save("Property-Maintenance-Report-" +date + ".pdf");
            });
     };
 
@@ -52,28 +52,37 @@ const MaintainenceReport = () => {
                         <thead>
                             <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                             <TableHeader value="Type" />
-                            <TableHeader value="Name" />
                             <TableHeader value="Service task & Shedule" />
                             <TableHeader value="Last Maintained Date" />
                             <TableHeader value="Next due" />
-                            <TableHeader value="Total Cost" />
                             <TableHeader value="Status" />
+                            <TableHeader value="Total Cost" />
+                            <TableHeader value="Comments" />
                             
                             </tr>
                         </thead>
 
                         <tbody>
                             {maintainence.map((data, key) => {
+                                var datacolor = "text-black";
+                                if (data.status === "In progress") {
+                                  datacolor = "text-red-600 font-bold";
+            
+                                } else {
+                                  datacolor = "text-green-500 font-bold";
+                                }
                                 return(
                                     TotalCost = TotalCost + data.others,
                                     <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                                          <TableData value={data.Type} />
-                                        <TableData value={data.name} />
                                         <TableData value={data.Description} />
                                         <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
                                         <TableData value={data.nextServiceDate.toString().split('T')[0]} />
-                                        <TableData value={data.others} />
-                                        <TableData value={data.status} />
+                                        
+                                            
+                                            <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
+                                            <TableData value={data.others} />
+                                            <TableData value={data.name} />
                                     </tr>
                                 )
                             })}

@@ -9,30 +9,32 @@ function MaintenanceCreateForm() {
   const navigate = useNavigate(); //useNavigate hook to redirect to another page after form submission is successful 
 
   const [Type, setType] = useState('');
-  const[name, setName] = useState("");
   const [Description, setDescription] = useState('');
   const [others, setOthers] = useState('');
   const [status, setStatus] = useState('');
   const [lastMaintainedDate, setLastMaintainedDate] = useState('');
   const [nextServiceDate, setNextServiceDate] = useState('');
+  const[name, setName] = useState("");
+  
 
   var date = new Date().toISOString().split('T')[0];
  
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-              <Header category="Form" title=" Add New Machinery" />
+              <Header category="Form" title=" Add New Maintenance" />
               <div className=" flex items-center justify-center "> 
               <form onSubmit={async(e)=>{
                   e.preventDefault();
                   
                   const newMaintenance = {
-                    Type, 
-                    name,
+                    Type,
                     Description,
                     others,
                     status,
                     lastMaintainedDate,
-                    nextServiceDate
+                    nextServiceDate, 
+                    name
+                    
                 }
 
                 await axios.post("http://localhost:8070/maintainence/create", newMaintenance)
@@ -57,23 +59,16 @@ function MaintenanceCreateForm() {
                                 setType(e.target.value);
                             }}>
                                 <option selected>Choose...</option>
-                                <option value="Vehicle">Vehicle</option>
-                                    <option value="Machinery">Machinery</option>
-                                    <option value="Building">Building</option>
+                                <option value="Plumbing">Plumbing</option>
+                                    <option value="HVAC">HVAC</option>
+                                    <option value="Flooring">Flooring</option>
+                                    <option value="Electrical">Electrical</option>
+                                    <option value="Painting">Painting</option>
+                                    <option value="Buildings">Buildings</option>
+
                             </select>
                         </div>
-
-
             
-
-                <div className="mb-3">
-                            <label htmlFor="employeeNumber" className="text-md">Name : </label>
-                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="employeeNumber"   required 
-                                onChange={(e)=>{
-                                    setName(e.target.value);
-                                }}/>
-                        </div>
                         <div className="mb-3">
                             <label htmlFor="employeeFullName" className="form-label">Service task & schedule : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
@@ -100,8 +95,10 @@ function MaintenanceCreateForm() {
                                 setStatus(e.target.value);
                             }}>
                                 <option selected>Choose...</option>
-                                    <option value="In progress">In progress</option>
+                                <option selected>Choose...</option>
                                     <option value="Completed">Completed</option>
+                                    <option value="In progress">In progress</option>
+
                             </select>
                         </div>
 
@@ -121,6 +118,17 @@ function MaintenanceCreateForm() {
                                 onChange={(e) =>{
                                     setNextServiceDate(e.target.value);
                                 }}/>
+                        </div>
+
+                        
+                <div className="mb-3">
+                            <label htmlFor="employeeNumber" className="text-md">Comment : </label>
+                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                id="employeeNumber"   required 
+                                onChange={(e)=>{
+                                    setName(e.target.value);
+                                }}/>
+
                         </div>
 
                       

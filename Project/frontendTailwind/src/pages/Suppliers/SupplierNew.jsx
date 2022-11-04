@@ -41,7 +41,7 @@ function AddSupplierDetails() {
                             navigate("/SupplierViewAll");
                           })
                           .catch((err) => {
-                            alert(err);
+                            alert("This Supplier ID already exits.");
                           });
                         
                      
@@ -88,7 +88,10 @@ function AddSupplierDetails() {
                 <div className="mb-3">
                     <label for="phone" className="form-label">Phone : </label>
                     <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                    id="phone" placeholder="Enter the phone number" required
+                    id="phone" placeholder="Enter the phone number" 
+                    pattern="^[0-9]{10}$"
+                            title="Invalid Phone Number"
+                    required
                     onChange={(e)=>{
                         setPhone(e.target.value);
                     }

@@ -49,14 +49,16 @@ return (
         <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
           <table className="w-full rounded-lg">
             <thead>
+
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                 <TableHeader value="Invoice No." />
                 <TableHeader value="Date of Order" />
                 <TableHeader value="Customer Name" />
                 <TableHeader value="Contact No." />
+                <TableHeader value="Item Name" />
+                <TableHeader value="Quantity" />
                 <TableHeader value="Total Amount" />
                 <TableHeader value="Status" />
-                <TableHeader value="Materials" />
               </tr>
             </thead>
             <tbody>
@@ -70,9 +72,11 @@ return (
                   <TableData value={new Date(data.orderDate).toISOString().split('T')[0]} />
                   <TableData value={data.customerName} />
                   <TableData value={data.customerContactNo} />
+                  <TableData value={data.itemName} />
+                  <TableData value={data.quantity} />
                   <TableData value={data.totalAmount} />
                   <TableData value={data.status} />
-                  <TableData value={data.materialsSupplied} />
+                  
                 </tr>
               )})}
             </tbody>
