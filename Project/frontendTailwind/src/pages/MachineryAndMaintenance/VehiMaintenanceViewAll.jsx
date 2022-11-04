@@ -6,9 +6,8 @@ import { useStateContext } from '../../contexts/ContextProvider.js';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 
-
-const MachMaintenanceViewAll = () => {
-    const [maintainenceMachine, setMaintainenceMachine] = useState([]);
+const VehiMaintenanceViewAll = () => {
+    const [maintainenceVehi, setMaintainenceVehi] = useState([]);
     const { currentColor } = useStateContext();
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -16,10 +15,10 @@ const MachMaintenanceViewAll = () => {
   var TotalCost = 0;
   
 
-  const getMMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-      axios.get("http://localhost:8070/maintainenceMachine/")
+  const getVMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+      axios.get("http://localhost:8070/maintainenceVehicle/")
       .then((res) => { 
-        setMaintainenceMachine (res.data); //setMaintainence  is used to update the state variable
+        setMaintainenceVehi (res.data); //setMaintainence  is used to update the state variable
         
       })
       .catch((err) => {
@@ -28,14 +27,14 @@ const MachMaintenanceViewAll = () => {
   }
 
   useEffect(() => { //useEffect is used to call the function getMaintainence 
-    getMMaintainence ();
+      getVMaintainence ();
   }, [])
 
-  const deleteMMaintainence  = async (id) => {
-      await axios.delete(`http://localhost:8070/maintainenceMachine/delete/${id}`)
+  const deleteVMaintainence  = async (id) => {
+      await axios.delete(`http://localhost:8070/maintainenceVehicle/delete/${id}`)
       .then((res) => {
           alert("Data deleted successfully");
-          getMMaintainence ();
+          getVMaintainence ();
       })
       .catch((err) => {
           alert(err.message);
@@ -45,9 +44,9 @@ const MachMaintenanceViewAll = () => {
   const confirmFunc = (id)=>{
 
 		if (confirm("Do you want to delete?") == true) {
-            deleteMMaintainence(id);
+            deleteVMaintainence(id);
 		} else {
-			navigate('/MachMaintenanceViewAll');
+			navigate('/VehiMaintenanceViewAll');
 		}
 
     }
@@ -55,7 +54,7 @@ const MachMaintenanceViewAll = () => {
   return (
     <div>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-        <Header category="Table" title="Machinery Maintenance " />
+        <Header category="Table" title="Vehicle Maintenance " />
 
         <div className=" flex items-center mb-5 ">
           <div>
@@ -65,7 +64,7 @@ const MachMaintenanceViewAll = () => {
             }} />
           </div>
           <div className="mr-0 ml-auto">
-            <Link to={"/MachMaintenanceReport"}> {/* change this link your preview page */}
+            <Link to={"/MaintainenceReport"}> {/* change this link your preview page */}
               <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
             </Link>
           </div>
@@ -78,39 +77,40 @@ const MachMaintenanceViewAll = () => {
           <table className="w-full rounded-lg" >
             <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                <TableHeader value="ID" />
-                <TableHeader value="Item" />
-                <TableHeader value="Repair needed" />
+                <TableHeader value="vehicle No" />
+                <TableHeader value="Vehicle model" />
+                <TableHeader value="Mileage at service" />
+                <TableHeader value="Service schedule" />
                 <TableHeader value="Last Maintained Date" />
-                <TableHeader value="Next due" />
-                <TableHeader value="Repair company" />
-                <TableHeader value="R.C ContactNO" />
-                <TableHeader value="Status" />
+                <TableHeader value="Next Service Date" />
+                <TableHeader value="performed By" />
+                <TableHeader value="status" />
                 <TableHeader value="Total Cost" />
                 <TableHeader value="Manage" />
               </tr>
             </thead>
             <tbody>
-              {maintainenceMachine.filter((data) => {
+              {maintainenceVehi.filter((data) => {
                     if(searchTerm == ""){
                         return data;
-                    }else if((data.machineID.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                    }else if((data.vehicleNo.toLowerCase().includes(searchTerm.toLowerCase())) ||
                       (data.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
                       (data.Description.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                      (data.status.toLowerCase().includes(searchTerm.toLowerCase()))||
-                      (data.Location.toLowerCase().includes(searchTerm.toLowerCase())))
+                        (data.performedBy.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                      (data.status.toLowerCase().includes(searchTerm.toLowerCase())))
+                      
                       {
                       return data;
                       }
                   }).map((data, key) => {
 
                     var datacolor = "text-black";
-                                if (data.status === "In progress") {
-                                  datacolor = "text-red-600 font-bold";
+                    if (data.status === "In progress") {
+                      datacolor = "text-red-600 font-bold";
 
-                                } else {
-                                  datacolor = "text-green-500 font-bold";
-                                }
+                    } else {
+                      datacolor = "text-green-500 font-bold";
+                    }
                   
                   return (
 
@@ -122,35 +122,34 @@ const MachMaintenanceViewAll = () => {
                 <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
 
 
-                  <TableData value={data.machineDetails.map((data1)=>{
+                  <TableData value={data.vehicleDetails.map((data2)=>{
+                        return(
+                            <div>
+                                <TableData value={data2.vehicleNo} />
+                            </div>
+                        )
+
+                  })} />
+                  <TableData value={data.vehicleDetails.map((data2)=>{
                     return(
                         <div>
-                            <TableData value={data1.machineID} />
+                            <TableData value={data2.vehicleModel} />
                         </div>
                     )
                   })} />
-                  <TableData value={data.machineDetails.map((data1)=>{
-                    return(
-                        <div>
-                            <TableData value={data1.name} />
-                        </div>
-                    )
-                  })} />
+                  <TableData value={data.mileage}/>
                   <TableData value={data.Description} />
                   <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
                   <TableData value={data.nextServiceDate.toString().split('T')[0]} />
-                  <TableData value={data.Location} />
-                    <TableData value={data.contactNo} />
-                    
-                    
+                  <TableData value={data.performedBy} />
                     
                     <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
                     <TableData value={data.others} />
-                   
+                    
                   
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                    
-                  <Link to={`/MachMaintenanceUpdate/${data._id}`}>
+                  <Link to={`/MaintenanceUpdate/${data._id}`}>
                       <button
                         type="button"
                         className="font-bold py-1 px-4 rounded-full mx-3 text-white"
@@ -185,4 +184,4 @@ const MachMaintenanceViewAll = () => {
   );
 };
 
-export default MachMaintenanceViewAll;
+export default VehiMaintenanceViewAll;
