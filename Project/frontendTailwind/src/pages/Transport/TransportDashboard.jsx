@@ -128,11 +128,13 @@ const TransportDashboard = () => {
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                       {/* small top boxes in the dashboard */}
                       {/* use minimum 3, maximum 5 */}
-                      <DashTopBox
-                        icon={<i className="fa-solid fa-truck " />}
-                        label="Total Transports"
-                        data={totTransport}
-                      />
+                      <Link to="/TransportViewAll">
+                        <DashTopBox
+                          icon={<i className="fa-solid fa-truck " />}
+                          label="Total Transports"
+                          data={totTransport}
+                        />
+                      </Link>
                       <DashTopBox
                         icon={<i className="fa-solid fa-hourglass px-1" />}
                         label="Pending Transports"

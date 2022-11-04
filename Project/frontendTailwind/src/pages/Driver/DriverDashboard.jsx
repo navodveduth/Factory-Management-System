@@ -126,11 +126,13 @@ const DriverDashboard = () => {
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                       {/* small top boxes in the dashboard */}
                       {/* use minimum 3, maximum 5 */}
-                      <DashTopBox
-                        icon={<FaUsers />}
-                        label="Total Drivers"
-                        data={totDrivers}
-                      />
+                      <Link to="/DriverViewAll">
+                        <DashTopBox
+                          icon={<FaUsers />}
+                          label="Total Drivers"
+                          data={totDrivers}
+                        />
+                      </Link>
                       <DashTopBox
                         icon={<FaUserCheck />}
                         label="Available Drivers"
