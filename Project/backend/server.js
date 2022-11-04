@@ -22,6 +22,7 @@ import payrollRouter from "./routes/payroll.routes.js";
 import leaveRouter from "./routes/leaves.routes.js";
 import salaryRouter from "./routes/salary.routes.js";
 import welfareFacilityRouter from "./routes/welfareFacility.routes.js";
+import customerRouter from "./routes/customer.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 8070;
@@ -47,6 +48,7 @@ app.use("/payroll", payrollRouter);
 app.use("/leave", leaveRouter);
 app.use("/salary", salaryRouter);
 app.use("/welfareFacility", welfareFacilityRouter);
+app.use("/customer", customerRouter);
 
 const URL = process.env.MONGODBURL;
 
