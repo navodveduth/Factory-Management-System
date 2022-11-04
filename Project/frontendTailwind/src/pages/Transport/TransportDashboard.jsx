@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FiSettings } from 'react-icons/fi';
+import { SiYourtraveldottv } from 'react-icons/si';
+import { MdOutlineAddLocationAlt } from 'react-icons/md';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import {
   DashTopBox,
@@ -59,8 +61,6 @@ const TransportDashboard = () => {
 
   return (
     <div>
-      {/* DON'T CHANGE ANYTHING HERE */}
-
       <div className={currentMode === 'Dark' ? 'dark' : ''}>
         <div className="flex relative dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
@@ -110,10 +110,16 @@ const TransportDashboard = () => {
                       {/* top buttons in the dashboard */}{' '}
                       {/* use for navigation buttons */}
                       <Link to="/TransportViewAll">
-                        <DashTopButton value="View All Transport Details" />
+                        <DashTopButton
+                          value="All Transport Details"
+                          icon={<SiYourtraveldottv />}
+                        />
                       </Link>
                       <Link to="/TransportCreate">
-                        <DashTopButton value="Create New Record" />
+                        <DashTopButton
+                          value="New Transport"
+                          icon={<MdOutlineAddLocationAlt />}
+                        />
                       </Link>
                     </div>
                   </div>
