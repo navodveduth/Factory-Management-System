@@ -6,8 +6,8 @@ import { useStateContext } from '../../contexts/ContextProvider.js';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 
-const MaintenanceViewAll = () => {
-    const [maintainence, setMaintainence] = useState([]);
+const VehiMaintenanceViewAll = () => {
+    const [maintainenceVehi, setMaintainenceVehi] = useState([]);
     const { currentColor } = useStateContext();
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -15,10 +15,10 @@ const MaintenanceViewAll = () => {
   var TotalCost = 0;
   
 
-  const getMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-      axios.get("http://localhost:8070/maintainence/")
+  const getVMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+      axios.get("http://localhost:8070/maintainenceVehicle/")
       .then((res) => { 
-          setMaintainence (res.data); //setMaintainence  is used to update the state variable
+        setMaintainenceVehi (res.data); //setMaintainence  is used to update the state variable
         
       })
       .catch((err) => {
@@ -27,14 +27,14 @@ const MaintenanceViewAll = () => {
   }
 
   useEffect(() => { //useEffect is used to call the function getMaintainence 
-      getMaintainence ();
+      getVMaintainence ();
   }, [])
 
-  const deleteMaintainence  = async (id) => {
-      await axios.delete(`http://localhost:8070/maintainence/delete/${id}`)
+  const deleteVMaintainence  = async (id) => {
+      await axios.delete(`http://localhost:8070/maintainenceVehicle/delete/${id}`)
       .then((res) => {
           alert("Data deleted successfully");
-          getMaintainence ();
+          getVMaintainence ();
       })
       .catch((err) => {
           alert(err.message);
@@ -44,9 +44,9 @@ const MaintenanceViewAll = () => {
   const confirmFunc = (id)=>{
 
 		if (confirm("Do you want to delete?") == true) {
-      deleteMaintainence(id);
+            deleteVMaintainence(id);
 		} else {
-			navigate('/MaintenanceViewAll');
+			navigate('/VehiMaintenanceViewAll');
 		}
 
     }
@@ -54,7 +54,7 @@ const MaintenanceViewAll = () => {
   return (
     <div>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-        <Header category="Table" title="Property Maintenance " />
+        <Header category="Table" title="Vehicle Maintenance " />
 
         <div className=" flex items-center mb-5 ">
           <div>
@@ -77,23 +77,26 @@ const MaintenanceViewAll = () => {
           <table className="w-full rounded-lg" >
             <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                <TableHeader value="Type" />
-                <TableHeader value="Service task & Shedule" />
+                <TableHeader value="vehicle No" />
+                <TableHeader value="Vehicle model" />
+                <TableHeader value="Mileage at service" />
+                <TableHeader value="Service schedule" />
                 <TableHeader value="Last Maintained Date" />
-                <TableHeader value="Next due" />
-                <TableHeader value="Status" />
+                <TableHeader value="Next Service Date" />
+                <TableHeader value="performed By" />
+                <TableHeader value="status" />
                 <TableHeader value="Total Cost" />
-                <TableHeader value="Comments" />
                 <TableHeader value="Manage" />
               </tr>
             </thead>
             <tbody>
-              {maintainence.filter((data) => {
+              {maintainenceVehi.filter((data) => {
                     if(searchTerm == ""){
                         return data;
-                    }else if((data.Type.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                    }else if((data.vehicleNo.toLowerCase().includes(searchTerm.toLowerCase())) ||
                       (data.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
                       (data.Description.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                        (data.performedBy.toLowerCase().includes(searchTerm.toLowerCase())) ||
                       (data.status.toLowerCase().includes(searchTerm.toLowerCase())))
                       
                       {
@@ -119,15 +122,30 @@ const MaintenanceViewAll = () => {
                 <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
 
 
-                  <TableData value={data.Type} />
+                  <TableData value={data.vehicleDetails.map((data2)=>{
+                        return(
+                            <div>
+                                <TableData value={data2.vehicleNo} />
+                            </div>
+                        )
+
+                  })} />
+                  <TableData value={data.vehicleDetails.map((data2)=>{
+                    return(
+                        <div>
+                            <TableData value={data2.vehicleModel} />
+                        </div>
+                    )
+                  })} />
+                  <TableData value={data.mileage}/>
                   <TableData value={data.Description} />
                   <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
                   <TableData value={data.nextServiceDate.toString().split('T')[0]} />
-                  
+                  <TableData value={data.performedBy} />
                     
                     <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
                     <TableData value={data.others} />
-                    <TableData value={data.name} />
+                    
                   
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                    
@@ -166,4 +184,4 @@ const MaintenanceViewAll = () => {
   );
 };
 
-export default MaintenanceViewAll;
+export default VehiMaintenanceViewAll;
