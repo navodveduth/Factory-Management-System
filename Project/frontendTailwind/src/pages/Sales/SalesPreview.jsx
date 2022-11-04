@@ -54,7 +54,6 @@ return (
                 <TableHeader value="Invoice No." />
                 <TableHeader value="Date of Order" />
                 <TableHeader value="Customer Name" />
-                <TableHeader value="Contact No." />
                 <TableHeader value="Item Name" />
                 <TableHeader value="Quantity" />
                 <TableHeader value="Total Amount" />
@@ -70,8 +69,14 @@ return (
 
                   <TableData value={data.invoiceNo} />
                   <TableData value={new Date(data.orderDate).toISOString().split('T')[0]} />
-                  <TableData value={data.customerName} />
-                  <TableData value={data.customerContactNo} />
+                  <TableData value={data.customerDetailss.map((data3) => {
+                                return (
+                                  <div>
+                                    <TableData value = {data3.customerName} /> 
+                                  </div>
+                                )
+                              
+                            })} />
                   <TableData value={data.itemName} />
                   <TableData value={data.quantity} />
                   <TableData value={data.totalAmount} />

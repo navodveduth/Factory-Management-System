@@ -4,7 +4,7 @@ import axios from 'axios';
 import {jsPDF} from "jspdf";
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
-// import { Link } from "react-router-dom"
+//import { Link } from "react-router-dom"
 
 function SalesInvoice() {
 
@@ -30,8 +30,7 @@ function SalesInvoice() {
 
           setInvoice(res.data.invoiceNo);
           setOrderDate(res.data.orderDate);
-          setCustomerName(res.data.customerName);
-          setCustomerContactNo(res.data.customerContactNo);
+          setCustomerID(res.data.customerID);
           setItemName(res.data.itemName);
           setQuantity(res.data.quantity);
           setTotalAmount(res.data.totalAmount);
@@ -41,7 +40,6 @@ function SalesInvoice() {
         });
       }, [id]);
 
-
       const createPDF = () => {
         const pdf = new jsPDF("portrait", "px", "b1", false)
         const data = document.querySelector("#invoiceView");
@@ -49,6 +47,14 @@ function SalesInvoice() {
           pdf.save(invoiceNo +".pdf");
         });
       }
+
+      var d = new Date(orderDate);
+
+      var date = d.getDate();
+      var month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+      var year = d.getFullYear();
+      var formateDate = year + "-" + month + "-" + date;
+
   
     return (
       <div>
@@ -69,19 +75,20 @@ function SalesInvoice() {
             <p>011 2942 672</p>
           </div>
 
-          <p className="text-2xl mt-10 text-center underline">INVOICE</p>
+          <p className="text-3xl mt-10 text-center underline">INVOICE</p>
           
   
           <div className="mt-8 text-right">
               <p>Invoice No: {invoiceNo}</p>
-              <p>Invoice Date: {orderDate}</p>
+              <p>Invoice Date: {formateDate}</p>
               <p>Due Date: {currentdate}</p> 
           </div>
-  
+ 
           <div className="mt-5 text-left">
               <p className="text-xl mb-3">Billed to:</p>
               <p>Name: {}</p>
               <p>PhoneNo: {}</p>
+              <p>Customer ID: {customerID}</p>
          </div>
   
           <div>

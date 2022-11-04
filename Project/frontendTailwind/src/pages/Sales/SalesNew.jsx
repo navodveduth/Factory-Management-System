@@ -14,6 +14,8 @@ const navigate = useNavigate();    //useNavigate hook to redirect to another pag
   const [totalAmount, setTotalAmount] =useState('');
   const [status, setStatus] =useState('');
 
+  var currentDate = new Date().toISOString().split('T')[0];
+
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
               <Header category="Form" title=" Create New Sale" />
@@ -56,7 +58,7 @@ const navigate = useNavigate();    //useNavigate hook to redirect to another pag
                 <div className="mb-3">
                   <label for="orderDate" className="form-label">Invoice Date</label>
                   <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="orderDate" required
+                  id="orderDate" max={currentDate} required
                   onChange={(e) =>{
                     setOrderDate(e.target.value);
                   }}/>
@@ -65,7 +67,7 @@ const navigate = useNavigate();    //useNavigate hook to redirect to another pag
                 <div className="mb-3">
                   <label for="customerID" className="form-label">Customer ID</label>
                   <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="customerID" placeholder = "Customer' ID" required maxLength={5}
+                  id="customerID" placeholder = "Customer ID" required maxLength={5}
                   onChange={(e)=>{
                     setCustomerID(e.target.value);
                   }}/>
@@ -101,11 +103,15 @@ const navigate = useNavigate();    //useNavigate hook to redirect to another pag
 
                 <div className="mb-3">
                   <label for="status" className="form-label">Order Status</label>
-                  <input type="text" class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="status" defaultValue={"Pending"} disabled 
+                  <select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                  id="status"   
                    onChange={(e) =>{
                     setStatus(e.target.value);
-                  }}/>
+                  }}
+                  >
+                    <option selected>Select Status</option>
+                    <option value='Pending'>Pending</option>
+                    </select>
                 </div>
 
                 <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Save Invoice</button>
