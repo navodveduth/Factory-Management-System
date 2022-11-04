@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { FiSettings } from 'react-icons/fi';
+import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import {
   Header,
   Navbar,
@@ -10,9 +12,6 @@ import {
 } from '../../components';
 
 import { useStateContext } from '../../contexts/ContextProvider';
-
-import { FiSettings } from 'react-icons/fi';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 const TransportNew = () => {
   const {
@@ -46,7 +45,7 @@ const TransportNew = () => {
   const [driver, setDriver] = useState('');
   const [drivers, setDrivers] = useState([]);
 
-  var currentDate = new Date().toISOString().split('T')[0];
+  const currentDate = new Date().toISOString().split('T')[0];
 
   const getDrivers = async () => {
     axios
