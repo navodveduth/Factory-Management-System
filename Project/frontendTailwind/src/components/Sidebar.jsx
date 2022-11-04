@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { MdOutlineCancel } from 'react-icons/md';
-import { FiUser, FiCalendar, FiBarChart, FiUsers, FiFileText, FiTool, FiPackage } from 'react-icons/fi';
+import { FiUser, FiCalendar, FiBarChart, FiUsers, FiFileText, FiTool, FiPackage, FiTrendingUp, FiShoppingBag, FiGift } from 'react-icons/fi';
 import { GiSewingMachine , GiSteeringWheel} from 'react-icons/gi';
 import { IoBagHandleOutline } from 'react-icons/io5';
 import { TbBuildingWarehouse, TbTruckDelivery, TbReportMoney, TbBuildingFactory2 } from 'react-icons/tb';
@@ -11,8 +11,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { useStateContext } from '../contexts/ContextProvider';
 
 const Sidebar = () => {
-  const { currentColor, activeMenu, setActiveMenu, screenSize } =
-    useStateContext();
+  const { currentColor, activeMenu, setActiveMenu, screenSize } = useStateContext();
 
   const handleCloseSideBar = () => {
     if (activeMenu !== undefined && screenSize <= 900) {
@@ -20,35 +19,27 @@ const Sidebar = () => {
     }
   };
 
-  const activeLink =
-    'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white  text-md m-2';
-  const normalLink =
-    'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2';
+  const activeLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white  text-md m-2';
+  const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2';
 
   return (
     <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
       {activeMenu && (
         <>
           <div className="flex justify-between items-center">
-            <Link
-              to="/"
-              onClick={handleCloseSideBar}
-              className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900"
-            >
+            <Link to="/" onClick={handleCloseSideBar} className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900">
               <span>Factory Management System</span> {/*  system name  */}
             </Link>
+
             <TooltipComponent content="Menu" position="BottomCenter">
-              <button
-                type="button"
-                onClick={() => setActiveMenu(!activeMenu)}
-                style={{ color: currentColor }}
-                className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden"
-              >
+              <button type="button" onClick={() => setActiveMenu(!activeMenu)} style={{ color: currentColor }} className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden">
                 <MdOutlineCancel />
               </button>
             </TooltipComponent>
           </div>
+
           <div className="mt-10 ">
+            
             {/*  menu ---------------------------------------------------------------------------------- menu  */}
             <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
               Employee management {/*  menu name  */}
@@ -84,6 +75,18 @@ const Sidebar = () => {
             </NavLink>
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
+            {/*<NavLink
+              to="/WelfareDashboard"
+              onClick={handleCloseSideBar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : '',
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <FiGift /> {/*  icon  */}
+             {/*} <span className="capitalize ">Welfare</span>{' '}
+              {/*  link name  */}
+            {/*</NavLink>*/}
 
             {/*  menu ---------------------------------------------------------------------------------- menu  */}
             <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
@@ -135,13 +138,13 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <IoBagHandleOutline /> {/*  icon  */}
+              <FiShoppingBag /> {/*  icon  */}
               <span className="capitalize ">Order Handling</span>{' '}
               {/*  link name  */}
             </NavLink>
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
-            {/*
+            
             <NavLink
               to="/SalesDashboard"
               onClick={handleCloseSideBar}
@@ -150,9 +153,9 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineCancel /> */}{/*  icon  */}
-              {/*<span className="capitalize ">Sales Analytics</span> {/*  link name  */}
-               {/* </NavLink> */}
+              <FiTrendingUp /> {/*  icon  */}
+              <span className="capitalize ">Sales Analytics</span> {/*  link name  */}
+            </NavLink>
 
             {/*  done ---------------------------------------------------------------------------------- done  */}
 
