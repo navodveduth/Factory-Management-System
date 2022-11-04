@@ -87,12 +87,12 @@ const MachineryReport = () => {
                             })}
                         </tbody>
                     </table><br></br>
-                    <span className="text-xs font-semibold inline-block py-2 px-2 uppercase rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+                    <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
             Total Depreciation : {TotalDepreciation.toFixed(2)}
             
           </span><br></br>
 
-          <span className="text-xs font-semibold inline-block py-2 px-2 uppercase rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+          <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
             
             TotalCost : {"Rs.  "+TotalCost.toFixed(2)}
           </span>
