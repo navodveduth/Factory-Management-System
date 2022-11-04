@@ -56,7 +56,6 @@ const TransportPieChart = () => {
         <AccumulationSeriesCollectionDirective>
           <AccumulationSeriesDirective
             type="Pie"
-            innerRadius="50%"
             dataSource={[
               {
                 x: 'Employee',
@@ -76,10 +75,20 @@ const TransportPieChart = () => {
             ]}
             xName="x"
             yName="y"
+            innerRadius="40%"
+            startAngle={0}
+            endAngle={360}
+            radius="70%"
+            explode
+            explodeOffset="10%"
+            explodeIndex={2}
             dataLabel={{
               visible: true,
               position: 'Outside',
               name: 'text',
+              font: {
+                fontWeight: '600',
+              },
             }}
           />
         </AccumulationSeriesCollectionDirective>
