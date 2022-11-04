@@ -3,16 +3,24 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { VscSymbolProperty } from 'react-icons/vsc';
 import { MdOutlineDirectionsBusFilled } from 'react-icons/md';
-import { BiBuildingHouse } from 'react-icons/bi';
+import { BiBuildingHouse ,BiAddToQueue} from 'react-icons/bi';
 import { GiSewingMachine } from 'react-icons/gi';
 import { GiMoneyStack } from 'react-icons/gi';
+import {MdAddBusiness,MdOutlineBusAlert}  from 'react-icons/md';
 import { DashTopBox, DashTopButton, MaintainChart, ChartsHeader } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 
-//property
+import { FiSettings } from 'react-icons/fi';
+import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
+import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-const MaintenanceDashboard = () => {
-  const { currentColor, currentMode } = useStateContext();
+
+
+/* IMPORT ALL YOUR IMPORTS AS USUAL ABOVE HERE, REMOVE UNNECESSARY ONES*/
+
+const MaintenanceDashboard = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT TO YOUR COMPONENT NAME
+
+  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
   const [maintainence, setMaintainence] = useState([]);
 
@@ -27,51 +35,65 @@ const MaintenanceDashboard = () => {
     })
 }
 
-useEffect(() => { //useEffect is used to call the function getMaintainence 
-    getMaintainence ();
-}, [])
+  useEffect(() => {
+    getMaintainence(); // <== CHANGE ACCORDING TO YOUR OWN FUNCTIONS, YOU CAN REMOVE THIS LINE IF YOU DON'T NEED IT
+    const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
+    const currentThemeMode = localStorage.getItem('themeMode');
+    if (currentThemeColor && currentThemeMode) {
+      setCurrentColor(currentThemeColor);
+      setCurrentMode(currentThemeMode);
+    }
+  }, []);
 
-//vehicles
+  //vehicles
 const [maintainenceVehi, setMaintainenceVehi] = useState([]);
     
-    const [searchTerm, setSearchTerm] = useState("");
+const [searchTerm, setSearchTerm] = useState("");
 
-  const getVMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-      axios.get("http://localhost:8070/maintainenceVehicle/")
-      .then((res) => { 
-        setMaintainenceVehi (res.data); //setMaintainence  is used to update the state variable
-        
-      })
-      .catch((err) => {
-          alert(err.message);
-      })
+const getVMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+  axios.get("http://localhost:8070/maintainenceVehicle/")
+  .then((res) => { 
+    setMaintainenceVehi (res.data); //setMaintainence  is used to update the state variable
+    
+  })
+  .catch((err) => {
+      alert(err.message);
+  })
+}
+
+useEffect(() => {
+  getVMaintainence(); // <== CHANGE ACCORDING TO YOUR OWN FUNCTIONS, YOU CAN REMOVE THIS LINE IF YOU DON'T NEED IT
+  const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
+  const currentThemeMode = localStorage.getItem('themeMode');
+  if (currentThemeColor && currentThemeMode) {
+    setCurrentColor(currentThemeColor);
+    setCurrentMode(currentThemeMode);
   }
-
-  useEffect(() => { //useEffect is used to call the function getMaintainence 
-      getVMaintainence ();
-  }, [])
-
-
+}, []);
 
 //machines
-  const [maintainenceMachine, setMaintainenceMachine] = useState([]);
+const [maintainenceMachine, setMaintainenceMachine] = useState([]);
    
-  const getMMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-      axios.get("http://localhost:8070/maintainenceMachine/")
-      .then((res) => { 
-        setMaintainenceMachine (res.data); //setMaintainence  is used to update the state variable
-        
-      })
-      .catch((err) => {
-          alert(err.message);
-      })
+const getMMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+    axios.get("http://localhost:8070/maintainenceMachine/")
+    .then((res) => { 
+      setMaintainenceMachine (res.data); //setMaintainence  is used to update the state variable
+      
+    })
+    .catch((err) => {
+        alert(err.message);
+    })
+}
+
+useEffect(() => {
+  getMMaintainence(); // <== CHANGE ACCORDING TO YOUR OWN FUNCTIONS, YOU CAN REMOVE THIS LINE IF YOU DON'T NEED IT
+  const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
+  const currentThemeMode = localStorage.getItem('themeMode');
+  if (currentThemeColor && currentThemeMode) {
+    setCurrentColor(currentThemeColor);
+    setCurrentMode(currentThemeMode);
   }
-
-  useEffect(() => { //useEffect is used to call the function getMaintainence 
-    getMMaintainence ();
-  }, [])
-
-
+}, []);
 
 const maintCount = maintainence.length;
 const vehiMaintCount = maintainenceVehi.length;
@@ -102,28 +124,80 @@ var prototal = 0;
  total = Math.round(total * 100) / 100;
 
   return (
-    <div className="mt-5">
+    <div>
 
-      <div className="flex flex-wrap lg:flex-nowrap justify-left ml-10 mt-5">
+      {/* DON'T CHANGE ANYTHING HERE */}
+
+        <div className={currentMode === 'Dark' ? 'dark' : ''}>
+
+            <div className="flex relative dark:bg-main-dark-bg">
+
+                <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}> {/* THEME SETTINGS BUTTON */}
+                    <TooltipComponent content="Settings" position="Top">
+                    <button
+                        type="button"
+                        onClick={() => setThemeSettings(true)}
+                        style={{ background: currentColor, borderRadius: '50%' }}
+                        className="text-3xl text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
+                    >
+                        <FiSettings />
+                    </button>
+                    </TooltipComponent>
+                </div>
+
+
+                {activeMenu ? ( // SIDEBAR IMPLEMENTATION
+                    <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
+                    <Sidebar />
+                    </div>
+                ) : (
+                    <div className="w-0 dark:bg-secondary-dark-bg">
+                    <Sidebar />
+                    </div>
+                )}
+
+                <div
+                    className={ // MAIN BACKGROUND IMPLEMENTATION
+                    activeMenu
+                        ? 'dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-72 w-full  '
+                        : 'bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 '
+                    }
+                >
+                    
+                    {/* NAVBAR IMPLEMENTATION */}
+                    <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
+                        <Navbar />
+                    </div>
+
+                    <div>
+                        {themeSettings && <ThemeSettings />}
+                        <div>
+                            {/* YOUR COMPONENT IMPLEMENTATION GOES HERE */}
+                            {/* COPY YOUR ORIGINAL COMPONENT CODE HERE */}
+                            {/* PART AFTER THE RETURN STATEMENT */}
+                            <div className="mt-5">
+
+      <div className="flex flex-wrap lg:flex-nowrap justify-left ml-5 mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* top buttons in the dashboard */} {/* use for navigation buttons*/}
           <Link to="/VehiMaintenanceViewAll">
-            <DashTopButton value="Vehicles" />
+            <DashTopButton value="All Vehicles" icon={<MdOutlineDirectionsBusFilled/>}/>
           </Link>
           <Link to="/MachMaintenanceViewAll">
-            <DashTopButton value="Machines" />
+            <DashTopButton value="All Machines" icon={<GiSewingMachine/>}/>
           </Link>
           <Link to="/MaintenanceViewAll">
-            <DashTopButton value="Property" />
+            <DashTopButton value="All Property" icon={<BiBuildingHouse/>}/>
+          </Link>
+          
+          <Link to="/VehiMaintenanceNew">
+            <DashTopButton value="New Vehicle" icon={<MdOutlineBusAlert/>}/>
           </Link>
           <Link to="/MachMaintenanceNew">
-            <DashTopButton value="Add machinery maintenance" />
-          </Link>
-          <Link to="/VehiMaintenanceNew">
-            <DashTopButton value="Add Vehicle maintenance" />
+            <DashTopButton value="New machinery" icon={<BiAddToQueue/>}/>
           </Link>
           <Link to="/MaintenanceCreate">
-            <DashTopButton value="Add property maintenance" />
+            <DashTopButton value="New property" icon={<MdAddBusiness/>} />
           </Link>
           {/* <Link to="/MaintainenceTask">
             <DashTopButton value="Tasks For today" />
@@ -147,7 +221,7 @@ var prototal = 0;
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
           <DashTopBox icon={<VscSymbolProperty />} label="Total Maintenances records" data={maintprog+machineMaintCount+vehiMaintCount} />
-          <DashTopBox icon={<GiMoneyStack />} label="Total cost" data={"Rs. "+total+".00"} /> 
+          <DashTopBox icon={<GiMoneyStack />} label="Total Maintenance cost" data={"Rs. "+total+".00"} /> 
                
         </div>
       </div>
@@ -158,7 +232,13 @@ var prototal = 0;
 
     </div>
 
-  
+                        </div>
+                        <Footer />
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
   );
 };
 
