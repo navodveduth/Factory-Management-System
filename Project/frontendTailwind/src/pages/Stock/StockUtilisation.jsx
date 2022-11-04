@@ -10,13 +10,13 @@ function StockUtilisation() {
     const { currentColor } = useStateContext();
     const navigate = useNavigate();
 
-    const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
+    const [stockUtil, setStockUtilisation] = useState([]); //stock is the state variable and setStock is the function to update the state variable
     const [searchTerm, setSearchTerm] = useState("");
 
-    const getStock = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stock")
+    const getStockUtil = async () => {  //getStock is the function to get the data from the backend
+        axios.get("http://localhost:8070/stockUtilisation")
             .then((res) => {
-                setStock(res.data); //setStock is used to update the state variable
+                setStockUtilisation(res.data); //setStock is used to update the state variable
                 console.log(res.data);
             })
             .catch((err) => {
@@ -26,11 +26,11 @@ function StockUtilisation() {
 
     const id = useParams();
 
-    const deleteStock = async (id) => {
-        await axios.delete('http://localhost:8070/stock/delete/' + id)
+    const deleteStockUtil = async (id) => {
+        await axios.delete('http://localhost:8070/stockUtilisation/delete/' + id)
             .then(() => {
                 alert("Data deleted successfully");
-                getStock();
+                getStockUtil();
             })
             .catch((err) => {
                 alert(err.message);
@@ -38,13 +38,13 @@ function StockUtilisation() {
     }
 
     useEffect(() => { //useEffect is used to call the function getStock
-        getStock();
+        getStockUtil();
     }, [])
 
     const confirmFunc = (id)=>{
 
 		if (confirm("Do you want to delete?") == true) {
-            deleteStock(id);
+            deleteStockUtil(id);
 		} else {
 			navigate('/StockUtilisation');
 		}
@@ -77,35 +77,34 @@ function StockUtilisation() {
                         <thead>
                             <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                                 <TableHeader value="Code" />
-                                <TableHeader value="Name" />
+                                <TableHeader value="Bundle Name" />
                                 <TableHeader value="Category" />
-                                <TableHeader value="Last updated" />
-                                <TableHeader value="Quantity" />
-                                <TableHeader value="Reorder level" />
-                                <TableHeader value="Buffer Stock" />
+                                <TableHeader value="Date" />
+                                <TableHeader value="Type" />
+                                <TableHeader value="unitPrice" />
+                                <TableHeader value="Units" />
+                                <TableHeader value="Total value" />
+                                <TableHeader value="Supplier" />
                                 <TableHeader value="Manage" />
                             </tr>
                         </thead>
                         <tbody>
-                            {stock.filter((data) => {
+                            {stockUtil.filter((data) => {
                                 if(searchTerm == ""){
                                     return data;
                                 }else if((data.stockCode.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                  (data.stockName.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                  (data.stockCategory.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                  (data.sufficientStock.toLowerCase().includes(searchTerm.toLowerCase())))
+                                  (data.type.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                  (data.supplier.toLowerCase().includes(searchTerm.toLowerCase())))
                                   
                                   {
                                   return data;
                                   }
                               }).map((data, key) => {//map is used to iterate the array
-                                const date = new Date(data.lastUpdated).toISOString().split('T')[0];
+                                const dbDate = new Date(data.date).toISOString().split('T')[0];
 
                                 var datacolor = "text-black";
-                                if (data.sufficientStock === "Available") {
+                                if (data.type === "Additions") {
                                     datacolor = "text-green-500 font-bold";
-                                } else if (data.sufficientStock === "-") {
-                                    datacolor = "text-black font-bold";
                                 } else {
                                     datacolor = "text-red-600 font-bold";
                                 }
@@ -115,10 +114,13 @@ function StockUtilisation() {
                                         <TableData value={data.stockCode} />
                                         <TableData value={data.stockName} />
                                         <TableData value={data.stockCategory} />
-                                        <TableData value={date} />
+                                        <TableData value={dbDate} />
+                                        <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.type}</td>
+                                        <TableData value={"Rs." + data.unitPrice} />
                                         <TableData value={data.quantity} />
-                                        <TableData value={data.reorderLevel} />
-                                        <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.sufficientStock} </td>
+                                        <TableData value={"Rs." + data.totalValue} />
+                                        <TableData value={data.supplier} />
+                                    
 
                                         <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                                             <Link to={`/StockUtilUpdate/${data._id}`}>
