@@ -35,12 +35,27 @@ const DriverView = () => {
 
   const navigate = useNavigate(); // This is a hook that allows us to navigate to a different route
 
-  const [nic, setNic] = useState('');
   const [fullName, setFullName] = useState('');
   const [drivingLicenseNo, setDrivingLicenseNo] = useState('');
-  const [contactNo, setContactNo] = useState('');
   const [vehicleNo, setVehicleNo] = useState('');
   const [vehicleModel, setVehicleModel] = useState('');
+
+  const [employees, setEmployees] = useState([]);
+
+  const getEmployees = async () => {
+    axios
+      .get('http://localhost:8070/employee/viewEmployee')
+      .then((res) => {
+        setEmployees(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
+  useEffect(() => {
+    getEmployees();
+  }, []);
 
   return (
     <div>
@@ -95,10 +110,8 @@ const DriverView = () => {
                         e.preventDefault();
 
                         const newDriver = {
-                          nic,
                           fullName,
                           drivingLicenseNo,
-                          contactNo,
                           vehicleNo,
                           vehicleModel,
                         };
@@ -119,32 +132,27 @@ const DriverView = () => {
                       }}
                     >
                       <div className="mb-3">
-                        <label className="form-label">NIC</label>
-                        <input
-                          type="text"
-                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                          id="nic"
-                          placeholder="Enter nic number..."
-                          // pattern="[0-9]{9}[vVxX] | [0-9]{12}"
-                          title="You entered an invalid NIC number format which must be 9 digits and a letter or 12 digits"
-                          required
-                          onChange={(e) => {
-                            setNic(e.target.value);
-                          }}
-                        />
-                      </div>
-                      <div className="mb-3">
                         <label className="form-label">Full Name</label>
-                        <input
-                          type="text"
-                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                        <select
                           id="fullName"
-                          placeholder="Enter full name..."
+                          name="fullName"
+                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           required
                           onChange={(e) => {
                             setFullName(e.target.value);
                           }}
-                        />
+                        >
+                          <option selected>Select...</option>
+                          {employees.map((item, index) =>
+                            item.employeeDesignation === 'Driver' ? (
+                              <option value={item.employeeFullName} key={index}>
+                                {item.employeeFullName}
+                              </option>
+                            ) : (
+                              ''
+                            )
+                          )}
+                        </select>
                       </div>
 
                       <div className="mb-3">
@@ -162,21 +170,7 @@ const DriverView = () => {
                           }}
                         />
                       </div>
-                      <div className="mb-3">
-                        <label className="form-label">Contact Number</label>
-                        <input
-                          type="tel"
-                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                          id="contactNo"
-                          placeholder="Enter contact number..."
-                          pattern="[0-9]{10}"
-                          title="You entered an invalid contact number format which must be 10 digits"
-                          required
-                          onChange={(e) => {
-                            setContactNo(e.target.value);
-                          }}
-                        />
-                      </div>
+
                       <div className="mb-3">
                         <label className="form-label">Vehicle Number</label>
                         <input
