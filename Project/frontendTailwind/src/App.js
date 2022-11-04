@@ -24,6 +24,7 @@ import { TransportDashboard, TransportViewAll, TransportNew, TransportUpdate, Tr
 
 import UserLogin from './pages/UserLogin';
 
+import { CustomerNew,CustomerViewAll,CustomerUpdate,CustomerDashboard } from './pages/Customer';
 
 const App = () => {
   return (
@@ -149,6 +150,12 @@ const App = () => {
           <Route path="/DriverUpdate/:id" element={<DriverUpdate />} />
           <Route path="/DriverReport" element={<DriverReport />} />
 
+          {/* customer management  */}
+          <Route path="/CustomerViewAll" element={<CustomerViewAll />} />
+          <Route path="/CustomerCreate" element={<CustomerNew />} />
+          <Route path="/CustomerUpdate/:id" element={<CustomerUpdate />} />
+          <Route path="/CustomerDashboard" element={<CustomerDashboard />} />
+          
         </Routes>
       </BrowserRouter>
         
