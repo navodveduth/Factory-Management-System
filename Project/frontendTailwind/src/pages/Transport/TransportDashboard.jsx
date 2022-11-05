@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FiSettings } from 'react-icons/fi';
 import { SiYourtraveldottv } from 'react-icons/si';
+import { GiMoneyStack } from 'react-icons/gi';
 import { MdOutlineAddLocationAlt } from 'react-icons/md';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import {
@@ -58,6 +59,12 @@ const TransportDashboard = () => {
   const completeTr = transport.filter(
     (data) => data.status === 'Completed'
   ).length;
+
+  let total = 0;
+  for (let index = 0; index < totTransport; index++) {
+    total += transport[index].transportCost;
+    total = Math.round(total * 100) / 100;
+  }
 
   return (
     <div>
@@ -144,6 +151,11 @@ const TransportDashboard = () => {
                         icon={<i className="fa-solid fa-circle-check" />}
                         label="Completed Transports"
                         data={completeTr}
+                      />
+                      <DashTopBox
+                        icon={<GiMoneyStack />}
+                        label="Total Transportation Cost"
+                        data={`Rs.${total}.00`}
                       />
                     </div>
                   </div>
