@@ -64,7 +64,7 @@ function SalaryUpdate() {
                         <div className="mb-3">
                             <label htmlFor="trnNumber" className="text-md">Employee Number : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="trnNumber" defaultValue={employeeNumber} placeholder="Enter Transaction ID" required 
+                                id="trnNumber" defaultValue={employeeNumber} placeholder="Enter Transaction ID"  required 
                                 onChange={(e)=>{
                                     setEmpNumber(e.target.value);
                                 }}/>
@@ -72,7 +72,7 @@ function SalaryUpdate() {
                         <div className="mb-3">
                             <label htmlFor="trnDescription" className="form-label">Basic Salary : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="trnDescription" defaultValue={employeeBasicSalary} placeholder="Enter Transaction Description" required 
+                                id="trnDescription" defaultValue={employeeBasicSalary} placeholder="Enter Transaction Description" min="1" title="Please enter a valid amount" required 
                                 onChange={(e)=>{
                                     setEmpBasic(e.target.value);
                                 }}/>
@@ -81,7 +81,7 @@ function SalaryUpdate() {
                         <div className="mb-3">
                             <label htmlFor="trnAmount" className="form-label">Allowance : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="trnAmount" defaultValue={employeeAllowance} placeholder="Enter Amount" required 
+                                id="trnAmount" defaultValue={employeeAllowance} placeholder="Enter Amount" min="1" title="Please enter a valid amount" required 
                                 onChange={(e) =>{
                                     setEmpAllowance(e.target.value);
                                 }}/>
@@ -90,7 +90,7 @@ function SalaryUpdate() {
                         <div className="mb-3">
                             <label htmlFor="trnAmount" className="form-label">Incentives : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="trnAmount" defaultValue={employeeIncentive} placeholder="Enter Amount" required 
+                                id="trnAmount" defaultValue={employeeIncentive} placeholder="Enter Amount" min="1" title="Please enter a valid amount" required 
                                 onChange={(e) =>{
                                     setEmpIncentive(e.target.value);
                                 }}/>

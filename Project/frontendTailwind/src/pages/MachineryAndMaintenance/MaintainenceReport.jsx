@@ -17,10 +17,19 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 const MaintainenceReport = () => {
 
     const [maintainence, setMaintainence] = useState([]);
-    var TotalCost = 0;
+    
 
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
+  var TotalCost = 0;
+  var total=0; 
+    
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+      })
 
   const getMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
     axios.get("http://localhost:8070/maintainence/")
@@ -144,6 +153,8 @@ const MaintainenceReport = () => {
                                 }
                                 return(
                                     TotalCost = TotalCost + data.others,
+                                    total=formatter.format(TotalCost),
+
                                     <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                                          <TableData value={data.Type} />
                                         <TableData value={data.Description} />
@@ -160,7 +171,7 @@ const MaintainenceReport = () => {
                         </tbody>
                     </table><br></br><br></br>
           <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-            Total Cost of Maintenance : {"Rs.  "+TotalCost.toFixed(2)}
+            Total Cost of Property Maintenance : {total}
             
           </span>
                 </div>
