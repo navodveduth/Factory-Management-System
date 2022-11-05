@@ -32,7 +32,6 @@ const StocksDashboard = () => {
   const itemCount = stock.length;
   const countRawMaterials= stock.filter((stk) => stk.stockCategory === 'Raw materials').length;
   const countWorkInProgress= stock.filter((stk) => stk.stockCategory === 'Work in progress').length;
-  const countFinishedGoods= stock.filter((stk) => stk.stockCategory === 'Finished goods').length;
   var total = 0;
    for (let index = 0; index < itemCount; index++) {
       total = total + stock[index].totalValue; 
@@ -48,8 +47,8 @@ const StocksDashboard = () => {
             <DashTopButton value="View All Stocks" />
           </Link>
 
-          <Link to="/StockUtilisation">
-            <DashTopButton value="View Stocks Utilisation" />
+          <Link to="/StockBreakdown">
+            <DashTopButton value="View Stocks Breakdown" />
           </Link>
 
           <Link to="/StockAdd">
@@ -64,8 +63,7 @@ const StocksDashboard = () => {
           <DashTopBox icon={<FaCoins />} label="Total Stocks Value" data={total} />  
           <DashTopBox icon={<AiOutlineStock />} label="Total Items" data={itemCount} />
           <DashTopBox icon={<GiRolledCloth />} label="Total Raw Materials" data={countRawMaterials}/>
-          <DashTopBox icon={<GiSewingNeedle />} label="Total Work In Progress" data={countWorkInProgress} />
-          <DashTopBox icon={<GiClothes />} label="Total Finished Goods" data={countFinishedGoods} />       
+          <DashTopBox icon={<GiSewingNeedle />} label="Total Work In Progress" data={countWorkInProgress} />       
         </div>
       </div>
     

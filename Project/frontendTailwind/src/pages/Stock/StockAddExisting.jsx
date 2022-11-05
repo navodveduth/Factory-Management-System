@@ -3,23 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Header } from '../../components';
 
-function StockAdd() {
+function StockAddExisting() {
 
     //useNavigate is a hook that is used to navigate to another page
     const navigate = useNavigate();
 
     const [stockCode, setStockCode] = useState('');
-    const [stockName, setStockName] = useState('');
-    const [stockCategory, setStockCategory] = useState('');
-    const [description, setDescription] = useState('');
-    var [damagedQty, setDamagedQty] = useState('');
     const [quantity, setQuantity] = useState('');
     const [date, setDate] = useState('');
-    var [type, setType] = useState('');
+    const [type, setType] = useState('');
     const [unitPrice, setUnitPrice] = useState('');
     var [supplier, setSupplier] = useState('');
     var [totalValue, setTotalValue] = useState('');
-    var [additions,setAdditions] = useState('');
 
     //gets the current date
     var currentDate = new Date().toISOString().split('T')[0];
@@ -44,31 +39,14 @@ function StockAdd() {
                 <form onSubmit={async (e) => {
                     e.preventDefault();
 
-                    {totalValue = quantity * unitPrice}
+                    totalValue = quantity * unitPrice;
 
                     // if (supplier === ''){
                     //     supplier = "-";
                     // }
-                    
-                    {type = "Additions"}
-                    {additions = quantity}
-                    
-                    const newStock = {
-                        stockCode,
-                        stockName,
-                        stockCategory,
-                        description,
-                        //reorderLevel,
-                        unitPrice,
-                        totalValue,
-                        //sufficientStock,
-                        damagedQty
-                    }
 
                     const newStockUtil = {
                         stockCode,
-                        stockName,
-                        stockCategory,
                         date,
                         type,
                         supplier,
@@ -88,9 +66,9 @@ function StockAdd() {
                         navigate('/StockAdd');
                     })
 
-                    await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
+                    await axios.post("http://localhost:8070/stockUtlisation/create", newStockUtil).then(() => {
                         alert("Data saved successfully");
-                        navigate('/StockDashboard');
+                        navigate('/Stock');
 
                     }).catch((err) => {
                         console.log(err);
@@ -107,34 +85,6 @@ function StockAdd() {
                             }} />
                     </div>
 
-                    <div className="mb-3">
-                        <label for="stockName" className="form-label">Stock Name: </label>
-                        <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" placeholder="Enter stock name..."
-                            title="The name can contain only alphabets" required onChange={(e) => {
-                                setStockName(e.target.value);
-                            }} />
-                    </div>
-
-                    <div className="mb-3">
-                        <label for="category" className="form-label">Category: </label>
-                        < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="stockCategory" title="Please choose one of the options" required onChange={(e) => {
-                            setStockCategory(e.target.value);
-                            //myFunction();
-                        }}>
-                            <option selected  >Select option...</option>
-                            <option value="Raw materials">Raw materials</option>
-                            <option value="Work in progress">Work in progress</option>
-                        </select>
-                    </div>
-
-                    <div className="mb-3">
-                        <label for="description" className="form-label">Description: </label>
-                        <textarea className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" placeholder="Enter stock description..."
-                            title="The name can contain only alphabets" required onChange={(e) => {
-                                setDescription(e.target.value);
-                            }} />
-                    </div>
-                    
                     {/* max uses the above date variable and sets the max date to select from*/}
                     <div className="mb-3">
                         <label for="date" className="form-label">Date: </label>
@@ -144,7 +94,7 @@ function StockAdd() {
                             }} />
                     </div>
 
-                    {/* <div className="mb-3">
+                    <div className="mb-3">
                         <label for="type" className="form-label">Type: </label>
                         < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="stockCategory" title="Please choose one of the options" required onChange={(e) => {
                             setType(e.target.value);
@@ -154,10 +104,10 @@ function StockAdd() {
                             <option value="Additions">Raw materials</option>
                             <option value="Issues">Work in progress</option>
                         </select>
-                    </div> */}
+                    </div>
 
                     <div className="mb-3">
-                        <label for="quantity" className="form-label">Quantity Purchased: </label>
+                        <label for="quantity" className="form-label">Quantity: </label>
                         <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" placeholder="Enter quantity..." min="0"
                             title="If there is no stock please input 0" required onChange={(e) => {
                                 setQuantity(e.target.value);
@@ -194,4 +144,4 @@ function StockAdd() {
     )
 }
 
-export default StockAdd;
+export default StockAddExisting;

@@ -6,16 +6,18 @@ import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 import { jsPDF } from "jspdf";
 
-function StockPDF() {
+function StockBreakdownPDF() {
 
     const { currentColor } = useStateContext();
 
     const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
+    const [searchTerm, setSearchTerm] = useState("");
 
     const getStock = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stock/")
+        axios.get("http://localhost:8070/stock")
             .then((res) => {
                 setStock(res.data); //setStock is used to update the state variable
+                console.log(res.data);
             })
             .catch((err) => {
                 alert(err.message);
@@ -53,10 +55,13 @@ function StockPDF() {
                             <TableHeader value="Code" />
                             <TableHeader value="Bundle Name" />
                             <TableHeader value="Category" />
-                            <TableHeader value="Description" />
                             <TableHeader value="Units" />
+                            <TableHeader value="Additions" />
+                            <TableHeader value="Issues" />
+                            <TableHeader value="Damaged Units" />
                             <TableHeader value="Unit price" />
-                            <TableHeader value="Total value" />
+                            <TableHeader value="Reorder Level" />
+                            <TableHeader value="Buffer stock" />
                         </tr>
                     </thead>
                     <tbody>
@@ -65,33 +70,30 @@ function StockPDF() {
 
                             var totAdds = 0;
                             var totIssues = 0;
-                            var price = 0
+                            var price = 0;
                             data.stockUtilisationDetails.filter((stk) => stk.type === "Additions" &&
-                                stk.stockCode == data.stockCode).map(
-                                    totAdds += stk.units
-                                )
+                            stk.stockCode == data.stockCode).map(
+                                totAdds += stk.units,
+                                price = stl.unitPrice
+                            )
 
                             data.stockUtilisationDetails.filter((stk) => stk.type === "Issues" &&
-                                stk.stockCode == data.stockCode).map(
-                                    totIssues += stk.units
-                                )
-
+                            stk.stockCode == data.stockCode).map(
+                                totIssues += stk.units
+                            )
 
                             return (
                                 <tr className="text-sm h-10 border dark:border-slate-600">
                                     <TableData value={data.stockCode} />
                                     <TableData value={data.stockName} />
                                     <TableData value={data.stockCategory} />
-                                    <TableData value={data.description} />
-                                    <TableData value={totAdds - totIssues - data.damagedQty} />
-                                    <TableData value={data.stockUtilisationDetails.map((data3) => {
-                                        return (<div>
-                                            <TableData value={data3.unitPrice} />
-                                            price = {data3.unitPrice}
-                                        </div>
-                                        )
-                                    })} />
-                                    <TableData value={"Rs." + price * (totAdds - totIssues - data.damagedQty)} />
+                                    <TableData value={data.quantity} />
+                                    <TableData value={totAdds} />
+                                    <TableData value={totIssues} />
+                                    <TableData values={data.damagedQty} />
+                                    <TableData value={"Rs." + price} />
+                                    <TableData value={data.reorderLevel} />
+                                    <TableData value={data.sufficientStock} />
                                 </tr>
                             )
                         })}
@@ -103,4 +105,4 @@ function StockPDF() {
     )
 }
 
-export default StockPDF
+export default StockBreakdownPDF
