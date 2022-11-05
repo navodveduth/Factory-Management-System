@@ -5,7 +5,17 @@ import Stock from "../../models/Stock/stock.models.js";  //always add the file e
 //reading all stock details
 export const getAllStockDetails = async (req, res) => {
     try {//retrives stock details
-        const stocks = await Stock.find();
+        const stocks = await Stock.aggregate([
+            {
+                $lookup:
+                {
+                    from: "stockUtilisations",
+                    localField: "stockCode",
+                    foreignField: "stockCode",
+                    as: "stockUtilisationDetails"
+                }
+            }
+        ]);
         res.status(200).json(stocks);  //200 and 404 are codes like success and error
     } catch (error) { //happens on error
         res.status(404).json({

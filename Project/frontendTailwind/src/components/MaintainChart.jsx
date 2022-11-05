@@ -22,13 +22,17 @@ const MaintainChart = () => {
     }, [])
     
     const maintCount = maintainence.length;
-    const maintprog = maintainence.filter((maint) => maint.status === "In progress").length;
-    const maintcomp = maintainence.filter((maint) => maint.status === "Completed").length;
+    const maintp = maintainence.filter((maint) => maint.Type === "Plumbing").length;
+    const maintH = maintainence.filter((maint) => maint.Type === "HVAC").length;
+    const maintF = maintainence.filter((maint) => maint.Type === "Flooring").length;
+    const maintP = maintainence.filter((maint) => maint.Type === "Painting").length;
+    const maintB = maintainence.filter((maint) => maint.Type === "Buildings").length;
+    const maintE = maintainence.filter((maint) => maint.Type === "Electrical").length;
     
 
   return (
     <div>
-        <ChartsHeader category="Chart" title='Maintenance Progression' />
+        <ChartsHeader category="Chart" title='Property Maintenance Progression' />
         <AccumulationChartComponent   legendSettings={{position:"Right", background: "white"}} tooltip={{enable:true}} >
             <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]} />
             <AccumulationSeriesCollectionDirective>
@@ -36,8 +40,13 @@ const MaintainChart = () => {
                     type="Pie"
                     dataSource={
                         [
-                            { x: 'In progress', y: (maintprog/maintCount*100).toPrecision(4), text: (maintprog/maintCount*100).toPrecision(2) + '%'},
-                            { x: 'Completed', y: (maintcomp/maintCount*100).toPrecision(4), text: (maintcomp/maintCount*100).toPrecision(2) + '%'},
+                            { x: 'Plumbing', y: (maintp/maintCount*100).toPrecision(4), text: (maintp/maintCount*100).toPrecision(2) + '%'},
+                            { x: 'HVAC', y: (maintH/maintCount*100).toPrecision(4), text: (maintH/maintCount*100).toPrecision(2) + '%'},
+                            { x: 'Flooring', y: (maintF/maintCount*100).toPrecision(4), text: (maintF/maintCount*100).toPrecision(2) + '%'},
+                            { x: 'Painting', y: (maintP/maintCount*100).toPrecision(4), text: (maintP/maintCount*100).toPrecision(2) + '%'},
+                            { x: 'Buildings', y: (maintB/maintCount*100).toPrecision(4), text: (maintB/maintCount*100).toPrecision(2) + '%'},
+                            { x: 'Electrical', y: (maintE/maintCount*100).toPrecision(4), text: (maintE/maintCount*100).toPrecision(2) + '%'},
+
                           
                             
                         ]

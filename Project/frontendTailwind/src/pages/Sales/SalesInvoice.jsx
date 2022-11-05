@@ -4,9 +4,14 @@ import axios from 'axios';
 import {jsPDF} from "jspdf";
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
-// import { Link } from "react-router-dom"
+import { useStateContext } from '../../contexts/ContextProvider';
+import { FiSettings } from 'react-icons/fi';
+import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
+import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+//import { Link } from "react-router-dom"
 
 function SalesInvoice() {
+    const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
     const navigate = useNavigate();
   
@@ -14,8 +19,10 @@ function SalesInvoice() {
       const [orderDate, setOrderDate] =useState('');
       const [customerName, setCustomerName] =useState('');
       const [customerContactNo, setCustomerContactNo] =useState('');
+      const [customerID, setCustomerID] =useState('');
+      const [itemName, setItemName] =useState('');
+      const [quantity, setQuantity] =useState('');
       const [totalAmount, setTotalAmount] =useState('');
-      const [status, setStatus] =useState('');
   
       const current = new Date();
       const currentdate = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}`;
@@ -23,15 +30,21 @@ function SalesInvoice() {
       const {id} = useParams();    //get the id from the url
   
       useEffect(() => { 
+        const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
+        const currentThemeMode = localStorage.getItem('themeMode');
+        if (currentThemeColor && currentThemeMode) {
+          setCurrentColor(currentThemeColor);
+          setCurrentMode(currentThemeMode);
+        }
         axios.get(`http://localhost:8070/sales/${id}`)
         .then(res => {
 
           setInvoice(res.data.invoiceNo);
           setOrderDate(res.data.orderDate);
-          setCustomerName(res.data.customerName);
-          setCustomerContactNo(res.data.customerContactNo);
+          setCustomerID(res.data.customerID);
+          setItemName(res.data.itemName);
+          setQuantity(res.data.quantity);
           setTotalAmount(res.data.totalAmount);
-          setStatus(res.data.status);
         })
         .catch(err => {
           alert(err.message);
@@ -45,9 +58,65 @@ function SalesInvoice() {
           pdf.save(invoiceNo +".pdf");
         });
       }
+
+      var d = new Date(orderDate);
+
+      var date = d.getDate();
+      var month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+      var year = d.getFullYear();
+      var formateDate = year + "-" + month + "-" + date;
+
   
     return (
       <div>
+
+      {/* DON'T CHANGE ANYTHING HERE */}
+
+        <div className={currentMode === 'Dark' ? 'dark' : ''}>
+
+            <div className="flex relative dark:bg-main-dark-bg">
+
+                <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}> {/* THEME SETTINGS BUTTON */}
+                    <TooltipComponent content="Settings" position="Top">
+                    <button
+                        type="button"
+                        onClick={() => setThemeSettings(true)}
+                        style={{ background: currentColor, borderRadius: '50%' }}
+                        className="text-3xl text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
+                    >
+                        <FiSettings />
+                    </button>
+                    </TooltipComponent>
+                </div>
+
+
+                {activeMenu ? ( // SIDEBAR IMPLEMENTATION
+                    <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
+                    <Sidebar />
+                    </div>
+                ) : (
+                    <div className="w-0 dark:bg-secondary-dark-bg">
+                    <Sidebar />
+                    </div>
+                )}
+
+                <div
+                    className={ // MAIN BACKGROUND IMPLEMENTATION
+                    activeMenu
+                        ? 'dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-72 w-full  '
+                        : 'bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 '
+                    }
+                >
+                    
+                    {/* NAVBAR IMPLEMENTATION */}
+                    <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
+                        <Navbar />
+                    </div>
+
+                    <div>
+                        {themeSettings && <ThemeSettings />}
+                        <div>
+                        <div>
         <p className="text-center text-4xl  dark:text-white">Invoice Preview    <button className="text-4xl right-4" onClick={createPDF} type="button" >
           <i className="fa-solid fa-download"></i></button>
         </p>
@@ -65,19 +134,20 @@ function SalesInvoice() {
             <p>011 2942 672</p>
           </div>
 
-          <p className="text-2xl mt-10 text-center underline">INVOICE</p>
+          <p className="text-3xl mt-10 text-center underline">INVOICE</p>
           
   
           <div className="mt-8 text-right">
               <p>Invoice No: {invoiceNo}</p>
-              <p>Invoice Date: {orderDate}</p>
+              <p>Invoice Date: {formateDate}</p>
               <p>Due Date: {currentdate}</p> 
           </div>
-  
+ 
           <div className="mt-5 text-left">
               <p className="text-xl mb-3">Billed to:</p>
-              <p>Name: {customerName}</p>
-              <p>PhoneNo: {customerContactNo}</p>
+              <p>Name: {}</p>
+              <p>PhoneNo: {}</p>
+              <p>Customer ID: {customerID}</p>
          </div>
   
           <div>
@@ -85,15 +155,17 @@ function SalesInvoice() {
             <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                 <TableHeader value="Invoice No." />
-                <TableHeader value="Status" />
+                <TableHeader value="Item Name" />
+                <TableHeader value="Quantity" />
                 <TableHeader value="Total Amount" />
               </tr>
             </thead>
             <tbody>
                 <tr className="text-sm h-10 border dark:border-slate-600">
                   <TableData value={invoiceNo} />
-                  <TableData value={status} />
-                  <TableData value={totalAmount} />
+                  <TableData value={itemName} />
+                  <TableData value={quantity} />
+                  <TableData value={"Rs." + totalAmount} />
                 </tr>
             </tbody>
             </table>
@@ -105,6 +177,14 @@ function SalesInvoice() {
         </div>
       </div>
       </div>
+                            
+                        </div>
+                        <Footer />
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
     )
   }
   
