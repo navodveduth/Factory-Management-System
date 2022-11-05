@@ -16,9 +16,6 @@ function StockBreakdown() {
     const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
     const [stockUtil, setStockUtil] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    var totAdds = 0;
-    var totIssues = 0;
-    var quantity = 0
 
     const getStock = async () => {  //getStock is the function to get the data from the backend
         axios.get("http://localhost:8070/stock")
@@ -187,6 +184,12 @@ function StockBreakdown() {
                                                 }).map((data, key) => {//map is used to iterate the array
                                                     //const date = new Date(data.lastUpdated).toISOString().split('T')[0];
 
+                                                    {
+                                                        var totAdds = 0;
+                                                        var totIssues = 0;
+                                                        var quantity = 0
+                                                    }
+                                                    
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Additions" &&
                                                             stockUtil.stockCode === data.stockCode).map((stockUtil) => {
