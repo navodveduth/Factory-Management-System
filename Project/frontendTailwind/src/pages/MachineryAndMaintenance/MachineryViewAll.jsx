@@ -25,6 +25,8 @@ const MachineryViewAll = () => {
   var TotalCost = 0;
   var total =0;
   var totalDep=0;
+  var machineryCost=0;
+  var depreCost=0;
 
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -165,10 +167,9 @@ const confirmFunc = (id)=>{
                 <TableHeader value="Name" />
                 <TableHeader value="Purchased date" />
                 <TableHeader value="Purchased Cost" />
-                {/* <TableHeader value="Salvage value" />
-                <TableHeader value="Useful life" /> */}
                 <TableHeader value="Depreciation" />
                 <TableHeader value="Availibility" />
+                <TableHeader value="Maintenance records"/>
                 <TableHeader value="Manage" />
               </tr>
             </thead>
@@ -185,11 +186,21 @@ const confirmFunc = (id)=>{
                       }
                   }).map((data, key) => {
 
+                    var datacolor = "text-black";
+                    if (data.others === "Unavailable") {
+                      datacolor = "text-red-600 font-bold";
+
+                    } else {
+                      datacolor = "text-green-500 font-bold";
+                    }
+
                     return(
 
-                // const purchasedDate = new Date(data.dateOfPurchased ).toLocaleDateString();
+             
                 TotalDepreciation = TotalDepreciation + parseFloat(parseFloat((data.machineryCost-data.salvage)/data.numberOfYrs).toFixed(2)),
                  TotalCost = TotalCost + parseFloat(data.machineryCost),
+                 machineryCost = formatter.format(parseFloat(data.machineryCost)),
+                 depreCost =formatter.format(parseFloat((data.machineryCost-data.salvage)/data.numberOfYrs).toFixed(2)),
                  total = formatter.format(TotalCost),
                  totalDep=formatter.format(TotalDepreciation),
                  
@@ -198,12 +209,17 @@ const confirmFunc = (id)=>{
                   <TableData value={data.machineID} />
                   <TableData value={data.name} />
                   <TableData value={data.dateOfPurchased.toString().split('T')[0]} />
-                  <TableData value={data.machineryCost+".00"} />
-                  {/* <TableData value={data.salvage+".00"} />
-                  <TableData value={data.numberOfYrs +"yrs"} /> */}
-                  <TableData value={parseFloat((data.machineryCost-data.salvage)/data.numberOfYrs).toFixed(2)} /> 
-                    <TableData value={data.others} />
-                    
+                  <TableData value={machineryCost} />
+                  <TableData value={depreCost} /> 
+                  <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.others} </td>
+                    <TableData value={data.machineDetails.map((data2) => {
+
+                      return(
+                        <div>
+                        <TableData value={data2.mid} />
+                        </div>
+                      )
+                    })}/>
 
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                   <Link to={`/MachineryUpdate/${data._id}`}>
