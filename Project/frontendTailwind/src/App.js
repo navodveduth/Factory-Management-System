@@ -23,6 +23,8 @@ import { DriverDashboard, DriverViewAll, DriverNew, DriverUpdate, DriverReport }
 import { TransportDashboard, TransportViewAll, TransportNew, TransportUpdate, TransportReport } from './pages/Transport';
 
 import UserLogin from './pages/UserLogin';
+import UserRegistration from './pages/UserRegistration'
+
 
 import { CustomerNew,CustomerViewAll,CustomerUpdate,CustomerDashboard } from './pages/Customer';
 
