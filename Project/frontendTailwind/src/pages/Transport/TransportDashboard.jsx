@@ -66,6 +66,15 @@ const TransportDashboard = () => {
     total = Math.round(total * 100) / 100;
   }
 
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'LKR',
+    minimumFractionDigits: 2,
+    currencyDisplay: 'symbol',
+  });
+
+  const formatCost = formatter.format(total);
+
   return (
     <div>
       <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -155,7 +164,7 @@ const TransportDashboard = () => {
                       <DashTopBox
                         icon={<GiMoneyStack />}
                         label="Total Transportation Cost"
-                        data={`Rs.${total}.00`}
+                        data={formatCost}
                       />
                     </div>
                   </div>
