@@ -146,16 +146,16 @@ const Sidebar = () => {
             {/*  links ---------------------------------------------------------------------------------- links  */}
             
             <NavLink
-              to="/SalesDashboard"
+              to="/CustomerDashboard"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <FiTrendingUp /> {/*  icon  */}
-              <span className="capitalize ">Sales Analytics</span> {/*  link name  */}
-            </NavLink>
+              <MdOutlineCancel />{/*  icon  */}
+              <span className="capitalize ">Customer Management</span> {/*  link name  */}
+                </NavLink>
 
             {/*  done ---------------------------------------------------------------------------------- done  */}
 
@@ -211,13 +211,13 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <TbBuildingWarehouse /> {/*  icon  */}
-              <span className="capitalize ">Stock</span> {/*  link name  */}
+              <span className="capitalize ">Stock Information</span> {/*  link name  */}
             </NavLink>
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/DamagedStockDashboard"
+              to="/StockUtilisationDashboard"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
@@ -225,7 +225,7 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <FaHouseDamage /> {/*  icon  */}
-              <span className="capitalize ">Damaged stock</span>{' '}
+              <span className="capitalize ">Stock Utilisation</span>{' '}
               {/*  link name  */}
             </NavLink>
             {/*  done ---------------------------------------------------------------------------------- done  */}

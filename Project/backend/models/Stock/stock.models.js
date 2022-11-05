@@ -28,13 +28,18 @@ const stockSchema = new Schema({
     description :{
         type: String,
         required:true
-    },
-    quantity: {
+     },
+    // quantity: {
+    //     type: Number,
+    //     min: 0,
+    //     required: true,
+    // },
+    reorderLevel: { //needs to be updated later and not when adding
         type: Number,
         min: 0,
-        required: true,
+        default:0,
     },
-    reorderLevel: { //needs to be updated later and not when adding
+    unitPrice:{
         type: Number,
         min: 0,
         default:0,
@@ -48,16 +53,16 @@ const stockSchema = new Schema({
         type: String,
         default: "-",
     },
-    additions:{
-        type: Number,
-        min: 0,
-        default:0.0
-    },
-    issues:{
-        type: Number,
-        min: 0,
-        default:0.0
-    },
+    // additions:{
+    //     type: Number,
+    //     min: 0,
+    //     default:0.0
+    // },
+    // issues:{
+    //     type: Number,
+    //     min: 0,
+    //     default:0.0
+    // },
     damagedQty:{
         type: Number,
         min: 0.0,

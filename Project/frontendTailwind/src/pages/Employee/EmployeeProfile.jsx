@@ -19,8 +19,8 @@ const EmployeeProfile = () => {
 
     const {id} = useParams(); //get the id from the url
   
-    const getEmployee = () => {
-        axios.get(`http://localhost:8070/employee/viewEmployee/${id}`).then((res) => {
+    const getEmployee = async () => {
+        await axios.get(`http://localhost:8070/employee/viewEmployee/${id}`).then((res) => {
             setEmployee(res.data);
         })
         .catch((err) => {
@@ -28,19 +28,19 @@ const EmployeeProfile = () => {
         })
     }
 
-    const employeeNumber = employee.employeeNumber;
+    const empNo = employee.employeeNumber;
+    //const dateJoined = new Date(employee.employeeDateOfJoin).toISOString().split('T')[0];
+    //const dateOfBirth = new Date(employee.employeeDOB).toISOString().split('T')[0];
 
-    const getLeaves = () => {
-        axios
-          .get(`http://localhost:8070/leave/viewLeavesNum/${employeeNumber}`)
-          .then((res) => {
+    const getLeaves = async () => {
+        await axios.get(`http://localhost:8070/leave/viewLeavesNum/${empNo}`).then((res) => {
             setLeave(res.data);
-          })
-          .catch((err) => {
+        })
+        .catch((err) => {
             alert(err.message);
-          });
-      };
-
+        });
+    };
+    
 
     useEffect(() => {
         getEmployee();
@@ -48,8 +48,8 @@ const EmployeeProfile = () => {
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
         if (currentThemeColor && currentThemeMode) {
-        setCurrentColor(currentThemeColor);
-        setCurrentMode(currentThemeMode);
+            setCurrentColor(currentThemeColor);
+            setCurrentMode(currentThemeMode);
         }
     }, []);
 
@@ -104,7 +104,7 @@ const EmployeeProfile = () => {
                             <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '>
                                 <Header category="Report" title="Employee Profile" />
                                 <div>
-                                    <div className="bg-main-bg dark:bg-main-dark-bg rounded-lg p-5 m-5">
+                                    <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
                                         <h1 className="text-2xl font-bold">Personal Details</h1>
                                         <div className="text-md ml-12 pt-5">
                                             <div className="p-1"> <span className="font-bold"> Employee Number </span> : {employee.employeeNumber}</div>
@@ -116,7 +116,7 @@ const EmployeeProfile = () => {
                                         </div>
                                         
                                     </div>
-                                    <div className="bg-main-bg dark:bg-main-dark-bg rounded-lg p-5 m-5">
+                                    <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
                                         <h1 className="text-2xl font-bold">Contact Details</h1>
                                         <div className="text-md ml-12 pt-5">
                                             <div className="p-1"> <span className="font-bold"> Address </span> : {employee.employeeAddress}</div>
@@ -124,7 +124,7 @@ const EmployeeProfile = () => {
                                             <div className="p-1"> <span className="font-bold"> Email </span> : {employee.employeeEmail}</div>
                                         </div>
                                     </div>
-                                    <div className="bg-main-bg dark:bg-main-dark-bg rounded-lg p-5 m-5">
+                                    <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
                                         <h1 className="text-2xl font-bold">Work Details</h1>
                                         <div className="text-md ml-12 pt-5">
                                             <div className="p-1"> <span className="font-bold"> Date joined </span> : {employee.employeeDateOfJoin}</div>
@@ -141,19 +141,17 @@ const EmployeeProfile = () => {
                                 <div className="block w-full overflow-x-auto rounded-lg">
                                     <table className="w-full rounded-lg">
                                         <thead>
-                                        <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                            <TableHeader value="Employee ID" />
-                                            <TableHeader value="Leave Type" />
-                                            <TableHeader value="Start Date" />
-                                            <TableHeader value="End Date" />
-                                            <TableHeader value="Reason" />
-                                            <TableHeader value="Status" />
-                                        </tr>
+                                            <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                                                <TableHeader value="Leave Type" />
+                                                <TableHeader value="Start Date" />
+                                                <TableHeader value="End Date" />
+                                                <TableHeader value="Reason" />
+                                                <TableHeader value="Status" />
+                                            </tr>
                                         </thead>
                                         <tbody>
                                         {leave.map((data, key) => (
                                             <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
-                                                <TableData value={data.employeeNumber} />
                                                 <TableData value={data.leaveType} />
                                                 <TableData value={new Date(data.leaveStartDate).toISOString().split('T')[0]} />
                                                 <TableData value={new Date(data.leaveEndDate).toISOString().split('T')[0]} />
