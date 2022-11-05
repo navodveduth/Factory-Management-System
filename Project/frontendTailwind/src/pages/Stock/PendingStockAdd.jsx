@@ -1,16 +1,17 @@
-import React, { useState , useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Header } from '../../components';
 import { FiUser } from 'react-icons/fi';
-import { DashTopBox, DashTopButton,  } from '../../components';
+import { DashTopBox, DashTopButton, } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-function StockAdd() {
+
+function PendingStockAdd() {
 
     //useNavigate is a hook that is used to navigate to another page
     const navigate = useNavigate();
@@ -20,43 +21,29 @@ function StockAdd() {
     const [stockName, setStockName] = useState('');
     const [stockCategory, setStockCategory] = useState('');
     const [description, setDescription] = useState('');
-    var [damagedQty, setDamagedQty] = useState('');
     const [quantity, setQuantity] = useState('');
     const [date, setDate] = useState('');
-    var [type, setType] = useState('');
-    const [unitPrice, setUnitPrice] = useState('');
-    var [supplier, setSupplier] = useState('');
-    var [totalValue, setTotalValue] = useState('');
-    var [additions, setAdditions] = useState('');
-    var [reorderLevel, setReorderLevel] = useState('');
-    var [sufficientStock, setSufficientStock] = useState('');
+    const [status, setStatus] = useState('');
 
     //gets the current date
     var currentDate = new Date().toISOString().split('T')[0];
     console.log(currentDate)
 
-    // var displayM = true;
-    // if (stockCategory === ''){
-    //     displayM = true;
-    // }
-    // else if (stockCategory != "Finished goods") {
-    //     displayM = false;
-    // } else{
-    //     displayM = true;
-    //     supplier  = "-";
-    // }
     useEffect(() => {
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
         if (currentThemeColor && currentThemeMode) {
-          setCurrentColor(currentThemeColor);
-          setCurrentMode(currentThemeMode);
+            setCurrentColor(currentThemeColor);
+            setCurrentMode(currentThemeMode);
         }
-      }, []);
+    })
 
     return (
 
         <div>
+
+            {/* DON'T CHANGE ANYTHING HERE */}
+
             <div className={currentMode === 'Dark' ? 'dark' : ''}>
 
                 <div className="flex relative dark:bg-main-dark-bg">
@@ -109,63 +96,25 @@ function StockAdd() {
                                         <form onSubmit={async (e) => {
                                             e.preventDefault();
 
-                                            { totalValue = quantity * unitPrice }
-
-                                            if (supplier === '') {
-                                                { supplier = "-" }
-                                            }
-
-                                            {
-                                                sufficientStock = "-";
-                                                reorderLevel = 0;
-                                                damagedQty = 0;
-                                                type = "Additions";
-                                                additions = quantity
-                                            }
-
                                             const newStock = {
                                                 stockCode,
                                                 stockName,
                                                 stockCategory,
                                                 description,
-                                                reorderLevel,
-                                                unitPrice,
-                                                totalValue,
-                                                sufficientStock,
-                                                damagedQty
-                                            }
-
-                                            const newStockUtil = {
-                                                stockCode,
-                                                stockName,
-                                                stockCategory,
                                                 date,
-                                                type,
-                                                supplier,
-                                                unitPrice,
                                                 quantity,
-                                                totalValue
+                                                status
                                             }
 
                                             console.log(newStock)
-                                            await axios.post("http://localhost:8070/stock/create", newStock).then(() => {
+                                            await axios.post("http://localhost:8070/pendingStock/create", newStock).then(() => {
                                                 alert("Data saved successfully");
-                                                navigate('/StockDashboard');
+                                                navigate('/PendingStockView');
 
                                             }).catch((err) => {
                                                 console.log(err);
                                                 alert("ERROR: Could not add stock");
-                                                navigate('/StockAdd');
-                                            })
-
-                                            await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
-                                                alert("Data saved successfully");
-                                                navigate('/StockDashboard');
-
-                                            }).catch((err) => {
-                                                console.log(err);
-                                                alert("ERROR: Could not add stock");
-                                                navigate('/StockAdd');
+                                                navigate('/PendingStockAdd');
                                             })
                                         }}>
 
@@ -214,48 +163,28 @@ function StockAdd() {
                                                     }} />
                                             </div>
 
-                                            {/* <div className="mb-3">
-                        <label for="type" className="form-label">Type: </label>
-                        < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="stockCategory" title="Please choose one of the options" required onChange={(e) => {
-                            setType(e.target.value);
-                            //myFunction();
-                        }}>
-                            <option selected  >Select option...</option>
-                            <option value="Additions">Raw materials</option>
-                            <option value="Issues">Work in progress</option>
-                        </select>
-                    </div> */}
+                                            <div className="mb-3">
+                                                <label for="status" className="form-label">Status: </label>
+                                                < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="status" title="Please choose one of the options" required onChange={(e) => {
+                                                    setStatus(e.target.value);
+                                                    //myFunction();
+                                                }}>
+                                                    <option selected  >Select option...</option>
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Processing">Processing</option>
+                                                    <option value="Resolved">Resolved</option>
+                                                </select>
+                                            </div>
 
                                             <div className="mb-3">
-                                                <label for="quantity" className="form-label">Quantity Purchased: </label>
+                                                <label for="quantity" className="form-label">Quantity Required: </label>
                                                 <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" placeholder="Enter quantity..." min="0"
                                                     title="If there is no stock please input 0" required onChange={(e) => {
                                                         setQuantity(e.target.value);
                                                     }} />
                                             </div>
 
-                                            <div className="mb-3">
-                                                <label for="unitPrice" className="form-label">Unit price: </label>
-                                                <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice" placeholder='Enter price per unit...'
-                                                    min="0" title="If the unit price is not avilable please enter 0" step="0.01" onChange={(e) => {
-                                                        setUnitPrice(e.target.value);
-                                                    }} />
-                                            </div>
-
-                                            <div className="mb-3" >
-                                                <label for="supplier" className="form-label">Materials provided by: </label>
-                                                <input id="supplier" type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Enter supplier name..."
-                                                    value={supplier} onChange={(e) => {
-                                                        setSupplier(e.target.value);
-                                                    }} />
-                                            </div>
-
-                                            <div className="mb-3">
-                                                <label for="totalValue" className="form-label">Total Value: </label>
-                                                <input type="number" min="0" step="0.01" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="totalCost" value={quantity * unitPrice} readOnly />
-                                            </div>
-
-                                            <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Add new stock</button>
+                                            <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Add stock request</button>
 
                                         </form>
                                     </div>
@@ -272,4 +201,4 @@ function StockAdd() {
     );
 };
 
-export default StockAdd;
+export default PendingStockAdd;
