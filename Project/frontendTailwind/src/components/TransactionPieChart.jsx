@@ -1,6 +1,8 @@
 import React, { useState, useEffect }from 'react'
 import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective, Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip } from '@syncfusion/ej2-react-charts';
 import axios from 'axios';
+import ChartsHeader from './ChartsHeader'
+import { useStateContext } from '../contexts/ContextProvider';
 
 const TransactionPieChart = () => {
     const [TRN, setTransactions] = useState([]);
@@ -34,8 +36,8 @@ const TransactionPieChart = () => {
           total += TRN.trnAmount; 
           })}
           
-
-        <AccumulationChartComponent title='Transaction Distribution by Type' legendSettings={{position:"Bottom"}} tooltip={{enable:true}}>
+          <ChartsHeader category="Chart" title="Transaction Distribution by Type" />
+        <AccumulationChartComponent legendSettings={{position:"Bottom"}} tooltip={{enable:true}}>
             <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]} />
             <AccumulationSeriesCollectionDirective>
                 <AccumulationSeriesDirective 

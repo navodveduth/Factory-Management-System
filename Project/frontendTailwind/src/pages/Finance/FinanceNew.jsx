@@ -37,7 +37,7 @@ function FinanceCreateForm() {
                       })
                       .catch((err)=>{
                           console.log(err);
-                          alert("Error occured");
+                          alert("Conflicting Transaction ID! Please enter a unique Transaction ID");
                       })
                       
                    

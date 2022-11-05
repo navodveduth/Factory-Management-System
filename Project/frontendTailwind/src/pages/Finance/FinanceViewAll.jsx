@@ -98,7 +98,7 @@ const FinanceViewAll = () => {
                 <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                   <TableData value={data.trnID} />
                   <TableData value={data.trnDesc} />
-                  <TableData value={data.trnAmount} />
+                  <TableData value={"Rs." + data.trnAmount} />
                   <TableData value={data.trnType} />
                   <TableData value={new Date(data.trnRecordedDate).toISOString().split('T')[0]} /> 
 
