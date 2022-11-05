@@ -9,7 +9,7 @@ import { WelfareDashboard, WelfareNew, WelfareReport, WelfareUpdate, WelfareView
 
 import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll } from './pages/Finance';
 
-import { MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport } from './pages/MachineryAndMaintenance';
+import { MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew} from './pages/MachineryAndMaintenance';
 
 import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice } from './pages/Sales';
 
@@ -24,6 +24,7 @@ import { TransportDashboard, TransportViewAll, TransportNew, TransportUpdate, Tr
 
 import UserLogin from './pages/UserLogin';
 
+import { CustomerNew,CustomerViewAll,CustomerUpdate,CustomerDashboard } from './pages/Customer';
 
 const App = () => {
   return (
@@ -90,7 +91,13 @@ const App = () => {
           <Route path="/MaintenanceUpdate/:id" element={<MaintenanceUpdate />} />
           <Route path="/MaintainenceTask/" element={<MaintainenceTask />} />
           <Route path="/MaintainenceReport" element={<MaintainenceReport />} />
-
+          <Route path="/MachMaintenanceViewAll" element={<MachMaintenanceViewAll />} />
+          <Route path="/MachMaintenanceNew" element={<MachMaintenanceNew />} />
+          <Route path="/MachMaintenanceUpdate/:id" element={<MachMaintenanceUpdate />} />
+          <Route path="/MachMaintenanceReport" element={<MachMaintenanceReport />} />
+          <Route path="/VehiMaintenanceViewAll" element={<VehiMaintenanceViewAll />} />
+          <Route path="/VehiMaintenanceNew" element={<VehiMaintenanceNew />} />
+                
           {/* sales management  */}
           <Route path="/SalesDashboard" element={<SalesDashboard />} />
           <Route path="/SalesViewAll" element={<SalesViewAll />} />
@@ -143,6 +150,12 @@ const App = () => {
           <Route path="/DriverUpdate/:id" element={<DriverUpdate />} />
           <Route path="/DriverReport" element={<DriverReport />} />
 
+          {/* customer management  */}
+          <Route path="/CustomerViewAll" element={<CustomerViewAll />} />
+          <Route path="/CustomerCreate" element={<CustomerNew />} />
+          <Route path="/CustomerUpdate/:id" element={<CustomerUpdate />} />
+          <Route path="/CustomerDashboard" element={<CustomerDashboard />} />
+          
         </Routes>
       </BrowserRouter>
         
