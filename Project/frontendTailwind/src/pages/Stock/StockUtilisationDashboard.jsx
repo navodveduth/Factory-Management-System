@@ -99,6 +99,9 @@ const StockUtilisationDashboard = () => {
                       <Link to="/StockAddExisting">
                         <DashTopButton value="Add New Entry for exisitng stock" />
                       </Link>
+                      <Link to="/PendingStockAdd">
+                        <DashTopButton value="Add new stock request" />
+                      </Link>
                     </div>
                   </div>
 
@@ -106,8 +109,10 @@ const StockUtilisationDashboard = () => {
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                       {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
                       <DashTopBox icon={<FaCoins />} label="Total Stocks Value" date={0} />
-                      {/* <DashTopBox icon={<AiOutlineStock />} label="Total Items" data={itemCount} />
-    <DashTopBox icon={<GiRolledCloth />} label="Total Raw Materials" data={countRawMaterials} />
+                      <Link to="/PendingStockView">
+                        <DashTopBox icon={<AiOutlineStock />} label="Pending" data={0} />
+                      </Link>
+                      {/* <DashTopBox icon={<GiRolledCloth />} label="Total Raw Materials" data={countRawMaterials} />
     <DashTopBox icon={<GiSewingNeedle />} label="Total Work in progress" data={countWorkInProgress} />
     <DashTopBox icon={<GiClothes />} label="Total Finished Goods" data={countFinishedGoods} /> */}
                     </div>

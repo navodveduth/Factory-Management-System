@@ -29,6 +29,10 @@ const stockPendingSchema = new Schema({
         type: String,
         required:true
      },
+     date:{
+        type: Date,
+        required: true,
+     },
     quantity: {
         type: Number,
         min: 0,
