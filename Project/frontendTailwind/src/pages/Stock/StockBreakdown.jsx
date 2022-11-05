@@ -189,7 +189,7 @@ function StockBreakdown() {
                                                         var totIssues = 0;
                                                         var quantity = 0
                                                     }
-                                                    
+
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Additions" &&
                                                             stockUtil.stockCode === data.stockCode).map((stockUtil) => {
@@ -216,7 +216,7 @@ function StockBreakdown() {
                                                     }
 
                                                     var datacolor = "text-black";
-                                                    if (data.quantity === "No usable stocks left") {
+                                                    if (quantity === "No usable stocks left") {
                                                         datacolor = "text-red-600 font-bold";
                                                     }
 

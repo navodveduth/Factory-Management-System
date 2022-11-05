@@ -17,9 +17,7 @@ function StockView() {
     const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
     const [stockUtil, setStockUtil] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    var totAdds = 0;
-    var totIssues = 0;
-    var quantity = 0
+
 
     const getStock = async () => {  //getStock is the function to get the data from the backend
         axios.get("http://localhost:8070/stock")
@@ -172,13 +170,10 @@ function StockView() {
                                                 }).map((data, key) => {//map is used to iterate the array
                                                     //const date = new Date(data.lastUpdated).toISOString().split('T')[0];
 
-                                                    // stock.filter((stock) => stock.type === "Additions" && stock.stockCode === data.stockCode).map(
-                                                    //     totAdds += stock.units
-                                                    // )
-                                                    // stock.filter((stock) => stock.type === "Issues" &&
-                                                    //     stock.stockCode === data.stockCode).map(
-                                                    //         totIssues += stock.units
-                                                    // )
+                                                    var totAdds = 0;
+                                                    var totIssues = 0;
+                                                    var quantity = 0;
+                                                    var totalValue = 0;
 
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type == "Additions" &&
@@ -193,7 +188,18 @@ function StockView() {
                                                             })
                                                     }
 
-                                                    { quantity = totAdds - totIssues - data.damagedQty}
+                                                    { quantity = totAdds - totIssues - data.damagedQty }
+                                                    { totalValue = data.unitPrice * quantity }
+
+                                                    if (quantity < 0) {
+                                                        { quantity = "No usable stocks left" }
+                                                        { totalValue = 0 }
+                                                    }
+
+                                                    var datacolor = "text-black";
+                                                    if (quantity === "No usable stocks left") {
+                                                        datacolor = "text-red-600 font-bold";
+                                                    }
 
                                                     return (
                                                         < tr className="text-sm h-10 border dark:border-slate-600" >
@@ -202,9 +208,9 @@ function StockView() {
                                                             <TableData value={data.stockCategory} />
                                                             {/* change the column width */}
                                                             <td className={"text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3"}>{data.description}</td>
-                                                            <TableData value={quantity} />
+                                                            <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
                                                             <TableData value={data.unitPrice} />
-                                                            <TableData value={"Rs." + (data.unitPrice * quantity)} />
+                                                            <TableData value={"Rs." + totalValue} />
 
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                                                                 <Link to={`/StockUpdate/${data._id}`}>
