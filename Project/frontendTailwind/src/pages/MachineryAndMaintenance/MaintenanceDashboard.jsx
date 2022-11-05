@@ -7,7 +7,7 @@ import { BiBuildingHouse ,BiAddToQueue} from 'react-icons/bi';
 import { GiSewingMachine } from 'react-icons/gi';
 import { GiMoneyStack } from 'react-icons/gi';
 import {MdAddBusiness,MdOutlineBusAlert}  from 'react-icons/md';
-import { DashTopBox, DashTopButton, MaintainChart, ChartsHeader } from '../../components';
+import { DashTopBox, DashTopButton, MaintainChart, ChartsHeader,MaintainBarChart } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 
 import { FiSettings } from 'react-icons/fi';
@@ -227,8 +227,12 @@ var prototal = 0;
       </div>
 
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+          < MaintainBarChart/>
+      </div>
+      <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
           < MaintainChart/>
       </div>
+     
 
     </div>
 
