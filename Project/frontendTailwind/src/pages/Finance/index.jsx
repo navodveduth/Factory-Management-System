@@ -8,3 +8,4 @@ export { default as SalaryDashboard } from './SalaryDashboard';
 export { default as SalaryViewAll } from './SalaryViewAll';
 export { default as SalaryNew } from './SalaryNew';
 export { default as SalaryUpdate } from './SalaryUpdate';
+export { default as PreviewSalary} from "./SalaryPreview";
