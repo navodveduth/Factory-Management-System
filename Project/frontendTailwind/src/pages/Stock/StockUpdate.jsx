@@ -33,6 +33,7 @@ function StockUpdate() {
             setStockCode(res.data.stockCode);
             setStockName(res.data.stockName);
             setStockCategory(res.data.stockCategory);
+            setDescription(res.data.description);
             setReorderLevel(res.data.reorderLevel);
             setDamagedQty(res.data.damagedQty);
             setUnitPrice(res.data.unitPrice);
