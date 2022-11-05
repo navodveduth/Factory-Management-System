@@ -332,7 +332,7 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <GiSteeringWheel /> {/*  icon  */}
-              <span className="capitalize ">Driver</span> {/*  link name  */}
+              <span className="capitalize ">Drivers</span> {/*  link name  */}
             </NavLink>
             {/*  done ---------------------------------------------------------------------------------- done  */}
           </div>
