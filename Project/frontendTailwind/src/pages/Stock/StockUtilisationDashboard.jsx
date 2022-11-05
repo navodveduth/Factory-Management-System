@@ -7,28 +7,30 @@ import { AiOutlineStock } from 'react-icons/ai';
 import { DashTopBox, DashTopButton } from '../../components';
 
 import { useStateContext } from '../../contexts/ContextProvider';
-import StockBarChart from '../../components/StockBarChart';
-
+import DamagedStockPieChart from '../../components/DamagedStockPieChart';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-const StocksDashboard = () => {
-  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
-  const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
 
-  const getStock = async () => {  //getStock is the function to get the data from the backend
-    axios.get("http://localhost:8070/stock/")
+const StockUtilisationDashboard = () => {
+  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
+
+  const [stockUtil, setStockUtil] = useState([]); //damagedStock is the state variable and setDamagedStock is the function to update the state variable
+
+  const getStockUtil = async () => {  //getdamagedStock is the function to get the data from the backend
+    axios.get("http://localhost:8070/stockUtilisation/")
       .then((res) => {
-        setStock(res.data); //setStock is used to update the state variable
+        setStockUtil(res.data); //setDamagedStock is used to update the state variable
+        console.log(res.data);
       })
       .catch((err) => {
         alert(err.message);
       })
   }
 
-  useEffect(() => { //useEffect is used to call the function getStock
-    getStock();
+  useEffect(() => { //useEffect is used to call the function getdamagedStock
+    getStockUtil();
     const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
     const currentThemeMode = localStorage.getItem('themeMode');
     if (currentThemeColor && currentThemeMode) {
@@ -38,16 +40,9 @@ const StocksDashboard = () => {
   }, [])
 
 
-  const itemCount = stock.length;
-  const countRawMaterials = stock.filter((stk) => stk.stockCategory === 'Raw materials').length;
-  const countWorkInProgress = stock.filter((stk) => stk.stockCategory === 'Work in progress').length;
-  var total = 0;
-  for (let index = 0; index < itemCount; index++) {
-    total = total + stock[index].totalValue;
-  }
-
   return (
     <div>
+
       <div className={currentMode === 'Dark' ? 'dark' : ''}>
 
         <div className="flex relative dark:bg-main-dark-bg">
@@ -98,16 +93,11 @@ const StocksDashboard = () => {
                   <div className="flex flex-wrap lg:flex-nowrap justify-left ml-10 mt-5">
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                       {/* top buttons in the dashboard */} {/* use for navigation buttons*/}
-                      <Link to="/StockView">
-                        <DashTopButton value="View All Stocks" />
+                      <Link to="/StockUtilisation">
+                        <DashTopButton value="View All Stocks Transactions" />
                       </Link>
-
-                      <Link to="/StockBreakdown">
-                        <DashTopButton value="View Stocks Breakdown" />
-                      </Link>
-
-                      <Link to="/StockAdd">
-                        <DashTopButton value="Add New Stock" />
+                      <Link to="/StockAddExisting">
+                        <DashTopButton value="Add New Entry for exisitng stock" />
                       </Link>
                     </div>
                   </div>
@@ -115,16 +105,16 @@ const StocksDashboard = () => {
                   <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                       {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-                      <DashTopBox icon={<FaCoins />} label="Total Stocks Value" data={total} />
-                      <DashTopBox icon={<AiOutlineStock />} label="Total Items" data={itemCount} />
-                      <DashTopBox icon={<GiRolledCloth />} label="Total Raw Materials" data={countRawMaterials} />
-                      <DashTopBox icon={<GiSewingNeedle />} label="Total Work In Progress" data={countWorkInProgress} />
+                      <DashTopBox icon={<FaCoins />} label="Total Stocks Value" date={0} />
+                      {/* <DashTopBox icon={<AiOutlineStock />} label="Total Items" data={itemCount} />
+    <DashTopBox icon={<GiRolledCloth />} label="Total Raw Materials" data={countRawMaterials} />
+    <DashTopBox icon={<GiSewingNeedle />} label="Total Work in progress" data={countWorkInProgress} />
+    <DashTopBox icon={<GiClothes />} label="Total Finished Goods" data={countFinishedGoods} /> */}
                     </div>
                   </div>
 
-
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-                    <StockBarChart />
+                    {/* charts */}
                   </div>
                 </div>
 
@@ -138,6 +128,4 @@ const StocksDashboard = () => {
   );
 };
 
-
-
-export default StocksDashboard;
+export default StockUtilisationDashboard;

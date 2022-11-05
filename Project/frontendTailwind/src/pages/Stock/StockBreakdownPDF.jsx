@@ -11,16 +11,19 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { jsPDF } from "jspdf";
 
-function StockPDF() {
+function StockBreakdownPDF() {
 
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
     const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
-    const [stockUtil, setStockUtil] = useState([]);
+    const [stockUtil,setStockUtil] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+
     const getStock = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stock/")
+        axios.get("http://localhost:8070/stock")
             .then((res) => {
                 setStock(res.data); //setStock is used to update the state variable
+                console.log(res.data);
             })
             .catch((err) => {
                 alert(err.message);
@@ -54,15 +57,12 @@ function StockPDF() {
         const pdf = new jsPDF("landscape", "px", "a1", false);
         const data = await document.querySelector("#tblPDF");
         pdf.html(data).then(() => {
-            pdf.save("stocks_" + date + ".pdf");
+            pdf.save("stocksBreakdown_" + date + ".pdf");
         });
     };
 
     return (
         <div>
-
-            {/* DON'T CHANGE ANYTHING HERE */}
-
             <div className={currentMode === 'Dark' ? 'dark' : ''}>
 
                 <div className="flex relative dark:bg-main-dark-bg">
@@ -124,40 +124,48 @@ function StockPDF() {
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
-                                                    <TableHeader value="Description" />
                                                     <TableHeader value="Units" />
+                                                    <TableHeader value="Additions" />
+                                                    <TableHeader value="Issues" />
+                                                    <TableHeader value="Damaged Units" />
                                                     <TableHeader value="Unit price" />
-                                                    <TableHeader value="Total value" />
+                                                    <TableHeader value="Reorder Level" />
+                                                    <TableHeader value="Buffer stock" />
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {stock.map((data, key) => {//map is used to iterate the array
                                                     //const date = new Date(data.lastUpdated).toISOString().split('T')[0];
 
-                                                    var totAdds = 0;
-                                                    var totIssues = 0;
-                                                    var quantity = 0;
-                                                    var totalValue = 0;
-
                                                     {
-                                                        stockUtil.filter((stockUtil) => stockUtil.type == "Additions" &&
-                                                            stockUtil.stockCode == data.stockCode).map((stockUtil) => {
+                                                        var totAdds = 0;
+                                                        var totIssues = 0;
+                                                        var quantity = 0
+                                                    }
+                                                    
+                                                    {
+                                                        stockUtil.filter((stockUtil) => stockUtil.type === "Additions" &&
+                                                            stockUtil.stockCode === data.stockCode).map((stockUtil) => {
                                                                 totAdds += stockUtil.quantity
                                                             })
                                                     }
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
-                                                            stockUtil.stockCode == data.stockCode).map((stockUtil) => {
+                                                            stockUtil.stockCode === data.stockCode).map((stockUtil) => {
                                                                 totIssues += stockUtil.quantity
                                                             })
                                                     }
 
                                                     { quantity = totAdds - totIssues - data.damagedQty }
-                                                    { totalValue = data.unitPrice * quantity }
-
                                                     if (quantity < 0) {
                                                         { quantity = "No usable stocks left" }
-                                                        { totalValue = 0 }
+                                                    }
+
+                                                    var dcolor = "text-black";
+                                                    if (data.sufficientStock === "Available") {
+                                                        dcolor = "text-green-500 font-bold";
+                                                    } else {
+                                                        dcolor = "text-red-600 font-bold";
                                                     }
 
                                                     var datacolor = "text-black";
@@ -166,15 +174,17 @@ function StockPDF() {
                                                     }
 
                                                     return (
-                                                        < tr className="text-sm h-10 border dark:border-slate-600" >
+                                                        <tr className="text-sm h-10 border dark:border-slate-600">
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
                                                             <TableData value={data.stockCategory} />
-                                                            {/* change the column width */}
-                                                            <td className={"text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3"}>{data.description}</td>
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
-                                                            <TableData value={data.unitPrice} />
-                                                            <TableData value={"Rs." + totalValue} />
+                                                            <TableData value={totAdds} />
+                                                            <TableData value={totIssues} />
+                                                            <TableData value={data.damagedQty} />
+                                                            <TableData value={"Rs." + data.unitPrice} />
+                                                            <TableData value={data.reorderLevel} />
+                                                            <td className={`${dcolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`} >{data.sufficientStock} </td>
 
                                                         </tr>
                                                     )
@@ -194,4 +204,4 @@ function StockPDF() {
     );
 };
 
-export default StockPDF
+export default StockBreakdownPDF
