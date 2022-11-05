@@ -121,7 +121,7 @@ function EmployeeCreateForm() {
                                             })
                                             .catch((err)=>{
                                                 console.log(err);
-                                                alert("This employee details alraedy exists");
+                                                alert(err);
                                             })
                                             
                                         
@@ -170,11 +170,11 @@ function EmployeeCreateForm() {
                                       <div className="mb-3">
                                         <label for="employeeGender" className="form-label">Gender : </label>
                                         <select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                        id="employeeGender" aria-label="Default select example" required
+                                        id="employeeGender" aria-label="Default select example" required="required"
                                         onChange={(e) =>{
                                           setEmployeeGender(e.target.value);
                                         }}>
-                                            <option selected>Select Gender</option>
+                                            <option value="">Select Gender</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
