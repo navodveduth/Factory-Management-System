@@ -41,6 +41,16 @@ const FinanceViewAll = () => {
       });
   };
 
+  const confirmFunc = (id)=>{
+
+		if (confirm("Do you want to delete?") == true) {
+        deleteFinance(id);
+		} else {
+			navigate('/FinanceViewAll');
+		}
+
+    }
+
 
   return (
 
@@ -88,7 +98,7 @@ const FinanceViewAll = () => {
                 <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                   <TableData value={data.trnID} />
                   <TableData value={data.trnDesc} />
-                  <TableData value={data.trnAmount} />
+                  <TableData value={"Rs." + data.trnAmount} />
                   <TableData value={data.trnType} />
                   <TableData value={new Date(data.trnRecordedDate).toISOString().split('T')[0]} /> 
 
@@ -106,7 +116,7 @@ const FinanceViewAll = () => {
                       type="button"
                       className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
                       onClick={() => {
-                        deleteFinance(data._id);
+                        confirmFunc(data._id);
                       }}
                     >
                       <i className="fas fa-trash" />

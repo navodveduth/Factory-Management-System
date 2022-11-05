@@ -10,6 +10,27 @@ import { useStateContext } from '../../contexts/ContextProvider';
 const SalaryDashboard = () => {
   const { currentColor, currentMode } = useStateContext();
 
+  const [sal, setSalary] = useState([]);
+
+  const getSalary = async () => {
+    axios
+      .get('http://localhost:8070/salary/SalaryView')
+      .then((res) => {
+        setSalary(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
+  useEffect(() => {
+    getSalary();
+  }, []);
+
+  const salCount = sal.length;
+  var salManagerCount = 0;
+
+
   return (
     <div className="mt-5">
 
@@ -28,10 +49,8 @@ const SalaryDashboard = () => {
       <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-          <DashTopBox icon={<FiUser />} label="Most Recent Transaction" data="Rs. 2300 +" />
-          <DashTopBox icon={<FiUser />} label="Total Employees" data="100" />
-          <DashTopBox icon={<FiUser />} label="Total Employees" data="100" />
-          <DashTopBox icon={<FiUser />} label="Total Employees" data="100" />       
+          <DashTopBox icon={<FiUser />} label="Salaried Employee Count" data = {salCount} />
+          <DashTopBox icon={<FiUser />} label="Total Number of Managers" data="4" />     
         </div>
       </div>
     </div>

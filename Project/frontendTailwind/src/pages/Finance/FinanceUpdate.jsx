@@ -67,7 +67,9 @@ function TransactionUpdate() {
                         <div className="mb-3">
                             <label htmlFor="trnNumber" className="text-md">Transaction Number : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="trnNumber" defaultValue={trnID} placeholder="Enter Transaction ID" required 
+                                id="trnNumber" defaultValue={trnID} placeholder="Enter Transaction ID"
+                                pattern="[A-Z]{1}[0-9]{3}" title="The Transaction ID must start with one uppercase character, followed by 3 Numeric digits"  
+                                required 
                                 onChange={(e)=>{
                                     setTransactionNumber(e.target.value);
                                 }}/>
@@ -84,7 +86,8 @@ function TransactionUpdate() {
                         <div className="mb-3">
                             <label htmlFor="trnAmount" className="form-label">Amount : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="trnAmount" defaultValue={trnAmount} placeholder="Enter Amount" required 
+                                id="trnAmount" defaultValue={trnAmount} placeholder="Enter Amount" min="1" title="Please enter a valid amount"
+                                required 
                                 onChange={(e) =>{
                                     setAmount(e.target.value);
                                 }}/>
