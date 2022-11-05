@@ -8,7 +8,7 @@ import { DashTopBox, DashTopButton,  } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 
 import { FiSettings } from 'react-icons/fi';
-import { Navbar, Footer, Sidebar, ThemeSettings } from '../components';
+import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 
