@@ -6,54 +6,120 @@ import { useStateContext } from '../../contexts/ContextProvider.js';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 
+import { FiSettings } from 'react-icons/fi';
+import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
+import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+
+
 
 const MachMaintenanceViewAll = () => {
     const [maintainenceMachine, setMaintainenceMachine] = useState([]);
-    const { currentColor } = useStateContext();
     const [searchTerm, setSearchTerm] = useState("");
 
 
   var TotalCost = 0;
   
 
-  const getMMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-      axios.get("http://localhost:8070/maintainenceMachine/")
-      .then((res) => { 
-        setMaintainenceMachine (res.data); //setMaintainence  is used to update the state variable
-        
-      })
-      .catch((err) => {
-          alert(err.message);
-      })
-  }
+  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
-  useEffect(() => { //useEffect is used to call the function getMaintainence 
-    getMMaintainence ();
-  }, [])
+
+  const getMMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+    axios.get("http://localhost:8070/maintainenceMachine/")
+    .then((res) => { 
+      setMaintainenceMachine (res.data); //setMaintainence  is used to update the state variable
+      
+    })
+    .catch((err) => {
+        alert(err.message);
+    })
+}
+
+
+  useEffect(() => {
+    getMMaintainence(); 
+    const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
+    const currentThemeMode = localStorage.getItem('themeMode');
+    if (currentThemeColor && currentThemeMode) {
+      setCurrentColor(currentThemeColor);
+      setCurrentMode(currentThemeMode);
+    }
+  }, []);
+
 
   const deleteMMaintainence  = async (id) => {
-      await axios.delete(`http://localhost:8070/maintainenceMachine/delete/${id}`)
-      .then((res) => {
-          alert("Data deleted successfully");
-          getMMaintainence ();
-      })
-      .catch((err) => {
-          alert(err.message);
-      })
+    await axios.delete(`http://localhost:8070/maintainenceMachine/delete/${id}`)
+    .then((res) => {
+        alert("Data deleted successfully");
+        getMMaintainence ();
+    })
+    .catch((err) => {
+        alert(err.message);
+    })
+}
+
+const confirmFunc = (id)=>{
+
+      if (confirm("Do you want to delete?") == true) {
+          deleteMMaintainence(id);
+      } else {
+          navigate('/MachMaintenanceViewAll');
+      }
+
   }
 
-  const confirmFunc = (id)=>{
-
-		if (confirm("Do you want to delete?") == true) {
-            deleteMMaintainence(id);
-		} else {
-			navigate('/MachMaintenanceViewAll');
-		}
-
-    }
-  
   return (
     <div>
+
+      {/* DON'T CHANGE ANYTHING HERE */}
+
+        <div className={currentMode === 'Dark' ? 'dark' : ''}>
+
+            <div className="flex relative dark:bg-main-dark-bg">
+
+                <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}> {/* THEME SETTINGS BUTTON */}
+                    <TooltipComponent content="Settings" position="Top">
+                    <button
+                        type="button"
+                        onClick={() => setThemeSettings(true)}
+                        style={{ background: currentColor, borderRadius: '50%' }}
+                        className="text-3xl text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
+                    >
+                        <FiSettings />
+                    </button>
+                    </TooltipComponent>
+                </div>
+
+
+                {activeMenu ? ( // SIDEBAR IMPLEMENTATION
+                    <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
+                    <Sidebar />
+                    </div>
+                ) : (
+                    <div className="w-0 dark:bg-secondary-dark-bg">
+                    <Sidebar />
+                    </div>
+                )}
+
+                <div
+                    className={ // MAIN BACKGROUND IMPLEMENTATION
+                    activeMenu
+                        ? 'dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-72 w-full  '
+                        : 'bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 '
+                    }
+                >
+                    
+                    {/* NAVBAR IMPLEMENTATION */}
+                    <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
+                        <Navbar />
+                    </div>
+
+                    <div>
+                        {themeSettings && <ThemeSettings />}
+                        <div>
+                            {/* YOUR COMPONENT IMPLEMENTATION GOES HERE */}
+                            {/* COPY YOUR ORIGINAL COMPONENT CODE HERE */}
+                            {/* PART AFTER THE RETURN STATEMENT */}
+                            <div>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
         <Header category="Table" title="Machinery Maintenance " />
 
@@ -174,7 +240,7 @@ const MachMaintenanceViewAll = () => {
                     })}
             </tbody>
           </table><br></br><br></br>
-          <span className="text-xs font-semibold inline-block py-2 px-2 uppercase rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+          <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
             Total Cost of Maintenance : {"Rs.  "+TotalCost.toFixed(2)}
             
           </span>
@@ -182,7 +248,15 @@ const MachMaintenanceViewAll = () => {
         </div>
       </div>
     </div>
+                        </div>
+                        <Footer />
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
   );
 };
 
 export default MachMaintenanceViewAll;
+

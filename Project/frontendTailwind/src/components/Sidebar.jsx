@@ -146,16 +146,16 @@ const Sidebar = () => {
             {/*  links ---------------------------------------------------------------------------------- links  */}
             
             <NavLink
-              to="/SalesDashboard"
+              to="/CustomerDashboard"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <FiTrendingUp /> {/*  icon  */}
-              <span className="capitalize ">Sales Analytics</span> {/*  link name  */}
-            </NavLink>
+              <MdOutlineCancel />{/*  icon  */}
+              <span className="capitalize ">Customer Management</span> {/*  link name  */}
+                </NavLink>
 
             {/*  done ---------------------------------------------------------------------------------- done  */}
 
