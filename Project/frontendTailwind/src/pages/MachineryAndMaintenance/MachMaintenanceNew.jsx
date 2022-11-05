@@ -16,8 +16,8 @@ function MachMaintenanceCreateForm() {
     
     const navigate = useNavigate(); //useNavigate hook to redirect to another page after form submission is successful 
   
+    const [mid, setmid] = useState(''); 
     const [machineID, setmachineID] = useState('');
-    const[name, setName] = useState("");
     const [Description, setDescription] = useState('');
     const [lastMaintainedDate, setLastMaintainedDate] = useState('');
     const [nextServiceDate, setNextServiceDate] = useState('');
@@ -94,8 +94,8 @@ function MachMaintenanceCreateForm() {
                   e.preventDefault();
                   
                   const newMaintenance = {
+                    mid,
                     machineID,
-                    name,
                     Description,
                     lastMaintainedDate,
                     nextServiceDate,
@@ -120,6 +120,14 @@ function MachMaintenanceCreateForm() {
                       
               }}>
 
+                        <div className="mb-3">
+                            <label htmlFor="employeeFullName" className="form-label">Maintainence Id: </label>
+                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                id="employeeFullName"  required 
+                                onChange={(e)=>{
+                                    setmid(e.target.value);
+                                }}/>
+                        </div>
 
 
                         <div className="mb-3">
@@ -128,16 +136,6 @@ function MachMaintenanceCreateForm() {
                                 id="employeeFullName"  required 
                                 onChange={(e)=>{
                                     setmachineID(e.target.value);
-                                }}/>
-                        </div>
-
-
-                        <div className="mb-3">
-                            <label htmlFor="employeeFullName" className="form-label">Name: </label>
-                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="employeeFullName"  
-                                onChange={(e)=>{
-                                    setName(e.target.value);
                                 }}/>
                         </div>
                         

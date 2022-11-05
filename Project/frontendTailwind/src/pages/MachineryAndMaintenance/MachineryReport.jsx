@@ -19,6 +19,9 @@ const MachineryReport = () => {
     var TotalCost = 0;
     var total=0;
     var totalDep=0;
+    var machineryCost=0;
+    var depreCost=0;
+    var salvage=0;
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -142,22 +145,34 @@ const MachineryReport = () => {
 
                         <tbody>
                             {machinery.map((data, key) => {
+
+                                        var datacolor = "text-black";
+                                        if (data.others === "Unavailable") {
+                                        datacolor = "text-red-600 font-bold";
+
+                                        } else {
+                                        datacolor = "text-green-500 font-bold";
+                                        }
+
                                 return(
 
                                     TotalDepreciation = TotalDepreciation + parseFloat(parseFloat((data.machineryCost-data.salvage)/data.numberOfYrs).toFixed(2)),
                                     TotalCost = TotalCost + parseFloat(data.machineryCost),
                                     total = formatter.format(TotalCost),
+                                    salvage=formatter.format(data.salvage),
                                     totalDep=formatter.format(TotalDepreciation),
+                                    machineryCost = formatter.format(parseFloat(data.machineryCost)),
+                                    depreCost =formatter.format(parseFloat((data.machineryCost-data.salvage)/data.numberOfYrs).toFixed(2)),
                    
                                     <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                                          <TableData value={data.machineID} />
                                         <TableData value={data.name} />
                                         <TableData value={data.dateOfPurchased.toString().split('T')[0]} />
-                                        <TableData value={data.machineryCost+".00"} />
-                                        <TableData value={data.salvage+".00"} />
+                                        <TableData value={machineryCost} />
+                                        <TableData value={salvage} />
                                         <TableData value={data.numberOfYrs +"yrs"} />
-                                        <TableData value={parseFloat((data.machineryCost-data.salvage)/data.numberOfYrs).toFixed(2)} /> 
-                                            <TableData value={data.others} />
+                                        <TableData value={depreCost} /> 
+                                        <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.others} </td>
                                     </tr>
                                 )
                             })}
