@@ -147,13 +147,13 @@ const confirmFunc = (id)=>{
           <table className="w-full rounded-lg" >
             <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                <TableHeader value="Maintenance ID"/>
                 <TableHeader value="Type" />
-                <TableHeader value="Service task & Shedule" />
+                <TableHeader value="Repair needed " />
                 <TableHeader value="Last Maintained Date" />
                 <TableHeader value="Next due" />
-                <TableHeader value="Status" />
                 <TableHeader value="Total Cost" />
-                <TableHeader value="Comments" />
+                <TableHeader value="Status" />
                 <TableHeader value="Manage" />
               </tr>
             </thead>
@@ -164,6 +164,7 @@ const confirmFunc = (id)=>{
                     }else if((data.Type.toLowerCase().includes(searchTerm.toLowerCase())) ||
                       (data.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
                       (data.Description.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                      (data.midprop.toLowerCase().includes(searchTerm.toLowerCase())) ||
                       (data.status.toLowerCase().includes(searchTerm.toLowerCase())))
                       
                       {
@@ -188,16 +189,16 @@ const confirmFunc = (id)=>{
 
                 <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
 
-
+                  <TableData value={data.midprop} />
                   <TableData value={data.Type} />
                   <TableData value={data.Description} />
                   <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
                   <TableData value={data.nextServiceDate.toString().split('T')[0]} />
-                  
+                  <TableData value={data.others} />
                     
                     <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
-                    <TableData value={data.others} />
-                    <TableData value={data.name} />
+                    
+                  
                   
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                    
