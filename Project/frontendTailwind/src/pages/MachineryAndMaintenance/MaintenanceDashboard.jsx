@@ -123,6 +123,16 @@ var prototal = 0;
  var total = vehitotal + machtotal + prototal;
  total = Math.round(total * 100) / 100;
 
+ 
+ const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'LKR',
+  minimumFractionDigits: 2,
+  currencyDisplay: 'symbol'
+})
+
+let formatTotal = formatter.format(total);
+
   return (
     <div>
 
@@ -221,7 +231,7 @@ var prototal = 0;
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
           <DashTopBox icon={<VscSymbolProperty />} label="Total Maintenances records" data={maintprog+machineMaintCount+vehiMaintCount} />
-          <DashTopBox icon={<GiMoneyStack />} label="Total Maintenance cost" data={"Rs. "+total+".00"} /> 
+          <DashTopBox icon={<GiMoneyStack />} label="Total Maintenance cost" data={formatTotal} /> 
                
         </div>
       </div>

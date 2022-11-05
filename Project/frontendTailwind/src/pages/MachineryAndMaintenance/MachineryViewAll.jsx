@@ -23,6 +23,17 @@ const MachineryViewAll = () => {
 
   var TotalDepreciation = 0;
   var TotalCost = 0;
+  var total =0;
+  var totalDep=0;
+
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'LKR',
+    minimumFractionDigits: 2,
+    currencyDisplay: 'symbol'
+  })
+  
+  
 
 const getMachinery = async () => {  //getMachinery is the function to get the data from the backend
   axios.get("http://localhost:8070/machinery/")
@@ -179,8 +190,10 @@ const confirmFunc = (id)=>{
                 // const purchasedDate = new Date(data.dateOfPurchased ).toLocaleDateString();
                 TotalDepreciation = TotalDepreciation + parseFloat(parseFloat((data.machineryCost-data.salvage)/data.numberOfYrs).toFixed(2)),
                  TotalCost = TotalCost + parseFloat(data.machineryCost),
-
-
+                 total = formatter.format(TotalCost),
+                 totalDep=formatter.format(TotalDepreciation),
+                 
+                 
                 <tr className="text-sm h-10 border dark:border-slate-600">
                   <TableData value={data.machineID} />
                   <TableData value={data.name} />
@@ -219,13 +232,13 @@ const confirmFunc = (id)=>{
           </table><br></br><br></br>
 
           <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-            Total Depreciation : {TotalDepreciation.toFixed(2)}
+            Total Depreciation : {totalDep}
             
           </span><br></br>
 
           <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
             
-            TotalCost : {"Rs.  "+TotalCost.toFixed(2)}
+            Total Purchase Cost : {total}
           </span>
                 
         </div>
