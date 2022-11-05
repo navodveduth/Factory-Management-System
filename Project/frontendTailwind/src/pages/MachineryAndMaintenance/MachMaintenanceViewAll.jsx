@@ -152,15 +152,16 @@ const confirmFunc = (id)=>{
           <table className="w-full rounded-lg" >
             <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                <TableHeader value="ID" />
-                <TableHeader value="Item" />
+                <TableHeader value="Maintenance ID"/>
+                <TableHeader value="Item name" />
                 <TableHeader value="Repair needed" />
                 <TableHeader value="Last Maintained Date" />
                 <TableHeader value="Next due" />
                 <TableHeader value="Repair company" />
-                <TableHeader value="R.C ContactNO" />
-                <TableHeader value="Status" />
+                <TableHeader value="ContactNO" />
                 <TableHeader value="Total Cost" />
+                <TableHeader value="Status" />
+                
                 <TableHeader value="Manage" />
               </tr>
             </thead>
@@ -197,14 +198,9 @@ const confirmFunc = (id)=>{
                 <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
 
 
-                  <TableData value={data.machineDetails.map((data1)=>{
-                    return(
-                        <div>
-                            <TableData value={data1.machineID} />
-                        </div>
-                    )
-                  })} />
-                  <TableData value={data.machineDetails.map((data1)=>{
+                  <TableData value={data.mid}/>
+                  
+                  <TableData value={data.machineDetailss.map((data1)=>{
                     return(
                         <div>
                             <TableData value={data1.name} />
@@ -216,11 +212,11 @@ const confirmFunc = (id)=>{
                   <TableData value={data.nextServiceDate.toString().split('T')[0]} />
                   <TableData value={data.Location} />
                     <TableData value={data.contactNo} />
-                    
+                    <TableData value={data.others} />
                     
                     
                     <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
-                    <TableData value={data.others} />
+                    
                    
                   
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
