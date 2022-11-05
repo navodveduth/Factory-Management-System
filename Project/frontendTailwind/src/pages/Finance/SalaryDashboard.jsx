@@ -50,9 +50,7 @@ const SalaryDashboard = () => {
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
           <DashTopBox icon={<FiUser />} label="Salaried Employee Count" data = {salCount} />
-          <DashTopBox icon={<FiUser />} label="Total Number of Managers" data={salManagerCount} />
-          <DashTopBox icon={<FiUser />} label="Total Employees" data="100" />
-          <DashTopBox icon={<FiUser />} label="Total Employees" data="100" />       
+          <DashTopBox icon={<FiUser />} label="Total Number of Managers" data="4" />     
         </div>
       </div>
     </div>
