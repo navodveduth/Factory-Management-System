@@ -1,27 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Header } from '../../components';
 
-function StockAdd() {
+function StockAddExisting() {
 
     //useNavigate is a hook that is used to navigate to another page
     const navigate = useNavigate();
 
+    const [stock, setStock] = useState('');
+    const [stockUtil, setStockUtil] = useState('');
     const [stockCode, setStockCode] = useState('');
-    const [stockName, setStockName] = useState('');
-    const [stockCategory, setStockCategory] = useState('');
-    const [description, setDescription] = useState('');
-    var [damagedQty, setDamagedQty] = useState('');
+    var [stockName, setstockName] = useState('');
+    var [stockCategory, setStockCategory] = useState('');
     const [quantity, setQuantity] = useState('');
     const [date, setDate] = useState('');
-    var [type, setType] = useState('');
+    const [type, setType] = useState('');
     const [unitPrice, setUnitPrice] = useState('');
     var [supplier, setSupplier] = useState('');
     var [totalValue, setTotalValue] = useState('');
-    var [additions,setAdditions] = useState('');
-    var [reorderLevel,setReorderLevel] = useState('');
-    var [ sufficientStock, setSufficientStock] = useState('');
 
     //gets the current date
     var currentDate = new Date().toISOString().split('T')[0];
@@ -38,6 +35,33 @@ function StockAdd() {
     //     supplier  = "-";
     // }
 
+    const getStock = async () => {  //getStock is the function to get the data from the backend
+        axios.get("http://localhost:8070/stock")
+            .then((res) => {
+                setStock(res.data); //setStock is used to update the state variable
+                console.log(res.data);
+            })
+            .catch((err) => {
+                alert(err.message);
+            })
+    }
+
+    const getStockUtil = async () => {  //getStock is the function to get the data from the backend
+        axios.get("http://localhost:8070/stockUtilisation")
+            .then((res) => {
+                setStockUtil(res.data); //setStock is used to update the state variable
+                console.log(res.data);
+            })
+            .catch((err) => {
+                alert(err.message);
+            })
+    }
+
+    useEffect(() => { //useEffect is used to call the function getStock
+        getStock();
+        getStockUtil();
+    }, [])
+
     return (
         <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
             <Header category="Form" title=" Create New Stock" />
@@ -46,28 +70,29 @@ function StockAdd() {
                 <form onSubmit={async (e) => {
                     e.preventDefault();
 
-                    {totalValue = quantity * unitPrice}
+                    var checkExists = "";
+                    var checkAddition =0;
+                    var checkIssues = 0;
 
-                    if (supplier === ''){
-                        {supplier = "-"}
+                    {
+                        stock.filter((stock) => stock.stockCode === stockCode).map((stock) => {
+                            checkExists = stock.stockCode,
+                            stockName = stock.stockName,
+                            stockCategory = stock.stockCategory
+
+                            {if(stock.type === "Additions"){
+                                {checkAddition = 1}
+                            }else if (stock.type === "Issues"){
+                                {checkIssues = 1}
+                            }}
+                            
+                        })
                     }
-                    
-                   {sufficientStock = "-";
-                    reorderLevel = 0 ;
-                    damagedQty = 0;
-                    type = "Additions";
-                    additions = quantity}
-                    
-                    const newStock = {
-                        stockCode,
-                        stockName,
-                        stockCategory,
-                        description,
-                        reorderLevel,
-                        unitPrice,
-                        totalValue,
-                        sufficientStock,
-                        damagedQty
+
+                    { totalValue = quantity * unitPrice }
+
+                    if (supplier === '') {
+                        supplier = "-";
                     }
 
                     const newStockUtil = {
@@ -82,26 +107,53 @@ function StockAdd() {
                         totalValue
                     }
 
-                    console.log(newStock)
-                    await axios.post("http://localhost:8070/stock/create", newStock).then(() => {
-                        alert("Data saved successfully");
-                        navigate('/StockDashboard');
+                    // console.log(newStock)
+                    // await axios.post("http://localhost:8070/stock/create", newStock).then(() => {
+                    //     alert("Data saved successfully");
+                    //     navigate('/StockDashboard');
 
-                    }).catch((err) => {
-                        console.log(err);
-                        alert("ERROR: Could not add stock");
-                        navigate('/StockAdd');
-                    })
+                    // }).catch((err) => {
+                    //     console.log(err);
+                    //     alert("ERROR: Could not add stock");
+                    //     navigate('/StockAdd');
+                    // })
 
-                    await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
-                        alert("Data saved successfully");
-                        navigate('/StockDashboard');
+                    {
+                        if (checkExists === "") {
+                            alert('Entry does not exist in stock information.For non existing stocks addition, please add from stock information page');
+                            navigate('/StockDashboard')
+                        } else {
+                            // if (checkExists === stockCode && date === currentDate && checkAddition === 1 && checkIssues ===1) {
+                                
+                            //     alert("An entry with " + stockCode + " and additions and issues already exists for today's date");
+                            //     navigate('/StockUtilisation')
 
-                    }).catch((err) => {
-                        console.log(err);
-                        alert("ERROR: Could not add stock");
-                        navigate('/StockAdd');
-                    })
+                            // } 
+                            // else if (checkExists === stockCode && date === currentDate && checkAddition === 1) {
+                                
+                            //     alert("An entry with " + stockCode + " and " + type + " already exists for today's date");
+                            //     navigate('/StockUtilisation')
+
+                            // }
+                            // else if (checkExists === stockCode && date === currentDate && checkIssues === 1) {
+                                
+                            //     alert("An entry with " + stockCode + " and " + type + " already exists for today's date");
+                            //     navigate('/StockUtilisation')
+
+                            // }else {
+                                await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
+                                    alert("Data saved successfully");
+                                    navigate('/StockUtilisation');
+
+                                }).catch((err) => {
+                                    console.log(err);
+                                    alert("ERROR: Could not add stock");
+                                    navigate('/StockAddExisting');
+                                })
+                            }
+                        }
+                    
+
                 }}>
 
                     <div className="mb-3">
@@ -112,34 +164,6 @@ function StockAdd() {
                             }} />
                     </div>
 
-                    <div className="mb-3">
-                        <label for="stockName" className="form-label">Stock Name: </label>
-                        <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" placeholder="Enter stock name..."
-                            title="The name can contain only alphabets" required onChange={(e) => {
-                                setStockName(e.target.value);
-                            }} />
-                    </div>
-
-                    <div className="mb-3">
-                        <label for="category" className="form-label">Category: </label>
-                        < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="stockCategory" title="Please choose one of the options" required onChange={(e) => {
-                            setStockCategory(e.target.value);
-                            //myFunction();
-                        }}>
-                            <option selected  >Select option...</option>
-                            <option value="Raw materials">Raw materials</option>
-                            <option value="Work in progress">Work in progress</option>
-                        </select>
-                    </div>
-
-                    <div className="mb-3">
-                        <label for="description" className="form-label">Description: </label>
-                        <textarea className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" placeholder="Enter stock description..."
-                            title="The name can contain only alphabets" required onChange={(e) => {
-                                setDescription(e.target.value);
-                            }} />
-                    </div>
-                    
                     {/* max uses the above date variable and sets the max date to select from*/}
                     <div className="mb-3">
                         <label for="date" className="form-label">Date: </label>
@@ -149,20 +173,20 @@ function StockAdd() {
                             }} />
                     </div>
 
-                    {/* <div className="mb-3">
+                    <div className="mb-3">
                         <label for="type" className="form-label">Type: </label>
                         < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="stockCategory" title="Please choose one of the options" required onChange={(e) => {
                             setType(e.target.value);
                             //myFunction();
                         }}>
                             <option selected  >Select option...</option>
-                            <option value="Additions">Raw materials</option>
-                            <option value="Issues">Work in progress</option>
+                            <option value="Additions">Additions</option>
+                            <option value="Issues">Issues</option>
                         </select>
-                    </div> */}
+                    </div>
 
                     <div className="mb-3">
-                        <label for="quantity" className="form-label">Quantity Purchased: </label>
+                        <label for="quantity" className="form-label">Quantity: </label>
                         <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" placeholder="Enter quantity..." min="0"
                             title="If there is no stock please input 0" required onChange={(e) => {
                                 setQuantity(e.target.value);
@@ -195,8 +219,8 @@ function StockAdd() {
                 </form>
             </div>
 
-        </div>
+        </div >
     )
 }
 
-export default StockAdd;
+export default StockAddExisting;

@@ -9,13 +9,13 @@ import { WelfareDashboard, WelfareNew, WelfareReport, WelfareUpdate, WelfareView
 
 import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll } from './pages/Finance';
 
-import { MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport } from './pages/MachineryAndMaintenance';
+import { MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew} from './pages/MachineryAndMaintenance';
 
 import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice } from './pages/Sales';
 
 import { OrderViewAll, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder } from './pages/Production/Index';
 
-import { StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockUtilisation, StockUtilUpdate, StockUtilPDF, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF } from './pages/Stock';
+import { StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, StockUtilisationDashboard, StockUtilisation, StockAddExisting, StockUtilUpdate, StockUtilPDF, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF } from './pages/Stock';
 
 import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, SupplierRecordsDashboard, SupplierDetailsPreview } from './pages/Suppliers';
 
@@ -23,7 +23,10 @@ import { DriverDashboard, DriverViewAll, DriverNew, DriverUpdate, DriverReport }
 import { TransportDashboard, TransportViewAll, TransportNew, TransportUpdate, TransportReport } from './pages/Transport';
 
 import UserLogin from './pages/UserLogin';
+import UserRegistration from './pages/UserRegistration'
 
+
+import { CustomerNew,CustomerViewAll,CustomerUpdate,CustomerDashboard } from './pages/Customer';
 
 const App = () => {
   return (
@@ -90,7 +93,13 @@ const App = () => {
           <Route path="/MaintenanceUpdate/:id" element={<MaintenanceUpdate />} />
           <Route path="/MaintainenceTask/" element={<MaintainenceTask />} />
           <Route path="/MaintainenceReport" element={<MaintainenceReport />} />
-
+          <Route path="/MachMaintenanceViewAll" element={<MachMaintenanceViewAll />} />
+          <Route path="/MachMaintenanceNew" element={<MachMaintenanceNew />} />
+          <Route path="/MachMaintenanceUpdate/:id" element={<MachMaintenanceUpdate />} />
+          <Route path="/MachMaintenanceReport" element={<MachMaintenanceReport />} />
+          <Route path="/VehiMaintenanceViewAll" element={<VehiMaintenanceViewAll />} />
+          <Route path="/VehiMaintenanceNew" element={<VehiMaintenanceNew />} />
+                
           {/* sales management  */}
           <Route path="/SalesDashboard" element={<SalesDashboard />} />
           <Route path="/SalesViewAll" element={<SalesViewAll />} />
@@ -111,10 +120,18 @@ const App = () => {
           <Route path="/StockView" element={<StockView />} />
           <Route path="/StockAdd" element={<StockAdd />} />
           <Route path="/StockUpdate/:id" element={<StockUpdate />} />
-          <Route path="/generatePDF" element={<StockPDF />} />
+          <Route path="/generateSPDF" element={<StockPDF />} />
+
+          <Route path="/StockBreakdown" element={<StockBreakdown/>} />
+          <Route path="/StockBreakdownUpdate/:id" element={<StockBreakdownUpdate/>} />
+          <Route path="/generateSBPDF" element={<StockBreakdownPDF/>} />
+          
+
+          <Route path="/StockUtilisationDashboard" element={<StockUtilisationDashboard/>} />
           <Route path="/StockUtilisation" element={<StockUtilisation />} />
-          <Route path="/StockUtilUpdate" element={<StockUtilUpdate />} />
-          <Route path="/StockUtilPDF" element={<StockUtilPDF />} />
+          <Route path="/StockAddExisting" element={<StockAddExisting />} />
+          <Route path="/StockUtilUpdate/:id" element={<StockUtilUpdate />} />
+          <Route path="/generateSUPDF" element={<StockUtilPDF />} />
 
           <Route path="/DamagedStockDashboard" element={<DamagedStockDashboard />} />
           <Route path="/DamagedStockView" element={<DamagedStockView />} />
@@ -143,6 +160,12 @@ const App = () => {
           <Route path="/DriverUpdate/:id" element={<DriverUpdate />} />
           <Route path="/DriverReport" element={<DriverReport />} />
 
+          {/* customer management  */}
+          <Route path="/CustomerViewAll" element={<CustomerViewAll />} />
+          <Route path="/CustomerCreate" element={<CustomerNew />} />
+          <Route path="/CustomerUpdate/:id" element={<CustomerUpdate />} />
+          <Route path="/CustomerDashboard" element={<CustomerDashboard />} />
+          
         </Routes>
       </BrowserRouter>
         
