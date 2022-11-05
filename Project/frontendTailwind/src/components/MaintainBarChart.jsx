@@ -142,7 +142,7 @@ const MaintainBarChart = () => {
         
           return (
             <div className="m-0 md:m-10 mt-0 p-0 max-h-21 bg-white dark:bg-secondary-dark-bg rounded-3xl">
-              <ChartsHeader category="Maintenance in progress"  />
+              <ChartsHeader category="Maintenance In Progress"  />
               <div className=" w-full">
                 <ChartComponent
                 

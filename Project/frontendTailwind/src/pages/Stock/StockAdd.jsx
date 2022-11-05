@@ -20,6 +20,8 @@ function StockAdd() {
     var [supplier, setSupplier] = useState('');
     var [totalValue, setTotalValue] = useState('');
     var [additions,setAdditions] = useState('');
+    var [reorderLevel,setReorderLevel] = useState('');
+    var [ sufficientStock, setSufficientStock] = useState('');
 
     //gets the current date
     var currentDate = new Date().toISOString().split('T')[0];
@@ -46,22 +48,25 @@ function StockAdd() {
 
                     {totalValue = quantity * unitPrice}
 
-                    // if (supplier === ''){
-                    //     supplier = "-";
-                    // }
+                    if (supplier === ''){
+                        {supplier = "-"}
+                    }
                     
-                    {type = "Additions"}
-                    {additions = quantity}
+                   {sufficientStock = "-";
+                    reorderLevel = 0 ;
+                    damagedQty = 0;
+                    type = "Additions";
+                    additions = quantity}
                     
                     const newStock = {
                         stockCode,
                         stockName,
                         stockCategory,
                         description,
-                        //reorderLevel,
+                        reorderLevel,
                         unitPrice,
                         totalValue,
-                        //sufficientStock,
+                        sufficientStock,
                         damagedQty
                     }
 
