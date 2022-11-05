@@ -23,6 +23,7 @@ const MachineryDashboard = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT 
 
   const [machinery, setMachinery] = useState([]);
 
+
     const getMachinery = async () => {  //getMachinery is the function to get the data from the backend
         axios.get("http://localhost:8070/machinery/")
         .then((res) => { 
@@ -65,6 +66,18 @@ const MachineryDashboard = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT 
 
   var  rate = prototal/total*100;
   rate = Math.round(rate * 100) / 100;
+
+
+  
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'LKR',
+    minimumFractionDigits: 2,
+    currencyDisplay: 'symbol'
+  })
+
+  let formatTotal = formatter.format(total);
+  let pformatTotal = formatter.format(prototal);
 
   return (
     <div>
@@ -149,8 +162,8 @@ const MachineryDashboard = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT 
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
   
          
-          <DashTopBox icon={<GiMoneyStack />} label="Total Machiery purchase Cost          " data={"Rs." + total+".00"} />
-          <DashTopBox icon={<GiMoneyStack />} label="Total Machinery Depreciation " data={"Rs." + prototal} />
+          <DashTopBox icon={<GiMoneyStack />} label="Total Machiery purchase Cost          " data={ formatTotal} />
+          <DashTopBox icon={<GiMoneyStack />} label="Total Machinery Depreciation " data={pformatTotal} />
           <DashTopBox icon={<FaChartBar />} label="Average Depreciation rate" data={rate + " %"} />  
           
         </div>
