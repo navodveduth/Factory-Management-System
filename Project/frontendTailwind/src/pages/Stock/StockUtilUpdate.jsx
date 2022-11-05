@@ -22,8 +22,8 @@ function StockUtilUpdate() {
     const getStockUtil = () => {
         axios.get("http://localhost:8070/stockUtilisation/" + id).then((res) => {
             setStockCode(res.data.stockCode);
-            setStockName(res.data.stockDetails.stockName);
-            setStockCategory(res.data.stockDetails.stockCategory);
+            setStockName(res.data.stockName);
+            setStockCategory(res.data.stockCategory);
             setDate(res.data.date);
             setQuantity(res.data.quantity);
             setType(res.data.type);
@@ -35,7 +35,7 @@ function StockUtilUpdate() {
     }
 
     useEffect(() => { getStockUtil() }, []);
-    //var date = new Date().toISOString().split('T')[0];
+    var formDate = date.split('T')[0];
 
     // var displayM = true;
     // if (stockCategory == ''){
@@ -102,7 +102,7 @@ function StockUtilUpdate() {
 
                     <div className="mb-3">
                         <label htmlFor="date" className="form-label">Date: </label>
-                        <input type="date"  value={date} className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date" readOnly />
+                        <input type="text"  value={formDate} className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date" readOnly />
 
                     </div>
 

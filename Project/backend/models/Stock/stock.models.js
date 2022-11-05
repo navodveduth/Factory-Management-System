@@ -66,8 +66,7 @@ const stockSchema = new Schema({
     damagedQty:{
         type: Number,
         min: 0.0,
-        default:0.0,
-        required: true
+        default:0.0
     }   
 })
 
