@@ -9,11 +9,6 @@ const maintainenceSchema = new Schema({
         required : true
     },
 
-    name: {
-        type: String,
-        required: true,
-    },
-
     Description : {
         type : String,  
         required : true
@@ -35,7 +30,12 @@ const maintainenceSchema = new Schema({
     nextServiceDate : {
         type : Date,
         required : true
-    }
+    },
+
+    name: {
+        type: String,
+        required: true,
+    },
 });
 
 const Maintainence = mongoose.model("maintainence" , maintainenceSchema);

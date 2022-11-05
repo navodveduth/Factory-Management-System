@@ -6,12 +6,15 @@ import bodyParser from 'body-parser';
 
 import machineryRouter from './routes/machinery.routes.js';
 import maintainenceRouter from './routes/maintainence.routes.js';
+import maintainenceMachineRouter from './routes/maintainenceMachine.routes.js';
+import maintainenceVehicleRouter from './routes/maintainenceVehicle.routes.js';
 import orderRouter from './routes/prod.routes.js';
 import financeRouter from './routes/finance.routes.js';
 import transportRouter from './routes/transport.routes.js';
 import driverRouter from './routes/driver.routes.js';
 import stockRouter from './routes/stock.routes.js';
 import damagedStockRouter from './routes/damagedStock.routes.js';
+import stockUtilisationRouter from './routes/stockUtilisation.routes.js';
 import supplierRouter from './routes/supplierDetails.route.js';
 import salesRouter from './routes/sales.routes.js';
 import employeeRouter from "./routes/employee.routes.js";
@@ -20,6 +23,7 @@ import payrollRouter from "./routes/payroll.routes.js";
 import leaveRouter from "./routes/leaves.routes.js";
 import salaryRouter from "./routes/salary.routes.js";
 import welfareFacilityRouter from "./routes/welfareFacility.routes.js";
+import customerRouter from "./routes/customer.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 8070;
@@ -29,12 +33,15 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use('/machinery', machineryRouter);
 app.use('/maintainence', maintainenceRouter);
+app.use('/maintainenceVehicle', maintainenceVehicleRouter);
+app.use('/maintainenceMachine', maintainenceMachineRouter);
 app.use('/production/order', orderRouter);
 app.use('/finance', financeRouter);
 app.use('/transport', transportRouter);
 app.use('/driver', driverRouter);
 app.use('/stock', stockRouter);
-app.use('/damagedStock', damagedStockRouter);
+app.use('/stockUtilisation', stockUtilisationRouter);
+app.use('/damagedStock',damagedStockRouter);
 app.use('/supplier', supplierRouter);
 app.use('/sales', salesRouter);
 app.use("/employee", employeeRouter);
@@ -43,6 +50,7 @@ app.use("/payroll", payrollRouter);
 app.use("/leave", leaveRouter);
 app.use("/salary", salaryRouter);
 app.use("/welfareFacility", welfareFacilityRouter);
+app.use("/customer", customerRouter);
 
 const URL = process.env.MONGODBURL;
 

@@ -23,29 +23,26 @@ const stockSchema = new Schema({
     stockCategory: {
         type: String,
         required: true,
-        enum: ['Raw materials', 'Work in progress', 'Finished goods'],
+        enum: ['Raw materials', 'Work in progress'],
     },
-    lastUpdated: {
-        type: Date, 
-    },
-    quantity: {
-        type: Number,
-        min: 0,
-        required: true,
-    },
+    description :{
+        type: String,
+        required:true
+     },
+    // quantity: {
+    //     type: Number,
+    //     min: 0,
+    //     required: true,
+    // },
     reorderLevel: { //needs to be updated later and not when adding
         type: Number,
         min: 0,
         default:0,
     },
-    unitPrice: {
+    unitPrice:{
         type: Number,
         min: 0,
-        default: 0.0,
-    },
-    supplier: {
-        type: String,
-        default: "-",
+        default:0,
     },
     totalValue: {
         type: Number,
@@ -55,7 +52,22 @@ const stockSchema = new Schema({
     sufficientStock: {
         type: String,
         default: "-",
-    }
+    },
+    // additions:{
+    //     type: Number,
+    //     min: 0,
+    //     default:0.0
+    // },
+    // issues:{
+    //     type: Number,
+    //     min: 0,
+    //     default:0.0
+    // },
+    damagedQty:{
+        type: Number,
+        min: 0.0,
+        default:0.0
+    }   
 })
 
 //Stock is inside the schema -> Stock is part of the collections

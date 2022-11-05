@@ -1,8 +1,19 @@
 import Sales from "../../models/Sales/sales.model.js";
+import mongoose from "mongoose";
 
 export const getAllSalesDetails = async (req, res) => {
     try {
-        const sales = await Sales.find();
+        const sales = await Sales.aggregate([
+            {
+                $lookup: 
+                {
+                    from: "customers",
+                    localField: "customerID" ,
+                    foreignField: "customerID",
+                    as: "customerDetailss"
+                }
+            }
+        ]);
         res.status(200).json(sales);
     } catch (error) {
         res.status(404).json({message : error});

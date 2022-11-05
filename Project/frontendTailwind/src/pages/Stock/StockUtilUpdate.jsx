@@ -10,24 +10,23 @@ function StockUtilUpdate() {
     const [stockCode, setStockCode] = useState('');
     const [stockName, setStockName] = useState('');
     const [stockCategory, setStockCategory] = useState('');
-    const [lastUpdated, setLastUpdated] = useState('');
+    const [date,setDate] = useState('');
+    const [type,setType] = useState('');
     const [quantity, setQuantity] = useState('');
-    const [reorderLevel, setReorderLevel] = useState('');
     const [unitPrice, setUnitPrice] = useState('');
     const [supplier, setSupplier] = useState('');
     var [totalValue, setTotalValue] = useState('');
-    var [sufficientStock, setSufficientStock] = useState('');
 
     const { id } = useParams();
 
-    const getStock = () => {
-        axios.get("http://localhost:8070/stock/" + id).then((res) => {
+    const getStockUtil = () => {
+        axios.get("http://localhost:8070/stockUtilisation/" + id).then((res) => {
             setStockCode(res.data.stockCode);
             setStockName(res.data.stockName);
             setStockCategory(res.data.stockCategory);
-            setLastUpdated(res.data.lastUpdated);
+            setDate(res.data.date);
             setQuantity(res.data.quantity);
-            setReorderLevel(res.data.reorderLevel);
+            setType(res.data.type);
             setUnitPrice(res.data.unitPrice);
             setSupplier(res.data.supplier);
         }).catch((err) => {
@@ -35,17 +34,17 @@ function StockUtilUpdate() {
         })
     }
 
-    useEffect(() => { getStock() }, []);
-    var date = new Date().toISOString().split('T')[0];
+    useEffect(() => { getStockUtil() }, []);
+    var formDate = date.split('T')[0];
 
-    var displayM = true;
-    if (stockCategory == ''){
-        displayM = true;
-    }
-    else if (stockCategory != "Finished goods") {
-        displayM = false;
-    } else
-        displayM = true;
+    // var displayM = true;
+    // if (stockCategory == ''){
+    //     displayM = true;
+    // }
+    // else if (stockCategory != "Finished goods") {
+    //     displayM = false;
+    // } else
+    //     displayM = true;
 
     return (
 
@@ -56,33 +55,24 @@ function StockUtilUpdate() {
                 <form onSubmit={async (e) => {
                     e.preventDefault();
 
-                    var checkStock = reorderLevel - quantity;
-                    if (checkStock > 0) {
-                        { sufficientStock = "Need " + checkStock.toString() }
-                    } else {
-                        { sufficientStock = "Available" }
-                    }
-
+                   
                     var total = quantity * unitPrice;
                     { totalValue = total }
 
-                    const newStock = {
+                    const newStockUtil = {
                         stockCode,
-                        stockName,
-                        stockCategory,
-                        lastUpdated,
-                        quantity,
-                        reorderLevel,
-                        unitPrice,
+                        date,
+                        type,
                         supplier,
-                        totalValue,
-                        sufficientStock
+                        unitPrice,
+                        quantity,
+                        totalValue
                     }
 
-                    await axios.put("http://localhost:8070/stock/update/" + id, newStock)
+                    await axios.put("http://localhost:8070/stockUtilisation/update/" + id, newStockUtil)
                         .then((res) => {
                             alert("Data updated successfully");
-                            console.log(newStock);
+                            console.log(newStockUtil);
                             //navigate to the stock view page
                             navigate('/StockUtilisation');
                         })
@@ -112,11 +102,15 @@ function StockUtilUpdate() {
 
                     <div className="mb-3">
                         <label htmlFor="date" className="form-label">Date: </label>
-                        <input type="date" min="2010-01-01" max={date} value={lastUpdated} className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date" required onChange={(e) => {
-                            setLastUpdated(e.target.value);
-                        }} />
+                        <input type="text"  value={formDate} className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date" readOnly />
 
                     </div>
+
+                    <div className="mb-3">
+                        <label htmlFor="type" className="form-label">Type: </label>
+                        <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" value={type} id="type" readOnly />
+                    </div>
+
                     <div className="mb-3">
                         <label htmlFor="quantity" className="form-label">Quantity: </label>
                         <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" value={quantity} min="0"
@@ -126,33 +120,25 @@ function StockUtilUpdate() {
                     </div>
 
                     <div className="mb-3">
-                        <label htmlFor="reorderLevel" className="form-label">Reorder Level: </label>
-                        <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="reorder" value={reorderLevel} min="0"
-                            disabled={displayM} title="If there is no stock please input 0" onChange={(e) => {
-                                setReorderLevel(e.target.value);
-                            }} />
-                    </div>
-
-                    {/* <div className="mb-3">
                         <label htmlFor="unitPrice" className="form-label">Unit price: </label>
                         <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice" value={unitPrice}
                             onChange={(e) => {
                                 setUnitPrice(e.target.value);
                             }} />
-                    </div> */}
+                    </div>
 
-                    {/* <div className="mb-3">
+                    <div className="mb-3">
                         <label htmlFor="supplier" className="form-label">Supplier: </label>
                         <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white
                          dark:text-black"  id="supplier" value={supplier}
                             readOnly />
-                    </div> */}
+                    </div>
 
-                    {/* <div className="mb-3">
+                    <div className="mb-3">
                         <label htmlFor="totalValue" className="form-label">Total Value: </label>
                         <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white
                          dark:text-black" value={quantity * unitPrice} id="totalValue" readOnly />
-                    </div> */}
+                    </div>
 
                     <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Submit</button>
                 </form>

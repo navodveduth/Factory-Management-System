@@ -4,32 +4,15 @@ const Schema = mongoose.Schema;
 
 const DriverSchema = new Schema(
   {
-    nic: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      minlength: 10,
-      maxlength: 12,
-      pattern: '^[0-9]{9}[vVxX]$ | ^[0-9]{12}$',
-    },
     fullName: {
       type: String,
       required: true,
+      maxlength: 100,
     },
     drivingLicenseNo: {
       type: String,
       required: true,
       unique: true,
-    },
-    contactNo: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      minlength: 10,
-      maxlength: 10,
-      pattern: '^[0-9]{10}$',
     },
     vehicleNo: {
       type: String,
