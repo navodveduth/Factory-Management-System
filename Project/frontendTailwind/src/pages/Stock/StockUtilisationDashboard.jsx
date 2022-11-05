@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { GiRolledCloth, GiSewingNeedle, GiClothes } from 'react-icons/gi';
-import { FaCoins } from 'react-icons/fa';
+import { FaCoins,FaChartBar,FaInbox } from 'react-icons/fa';
 import { AiOutlineStock } from 'react-icons/ai';
 import { DashTopBox, DashTopButton } from '../../components';
+import { BiAddToQueue } from 'react-icons/bi';
 
 import { useStateContext } from '../../contexts/ContextProvider';
 import DamagedStockPieChart from '../../components/DamagedStockPieChart';
@@ -90,17 +91,17 @@ const StockUtilisationDashboard = () => {
 
                 <div className="mt-5">
 
-                  <div className="flex flex-wrap lg:flex-nowrap justify-left ml-10 mt-5">
+                  <div className="flex flex-wrap lg:flex-nowrap justify-left ml-5 mt-5">
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                       {/* top buttons in the dashboard */} {/* use for navigation buttons*/}
                       <Link to="/StockUtilisation">
-                        <DashTopButton value="View All Stocks Transactions" />
+                        <DashTopButton icon={<FaChartBar />} value="View All Stocks Transactions" />
                       </Link>
                       <Link to="/StockAddExisting">
-                        <DashTopButton value="Add New Entry for exisitng stock" />
+                        <DashTopButton icon={<BiAddToQueue/>} value="Add New Entry for exisitng stock" />
                       </Link>
                       <Link to="/PendingStockAdd">
-                        <DashTopButton value="Add new stock request" />
+                        <DashTopButton icon={<FaInbox/>} value="Add new stock request" />
                       </Link>
                     </div>
                   </div>
