@@ -161,34 +161,38 @@ const DriverDashboard = () => {
                         <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                           <TableHeader value="NIC" />
                           <TableHeader value="Name" />
-                          <TableHeader value="Driving License No" />
-                          <TableHeader value="Contact No" />
+                          <TableHeader value="Driving License Number" />
+                          <TableHeader value="Contact Number" />
                           <TableHeader value="Vehicle Number" />
                           <TableHeader value="Vehicle Model" />
                         </tr>
                       </thead>
 
                       <tbody>
-                        {driver.map((data) => (
-                          <tr
-                            className="text-sm h-10 border dark:border-slate-600"
-                            key={data._id}
-                          >
-                            {data.driverDetails.map((driverData) => (
-                              <TableData value={driverData.employeeNIC} />
-                            ))}
+                        {driver.map((data) =>
+                          data.status === 'Available' ? (
+                            <tr
+                              className="text-sm h-10 border dark:border-slate-600"
+                              key={data._id}
+                            >
+                              {data.driverDetails.map((driverData) => (
+                                <TableData value={driverData.employeeNIC} />
+                              ))}
 
-                            <TableData value={data.fullName} />
-                            <TableData value={data.drivingLicenseNo} />
-                            {data.driverDetails.map((driverData) => (
-                              <TableData
-                                value={driverData.employeeContactNumber}
-                              />
-                            ))}
-                            <TableData value={data.vehicleNo} />
-                            <TableData value={data.vehicleModel} />
-                          </tr>
-                        ))}
+                              <TableData value={data.fullName} />
+                              <TableData value={data.drivingLicenseNo} />
+                              {data.driverDetails.map((driverData) => (
+                                <TableData
+                                  value={driverData.employeeContactNumber}
+                                />
+                              ))}
+                              <TableData value={data.vehicleNo} />
+                              <TableData value={data.vehicleModel} />
+                            </tr>
+                          ) : (
+                            ''
+                          )
+                        )}
                       </tbody>
                     </table>
                   </div>
