@@ -3,7 +3,14 @@ export { default as StockView } from './StockView';
 export { default as StockAdd } from './StockAdd';
 export { default as StockUpdate } from './StockUpdate';
 export { default as StockPDF } from './StockPDF';
+
+export { default as StockBreakdown } from './StockBreakdown';
+export { default as StockBreakdownUpdate } from './StockBreakdownUpdate';
+export { default as StockBreakdownPDF } from './StockBreakdownPDF';
+
+export { default as StockUtilisationDashboard} from './StockUtilisationDashboard';
 export { default as StockUtilisation } from './StockUtilisation';
+export { default as StockAddExisting } from './StockAddExisting';
 export { default as StockUtilUpdate } from './StockUtilUpdate';
 export { default as StockUtilPDF} from './StockUtilPDF';
 
