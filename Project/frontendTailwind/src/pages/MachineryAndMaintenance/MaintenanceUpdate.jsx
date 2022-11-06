@@ -149,7 +149,7 @@ function MaintenanceUpdate() {
                         <div className="mb-3">
                             <label htmlFor="employeeFullName" className="form-label">Maintenance ID: </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="employeeFullName" defaultValue={midprop}  
+                                id="employeeFullName" defaultValue={midprop}  disabled
                                 onChange={(e)=>{
                                     setMidprop(e.target.value);
                                 }}/>

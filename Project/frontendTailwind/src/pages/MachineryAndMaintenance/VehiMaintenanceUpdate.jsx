@@ -14,35 +14,37 @@ function VehiMaintenanceUpdate() {
     const navigate = useNavigate(); //useNavigate hook to redirect to another page after form submission is successful 
    
   
-    const[midprop, setMidprop] = useState("");
-    const [Type, setType] = useState('');
+    const [mainID,setmainID] = useState('');
+    const [vehicleNo, setvehicleNo] = useState('');
+    const[mileage, setmileage] = useState("");
     const [Description, setDescription] = useState('');
-    const [others, setOthers] = useState('');
-    const [status, setStatus] = useState('');
     const [lastMaintainedDate, setLastMaintainedDate] = useState('');
     const [nextServiceDate, setNextServiceDate] = useState('');
-    const[name, setName] = useState("");
+    const [performedBy, setperformedBy] = useState('');
+    const [status, setStatus] = useState('');
+    const [others, setOthers] = useState('');
+    
   
     const {id} = useParams(); //get the id from the url
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
 
-  const getMaintainence = () => {
-    axios.get(`http://localhost:8070/maintainence/${id}`)
+  const getVMaintainence = () => {
+    axios.get(`http://localhost:8070/maintainenceVehicle/${id}`)
     .then((res) => {
       
       const dob = new Date(res.data.lastMaintainedDate).toISOString().split('T')[0];
       const doj = new Date(res.data.nextServiceDate).toISOString().split('T')[0];
 
-        setMidprop(res.data.midprop);
-        setType(res.data.Type);
+        setmainID(res.data.mainID);
+        setvehicleNo(res.data.vehicleNo);
+        setmileage(res.data.mileage);
         setDescription(res.data.Description);
         setLastMaintainedDate(dob);
         setNextServiceDate(doj);
-        setOthers(res.data.others);
+        setperformedBy(res.data.performedBy);
         setStatus(res.data.status);
-        setName(res.data.name);
-        
+        setOthers(res.data.others);
 
     })
     .catch((err) => {
@@ -50,8 +52,8 @@ function VehiMaintenanceUpdate() {
     })
 }
 
-  useEffect(() => {
-    getMaintainence(); // <== CHANGE ACCORDING TO YOUR OWN FUNCTIONS, YOU CAN REMOVE THIS LINE IF YOU DON'T NEED IT
+useEffect(() => {
+    getVMaintainence(); // <== CHANGE ACCORDING TO YOUR OWN FUNCTIONS, YOU CAN REMOVE THIS LINE IF YOU DON'T NEED IT
     const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
     const currentThemeMode = localStorage.getItem('themeMode');
     if (currentThemeColor && currentThemeMode) {
@@ -59,6 +61,7 @@ function VehiMaintenanceUpdate() {
       setCurrentMode(currentThemeMode);
     }
   }, []);
+
 
   return (
     <div>
@@ -121,21 +124,25 @@ function VehiMaintenanceUpdate() {
                         
                         
                         const newMaintenance = {
-                            midprop,
-                            Type,
+                            mainID,
+                            vehicleNo,
+                            mileage,
                             Description,
-                            others,
-                            status,
                             lastMaintainedDate,
-                            nextServiceDate, 
-                    name
+                            nextServiceDate,
+                            performedBy,
+                            status,
+                            others
+
+                            
+                
                         }
 
-                        await axios.put("http://localhost:8070/maintainence/update/"+ id, newMaintenance)
+                        await axios.put("http://localhost:8070/maintainenceVehicle/update/"+ id, newMaintenance)
                         .then((res)=>{
                             alert("Data updated successfully");
                             //navigate to the maintainence view page
-                        navigate('/MaintenanceViewAll');
+                        navigate('/VehiMaintenanceViewAll');
                         })
                         .catch((err)=>{
                             console.log(err);
@@ -149,32 +156,33 @@ function VehiMaintenanceUpdate() {
                         <div className="mb-3">
                             <label htmlFor="employeeFullName" className="form-label">Maintenance ID: </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="employeeFullName" defaultValue={midprop}  
+                                id="employeeFullName" defaultValue={mainID}  disabled
                                 onChange={(e)=>{
-                                    setMidprop(e.target.value);
+                                    setmainID(e.target.value);
                                 }}/>
                         </div>
 
                         <div className="mb-3">
-                            <label for="employeeType" className="form-label">Type : </label>
-                            <select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                            id="employeeType" aria-label="Default select example" defaultValue={Type} required
-                            onChange={(e) =>{
-                                setType(e.target.value);
-                            }}>
-                               <option selected>Choose...</option>
-                                <option value="Plumbing">Plumbing</option>
-                                    <option value="HVAC">HVAC</option>
-                                    <option value="Flooring">Flooring</option>
-                                    <option value="Electrical">Electrical</option>
-                                    <option value="Painting">Painting</option>
-                                    <option value="Buildings">Buildings</option>
-
-                            </select>
+                            <label htmlFor="employeeFullName" className="form-label">Vehicle No: </label>
+                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                id="employeeFullName" defaultValue={mainID}  disabled
+                                onChange={(e)=>{
+                                    setvehicleNo(e.target.value);
+                                }}/>
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="employeeFullName" className="form-label">Repair needed : </label>
+                            <label htmlFor="employeeFullName" className="form-label">Mileage at service:</label>
+                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                id="employeeFullName" defaultValue={mileage}  required
+                                onChange={(e)=>{
+                                    setmileage(e.target.value);
+                                }}/>
+                        </div>
+
+
+                        <div className="mb-3">
+                            <label htmlFor="employeeFullName" className="form-label">Service task: : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="employeeFullName" defaultValue={Description} required 
                                 onChange={(e)=>{
@@ -191,21 +199,7 @@ function VehiMaintenanceUpdate() {
                                 }}/>
                         </div>
 
-                        <div className="mb-3">
-                            <label for="employeeType" className="form-label">Status : </label>
-                            <select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                            id="employeeType" aria-label="Default select example" defaultValue={status} required
-                            onChange={(e) =>{
-                                setStatus(e.target.value);
-                            }}>
-                                <option selected>Choose...</option>
-                                    <option value="Completed">Completed</option>
-                                    <option value="In progress">In progress</option>
-                                    
-
-                            </select>
-                        </div>
-
+                        
                         <div className="mb-3">
                             <label htmlFor="employeeDOB" className="form-label">Last Maintained Date : </label>
                             <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
@@ -225,16 +219,19 @@ function VehiMaintenanceUpdate() {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="employeeNumber" className="text-md">Comment : </label>
-                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="employeeNumber"  defaultValue={name} required 
-                                onChange={(e)=>{
-                                    setName(e.target.value);
-                                }}/>
+                            <label for="employeeType" className="form-label">Status : </label>
+                            <select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                            id="employeeType" aria-label="Default select example" defaultValue={status} required
+                            onChange={(e) =>{
+                                setStatus(e.target.value);
+                            }}>
+                                <option selected>Choose...</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="In progress">In progress</option>
+                                    
+
+                            </select>
                         </div>
-
-                       
-
 
 
                     <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Submit</button>

@@ -129,6 +129,7 @@ const VehiMaintenanceReport = () => {
                     <table className="w-full rounded-lg">
                         <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+              <TableHeader title="Maintenance ID" />
                 <TableHeader value="vehicle No" />
                 <TableHeader value="Vehicle model" />
                 <TableHeader value="Mileage at service" />
@@ -138,7 +139,8 @@ const VehiMaintenanceReport = () => {
                 <TableHeader value="performed By" />
                 <TableHeader value="status" />
                 <TableHeader value="Total Cost" />
-                <TableHeader value="Manage" />
+                <TableHeader value="Total Cost" />
+                
               </tr>
             </thead>
             <tbody>
@@ -163,34 +165,29 @@ const VehiMaintenanceReport = () => {
                 <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
 
 
-                  <TableData value={data.vehicleDetails.map((data2)=>{
-                        return(
-                            <div>
-                                <TableData value={data2.vehicleNo} />
-                            </div>
-                        )
+                    <TableData value={data.mainID} />
 
-                  })} />
-                  <TableData value={data.vehicleDetails.map((data2)=>{
-                    return(
-                        <div>
-                            <TableData value={data2.vehicleModel} />
-                        </div>
-                    )
-                  })} />
-                  <TableData value={data.mileage}/>
-                  <TableData value={data.Description} />
-                  <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
-                  <TableData value={data.nextServiceDate.toString().split('T')[0]} />
-                  <TableData value={data.performedBy} />
-                    
-                    <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
-                    <TableData value={data.others} />
-                    
-                  
-                  <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                   
-                  
+                    <TableData value={data.vehicleNo} />
+                    <TableData value={data.vehicleDetails.map((data2)=>{
+                      return(
+                          <div>
+                              <TableData value={data2.vehicleModel} />
+                          </div>
+                      )
+                    })} />
+                    <TableData value={data.mileage}/>
+                    <TableData value={data.Description} />
+                    <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
+                    <TableData value={data.nextServiceDate.toString().split('T')[0]} />
+                    <TableData value={data.performedBy} />
+                      
+                      <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
+                      <TableData value={data.others} />
+                                        
+                                      
+                    <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                      
+                                      
                     
                   </td>
                 </tr>
