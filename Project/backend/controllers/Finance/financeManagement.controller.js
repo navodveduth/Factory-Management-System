@@ -22,35 +22,27 @@ export const viewOneFinancialData = async (req, res) => {
     }
 }
 
-export const viewFDByRevenue = async (req, res) => {
+export const getDateRangeFinance = async (req, res) => {
     try {
-        const amount = req.params.revenue;
-        const financedata = await FD.find({
-            revenue : amount
-          });
-
-       /*  const financedata = await FD.collection.aggregate([
-            {
-                $addFields: {
-                    date: {
-                        $dateToString: { 
-                            format: "%Y-%m-%d",
-                            date: "$recordedDate"
-                        }
-                    }
+        const DS = req.params.DS;
+        const DE = req.params.DE;
+        const financedata = await FD.aggregate([
+            /* {
+                $lookup:
+                {
+                    from: "finances",
+                    localField: "local",  
+                    foreignField: "foreign", 
+                    as: "newField" 
                 }
-            },
+            }, */
             {
-                $match: {
-                    date: date
-                }
+                $match: { trnRecordedDate: { $gte: new Date(DS), $lte: new Date(DE) } }
             }
-        ]).toArray(); */
+        ]);
         res.status(200).json(financedata);
     } catch (error) {
-        res.status(404).json({
-            message : error
-        })
+        res.status(404).json({message : error});
     }
 }
 
