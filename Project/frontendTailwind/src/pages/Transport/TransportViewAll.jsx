@@ -87,6 +87,13 @@ const TransportViewAll = () => {
       });
   };
 
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'LKR',
+    minimumFractionDigits: 2,
+    currencyDisplay: 'symbol',
+  });
+
   return (
     <div>
       <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -262,6 +269,10 @@ const TransportViewAll = () => {
                               } else {
                                 dataColor = 'text-yellow-600 font-bold';
                               }
+
+                              const transportCost = formatter.format(
+                                data.transportCost
+                              );
                               return (
                                 <tr
                                   className="text-sm h-10 border dark:border-slate-600"
@@ -274,11 +285,7 @@ const TransportViewAll = () => {
                                   />
                                   <TableData value={data.timeOfDispatch} />
                                   <TableData value={`${data.distance} km`} />
-                                  <TableData
-                                    value={`Rs. ${data.transportCost.toFixed(
-                                      2
-                                    )}`}
-                                  />
+                                  <TableData value={transportCost} />
                                   <TableData value={data.driver} />
                                   <TableData value={data.description} />
                                   <td
