@@ -5,14 +5,15 @@ const Schema = mongoose.Schema;
 
 const maintainenceMachineSchema = new Schema({
 
+    mid:{
+        type: String,
+        required:true
+
+    },
+
     machineID:{
         type: String,
         required: true
-    },
-
-    name: {
-        type: String,
-        
     },
 
     Description : {

@@ -10,7 +10,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 
 
-function MaintenanceUpdate() {
+function VehiMaintenanceUpdate() {
     const navigate = useNavigate(); //useNavigate hook to redirect to another page after form submission is successful 
    
   
@@ -251,4 +251,4 @@ function MaintenanceUpdate() {
   );
 };
 
-export default MaintenanceUpdate;
+export default VehiMaintenanceUpdate;
