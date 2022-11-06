@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import {
@@ -25,7 +25,10 @@ const TransportViewAll = () => {
     setThemeSettings,
   } = useStateContext();
 
+  const navigate = useNavigate();
   const [transport, setTransport] = useState([]);
+  const [dateStart, setDateStart] = useState(''); // dateStart
+  const [dateEnd, setDateEnd] = useState(''); // dateEnd
   const [searchTerm, setSearchTerm] = useState(''); // search term state for search bar functionality in table
 
   // const [value, setValue] = useState('');
@@ -44,6 +47,10 @@ const TransportViewAll = () => {
   //     setValue(e.target.value);
   //   }
   // };
+
+  const toDateRange = () => {
+    navigate('/TransportDateRange', { state: { DS: dateStart, DE: dateEnd } });
+  };
 
   const getTransport = async () => {
     axios
@@ -133,13 +140,48 @@ const TransportViewAll = () => {
                       <div>
                         <input
                           type="text"
-                          className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                          className="block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           placeholder="Search Here"
                           onChange={(e) => {
                             setSearchTerm(e.target.value);
                           }}
                         />
                       </div>
+
+                      <div>
+                        <input
+                          type="date"
+                          className="block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3"
+                          placeholder="Start Date"
+                          onChange={(e) => {
+                            setDateStart(e.target.value);
+                          }}
+                        />
+                      </div>
+
+                      <div>
+                        <input
+                          type="date"
+                          className="block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3"
+                          placeholder="End Date"
+                          onChange={(e) => {
+                            setDateEnd(e.target.value);
+                          }}
+                        />
+                      </div>
+
+                      <div className="mx-1">
+                        <button
+                          type="button"
+                          className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500"
+                          onClick={() => {
+                            toDateRange();
+                          }}
+                        >
+                          Filter
+                        </button>
+                      </div>
+
                       <div className="mr-0 ml-auto">
                         <Link to="/TransportReport">
                           {/* change this link your preview page */}
