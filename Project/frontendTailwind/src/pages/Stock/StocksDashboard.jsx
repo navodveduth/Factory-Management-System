@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { GiRolledCloth, GiSewingNeedle, GiClothes } from 'react-icons/gi';
-import { FaCoins } from 'react-icons/fa';
+import { FaCoins , FaWarehouse, FaFileSignature} from 'react-icons/fa';
 import { AiOutlineStock } from 'react-icons/ai';
+import { BiAddToQueue } from 'react-icons/bi';
 import { DashTopBox, DashTopButton } from '../../components';
 
 import { useStateContext } from '../../contexts/ContextProvider';
@@ -95,19 +96,19 @@ const StocksDashboard = () => {
 
                 <div className="mt-5">
 
-                  <div className="flex flex-wrap lg:flex-nowrap justify-left ml-10 mt-5">
+                  <div className="flex flex-wrap lg:flex-nowrap justify-left ml-5 mt-5">
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                       {/* top buttons in the dashboard */} {/* use for navigation buttons*/}
                       <Link to="/StockView">
-                        <DashTopButton value="View All Stocks" />
+                        <DashTopButton icon={<FaWarehouse />} value="View All Stocks" />
                       </Link>
 
                       <Link to="/StockBreakdown">
-                        <DashTopButton value="View Stocks Breakdown" />
+                        <DashTopButton icon={<FaFileSignature/>} value="View Stocks Breakdown" />
                       </Link>
 
                       <Link to="/StockAdd">
-                        <DashTopButton value="Add New Stock" />
+                        <DashTopButton icon={<BiAddToQueue/>} value="Add New Stock" />
                       </Link>
                     </div>
                   </div>

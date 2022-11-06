@@ -9,13 +9,13 @@ import { WelfareDashboard, WelfareNew, WelfareReport, WelfareUpdate, WelfareView
 
 import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll, PreviewSalary, FinanceDateRange } from './pages/Finance';
 
-import { MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew} from './pages/MachineryAndMaintenance';
+import { MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport} from './pages/MachineryAndMaintenance';
 
 import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice } from './pages/Sales';
 
 import { OrderViewAll, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder } from './pages/Production/Index';
 
-import { StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, StockUtilisationDashboard, StockUtilisation, StockAddExisting, StockUtilUpdate, StockUtilPDF, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF } from './pages/Stock';
+import { StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, StockUtilisationDashboard, StockUtilisation, StockAddExisting, StockUtilUpdate, StockUtilPDF, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF, PendingStockView, PendingStockAdd, PendingStockUpdate, PendingStockPDf } from './pages/Stock';
 
 import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, SupplierRecordsDashboard, SupplierDetailsPreview } from './pages/Suppliers';
 
@@ -102,6 +102,8 @@ const App = () => {
           <Route path="/MachMaintenanceReport" element={<MachMaintenanceReport />} />
           <Route path="/VehiMaintenanceViewAll" element={<VehiMaintenanceViewAll />} />
           <Route path="/VehiMaintenanceNew" element={<VehiMaintenanceNew />} />
+          <Route path="/VehiMaintenanceUpdate/:id" element={<VehiMaintenanceUpdate />} />
+          <Route path="/VehiMaintenanceReport" element={<VehiMaintenanceReport />} />
                 
           {/* sales management  */}
           <Route path="/SalesDashboard" element={<SalesDashboard />} />
@@ -129,6 +131,10 @@ const App = () => {
           <Route path="/StockBreakdownUpdate/:id" element={<StockBreakdownUpdate/>} />
           <Route path="/generateSBPDF" element={<StockBreakdownPDF/>} />
           
+          <Route path="/PendingStockView" element={<PendingStockView />} />
+          <Route path="PendingStockAdd" element={<PendingStockAdd />} />
+          <Route path="PendingStockUpdate/:id" element={<PendingStockUpdate />} />
+          <Route path="/generatePSPDF" element={<PendingStockPDf />}/>
 
           <Route path="/StockUtilisationDashboard" element={<StockUtilisationDashboard/>} />
           <Route path="/StockUtilisation" element={<StockUtilisation />} />

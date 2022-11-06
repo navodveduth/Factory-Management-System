@@ -10,12 +10,14 @@ import {
   DashTopBox,
   DashTopButton,
   Navbar,
+  Header,
   Footer,
   Sidebar,
   ThemeSettings,
 } from '../../components';
-
 import { useStateContext } from '../../contexts/ContextProvider';
+import TableData from '../../components/Table/TableData';
+import TableHeader from '../../components/Table/TableHeader';
 
 const DriverDashboard = () => {
   const {
@@ -144,6 +146,55 @@ const DriverDashboard = () => {
                         data={unavailable}
                       />
                     </div>
+                  </div>
+                </div>
+
+                <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
+                  <Header category="Table" title="Available Drivers" />
+
+                  <div
+                    className="block w-full overflow-x-auto rounded-lg"
+                    id="tableContainer"
+                  >
+                    <table className="w-full rounded-lg">
+                      <thead>
+                        <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                          <TableHeader value="NIC" />
+                          <TableHeader value="Name" />
+                          <TableHeader value="Driving License Number" />
+                          <TableHeader value="Contact Number" />
+                          <TableHeader value="Vehicle Number" />
+                          <TableHeader value="Vehicle Model" />
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {driver.map((data) =>
+                          data.status === 'Available' ? (
+                            <tr
+                              className="text-sm h-10 border dark:border-slate-600"
+                              key={data._id}
+                            >
+                              {data.driverDetails.map((driverData) => (
+                                <TableData value={driverData.employeeNIC} />
+                              ))}
+
+                              <TableData value={data.fullName} />
+                              <TableData value={data.drivingLicenseNo} />
+                              {data.driverDetails.map((driverData) => (
+                                <TableData
+                                  value={driverData.employeeContactNumber}
+                                />
+                              ))}
+                              <TableData value={data.vehicleNo} />
+                              <TableData value={data.vehicleModel} />
+                            </tr>
+                          ) : (
+                            ''
+                          )
+                        )}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>

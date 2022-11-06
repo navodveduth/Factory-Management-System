@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { jsPDF } from "jspdf";
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider.js';
 import TableData from '../../components/Table/TableData';
@@ -9,14 +10,13 @@ import TableHeader from '../../components/Table/TableHeader';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import MachineryViewAll from './MachineryViewAll';
 
 
+const VehiMaintenanceReport = () => {
+  const [maintainenceVehi, setMaintainenceVehi] = useState([]);
 
-const MachMaintenanceViewAll = () => {
-  const [maintainenceMachine, setMaintainenceMachine] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
 
+  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
   var TotalCost = 0;
   var total = 0;
@@ -28,14 +28,10 @@ const MachMaintenanceViewAll = () => {
     currencyDisplay: 'symbol'
   })
 
-
-  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
-
-
-  const getMMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainenceMachine/")
+  const getVMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+    axios.get("http://localhost:8070/maintainenceVehicle/")
       .then((res) => {
-        setMaintainenceMachine(res.data); //setMaintainence  is used to update the state variable
+        setMaintainenceVehi(res.data); //setMaintainence  is used to update the state variable
 
       })
       .catch((err) => {
@@ -45,7 +41,7 @@ const MachMaintenanceViewAll = () => {
 
 
   useEffect(() => {
-    getMMaintainence();
+    getVMaintainence(); // <== CHANGE ACCORDING TO YOUR OWN FUNCTIONS, YOU CAN REMOVE THIS LINE IF YOU DON'T NEED IT
     const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
     const currentThemeMode = localStorage.getItem('themeMode');
     if (currentThemeColor && currentThemeMode) {
@@ -55,26 +51,17 @@ const MachMaintenanceViewAll = () => {
   }, []);
 
 
-  const deleteMMaintainence = async (id) => {
-    await axios.delete(`http://localhost:8070/maintainenceMachine/delete/${id}`)
-      .then((res) => {
-        alert("Data deleted successfully");
-        getMMaintainence();
-      })
-      .catch((err) => {
-        alert(err.message);
-      })
-  }
 
-  const confirmFunc = (id) => {
 
-    if (confirm("Do you want to delete?") == true) {
-      deleteMMaintainence(id);
-    } else {
-      navigate('/MachMaintenanceViewAll');
-    }
+  const createPDF = () => {
+    const date = new Date(Date.now()).toISOString().split('T')[0];
+    const pdf = new jsPDF("landscape", "px", "a1", false);
+    const data = document.querySelector("#tableContainer");
+    pdf.html(data).then(() => {
+      pdf.save("Machinery-Maintenance-Report-" + date + ".pdf");
+    });
+  };
 
-  }
 
   return (
     <div>
@@ -130,53 +117,35 @@ const MachMaintenanceViewAll = () => {
                 {/* PART AFTER THE RETURN STATEMENT */}
                 <div>
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                    <Header category="Table" title="Machinery Maintenance " />
+                    <Header category="Report" title="Vehicle Maintenance Report " />
 
                     <div className=" flex items-center mb-5 ">
-                      <div>
-                        <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here"
-                          onChange={(e) => {
-                            setSearchTerm(e.target.value);
-                          }} />
-                      </div>
                       <div className="mr-0 ml-auto">
-                        <Link to={"/MachMaintenanceReport"}> {/* change this link your preview page */}
-                          <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
-                        </Link>
+                        <button onClick={createPDF} type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
                       </div>
-
                     </div>
 
-
-
-                    <div className="block w-full overflow-x-auto rounded-lg">
-                      <table className="w-full rounded-lg" >
+                    <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
+                      <table className="w-full rounded-lg">
                         <thead>
                           <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                             <TableHeader value="Code" />
-                            <TableHeader value="Item" />
-                            <TableHeader value="Repairs" />
-                            <TableHeader value="Repair started" />
-                            <TableHeader value="Repaired by" />
-                            <TableHeader value="Contacts" />
+                            <TableHeader value="vehicle No" />
+                            <TableHeader value="Model" />
+                            <TableHeader value="Mileage at service" />
+                            <TableHeader value="Service schedule" />
+                            <TableHeader value="Last Maintained" />
+                            <TableHeader value="Next Due" />
+                            <TableHeader value="Performed By" />
                             <TableHeader value="Cost" />
-                            <TableHeader value="Status" />
+                            <TableHeader value="status" />
 
-                            <TableHeader value="Manage" />
+
+
                           </tr>
                         </thead>
                         <tbody>
-                          {maintainenceMachine.filter((data) => {
-                            if (searchTerm == "") {
-                              return data;
-                            } else if ((data.machineID.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                              (data.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                              (data.Description.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                              (data.status.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                              (data.Location.toLowerCase().includes(searchTerm.toLowerCase()))) {
-                              return data;
-                            }
-                          }).map((data, key) => {
+                          {maintainenceVehi.map((data, key) => {
 
                             var datacolor = "text-black";
                             if (data.status === "In progress") {
@@ -197,48 +166,30 @@ const MachMaintenanceViewAll = () => {
                               <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
 
 
-                                <TableData value={data.mid} />
+                                <TableData value={data.mainID} />
 
-                                <TableData value={data.machineDetailss.map((data1) => {
+                                <TableData value={data.vehicleNo} />
+                                <TableData value={data.vehicleDetails.map((data2) => {
                                   return (
                                     <div>
-                                      <Link to={`/MachineryViewAll/`}>
-                                        <TableData value={data1.name} />
-                                      </Link>
+                                      <TableData value={data2.vehicleModel} />
                                     </div>
                                   )
                                 })} />
+                                <TableData value={data.mileage} />
                                 <TableData value={data.Description} />
                                 <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
-                                <TableData value={data.Location} />
-                                <TableData value={data.contactNo} />
+                                <TableData value={data.nextServiceDate.toString().split('T')[0]} />
+                                <TableData value={data.performedBy} />
                                 <TableData value={"Rs." + data.others} />
-
-
                                 <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
 
 
 
                                 <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
 
-                                  <Link to={`/MachMaintenanceUpdate/${data._id}`}>
-                                    <button
-                                      type="button"
-                                      className="font-bold py-1 px-4 rounded-full mx-3 text-white"
-                                      style={{ background: currentColor }}
-                                    >
-                                      <i className="fas fa-edit" />
-                                    </button>
-                                  </Link>
-                                  <button
-                                    type="button"
-                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
-                                    onClick={() => {
-                                      confirmFunc(data._id);
-                                    }}
-                                  >
-                                    <i className="fas fa-trash" />
-                                  </button>
+
+
                                 </td>
                               </tr>
                             )
@@ -246,7 +197,7 @@ const MachMaintenanceViewAll = () => {
                         </tbody>
                       </table><br></br><br></br>
                       <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-                        Total Cost of Machinery Maintenance : {total}
+                        Total Cost of Vehicle Maintenance : {total}
 
                       </span>
 
@@ -263,5 +214,4 @@ const MachMaintenanceViewAll = () => {
   );
 };
 
-export default MachMaintenanceViewAll;
-
+export default VehiMaintenanceReport;
