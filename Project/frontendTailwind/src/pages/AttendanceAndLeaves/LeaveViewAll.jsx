@@ -135,6 +135,7 @@ const LeaveViewAll = () => {
                                     <thead>
                                       <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                                         <TableHeader value="Employee ID" />
+                                        <TableHeader value="Employee Name" />
                                         <TableHeader value="Leave Type" />
                                         <TableHeader value="Start Date" />
                                         <TableHeader value="End Date" />
@@ -151,6 +152,7 @@ const LeaveViewAll = () => {
                                       if(searchTerm == ""){
                                         return data;
                                       }else if((data.employeeNumber.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                        (data.LeavesDetails.employeeFullName.toLowerCase().includes(searchTerm.toLowerCase())) ||
                                         (data.leaveType.toLowerCase().includes(searchTerm.toLowerCase())) ||
                                         (startDate.toLowerCase().includes(searchTerm.toLowerCase())) ||
                                         (endDate.toLowerCase().includes(searchTerm.toLowerCase())) ||
@@ -163,6 +165,13 @@ const LeaveViewAll = () => {
                                           return(
                                             <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                                               <TableData value={data.employeeNumber} />
+                                              <TableData value={data.employeeDetails.map((data3) => {
+                                                      return (
+                                                      <div>
+                                                          {data3.employeeFullName} 
+                                                      </div>
+                                                      )
+                                                  })} />
                                               <TableData value={data.leaveType} />
                                               <TableData value={new Date(data.leaveStartDate).toISOString().split('T')[0]} />
                                               <TableData value={new Date(data.leaveEndDate).toISOString().split('T')[0]} />
