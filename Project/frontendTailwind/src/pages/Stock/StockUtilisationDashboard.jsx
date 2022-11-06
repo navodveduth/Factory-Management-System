@@ -97,7 +97,7 @@ const StockUtilisationDashboard = () => {
                       <Link to="/StockUtilisation">
                         <DashTopButton icon={<FaChartBar />} value="View All Stocks Transactions" />
                       </Link>
-                      <Link to="/StockAddExisting">
+                      <Link to="/StockUtilAddOption">
                         <DashTopButton icon={<BiAddToQueue/>} value="Add New Entry for exisitng stock" />
                       </Link>
                       <Link to="/PendingStockAdd">

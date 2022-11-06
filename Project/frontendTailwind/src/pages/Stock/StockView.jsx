@@ -151,7 +151,7 @@ function StockView() {
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
-                                                    <TableHeader value="Description" />
+                                                    <th className='px-4 py-3 text-md whitespace-nowrap font-semibold text-center text-black-300'>Description</th>
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Unit price" />
                                                     <TableHeader value="Total value" />
@@ -177,13 +177,13 @@ function StockView() {
 
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type == "Additions" &&
-                                                            stockUtil.stockCode == data.stockCode).map((stockUtil) => {
+                                                            stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totAdds += stockUtil.quantity
                                                             })
                                                     }
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
-                                                            stockUtil.stockCode == data.stockCode).map((stockUtil) => {
+                                                            stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totIssues += stockUtil.quantity
                                                             })
                                                     }
@@ -207,12 +207,21 @@ function StockView() {
                                                             <TableData value={data.stockName} />
                                                             <TableData value={data.stockCategory} />
                                                             {/* change the column width */}
-                                                            <td className={"text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3"}>{data.description}</td>
+                                                            <td className={"max-w-200 text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3"}>{data.description}</td>
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
                                                             <TableData value={data.unitPrice} />
                                                             <TableData value={"Rs." + totalValue} />
 
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                                                <Link to={`/StockInformation/${data._id}`}>
+                                                                    <button
+                                                                        type="button"
+                                                                        className="bg-neutral-500 font-bold py-1 px-4 rounded-full mx-3 text-white"
+                                                                    >
+                                                                        <i className="fas fa-info-circle" />
+                                                                    </button>
+                                                                </Link>
+
                                                                 <Link to={`/StockUpdate/${data._id}`}>
                                                                     <button
                                                                         type="button"
