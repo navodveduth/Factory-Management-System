@@ -134,7 +134,7 @@ const confirmFunc = (id)=>{
             }} />
           </div>
           <div className="mr-0 ml-auto">
-            <Link to={"/MaintainenceReport"}> {/* change this link your preview page */}
+            <Link to={"/VehiMaintenanceReport"}> {/* change this link your preview page */}
               <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
             </Link>
           </div>
@@ -147,7 +147,7 @@ const confirmFunc = (id)=>{
           <table className="w-full rounded-lg" >
             <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                <TableHeader title="Maintenance ID" />
+                <TableHeader value="Maintenance ID" />
                 <TableHeader value="vehicle No" />
                 <TableHeader value="Vehicle model" />
                 <TableHeader value="Mileage at service" />
@@ -216,7 +216,7 @@ const confirmFunc = (id)=>{
                   
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                    
-                  <Link to={`/MaintenanceUpdate/${data._id}`}>
+                  <Link to={`/VehiMaintenanceUpdate/${data._id}`}>
                       <button
                         type="button"
                         className="font-bold py-1 px-4 rounded-full mx-3 text-white"
