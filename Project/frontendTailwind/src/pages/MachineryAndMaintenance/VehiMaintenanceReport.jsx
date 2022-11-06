@@ -129,7 +129,7 @@ const VehiMaintenanceReport = () => {
                     <table className="w-full rounded-lg">
                         <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-              <TableHeader title="Maintenance ID" />
+              <TableHeader value="Maintenance ID" />
                 <TableHeader value="vehicle No" />
                 <TableHeader value="Vehicle model" />
                 <TableHeader value="Mileage at service" />
@@ -139,7 +139,7 @@ const VehiMaintenanceReport = () => {
                 <TableHeader value="performed By" />
                 <TableHeader value="status" />
                 <TableHeader value="Total Cost" />
-                <TableHeader value="Total Cost" />
+                
                 
               </tr>
             </thead>
