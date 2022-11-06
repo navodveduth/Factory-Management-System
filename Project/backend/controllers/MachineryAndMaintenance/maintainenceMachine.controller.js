@@ -31,6 +31,28 @@ export const getOneMMaintainenceDetail = async (req, res) =>{
 
 }
 
+export const getOneMMaintainenceDetailByMachineryNumber = async (req, res) =>{
+    try {
+        const machineID= req.params.machineID;
+       const maintainenceMachine= await MaintainenceMachine.find({machineID: machineID});
+        res.status(200).json(maintainenceMachine);
+    } catch (error) {
+        res.status(404).json({ message : error});
+    }
+
+}
+
+export const getAllMMaintainenceDetailByMachineryNumber = async (req, res) =>{
+    try {
+        const machineID= req.params.machineID;
+       const maintainenceMachines= await MaintainenceMachine.find({machineID: machineID});
+        res.status(200).json(maintainenceMachines);
+    } catch (error) {
+        res.status(404).json({ message : error});
+    }
+
+}
+
 export const createMMaintainenceDetails = async (req, res) =>{
     try {
         const maintainenceMachine = req.body;
