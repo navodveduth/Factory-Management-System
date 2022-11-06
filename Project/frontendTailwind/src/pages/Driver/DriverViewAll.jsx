@@ -171,7 +171,8 @@ const DriverViewViewAll = () => {
                             .filter((data) => {
                               if (searchTerm == '') {
                                 return data;
-                              } else if (
+                              }
+                              if (
                                 data.fullName
                                   .toString()
                                   .toLowerCase()
@@ -195,50 +196,48 @@ const DriverViewViewAll = () => {
                                 return data;
                               }
                             })
-                            .map((data, key) => {
-                              return (
-                                <tr
-                                  className="text-sm h-10 border dark:border-slate-600"
-                                  key={key}
-                                >
-                                  {data.driverDetails.map((driverData) => (
-                                    <TableData value={driverData.employeeNIC} />
-                                  ))}
+                            .map((data, key) => (
+                              <tr
+                                className="text-sm h-10 border dark:border-slate-600"
+                                key={key}
+                              >
+                                {data.driverDetails.map((driverData) => (
+                                  <TableData value={driverData.employeeNIC} />
+                                ))}
 
-                                  <TableData value={data.fullName} />
-                                  <TableData value={data.drivingLicenseNo} />
-                                  {data.driverDetails.map((driverData) => (
-                                    <TableData
-                                      value={driverData.employeeContactNumber}
-                                    />
-                                  ))}
-                                  <TableData value={data.vehicleNo} />
-                                  <TableData value={data.vehicleModel} />
-                                  <TableData value={data.status} />
+                                <TableData value={data.fullName} />
+                                <TableData value={data.drivingLicenseNo} />
+                                {data.driverDetails.map((driverData) => (
+                                  <TableData
+                                    value={driverData.employeeContactNumber}
+                                  />
+                                ))}
+                                <TableData value={data.vehicleNo} />
+                                <TableData value={data.vehicleModel} />
+                                <TableData value={data.status} />
 
-                                  <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                    <Link to={`/driverUpdate/${data._id}`}>
-                                      <button
-                                        type="button"
-                                        className="font-bold py-1 px-4 rounded-full mx-3 text-white"
-                                        style={{ background: currentColor }}
-                                      >
-                                        <i className="fas fa-edit" />
-                                      </button>
-                                    </Link>
+                                <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                  <Link to={`/driverUpdate/${data._id}`}>
                                     <button
                                       type="button"
-                                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
-                                      onClick={() => {
-                                        deleteDriver(data._id);
-                                      }}
+                                      className="font-bold py-1 px-4 rounded-full mx-3 text-white"
+                                      style={{ background: currentColor }}
                                     >
-                                      <i className="fas fa-trash" />
+                                      <i className="fas fa-edit" />
                                     </button>
-                                  </td>
-                                </tr>
-                              );
-                            })}
+                                  </Link>
+                                  <button
+                                    type="button"
+                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
+                                    onClick={() => {
+                                      deleteDriver(data._id);
+                                    }}
+                                  >
+                                    <i className="fas fa-trash" />
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
                         </tbody>
                       </table>
                     </div>
