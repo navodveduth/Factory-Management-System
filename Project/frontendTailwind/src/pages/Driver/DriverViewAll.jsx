@@ -26,23 +26,23 @@ const DriverViewViewAll = () => {
   } = useStateContext();
 
   const [driver, setDriver] = useState([]); // useState is a hook that is used to create a state variable and a function to update it
-  const [value, setValue] = useState('');
-  const [tableFilter, setTableFilter] = useState([]);
 
-  const filterData = (e) => {
-    console.log(driver);
-    if (e.target.value !== '') {
-      setValue(e.target.value);
-      const filterTable = driver.filter((o) =>
-        Object.keys(o).some((k) =>
-          String(o[k]).toLowerCase().includes(e.target.value.toLowerCase())
-        )
-      );
-      setTableFilter([...filterTable]);
-    } else {
-      setValue(e.target.value);
-    }
-  };
+  const [searchTerm, setSearchTerm] = useState(''); // search term state for search bar functionality in table
+
+  // const filterData = (e) => {
+  //   console.log(driver);
+  //   if (e.target.value !== '') {
+  //     setValue(e.target.value);
+  //     const filterTable = driver.filter((o) =>
+  //       Object.keys(o).some((k) =>
+  //         String(o[k]).toLowerCase().includes(e.target.value.toLowerCase())
+  //       )
+  //     );
+  //     setTableFilter([...filterTable]);
+  //   } else {
+  //     setValue(e.target.value);
+  //   }
+  // };
 
   const getDriver = async () => {
     axios
@@ -134,8 +134,9 @@ const DriverViewViewAll = () => {
                           type="text"
                           className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           placeholder="Search Here"
-                          value={value}
-                          onChange={filterData}
+                          onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                          }}
                         />
                       </div>
                       <div className="mr-0 ml-auto">
@@ -166,12 +167,39 @@ const DriverViewViewAll = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {value.length > 0
-                            ? tableFilter.map((data) => (
-                                // map is used to iterate through the transport details
+                          {driver
+                            .filter((data) => {
+                              if (searchTerm == '') {
+                                return data;
+                              } else if (
+                                data.fullName
+                                  .toString()
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase()) ||
+                                data.drivingLicenseNo
+                                  .toString()
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase()) ||
+                                data.vehicleNo
+                                  .toString()
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase()) ||
+                                data.vehicleModel
+                                  .toString()
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase()) ||
+                                data.status
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase())
+                              ) {
+                                return data;
+                              }
+                            })
+                            .map((data, key) => {
+                              return (
                                 <tr
                                   className="text-sm h-10 border dark:border-slate-600"
-                                  key={data._id}
+                                  key={key}
                                 >
                                   {data.driverDetails.map((driverData) => (
                                     <TableData value={driverData.employeeNIC} />
@@ -209,49 +237,8 @@ const DriverViewViewAll = () => {
                                     </button>
                                   </td>
                                 </tr>
-                              ))
-                            : driver.map((data) => (
-                                <tr
-                                  className="text-sm h-10 border dark:border-slate-600"
-                                  key={data._id}
-                                >
-                                  {data.driverDetails.map((driverData) => (
-                                    <TableData value={driverData.employeeNIC} />
-                                  ))}
-
-                                  <TableData value={data.fullName} />
-                                  <TableData value={data.drivingLicenseNo} />
-                                  {data.driverDetails.map((driverData) => (
-                                    <TableData
-                                      value={driverData.employeeContactNumber}
-                                    />
-                                  ))}
-                                  <TableData value={data.vehicleNo} />
-                                  <TableData value={data.vehicleModel} />
-                                  <TableData value={data.status} />
-
-                                  <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                    <Link to={`/driverUpdate/${data._id}`}>
-                                      <button
-                                        type="button"
-                                        className="font-bold py-1 px-4 rounded-full mx-3 text-white"
-                                        style={{ background: currentColor }}
-                                      >
-                                        <i className="fas fa-edit" />
-                                      </button>
-                                    </Link>
-                                    <button
-                                      type="button"
-                                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
-                                      onClick={() => {
-                                        deleteDriver(data._id);
-                                      }}
-                                    >
-                                      <i className="fas fa-trash" />
-                                    </button>
-                                  </td>
-                                </tr>
-                              ))}
+                              );
+                            })}
                         </tbody>
                       </table>
                     </div>
