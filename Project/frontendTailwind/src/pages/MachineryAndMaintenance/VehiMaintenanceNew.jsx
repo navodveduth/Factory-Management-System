@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
-
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -14,8 +13,8 @@ function VehiMaintenanceNew() {
     
     const navigate = useNavigate(); //useNavigate hook to redirect to another page after form submission is successful 
   
+    const [mainID,setmainID] = useState('');
     const [vehicleNo, setvehicleNo] = useState('');
-    const[name, setName] = useState("");
     const[mileage, setmileage] = useState("");
     const [Description, setDescription] = useState('');
     const [lastMaintainedDate, setLastMaintainedDate] = useState('');
@@ -88,6 +87,7 @@ function VehiMaintenanceNew() {
                   e.preventDefault();
                   
                   const newMaintenance = {
+                        mainID,
                         vehicleNo,
                         name,
                         mileage,
@@ -117,6 +117,15 @@ function VehiMaintenanceNew() {
               }}>
 
 
+                        <div className="mb-3">
+                            <label htmlFor="employeeFullName" className="form-label">Maintenance ID: </label>
+                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                id="employeeFullName"  required 
+                                onChange={(e)=>{
+                                    setmainID(e.target.value);
+                                }}/>
+                        </div>
+
 
                         <div className="mb-3">
                             <label htmlFor="employeeFullName" className="form-label">Vehicle No: </label>
@@ -127,15 +136,6 @@ function VehiMaintenanceNew() {
                                 }}/>
                         </div>
 
-
-                        <div className="mb-3">
-                            <label htmlFor="employeeFullName" className="form-label">Vehicle Model: </label>
-                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="employeeFullName"  
-                                onChange={(e)=>{
-                                    setName(e.target.value);
-                                }}/>
-                        </div>
                         
                         <div className="mb-3">
                             <label htmlFor="employeeFullName" className="form-label">Mileage at service: </label>
@@ -147,7 +147,7 @@ function VehiMaintenanceNew() {
                         </div>
             
                         <div className="mb-3">
-                            <label htmlFor="employeeFullName" className="form-label">Service schedule: </label>
+                            <label htmlFor="employeeFullName" className="form-label">Service Task: </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="employeeFullName"  required 
                                 onChange={(e)=>{

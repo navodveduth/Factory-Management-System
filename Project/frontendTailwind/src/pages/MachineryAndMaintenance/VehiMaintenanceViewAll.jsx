@@ -147,6 +147,7 @@ const confirmFunc = (id)=>{
           <table className="w-full rounded-lg" >
             <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                <TableHeader title="Maintenance ID" />
                 <TableHeader value="vehicle No" />
                 <TableHeader value="Vehicle model" />
                 <TableHeader value="Mileage at service" />
@@ -164,8 +165,9 @@ const confirmFunc = (id)=>{
                     if(searchTerm == ""){
                         return data;
                     }else if((data.vehicleNo.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                      (data.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                      (data.mainID.toLowerCase().includes(searchTerm.toLowerCase())) ||
                       (data.Description.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                      (data.vehicleModel.toLowerCase().includes(searchTerm.toLowerCase())) ||
                         (data.performedBy.toLowerCase().includes(searchTerm.toLowerCase())) ||
                       (data.status.toLowerCase().includes(searchTerm.toLowerCase())))
                       
@@ -192,15 +194,9 @@ const confirmFunc = (id)=>{
 
                 <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
 
+                  <TableData value={data.mainID} />
 
-                  <TableData value={data.vehicleDetails.map((data2)=>{
-                        return(
-                            <div>
-                                <TableData value={data2.vehicleNo} />
-                            </div>
-                        )
-
-                  })} />
+                  <TableData value={data.vehicleNo} />
                   <TableData value={data.vehicleDetails.map((data2)=>{
                     return(
                         <div>
