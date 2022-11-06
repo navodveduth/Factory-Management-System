@@ -15,7 +15,7 @@ import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, Sale
 
 import { OrderViewAll, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder } from './pages/Production/Index';
 
-import { StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, StockUtilisationDashboard, StockUtilisation, StockAddExisting, StockUtilUpdate, StockUtilPDF, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF, PendingStockView, PendingStockAdd, PendingStockUpdate, PendingStockPDf } from './pages/Stock';
+import { StocksDashboard, StockView, StockInformation, StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, StockUtilisationDashboard, StockUtilisation, StockAddExisting, StockUtilAddOption, StockUtilUpdate, StockUtilPDF, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF, PendingStockView, PendingStockAdd, PendingStockUpdate, PendingStockPDf } from './pages/Stock';
 
 import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, SupplierRecordsDashboard, SupplierDetailsPreview } from './pages/Suppliers';
 
@@ -118,6 +118,7 @@ const App = () => {
           {/* stock management  */}
           <Route path="/StockDashboard" element={<StocksDashboard />} />
           <Route path="/StockView" element={<StockView />} />
+          <Route path="/StockInformation/:id" element={<StockInformation />} />
           <Route path="/StockAdd" element={<StockAdd />} />
           <Route path="/StockUpdate/:id" element={<StockUpdate />} />
           <Route path="/generateSPDF" element={<StockPDF />} />
@@ -133,7 +134,8 @@ const App = () => {
 
           <Route path="/StockUtilisationDashboard" element={<StockUtilisationDashboard/>} />
           <Route path="/StockUtilisation" element={<StockUtilisation />} />
-          <Route path="/StockAddExisting" element={<StockAddExisting />} />
+          <Route path="/StockUtilAddOption" element={<StockUtilAddOption />} />
+          <Route path="/StockAddExisting/:id" element={<StockAddExisting />} />
           <Route path="/StockUtilUpdate/:id" element={<StockUtilUpdate />} />
           <Route path="/generateSUPDF" element={<StockUtilPDF />} />
 
