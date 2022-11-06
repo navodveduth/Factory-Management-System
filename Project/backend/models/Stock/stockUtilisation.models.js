@@ -27,6 +27,9 @@ const stockUtilSchema = new Schema({
     date: {
         type: Date,
     },
+    firstPurchaseDate: {
+        type: Date,
+    },
     type: {
         type: String,
         required: true,
