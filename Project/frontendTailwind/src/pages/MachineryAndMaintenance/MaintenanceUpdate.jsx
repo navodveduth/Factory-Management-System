@@ -14,6 +14,7 @@ function MaintenanceUpdate() {
     const navigate = useNavigate(); //useNavigate hook to redirect to another page after form submission is successful 
    
   
+    const[midprop, setMidprop] = useState("");
     const [Type, setType] = useState('');
     const [Description, setDescription] = useState('');
     const [others, setOthers] = useState('');
@@ -33,6 +34,7 @@ function MaintenanceUpdate() {
       const dob = new Date(res.data.lastMaintainedDate).toISOString().split('T')[0];
       const doj = new Date(res.data.nextServiceDate).toISOString().split('T')[0];
 
+        setMidprop(res.data.midprop);
         setType(res.data.Type);
         setDescription(res.data.Description);
         setLastMaintainedDate(dob);
@@ -119,6 +121,7 @@ function MaintenanceUpdate() {
                         
                         
                         const newMaintenance = {
+                            midprop,
                             Type,
                             Description,
                             others,
@@ -142,7 +145,17 @@ function MaintenanceUpdate() {
                         
                 }}>
 
-<div className="mb-3">
+
+                        <div className="mb-3">
+                            <label htmlFor="employeeFullName" className="form-label">Maintenance ID: </label>
+                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                id="employeeFullName" defaultValue={midprop}  disabled
+                                onChange={(e)=>{
+                                    setMidprop(e.target.value);
+                                }}/>
+                        </div>
+
+                        <div className="mb-3">
                             <label for="employeeType" className="form-label">Type : </label>
                             <select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                             id="employeeType" aria-label="Default select example" defaultValue={Type} required
@@ -161,7 +174,7 @@ function MaintenanceUpdate() {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="employeeFullName" className="form-label">Service task & schedule : </label>
+                            <label htmlFor="employeeFullName" className="form-label">Repair needed : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="employeeFullName" defaultValue={Description} required 
                                 onChange={(e)=>{

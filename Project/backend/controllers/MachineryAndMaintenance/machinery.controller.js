@@ -2,7 +2,17 @@ import Machinery from "../../models/MachineryAndMaintenance/machinery.model.js";
 
 export const getAllMachineryDetails = async (req, res) => {
     try {
-        const machinery = await Machinery.find();
+        const machinery = await Machinery.aggregate([
+            {
+                $lookup: 
+                {
+                    from: "maintainencemachines",
+                    localField: "machineID" ,
+                    foreignField: "machineID",
+                    as: "machineDetails"
+                }
+            }
+        ]);
         res.status(200).json(machinery);    
     } catch (error) {
         res.status(404).json({ message : error});

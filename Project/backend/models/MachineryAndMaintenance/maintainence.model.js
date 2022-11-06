@@ -4,6 +4,12 @@ const Schema = mongoose.Schema;
 
 const maintainenceSchema = new Schema({
 
+    midprop:{
+        type: String,
+        required: true
+
+    },
+
     Type : {
         type : String, 
         required : true

@@ -20,7 +20,7 @@ const EmployeeProfile = () => {
     const {id} = useParams(); //get the id from the url
   
     const getEmployee = async () => {
-        await axios.get(`http://localhost:8070/employee/viewEmployee/${id}`).then((res) => {
+        axios.get(`http://localhost:8070/employee/viewEmployee/${id}`).then((res) => {
             setEmployee(res.data);
         })
         .catch((err) => {
@@ -33,7 +33,7 @@ const EmployeeProfile = () => {
     //const dateOfBirth = new Date(employee.employeeDOB).toISOString().split('T')[0];
 
     const getLeaves = async () => {
-        await axios.get(`http://localhost:8070/leave/viewLeavesNum/${empNo}`).then((res) => {
+        axios.get(`http://localhost:8070/leave/viewLeavesNum/${empNo}`).then((res) => {
             setLeave(res.data);
         })
         .catch((err) => {
@@ -52,6 +52,9 @@ const EmployeeProfile = () => {
             setCurrentMode(currentThemeMode);
         }
     }, []);
+
+    console.log(employee);
+    console.log(leave);
 
     return (
         <div>

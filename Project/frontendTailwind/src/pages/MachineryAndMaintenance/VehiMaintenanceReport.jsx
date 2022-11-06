@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { jsPDF } from "jspdf";
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider.js';
 import TableData from '../../components/Table/TableData';
@@ -11,11 +12,10 @@ import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 
-
-const MaintenanceViewAll = () => {
-    const [maintainence, setMaintainence] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
-
+const VehiMaintenanceReport = () => {
+    const [maintainenceVehi, setMaintainenceVehi] = useState([]);
+   
+  
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
   var TotalCost = 0;
@@ -28,10 +28,10 @@ const MaintenanceViewAll = () => {
         currencyDisplay: 'symbol'
       })
 
-  const getMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainence/")
+  const getVMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+    axios.get("http://localhost:8070/maintainenceVehicle/")
     .then((res) => { 
-        setMaintainence (res.data); //setMaintainence  is used to update the state variable
+      setMaintainenceVehi (res.data); //setMaintainence  is used to update the state variable
       
     })
     .catch((err) => {
@@ -39,8 +39,9 @@ const MaintenanceViewAll = () => {
     })
 }
 
+
   useEffect(() => {
-    getMaintainence(); // 
+    getVMaintainence(); // <== CHANGE ACCORDING TO YOUR OWN FUNCTIONS, YOU CAN REMOVE THIS LINE IF YOU DON'T NEED IT
     const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
     const currentThemeMode = localStorage.getItem('themeMode');
     if (currentThemeColor && currentThemeMode) {
@@ -49,26 +50,18 @@ const MaintenanceViewAll = () => {
     }
   }, []);
 
-  const deleteMaintainence  = async (id) => {
-    await axios.delete(`http://localhost:8070/maintainence/delete/${id}`)
-    .then((res) => {
-        alert("Data deleted successfully");
-        getMaintainence ();
-    })
-    .catch((err) => {
-        alert(err.message);
-    })
-}
+ 
 
-const confirmFunc = (id)=>{
+  
+  const createPDF = () => {
+    const date = new Date(Date.now()).toISOString().split('T')[0];
+    const pdf = new jsPDF("landscape", "px", "a1",false);
+    const data = document.querySelector("#tableContainer");
+    pdf.html(data).then(() => {
+        pdf.save("Machinery-Maintenance-Report-" +date + ".pdf");
+       });
+};
 
-      if (confirm("Do you want to delete?") == true) {
-    deleteMaintainence(id);
-      } else {
-          navigate('/MaintenanceViewAll');
-      }
-
-  }
 
   return (
     <div>
@@ -124,53 +117,34 @@ const confirmFunc = (id)=>{
                             {/* PART AFTER THE RETURN STATEMENT */}
                             <div>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-        <Header category="Table" title="Property Maintenance " />
+        <Header category="Report" title="Vehicle Maintenance Report " />
 
         <div className=" flex items-center mb-5 ">
-          <div>
-            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-            }} />
-          </div>
-          <div className="mr-0 ml-auto">
-            <Link to={"/MaintainenceReport"}> {/* change this link your preview page */}
-              <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
-            </Link>
-          </div>
+                    <div className="mr-0 ml-auto">
+                        <button onClick={createPDF} type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
+                    </div>
+                </div>
 
-          </div>
-
-
-
-        <div className="block w-full overflow-x-auto rounded-lg">
-          <table className="w-full rounded-lg" >
-            <thead>
+                <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
+                    <table className="w-full rounded-lg">
+                        <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                <TableHeader value="Maintenance ID"/>
-                <TableHeader value="Type" />
-                <TableHeader value="Repair needed " />
+              <TableHeader title="Maintenance ID" />
+                <TableHeader value="vehicle No" />
+                <TableHeader value="Vehicle model" />
+                <TableHeader value="Mileage at service" />
+                <TableHeader value="Service schedule" />
                 <TableHeader value="Last Maintained Date" />
-                <TableHeader value="Next due" />
+                <TableHeader value="Next Service Date" />
+                <TableHeader value="performed By" />
+                <TableHeader value="status" />
                 <TableHeader value="Total Cost" />
-                <TableHeader value="Status" />
-                <TableHeader value="Manage" />
+                <TableHeader value="Total Cost" />
+                
               </tr>
             </thead>
             <tbody>
-              {maintainence.filter((data) => {
-                    if(searchTerm == ""){
-                        return data;
-                    }else if((data.Type.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                      (data.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                      (data.Description.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                      (data.midprop.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                      (data.status.toLowerCase().includes(searchTerm.toLowerCase())))
-                      
-                      {
-                      return data;
-                      }
-                  }).map((data, key) => {
+              {maintainenceVehi.map((data, key) => {
 
                     var datacolor = "text-black";
                     if (data.status === "In progress") {
@@ -186,40 +160,35 @@ const confirmFunc = (id)=>{
                     // const NSdate = new Date(data.nextServiceDate).toLocaleDateString();
                 TotalCost = TotalCost + data.others,
                 total=formatter.format(TotalCost),
+                
 
                 <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
 
-                  <TableData value={data.midprop} />
-                  <TableData value={data.Type} />
-                  <TableData value={data.Description} />
-                  <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
-                  <TableData value={data.nextServiceDate.toString().split('T')[0]} />
-                  <TableData value={data.others} />
+
+                    <TableData value={data.mainID} />
+
+                    <TableData value={data.vehicleNo} />
+                    <TableData value={data.vehicleDetails.map((data2)=>{
+                      return(
+                          <div>
+                              <TableData value={data2.vehicleModel} />
+                          </div>
+                      )
+                    })} />
+                    <TableData value={data.mileage}/>
+                    <TableData value={data.Description} />
+                    <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
+                    <TableData value={data.nextServiceDate.toString().split('T')[0]} />
+                    <TableData value={data.performedBy} />
+                      
+                      <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
+                      <TableData value={data.others} />
+                                        
+                                      
+                    <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                      
+                                      
                     
-                    <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
-                    
-                  
-                  
-                  <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                   
-                  <Link to={`/MaintenanceUpdate/${data._id}`}>
-                      <button
-                        type="button"
-                        className="font-bold py-1 px-4 rounded-full mx-3 text-white"
-                        style={{ background: currentColor }}
-                      >
-                        <i className="fas fa-edit" />
-                      </button>
-                    </Link>
-                    <button
-                      type="button"
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
-                      onClick={() => {
-                        confirmFunc(data._id);
-                      }}
-                    >
-                      <i className="fas fa-trash" />
-                    </button>
                   </td>
                 </tr>
                     )
@@ -227,7 +196,7 @@ const confirmFunc = (id)=>{
             </tbody>
           </table><br></br><br></br>
           <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-            Total Cost of property Maintenance : {total}
+            Total Cost of Vehicle Maintenance : {total}
             
           </span>
 
@@ -244,5 +213,4 @@ const confirmFunc = (id)=>{
   );
 };
 
-export default MaintenanceViewAll;
-
+export default VehiMaintenanceReport;

@@ -280,7 +280,7 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <GiSewingMachine /> {/*  icon  */}
-              <span className="capitalize ">Machinery</span> {/*  link name  */}
+              <span className="capitalize ">Machinery Details</span> {/*  link name  */}
             </NavLink>
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
@@ -294,7 +294,7 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <FiTool /> {/*  icon  */}
-              <span className="capitalize ">Maintenance</span>{' '}
+              <span className="capitalize ">Maintenance Records</span>{' '}
               {/*  link name  */}
             </NavLink>
 
