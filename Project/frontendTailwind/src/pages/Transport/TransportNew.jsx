@@ -246,6 +246,20 @@ const TransportNew = () => {
                           }}
                         />
                       </div>
+                      <div className="mb-3">
+                        <label htmlFor="totalCost" className="form-label">
+                          Total Cost:
+                        </label>
+                        <input
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                          id="totalCost"
+                          value={distance * 100}
+                          readOnly
+                        />
+                      </div>
 
                       <button
                         type="submit"
