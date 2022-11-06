@@ -26,22 +26,24 @@ const TransportViewAll = () => {
   } = useStateContext();
 
   const [transport, setTransport] = useState([]);
-  const [value, setValue] = useState('');
-  const [tableFilter, setTableFilter] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(''); // search term state for search bar functionality in table
 
-  const filterData = (e) => {
-    if (e.target.value !== '') {
-      setValue(e.target.value);
-      const filterTable = transport.filter((o) =>
-        Object.keys(o).some((k) =>
-          String(o[k]).toLowerCase().includes(e.target.value.toLowerCase())
-        )
-      );
-      setTableFilter([...filterTable]);
-    } else {
-      setValue(e.target.value);
-    }
-  };
+  // const [value, setValue] = useState('');
+  // const [tableFilter, setTableFilter] = useState([]);
+
+  // const filterData = (e) => {
+  //   if (e.target.value !== '') {
+  //     setValue(e.target.value);
+  //     const filterTable = transport.filter((o) =>
+  //       Object.keys(o).some((k) =>
+  //         String(o[k]).toLowerCase().includes(e.target.value.toLowerCase())
+  //       )
+  //     );
+  //     setTableFilter([...filterTable]);
+  //   } else {
+  //     setValue(e.target.value);
+  //   }
+  // };
 
   const getTransport = async () => {
     axios
@@ -133,8 +135,9 @@ const TransportViewAll = () => {
                           type="text"
                           className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           placeholder="Search Here"
-                          value={value}
-                          onChange={filterData}
+                          onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                          }}
                         />
                       </div>
                       <div className="mr-0 ml-auto">
@@ -167,12 +170,53 @@ const TransportViewAll = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {value.length > 0
-                            ? tableFilter.map((data) => (
-                                // map is used to iterate through the transport details
+                          {transport
+                            .filter((data) => {
+                              if (searchTerm == '') {
+                                return data;
+                              } else if (
+                                data.type
+                                  .toString()
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase()) ||
+                                data.destinationAddress
+                                  .toString()
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase()) ||
+                                data.date
+                                  .toString()
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase()) ||
+                                data.timeOfDispatch
+                                  .toString()
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase()) ||
+                                data.distance
+                                  .toString()
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase()) ||
+                                data.transportCost
+                                  .toString()
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase()) ||
+                                data.driver
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase()) ||
+                                data.description
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase()) ||
+                                data.status
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase())
+                              ) {
+                                return data;
+                              }
+                            })
+                            .map((data, key) => {
+                              return (
                                 <tr
                                   className="text-sm h-10 border dark:border-slate-600"
-                                  key={data._id}
+                                  key={key}
                                 >
                                   <TableData value={data.type} />
                                   <TableData value={data.destinationAddress} />
@@ -211,50 +255,8 @@ const TransportViewAll = () => {
                                     </button>
                                   </td>
                                 </tr>
-                              ))
-                            : transport.map((data) => (
-                                <tr
-                                  className="text-sm h-10 border dark:border-slate-600"
-                                  key={data._id}
-                                >
-                                  <TableData value={data.type} />
-                                  <TableData value={data.destinationAddress} />
-                                  <TableData
-                                    value={data.date.substring(0, 10)}
-                                  />
-                                  <TableData value={data.timeOfDispatch} />
-                                  <TableData value={`${data.distance} km`} />
-                                  <TableData
-                                    value={`Rs. ${data.transportCost.toFixed(
-                                      2
-                                    )}`}
-                                  />
-                                  <TableData value={data.driver} />
-                                  <TableData value={data.description} />
-                                  <TableData value={data.status} />
-
-                                  <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                    <Link to={`/transportUpdate/${data._id}`}>
-                                      <button
-                                        type="button"
-                                        className="font-bold py-1 px-4 rounded-full mx-3 text-white"
-                                        style={{ background: currentColor }}
-                                      >
-                                        <i className="fas fa-edit" />
-                                      </button>
-                                    </Link>
-                                    <button
-                                      type="button"
-                                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
-                                      onClick={() => {
-                                        deleteTransport(data._id);
-                                      }}
-                                    >
-                                      <i className="fas fa-trash" />
-                                    </button>
-                                  </td>
-                                </tr>
-                              ))}
+                              );
+                            })}
                         </tbody>
                       </table>
                     </div>
