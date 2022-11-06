@@ -32,7 +32,7 @@ function MachMaintenanceUpdate() {
           const dob = new Date(res.data.lastMaintainedDate).toISOString().split('T')[0];
           const doj = new Date(res.data.nextServiceDate).toISOString().split('T')[0];
     
-            setmid(res.data._id);
+            setmid(res.data.mid);
             setmachineID(res.data.machineID);
             setDescription(res.data.Description);
             setLastMaintainedDate(dob);
