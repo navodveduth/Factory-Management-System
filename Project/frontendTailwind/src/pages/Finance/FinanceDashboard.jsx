@@ -101,7 +101,7 @@ const FinanceDashboard = () => {
                               totalExp += TRN.trnAmount;
                               })}
 
-                            <div className="flex flex-wrap lg:flex-nowrap justify-left ml-10 mt-5">
+                            <div className="flex flex-wrap lg:flex-nowrap justify-left ml-5 mt-5">
                               <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                                 {/* top buttons in the dashboard */} {/* use for navigation buttons*/}
                                 <Link to="/FinanceViewAll">

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
@@ -12,7 +12,10 @@ import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-const FinanceViewAll = () => {
+const FinanceDateRange = () => {
+
+  const location = useLocation();
+
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
   const [transactions, setTransactions] = useState([]);
@@ -20,15 +23,9 @@ const FinanceViewAll = () => {
   const [dateEnd, setDateEnd] = useState("");
   const [searchTerm, setSearchTerm] = useState("");  //add this state to save filter word
 
-  const navigate = useNavigate();
-  
-  const toDateRange=()=>{
-    navigate('/FinanceDateRange',{state:{DS:dateStart,DE:dateEnd}});
-  }
-
   const getFinance = async () => {
     axios
-      .get('http://localhost:8070/finance/viewTransaction')
+      .get('http://localhost:8070/finance/date/'+location.state.DS+'/'+location.state.DE)
       .then((res) => {
         setTransactions(res.data);
       })
@@ -69,13 +66,6 @@ const FinanceViewAll = () => {
 		}
 
     }
-
- const formatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'LKR',
-      minimumFractionDigits: 2,
-      currencyDisplay: 'symbol'
-    })
 
 
   return (
@@ -157,7 +147,7 @@ const FinanceViewAll = () => {
                               </div>
 
                               <div className=" mx-1">
-                                  <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}  >filter</button>
+                                  <button type="button"  onClick={()=>{toDateRange()}} className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" >filter</button>
                               </div>
 
                               <div className="mr-0 ml-auto">
@@ -188,12 +178,11 @@ const FinanceViewAll = () => {
                                             return data;
                                         }
                                     }).map((data, key) => {
-                                      let total = formatter.format(data.trnAmount);
                                     return(
                                     <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                                       <TableData value={data.trnID} />
                                       <TableData value={data.trnDesc} />
-                                      <TableData value={total} />
+                                      <TableData value={"Rs." + data.trnAmount} />
                                       <TableData value={data.trnType} />
                                       <TableData value={new Date(data.trnRecordedDate).toISOString().split('T')[0]} /> 
 
@@ -236,4 +225,4 @@ const FinanceViewAll = () => {
   );
 };
 
-export default FinanceViewAll;
+export default FinanceDateRange;
