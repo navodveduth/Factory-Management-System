@@ -318,7 +318,7 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <TbTruckDelivery /> {/*  icon  */}
-              <span className="capitalize ">Transport</span> {/*  link name  */}
+              <span className="capitalize ">Transport Details</span> {/*  link name  */}
             </NavLink>
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
