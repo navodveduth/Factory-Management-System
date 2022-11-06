@@ -200,7 +200,9 @@ const confirmFunc = (id)=>{
                   <TableData value={data.vehicleDetails.map((data2)=>{
                     return(
                         <div>
+                          <Link to={"/DriverViewAll/"}>
                             <TableData value={data2.vehicleModel} />
+                            </Link>
                         </div>
                     )
                   })} />
