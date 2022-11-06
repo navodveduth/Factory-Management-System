@@ -5,6 +5,7 @@ import ChartsHeader from './ChartsHeader'
 import { useStateContext } from '../contexts/ContextProvider';
 
 const TransactionPieChart = () => {
+    const { currentMode } = useStateContext();
     const [TRN, setTransactions] = useState([]);
 
     const getFinance = async () => {
@@ -37,12 +38,11 @@ const TransactionPieChart = () => {
           })}
           
           <ChartsHeader category="Chart" title="Transaction Distribution by Type" />
-        <AccumulationChartComponent legendSettings={{position:"Bottom"}} tooltip={{enable:true}}>
+          <AccumulationChartComponent legendSettings={{position:"Right", background: "white"}} tooltip={{enable:true}} background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'} >
             <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]} />
             <AccumulationSeriesCollectionDirective>
                 <AccumulationSeriesDirective 
                     type="Pie"
-                    innerRadius="50%"
                     dataSource={
                         [
                             { x: 'Revenue', y: (totalRev), text: (totalRev/total*100).toPrecision(2) + '%'},
@@ -51,10 +51,20 @@ const TransactionPieChart = () => {
                     }
                     xName="x"
                     yName="y"
+                    innerRadius="40%"
+                    startAngle={0}
+                    endAngle={360}
+                    radius="70%"
+                    explode
+                    explodeOffset="10%"
+                    explodeIndex={2}
                     dataLabel={{
-                        visible: true,
-                        position: 'Outside',
-                        name: 'text',
+                      visible: true,
+                      position: 'Outside',
+                      name: 'text',
+                      font: {
+                        fontWeight: '600',
+                      },
                     }}
                     >
                     
