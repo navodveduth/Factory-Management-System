@@ -7,7 +7,7 @@ export const getAllVMaintainenceDetails = async (req, res) => {
         const maintainenceVehicle = await MaintainenceVehicle.aggregate([
             {
                 $lookup:{
-                    from: "driver",
+                    from: "drivers",
                     localField: "vehicleNo" ,
                     foreignField: "vehicleNo",
                     as: "vehicleDetails"

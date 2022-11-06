@@ -4,13 +4,15 @@ const Schema = mongoose.Schema;
 
 const maintainenceVehicleSchema = new Schema({
 
+    mainID:{
+        type: String,
+        required: true
+
+    },
+
     vehicleNo:{
         type: String,
         required: true
-    },
-
-    name: {
-        type: String
     },
 
     mileage: {  

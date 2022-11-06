@@ -60,8 +60,8 @@ const SalesViewAll = () => {
     }
 
   return (
+    
     <div>
-
     {/* DON'T CHANGE ANYTHING HERE */}
 
       <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -166,12 +166,11 @@ const SalesViewAll = () => {
                                                   <TableData value={data.customerDetailss.map((data3) => {
                                                       return (
                                                       <div>
-                                                          <TableData value = {data3.customerName} /> 
+                                                          {data3.customerName};
                                                       </div>
                                                       )
                                                   
                                                   })} />
-                                  
                                                   <TableData value={data.itemName} />
                                                   <TableData value={data.quantity} />
                                                   <TableData value={"Rs."+data.totalAmount} />
