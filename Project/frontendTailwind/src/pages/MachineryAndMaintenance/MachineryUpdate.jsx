@@ -143,7 +143,7 @@ function MachineryUpdate() { // <== THIS IS THE COMPONENT NAME, CHANGE IT TO YOU
                         <div className="mb-3">
                             <label htmlFor="employeeNumber" className="text-md">Machine ID : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="employeeNumber" defaultValue={machineID} placeholder="Enter the Machine ID" required 
+                                id="employeeNumber" defaultValue={machineID}  disabled 
                                 onChange={(e)=>{
                                     setMachineID(e.target.value);
                                 }}/>

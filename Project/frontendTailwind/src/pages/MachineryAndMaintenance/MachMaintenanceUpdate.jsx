@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect,useState } from 'react'
+import { useParams,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
@@ -13,8 +13,8 @@ function MachMaintenanceUpdate() {
     
     const navigate = useNavigate(); //useNavigate hook to redirect to another page after form submission is successful 
   
+    const [mid, setmid] = useState('');
     const [machineID, setmachineID] = useState('');
-    const[name, setName] = useState("");
     const [Description, setDescription] = useState('');
     const [lastMaintainedDate, setLastMaintainedDate] = useState('');
     const [nextServiceDate, setNextServiceDate] = useState('');
@@ -23,9 +23,45 @@ function MachMaintenanceUpdate() {
     const[contactNo, setContactNo] = useState("");
     const [others, setOthers] = useState('');
     
-   
+    const {id} = useParams(); //get the id from the url
     
+    const getMMaintainence = () => {
+        axios.get(`http://localhost:8070/maintainenceMachine/${id}`)
+        .then((res) => {
+          
+          const dob = new Date(res.data.lastMaintainedDate).toISOString().split('T')[0];
+          const doj = new Date(res.data.nextServiceDate).toISOString().split('T')[0];
     
+            setmid(res.data._id);
+            setmachineID(res.data.machineID);
+            setDescription(res.data.Description);
+            setLastMaintainedDate(dob);
+            setNextServiceDate(doj);
+            setStatus(res.data.status);
+            setLocation(res.data.Location);
+            setContactNo(res.data.contactNo);
+            setOthers(res.data.others);
+
+    
+            
+    
+        })
+        .catch((err) => {
+            alert(err.message);
+        })
+    }
+  
+
+
+  useEffect(() => {
+    getMMaintainence(); 
+    const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
+    const currentThemeMode = localStorage.getItem('themeMode');
+    if (currentThemeColor && currentThemeMode) {
+      setCurrentColor(currentThemeColor);
+      setCurrentMode(currentThemeMode);
+    }
+  }, []);
   
     var date = new Date().toISOString().split('T')[0]; // <== THIS IS THE COMPONENT NAME, CHANGE IT TO YOUR COMPONENT NAME
 
@@ -92,8 +128,8 @@ function MachMaintenanceUpdate() {
                   e.preventDefault();
                   
                   const newMachMaintenance = {
+                    mid,
                     machineID,
-                    name,
                     Description,
                     lastMaintainedDate,
                     nextServiceDate,
@@ -104,7 +140,8 @@ function MachMaintenanceUpdate() {
                     
                 }
 
-                await axios.post("http://localhost:8070/maintainenceMachine/update", newMachMaintenance)
+            
+                await axios.put(`http://localhost:8070/maintainenceMachine/update/` + id, newMachMaintenance)
                       .then((res)=>{
                           alert("Data saved successfully");
                           //navigate to the maintainence view page
@@ -118,7 +155,23 @@ function MachMaintenanceUpdate() {
                       
               }}>
 
+                        <div className="mb-3">
+                            <label htmlFor="employeeFullName" className="form-label">Maintenance ID : </label>
+                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                id="employeeFullName" defaultValue={mid} disabled 
+                                onChange={(e)=>{
+                                    setmid(e.target.value);
+                                }}/>
+                        </div>
                         
+                        <div className="mb-3">
+                            <label htmlFor="employeeFullName" className="form-label">Machinery ID : </label>
+                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                id="employeeFullName" defaultValue={machineID} disabled 
+                                onChange={(e)=>{
+                                    setmachineID(e.target.value);
+                                }}/>
+                        </div>
             
                         <div className="mb-3">
                             <label htmlFor="employeeFullName" className="form-label">Repair needed : </label>
