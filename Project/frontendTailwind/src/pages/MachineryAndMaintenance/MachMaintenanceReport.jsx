@@ -17,11 +17,20 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 const MachMaintenanceReport = () => {
 
     const [maintainenceMachine, setMaintainenceMachine] = useState([]);
-    var TotalCost = 0; 
 
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
+  var TotalCost = 0;
+  var total=0; 
+    
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+      })
 
+      
   const getMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
     axios.get("http://localhost:8070/maintainenceMachine/")
     .then((res) => { 
@@ -120,15 +129,17 @@ const MachMaintenanceReport = () => {
                     <table className="w-full rounded-lg">
                         <thead>
                             <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                            <TableHeader value="ID" />
-                            <TableHeader value="Item" />
+                            <TableHeader value="Maintenance ID"/>
+                            <TableHeader value="Item name" />
                             <TableHeader value="Repair needed" />
                             <TableHeader value="Last Maintained Date" />
                             <TableHeader value="Next due" />
                             <TableHeader value="Repair company" />
-                            <TableHeader value="R.C ContactNO" />
-                            <TableHeader value="Status" />
+                            <TableHeader value="ContactNO" />
                             <TableHeader value="Total Cost" />
+                           
+                            <TableHeader value="Status" />
+                           
                                         
                             </tr>
                         </thead>
@@ -145,31 +156,29 @@ const MachMaintenanceReport = () => {
                                     }
                                 return(
                                     TotalCost = TotalCost + data.others,
+                                    total=formatter.format(TotalCost),
+                                    
                                     <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
-                                        <TableData value={data.machineDetails.map((data1)=>{
-                                              return(
-                                                  <div>
-                                                      <TableData value={data1.machineID} />
-                                                  </div>
-                                              )
-                                            })} />
-                                            <TableData value={data.machineDetails.map((data1)=>{
-                                              return(
-                                                  <div>
-                                                      <TableData value={data1.name} />
-                                                  </div>
-                                              )
-                                            })} />
-                                            <TableData value={data.Description} />
-                                            <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
-                                            <TableData value={data.nextServiceDate.toString().split('T')[0]} />
-                                            <TableData value={data.Location} />
-                                              <TableData value={data.contactNo} />
-                                              
-                                              
-                                              
-                                              <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
-                                              <TableData value={data.others} />
+                                        <TableData value={data.mid}/>
+                  
+                                        <TableData value={data.machineDetailss.map((data1)=>{
+                                            return(
+                                                <div>
+                                                    <TableData value={data1.name} />
+                                                </div>
+                                            )
+                                        })} />
+                                        <TableData value={data.Description} />
+                                        <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
+                                        <TableData value={data.nextServiceDate.toString().split('T')[0]} />
+                                        <TableData value={data.Location} />
+                                            <TableData value={data.contactNo} />
+                                            <TableData value={data.others} />
+                                            
+                                            
+                                            
+                                            <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
+                                           
                    
                                     </tr>
                                 )
@@ -177,7 +186,7 @@ const MachMaintenanceReport = () => {
                         </tbody>
                     </table><br></br><br></br>
           <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-            Total Cost of Machinery Maintenance : {"Rs.  "+TotalCost.toFixed(2)}
+            Total Cost of Machinery Maintenance : {total}
             
           </span>
                 </div>

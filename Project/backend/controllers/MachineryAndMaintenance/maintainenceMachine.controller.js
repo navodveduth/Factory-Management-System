@@ -10,7 +10,7 @@ export const getAllMMaintainenceDetails = async (req, res) => {
                     from: "machinery",
                     localField: "machineID" ,
                     foreignField: "machineID",
-                    as: "machineDetails"
+                    as: "machineDetailss"
                 }
             }
         ]);

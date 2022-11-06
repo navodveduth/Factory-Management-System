@@ -14,6 +14,11 @@ export { default as StockAddExisting } from './StockAddExisting';
 export { default as StockUtilUpdate } from './StockUtilUpdate';
 export { default as StockUtilPDF} from './StockUtilPDF';
 
+export { default as PendingStockView } from './PendingStockView';
+export { default as PendingStockAdd } from './PendingStockAdd';
+export { default as PendingStockUpdate } from './PendingStockUpdate';
+export {default as PendingStockPDf } from './PendingStockPDF';
+
 export { default as DamagedStockDashboard } from './DamagedStockDashboard';
 export { default as DamagedStockView } from './DamagedStockView';
 export { default as DamagedStockAdd } from './DamagedStockAdd';

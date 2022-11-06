@@ -23,6 +23,19 @@ const MachineryViewAll = () => {
 
   var TotalDepreciation = 0;
   var TotalCost = 0;
+  var total =0;
+  var totalDep=0;
+  var machineryCost=0;
+  var depreCost=0;
+
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'LKR',
+    minimumFractionDigits: 2,
+    currencyDisplay: 'symbol'
+  })
+  
+  
 
 const getMachinery = async () => {  //getMachinery is the function to get the data from the backend
   axios.get("http://localhost:8070/machinery/")
@@ -154,10 +167,9 @@ const confirmFunc = (id)=>{
                 <TableHeader value="Name" />
                 <TableHeader value="Purchased date" />
                 <TableHeader value="Purchased Cost" />
-                {/* <TableHeader value="Salvage value" />
-                <TableHeader value="Useful life" /> */}
                 <TableHeader value="Depreciation" />
                 <TableHeader value="Availibility" />
+                <TableHeader value="Maintenance records"/>
                 <TableHeader value="Manage" />
               </tr>
             </thead>
@@ -174,23 +186,40 @@ const confirmFunc = (id)=>{
                       }
                   }).map((data, key) => {
 
+                    var datacolor = "text-black";
+                    if (data.others === "Unavailable") {
+                      datacolor = "text-red-600 font-bold";
+
+                    } else {
+                      datacolor = "text-green-500 font-bold";
+                    }
+
                     return(
 
-                // const purchasedDate = new Date(data.dateOfPurchased ).toLocaleDateString();
+             
                 TotalDepreciation = TotalDepreciation + parseFloat(parseFloat((data.machineryCost-data.salvage)/data.numberOfYrs).toFixed(2)),
                  TotalCost = TotalCost + parseFloat(data.machineryCost),
-
-
+                 machineryCost = formatter.format(parseFloat(data.machineryCost)),
+                 depreCost =formatter.format(parseFloat((data.machineryCost-data.salvage)/data.numberOfYrs).toFixed(2)),
+                 total = formatter.format(TotalCost),
+                 totalDep=formatter.format(TotalDepreciation),
+                 
+                 
                 <tr className="text-sm h-10 border dark:border-slate-600">
                   <TableData value={data.machineID} />
                   <TableData value={data.name} />
                   <TableData value={data.dateOfPurchased.toString().split('T')[0]} />
-                  <TableData value={data.machineryCost+".00"} />
-                  {/* <TableData value={data.salvage+".00"} />
-                  <TableData value={data.numberOfYrs +"yrs"} /> */}
-                  <TableData value={parseFloat((data.machineryCost-data.salvage)/data.numberOfYrs).toFixed(2)} /> 
-                    <TableData value={data.others} />
-                    
+                  <TableData value={machineryCost} />
+                  <TableData value={depreCost} /> 
+                  <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.others} </td>
+                    <TableData value={data.machineDetails.map((data2) => {
+
+                      return(
+                        <div>
+                        <TableData value={data2.mid} />
+                        </div>
+                      )
+                    })}/>
 
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                   <Link to={`/MachineryUpdate/${data._id}`}>
@@ -219,13 +248,13 @@ const confirmFunc = (id)=>{
           </table><br></br><br></br>
 
           <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-            Total Depreciation : {TotalDepreciation.toFixed(2)}
+            Total Depreciation : {totalDep}
             
           </span><br></br>
 
           <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
             
-            TotalCost : {"Rs.  "+TotalCost.toFixed(2)}
+            Total Purchase Cost : {total}
           </span>
                 
         </div>

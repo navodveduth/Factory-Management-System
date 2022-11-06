@@ -16,11 +16,17 @@ const MaintenanceViewAll = () => {
     const [maintainence, setMaintainence] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
 
-
-  var TotalCost = 0;
-  
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
+  var TotalCost = 0;
+  var total=0; 
+    
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+      })
 
   const getMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
     axios.get("http://localhost:8070/maintainence/")
@@ -141,13 +147,13 @@ const confirmFunc = (id)=>{
           <table className="w-full rounded-lg" >
             <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                <TableHeader value="Maintenance ID"/>
                 <TableHeader value="Type" />
-                <TableHeader value="Service task & Shedule" />
+                <TableHeader value="Repair needed " />
                 <TableHeader value="Last Maintained Date" />
                 <TableHeader value="Next due" />
-                <TableHeader value="Status" />
                 <TableHeader value="Total Cost" />
-                <TableHeader value="Comments" />
+                <TableHeader value="Status" />
                 <TableHeader value="Manage" />
               </tr>
             </thead>
@@ -158,6 +164,7 @@ const confirmFunc = (id)=>{
                     }else if((data.Type.toLowerCase().includes(searchTerm.toLowerCase())) ||
                       (data.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
                       (data.Description.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                      (data.midprop.toLowerCase().includes(searchTerm.toLowerCase())) ||
                       (data.status.toLowerCase().includes(searchTerm.toLowerCase())))
                       
                       {
@@ -178,20 +185,20 @@ const confirmFunc = (id)=>{
                     // const LMdate = new Date(data.lastMaintainedDate).toLocaleDateString();
                     // const NSdate = new Date(data.nextServiceDate).toLocaleDateString();
                 TotalCost = TotalCost + data.others,
-                
+                total=formatter.format(TotalCost),
 
                 <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
 
-
+                  <TableData value={data.midprop} />
                   <TableData value={data.Type} />
                   <TableData value={data.Description} />
                   <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
                   <TableData value={data.nextServiceDate.toString().split('T')[0]} />
-                  
+                  <TableData value={data.others} />
                     
                     <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
-                    <TableData value={data.others} />
-                    <TableData value={data.name} />
+                    
+                  
                   
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                    
@@ -220,7 +227,7 @@ const confirmFunc = (id)=>{
             </tbody>
           </table><br></br><br></br>
           <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-            Total Cost of Maintenance : {"Rs.  "+TotalCost.toFixed(2)}
+            Total Cost of property Maintenance : {total}
             
           </span>
 

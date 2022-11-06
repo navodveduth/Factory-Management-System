@@ -123,6 +123,16 @@ var prototal = 0;
  var total = vehitotal + machtotal + prototal;
  total = Math.round(total * 100) / 100;
 
+ 
+ const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'LKR',
+  minimumFractionDigits: 2,
+  currencyDisplay: 'symbol'
+})
+
+let formatTotal = formatter.format(total);
+
   return (
     <div>
 
@@ -180,24 +190,27 @@ var prototal = 0;
       <div className="flex flex-wrap lg:flex-nowrap justify-left ml-5 mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* top buttons in the dashboard */} {/* use for navigation buttons*/}
-          <Link to="/VehiMaintenanceViewAll">
-            <DashTopButton value="All Vehicles" icon={<MdOutlineDirectionsBusFilled/>}/>
+          
+          
+          <Link to="/MaintenanceViewAll">
+            <DashTopButton value="All Property" icon={<BiBuildingHouse/>}/>
           </Link>
           <Link to="/MachMaintenanceViewAll">
             <DashTopButton value="All Machines" icon={<GiSewingMachine/>}/>
           </Link>
-          <Link to="/MaintenanceViewAll">
-            <DashTopButton value="All Property" icon={<BiBuildingHouse/>}/>
+          <Link to="/VehiMaintenanceViewAll">
+            <DashTopButton value="All Vehicles" icon={<MdOutlineDirectionsBusFilled/>}/>
           </Link>
           
-          <Link to="/VehiMaintenanceNew">
-            <DashTopButton value="New Vehicle" icon={<MdOutlineBusAlert/>}/>
+          
+          <Link to="/MaintenanceCreate">
+            <DashTopButton value="New Property" icon={<MdAddBusiness/>} />
           </Link>
           <Link to="/MachMaintenanceNew">
-            <DashTopButton value="New machinery" icon={<BiAddToQueue/>}/>
+            <DashTopButton value="New Machinery" icon={<BiAddToQueue/>}/>
           </Link>
-          <Link to="/MaintenanceCreate">
-            <DashTopButton value="New property" icon={<MdAddBusiness/>} />
+          <Link to="/VehiMaintenanceNew">
+            <DashTopButton value="New Vehicle" icon={<MdOutlineBusAlert/>}/>
           </Link>
           {/* <Link to="/MaintainenceTask">
             <DashTopButton value="Tasks For today" />
@@ -209,9 +222,10 @@ var prototal = 0;
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
           
-          <DashTopBox icon={<MdOutlineDirectionsBusFilled />} label="Vehicles under maintenance" data={maintainenceVehip} />
-          <DashTopBox icon={<BiBuildingHouse />} label="Property under maintenance" data={maintprog} />
-          <DashTopBox icon={<GiSewingMachine />} label="Machines under maintenance" data={maintainenceMachinep} />
+          
+          <DashTopBox icon={<BiBuildingHouse />} label="Property Under Maintenance" data={maintprog} />
+          <DashTopBox icon={<GiSewingMachine />} label="Machines Under Maintenance" data={maintainenceMachinep} />
+          <DashTopBox icon={<MdOutlineDirectionsBusFilled />} label="Vehicles Under Maintenance" data={maintainenceVehip} />
           
         </div>
       </div>
@@ -220,8 +234,8 @@ var prototal = 0;
       <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-          <DashTopBox icon={<VscSymbolProperty />} label="Total Maintenances records" data={maintprog+machineMaintCount+vehiMaintCount} />
-          <DashTopBox icon={<GiMoneyStack />} label="Total Maintenance cost" data={"Rs. "+total+".00"} /> 
+          <DashTopBox icon={<VscSymbolProperty />} label="Total Maintenances Records" data={maintprog+machineMaintCount+vehiMaintCount} />
+          <DashTopBox icon={<GiMoneyStack />} label="Total Maintenance Cost" data={formatTotal} /> 
                
         </div>
       </div>

@@ -18,6 +18,14 @@ const MachMaintenanceViewAll = () => {
 
 
   var TotalCost = 0;
+  var total=0;
+
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'LKR',
+    minimumFractionDigits: 2,
+    currencyDisplay: 'symbol'
+  })
   
 
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
@@ -144,15 +152,16 @@ const confirmFunc = (id)=>{
           <table className="w-full rounded-lg" >
             <thead>
               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                <TableHeader value="ID" />
-                <TableHeader value="Item" />
+                <TableHeader value="Maintenance ID"/>
+                <TableHeader value="Item name" />
                 <TableHeader value="Repair needed" />
                 <TableHeader value="Last Maintained Date" />
                 <TableHeader value="Next due" />
                 <TableHeader value="Repair company" />
-                <TableHeader value="R.C ContactNO" />
-                <TableHeader value="Status" />
+                <TableHeader value="ContactNO" />
                 <TableHeader value="Total Cost" />
+                <TableHeader value="Status" />
+                
                 <TableHeader value="Manage" />
               </tr>
             </thead>
@@ -183,19 +192,15 @@ const confirmFunc = (id)=>{
                     // const LMdate = new Date(data.lastMaintainedDate).toLocaleDateString();
                     // const NSdate = new Date(data.nextServiceDate).toLocaleDateString();
                 TotalCost = TotalCost + data.others,
+                total= formatter.format(TotalCost),
                 
 
                 <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
 
 
-                  <TableData value={data.machineDetails.map((data1)=>{
-                    return(
-                        <div>
-                            <TableData value={data1.machineID} />
-                        </div>
-                    )
-                  })} />
-                  <TableData value={data.machineDetails.map((data1)=>{
+                  <TableData value={data.mid}/>
+                  
+                  <TableData value={data.machineDetailss.map((data1)=>{
                     return(
                         <div>
                             <TableData value={data1.name} />
@@ -207,11 +212,11 @@ const confirmFunc = (id)=>{
                   <TableData value={data.nextServiceDate.toString().split('T')[0]} />
                   <TableData value={data.Location} />
                     <TableData value={data.contactNo} />
-                    
+                    <TableData value={data.others} />
                     
                     
                     <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
-                    <TableData value={data.others} />
+                    
                    
                   
                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
@@ -241,7 +246,7 @@ const confirmFunc = (id)=>{
             </tbody>
           </table><br></br><br></br>
           <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-            Total Cost of Maintenance : {"Rs.  "+TotalCost.toFixed(2)}
+            Total Cost of Machinery Maintenance : {total}
             
           </span>
 

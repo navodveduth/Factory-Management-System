@@ -14,6 +14,7 @@ function MaintenanceCreateForm() {
     
     const navigate = useNavigate(); //useNavigate hook to redirect to another page after form submission is successful 
   
+    const[midprop, setMidprop] = useState("");
     const [Type, setType] = useState('');
     const [Description, setDescription] = useState('');
     const [others, setOthers] = useState('');
@@ -86,6 +87,7 @@ function MaintenanceCreateForm() {
                   e.preventDefault();
                   
                   const newMaintenance = {
+                        midprop,
                     Type,
                     Description,
                     others,
@@ -111,6 +113,16 @@ function MaintenanceCreateForm() {
               }}>
 
                         <div className="mb-3">
+                            <label htmlFor="employeeFullName" className="form-label">Maintenance ID: </label>
+                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                id="employeeFullName"  required 
+                                onChange={(e)=>{
+                                    setMidprop(e.target.value);
+                                }}/>
+                        </div>
+
+
+                        <div className="mb-3">
                             <label for="employeeType" className="form-label">Type : </label>
                             <select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                             id="employeeType" aria-label="Default select example"  required
@@ -129,7 +141,7 @@ function MaintenanceCreateForm() {
                         </div>
             
                         <div className="mb-3">
-                            <label htmlFor="employeeFullName" className="form-label">Service task & schedule : </label>
+                            <label htmlFor="employeeFullName" className="form-label">Repair needed  : </label>
                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                 id="employeeFullName"  required 
                                 onChange={(e)=>{
