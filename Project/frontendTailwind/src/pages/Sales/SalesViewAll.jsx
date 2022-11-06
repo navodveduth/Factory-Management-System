@@ -12,7 +12,6 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 const SalesViewAll = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
-
   const [sales, setSale] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -46,19 +45,24 @@ const SalesViewAll = () => {
       })
       .catch((err) => {
         alert(err.message);
-      });
-  };
+      })
+  }
 
   const confirmFunc = (id)=>{
-
 		if (confirm("Do you want to delete?") == true) {
         deleteSale(id);
 		} else {
 			  navigate('/SalesViewAll');
 		}
-
     }
 
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+      })
+    
   return (
     
     <div>
@@ -156,9 +160,9 @@ const SalesViewAll = () => {
                                           return data;
                                           }
                                       }).map((data, key) => {
+                                        let formattedAmount = formatter.format(data.totalAmount)
+
                                           return( 
-
-
                                               <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
 
                                                   <TableData value={data.invoiceNo} />
@@ -166,14 +170,14 @@ const SalesViewAll = () => {
                                                   <TableData value={data.customerDetailss.map((data3) => {
                                                       return (
                                                       <div>
-                                                          {data3.customerName};
+                                                          {data3.customerName}
                                                       </div>
                                                       )
                                                   
                                                   })} />
                                                   <TableData value={data.itemName} />
                                                   <TableData value={data.quantity} />
-                                                  <TableData value={"Rs."+data.totalAmount} />
+                                                  <TableData value={formattedAmount} />
                                                   <TableData value={data.status} />
 
                                       <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
