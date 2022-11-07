@@ -206,6 +206,7 @@ const TransportViewAll = () => {
                       <table className="w-full rounded-lg">
                         <thead>
                           <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                            <TableHeader value="Transport ID" />
                             <TableHeader value="Type" />
                             <TableHeader value="Destination Address" />
                             <TableHeader value="Date" />
@@ -278,6 +279,7 @@ const TransportViewAll = () => {
                                   className="text-sm h-10 border dark:border-slate-600"
                                   key={key}
                                 >
+                                  <TableData value={data.transportID} />
                                   <TableData value={data.type} />
                                   <TableData value={data.destinationAddress} />
                                   <TableData

@@ -35,7 +35,9 @@ const TransportNew = () => {
 
   const navigate = useNavigate(); // useNavigate hook to redirect to another page after form submission is successful
 
+  const [transportID, setTransportID] = useState('');
   const [type, setType] = useState('');
+  const [typeInfo, setTypeInfo] = useState('');
   const [destinationAddress, setDestinationAddress] = useState('');
   const [date, setDate] = useState('');
   const [distance, setDistance] = useState('');
@@ -43,7 +45,6 @@ const TransportNew = () => {
   const [transportCost, setTransportCost] = useState('');
   const [description, setDescription] = useState('');
   const [driver, setDriver] = useState('');
-  const [typeInfo, setTypeInfo] = useState('');
   const [drivers, setDrivers] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [goods, setGoods] = useState([]);
@@ -94,7 +95,6 @@ const TransportNew = () => {
       <div className={currentMode === 'Dark' ? 'dark' : ''}>
         <div className="flex relative dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
-            {' '}
             {/* THEME SETTINGS BUTTON */}
             <TooltipComponent content="Settings" position="Top">
               <button
@@ -142,6 +142,7 @@ const TransportNew = () => {
                         e.preventDefault();
 
                         const newTransport = {
+                          transportID,
                           type,
                           typeInfo,
                           destinationAddress,
@@ -168,6 +169,22 @@ const TransportNew = () => {
                           });
                       }}
                     >
+                      <div className="mb-3">
+                        <label htmlFor="transportID" className="form-label">
+                          Transport Number :
+                        </label>
+                        <input
+                          type="text"
+                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                          pattern="[A-Z]{1}[0-9]{3,7}"
+                          id="transportID"
+                          required
+                          onChange={(e) => {
+                            setTransportID(e.target.value);
+                          }}
+                        />
+                      </div>
+
                       <div className="mb-3">
                         <label className="form-label" className="block">
                           Transportation Type
@@ -213,6 +230,7 @@ const TransportNew = () => {
                               setTypeInfo(e.target.value);
                             }}
                           >
+                            <option selected>Select...</option>
                             {goods.map((item, index) => (
                               <option value={item.invoiceNo} key={index}>
                                 {`${item.invoiceNo} - ${item.itemName} x ${item.quantity}`}
@@ -230,7 +248,7 @@ const TransportNew = () => {
                           type="text"
                           className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           id="address"
-                          placeholder="Enter destination..."
+                          placeholder="Enter the destination..."
                           required
                           onChange={(e) => {
                             setDestinationAddress(e.target.value);
@@ -269,7 +287,7 @@ const TransportNew = () => {
                           type="text"
                           className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           id="distance"
-                          placeholder="Enter distance..."
+                          placeholder="Enter the distance..."
                           required
                           min="0"
                           onChange={(e) => {
@@ -303,7 +321,7 @@ const TransportNew = () => {
                           type="text"
                           className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           id="description"
-                          placeholder="Enter description..."
+                          placeholder="Enter the description..."
                           required
                           onChange={(e) => {
                             setDescription(e.target.value);
@@ -312,7 +330,7 @@ const TransportNew = () => {
                       </div>
                       <div className="mb-3">
                         <label htmlFor="totalCost" className="form-label">
-                          Total Cost:
+                          Transportation Cost:
                         </label>
                         <input
                           type="number"
