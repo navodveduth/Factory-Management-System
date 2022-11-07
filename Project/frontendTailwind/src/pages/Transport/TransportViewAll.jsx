@@ -210,11 +210,8 @@ const TransportViewAll = () => {
                             <TableHeader value="Type" />
                             <TableHeader value="Destination Address" />
                             <TableHeader value="Date" />
-                            <TableHeader value="Time" />
-                            <TableHeader value="Distance" />
                             <TableHeader value="Transport Cost" />
                             <TableHeader value="Driver" />
-                            <TableHeader value="Description" />
                             <TableHeader value="Status" />
                             <TableHeader value="Manage" />
                           </tr>
@@ -285,11 +282,8 @@ const TransportViewAll = () => {
                                   <TableData
                                     value={data.date.substring(0, 10)}
                                   />
-                                  <TableData value={data.timeOfDispatch} />
-                                  <TableData value={`${data.distance} km`} />
                                   <TableData value={transportCost} />
                                   <TableData value={data.driver} />
-                                  <TableData value={data.description} />
                                   <td
                                     className={`${dataColor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}
                                   >

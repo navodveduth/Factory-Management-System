@@ -118,7 +118,7 @@ const TransportRecord = () => {
                       </div>
                       <div className="p-1 py-1 text-lg">
                         <span className="font-bold"> Date </span> :{' '}
-                        {transport.date.substring(0, 10)}
+                        {new Date(transport.date).toDateString()}
                       </div>
                       <div className="p-1 py-1 text-lg">
                         <span className="font-bold">Time Of Dispatch</span> :{' '}
