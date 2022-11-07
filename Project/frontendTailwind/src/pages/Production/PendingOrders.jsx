@@ -53,7 +53,7 @@ const PendingOrders = () => {
   return (
     <div>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-        <Header category="Table" title="Sales Invoices" />
+        <Header category="Table" title="Pending Sale Orders" />
         
         <div className=" flex items-center mb-5 ">
           <div>
@@ -122,7 +122,7 @@ const PendingOrders = () => {
                               <TableData value={data.status} />
   
                     <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                      <Link to={`/SalesUpdate/${data._id}`}>
+                      <Link to={"/updateCost/" +data._id }>
                         <button
                           type="button"
                           className=" bg-green-500 hover:bg-green-700 font-bold py-1 px-4 rounded-full mx-3  text-white"
