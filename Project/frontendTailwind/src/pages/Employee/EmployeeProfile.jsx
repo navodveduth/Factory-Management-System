@@ -6,6 +6,7 @@ import { Navbar, Footer, Sidebar, ThemeSettings, Header  } from '../../component
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
+import {DateRangePickerComponent} from '@syncfusion/ej2-react-calendars' // this code needed for the datesort function
 
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -16,8 +17,8 @@ const EmployeeProfile = () => {
 
     const [employee, setEmployee] = useState([]);
     const [leave, setLeave] = useState([]);
-    const [month, setMonth] = useState("");
-    const [year, setYear] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
 
     const {id} = useParams(); //get the id from the url
   
@@ -56,6 +57,28 @@ const EmployeeProfile = () => {
 
     const thisYear = new Date().getFullYear();
     const leaveCount = 14 - (leave.filter((leave) => leave.leaveStartDate.substring(0, 4) == thisYear).length);
+
+    // this code needed for the datesort function
+    function onClick(){
+        if(dateRangeRef.value && dateRangeRef.value.length > 0){
+            const start = dateRangeRef.value[0];
+            const end = dateRangeRef.value[1];
+            let date1 = JSON.stringify(start)
+            date1 = date1.substring(1,11)
+            setStartDate(date1)
+            let date2 = JSON.stringify(end)
+            date2 = date2.substring(1,11)
+            setEndDate(date2)
+            console.log(startDate)
+            console.log(endDate)
+        }
+        else{
+            setStartDate("")
+            setEndDate("")
+        }
+    }
+
+    let dateRangeRef =  dateRange => dateRangeRef = dateRange; // this code needed for the datesort function
 
     return (
         <div>
@@ -143,50 +166,17 @@ const EmployeeProfile = () => {
                             <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '>
                                 <Header category="Report" title="Employee Leaves" />
                                 <div className=" flex items-center mb-5 ">
-                                <div className="font-bold text-lg" > <span> Leaves left for {thisYear} </span> : {leaveCount}</div>
-                                </div>
-                                <div className=" flex items-center mb-5 ">
-                                <div>
-                                    <select type="text" className="mt-1 block w-36 mr-5 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                                            onChange={(e) =>{
-                                                setMonth(e.target.value);
-                                            }}>
-                                            <option selected value="">Select Month</option>
-                                            <option value="01">January</option>
-                                            <option value="02">February</option>
-                                            <option value="03">March</option>
-                                            <option value="04">April</option>
-                                            <option value="05">May</option>
-                                            <option value="06">June</option>
-                                            <option value="07">July</option>
-                                            <option value="08">August</option>
-                                            <option value="09">September</option>
-                                            <option value="10">October</option>
-                                            <option value="11">November</option>
-                                            <option value="12">December</option>
-                                    </select>
+                                    <div className="font-bold text-lg" > <span> Leaves left for {thisYear} </span> : {leaveCount}</div>
                                 </div>
 
-                                <div>
-                                    <select type="text" className="mt-1 block w-32 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                                            onChange={(e) =>{
-                                                setYear(e.target.value);
-                                            }}>
-                                            <option selected value="">Select Year</option>
-                                            <option value="2012">2012</option>
-                                            <option value="2013">2013</option>
-                                            <option value="2014">2014</option>
-                                            <option value="2015">2015</option>
-                                            <option value="2016">2016</option>
-                                            <option value="2017">2017</option>
-                                            <option value="2018">2018</option>
-                                            <option value="2019">2019</option>
-                                            <option value="2020">2020</option>
-                                            <option value="2021">2021</option>
-                                            <option value="2022">2022</option>
-                                    </select>
+                                <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
+                                    <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-48">
+                                        <DateRangePickerComponent ref={dateRangeRef}  placeholder="Select a date range"/>
+                                    </div>
+                                    <div className="ml-5">
+                                        <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={onClick}>Filter</button>
+                                    </div>
                                 </div>
-                              </div>
 
                                 <div className="block w-full overflow-x-auto rounded-lg">
                                     <table className="w-full rounded-lg">
@@ -201,16 +191,13 @@ const EmployeeProfile = () => {
                                         </thead>
                                         <tbody>
                                         {leave.filter((data) => {
-                                            if(month == "" && year == ""){
-                                                return data;
-                                            }else if(month == "" && year != ""){
-                                                return data.leaveStartDate.split("-")[0] == year;
-                                            }else if(month != "" && year == ""){
-                                                return data.leaveStartDate.split("-")[1] == month;
-                                            }else{
-                                                return data.leaveStartDate.split("-")[1] == month && data.leaveStartDate.split("-")[0] == year;
+                                            if (startDate && endDate) {
+                                                return data.leaveStartDate >= startDate && data.leaveEndDate <= endDate;
                                             }
-                                            }).map((data, key) => {
+                                            else {
+                                                return data;
+                                            }
+                                        }).map((data, key) => {
                                             return(
                                             <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                                                 <TableData value={data.leaveType} />
