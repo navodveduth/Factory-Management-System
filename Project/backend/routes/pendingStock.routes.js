@@ -2,7 +2,7 @@
 import express from "express";
 
 //importing controllers
-import {getAllPendingStocks, getOnePendingStock, addPendingStock, deletePendingStock, updatePendingStock} from "../controllers/Stock/pendingStock.controllers.js"
+import {getAllPendingStocks, getOnePendingStock, addPendingStock, deletePendingStock,getOneStockStatus, updatePendingStock, getDateRangePendingStock} from "../controllers/Stock/pendingStock.controllers.js"
 
 const router = express.Router();
 
@@ -13,5 +13,7 @@ router.get("/:id", getOnePendingStock)
 router.post("/create", addPendingStock);
 router.delete("/delete/:id", deletePendingStock);
 router.put("/update/:id", updatePendingStock);
+router.get("/date/:DS/:DE", getDateRangePendingStock);
+router.get("/status/:ST", getOneStockStatus);
 
 export default router;
