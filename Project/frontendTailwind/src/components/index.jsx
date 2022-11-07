@@ -18,5 +18,4 @@ export { default as ProductionPieChart } from './ProductionPieChart';
 export { default as TransactionPieChart } from './TransactionPieChart';
 export { default as AttendanceChart } from './AttendanceChart';
 export { default as AttendancePieChart } from './AttendancePieChart'
-export { default as FilterPopup } from './FilterPopup'
 
