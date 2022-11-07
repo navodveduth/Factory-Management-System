@@ -203,7 +203,7 @@ const TransportNew = () => {
                           <option value="Employee">Employee</option>
                           <option value="Goods">Goods</option>
                         </select>
-                        {type === 'Staff' || type === 'Employee' ? (
+                        {type === 'Staff' || type === 'Employee' ? ( // IF TYPE IS STAFF OR EMPLOYEE
                           <select
                             id="trInfo"
                             name="trInfo"
@@ -231,14 +231,19 @@ const TransportNew = () => {
                             }}
                           >
                             <option selected>Select...</option>
-                            {goods.map((item, index) => (
-                              <option
-                                value={`${item.invoiceNo} - ${item.itemName} x ${item.quantity}`}
-                                key={index}
-                              >
-                                {`${item.invoiceNo} - ${item.itemName} x ${item.quantity}`}
-                              </option>
-                            ))}
+                            {goods.map((item, index) =>
+                              item.status === 'Finished' ? ( // CHECKING IF THE GOODS ARE FINISHED
+                                <option
+                                  value={`${item.invoiceNo} - ${item.itemName} x ${item.quantity}`}
+                                  key={index}
+                                >
+                                  {`${item.invoiceNo} - ${item.itemName} x ${item.quantity}`}
+                                </option>
+                              ) : (
+                                // IF NOT FINISHED, IT WILL NOT BE DISPLAYED
+                                ''
+                              )
+                            )}
                           </select>
                         )}
                       </div>

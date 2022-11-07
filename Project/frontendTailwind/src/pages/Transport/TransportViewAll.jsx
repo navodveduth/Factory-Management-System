@@ -271,6 +271,7 @@ const TransportViewAll = () => {
                               const transportCost = formatter.format(
                                 data.transportCost
                               );
+
                               return (
                                 <tr
                                   className="text-sm h-10 border dark:border-slate-600"

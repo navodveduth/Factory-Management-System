@@ -83,6 +83,13 @@ const TransportDateRange = () => {
       });
   };
 
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'LKR',
+    minimumFractionDigits: 2,
+    currencyDisplay: 'symbol',
+  });
+
   return (
     <div>
       <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -173,14 +180,12 @@ const TransportDateRange = () => {
                       <table className="w-full rounded-lg">
                         <thead>
                           <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                            <TableHeader value="Transport ID" />
                             <TableHeader value="Type" />
                             <TableHeader value="Destination Address" />
                             <TableHeader value="Date" />
-                            <TableHeader value="Time" />
-                            <TableHeader value="Distance" />
                             <TableHeader value="Transport Cost" />
                             <TableHeader value="Driver" />
-                            <TableHeader value="Description" />
                             <TableHeader value="Status" />
                             <TableHeader value="Manage" />
                           </tr>
@@ -236,25 +241,24 @@ const TransportDateRange = () => {
                               } else {
                                 dataColor = 'text-yellow-600 font-bold';
                               }
+
+                              const transportCost = formatter.format(
+                                data.transportCost
+                              );
+
                               return (
                                 <tr
                                   className="text-sm h-10 border dark:border-slate-600"
                                   key={key}
                                 >
+                                  <TableData value={data.transportID} />
                                   <TableData value={data.type} />
                                   <TableData value={data.destinationAddress} />
                                   <TableData
                                     value={data.date.substring(0, 10)}
                                   />
-                                  <TableData value={data.timeOfDispatch} />
-                                  <TableData value={`${data.distance} km`} />
-                                  <TableData
-                                    value={`Rs. ${data.transportCost.toFixed(
-                                      2
-                                    )}`}
-                                  />
+                                  <TableData value={transportCost} />
                                   <TableData value={data.driver} />
-                                  <TableData value={data.description} />
                                   <td
                                     className={`${dataColor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}
                                   >
@@ -262,6 +266,15 @@ const TransportDateRange = () => {
                                   </td>
 
                                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                    <Link to={`/TransportRecord/${data._id}`}>
+                                      <button
+                                        type="button"
+                                        className="bg-neutral-500 font-bold py-1 px-4 rounded-full mx-3 text-white"
+                                      >
+                                        <i className="fa-regular fa-file-lines" />
+                                      </button>
+                                    </Link>
+
                                     <Link to={`/transportUpdate/${data._id}`}>
                                       <button
                                         type="button"
