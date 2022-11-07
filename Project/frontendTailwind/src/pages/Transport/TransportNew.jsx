@@ -232,7 +232,10 @@ const TransportNew = () => {
                           >
                             <option selected>Select...</option>
                             {goods.map((item, index) => (
-                              <option value={item.invoiceNo} key={index}>
+                              <option
+                                value={`${item.invoiceNo} - ${item.itemName} x ${item.quantity}`}
+                                key={index}
+                              >
                                 {`${item.invoiceNo} - ${item.itemName} x ${item.quantity}`}
                               </option>
                             ))}

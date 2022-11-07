@@ -252,7 +252,10 @@ const TransportUpdate = () => {
                           >
                             <option value={typeInfo}>{typeInfo}</option>
                             {goods.map((item, index) => (
-                              <option value={item.invoiceNo} key={index}>
+                              <option
+                                value={`${item.invoiceNo} - ${item.itemName} x ${item.quantity}`}
+                                key={index}
+                              >
                                 {`${item.invoiceNo} - ${item.itemName} x ${item.quantity}`}
                               </option>
                             ))}
