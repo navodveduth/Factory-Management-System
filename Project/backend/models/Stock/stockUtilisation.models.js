@@ -15,6 +15,15 @@ const stockUtilSchema = new Schema({
         max:8,
         required:true,
     },
+    stockName: {
+        type: String,
+        required: true,
+    },
+    stockCategory: {
+        type: String,
+        required: true,
+        enum: ['Raw materials', 'Work in progress'],
+    },
     date: {
         type: Date,
     },

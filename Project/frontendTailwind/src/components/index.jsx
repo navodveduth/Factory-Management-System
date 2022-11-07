@@ -13,8 +13,10 @@ export { default as EmployeePieChart } from './EmployeePieChart';
 export { default as MachineryPieChart } from './MachineryPieChart';
 export { default as SalesChart } from './SalesChart';
 export { default as MaintainChart } from './MaintainChart';
+export { default as MaintainBarChart } from './MaintainBarChart';
 export { default as ProductionPieChart } from './ProductionPieChart';
 export { default as TransactionPieChart } from './TransactionPieChart';
 export { default as AttendanceChart } from './AttendanceChart';
 export { default as AttendancePieChart } from './AttendancePieChart'
+export { default as FilterPopup } from './FilterPopup'
 

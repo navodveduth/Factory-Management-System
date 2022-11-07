@@ -7,15 +7,15 @@ import { EmployeeDashboard, EmployeeViewAll, EmployeeNew, EmployeeUpdate, Employ
 import { AttendanceAndLeaveDashboard, AttendanceViewAll, AttendanceNew, AttendanceUpdate, AttendanceReport, AttendanceNewRecord, LeaveViewAll, LeaveNew, LeaveUpdate, LeaveReport } from './pages/AttendanceAndLeaves';
 import { WelfareDashboard, WelfareNew, WelfareReport, WelfareUpdate, WelfareViewAll } from './pages/Welfare';
 
-import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll } from './pages/Finance';
+import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll, PreviewSalary, FinanceDateRange } from './pages/Finance';
 
-import { MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew} from './pages/MachineryAndMaintenance';
-
-import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice } from './pages/Sales';
+import {  MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport,MaintainenceDateRange, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachManitenanceDateRange,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport,VehiMaintenanceDateRange} from './pages/Maintenance';
+import {MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory} from './pages//Machinery';
+import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice, SalesDateRange } from './pages/Sales';
 
 import { OrderViewAll, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder } from './pages/Production/Index';
 
-import { StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockUtilisation, StockUtilUpdate, StockUtilPDF, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF } from './pages/Stock';
+import { StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, StockUtilisationDashboard, StockUtilisation, StockAddExisting, StockUtilUpdate, StockUtilPDF, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF, PendingStockView, PendingStockAdd, PendingStockUpdate, PendingStockPDf } from './pages/Stock';
 
 import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview } from './pages/Suppliers';
 
@@ -23,6 +23,8 @@ import { DriverDashboard, DriverViewAll, DriverNew, DriverUpdate, DriverReport }
 import { TransportDashboard, TransportViewAll, TransportNew, TransportUpdate, TransportReport } from './pages/Transport';
 
 import UserLogin from './pages/UserLogin';
+import UserRegistration from './pages/UserRegistration'
+
 
 import { CustomerNew,CustomerViewAll,CustomerUpdate,CustomerDashboard } from './pages/Customer';
 
@@ -70,12 +72,15 @@ const App = () => {
           <Route path="/FinanceViewAll" element={<FinanceViewAll />} />
           <Route path="/FinanceUpdate/:id" element={<FinanceUpdate />} />
           <Route path="/FinancePreview/" element={<FinancePreview />} />
+          <Route path="/FinanceDateRange/" element={<FinanceDateRange />} />\
 
           {/* salary management  */}
           <Route path="/SalaryDashboard" element={<SalaryDashboard />} />
           <Route path="/SalaryViewAll" element={<SalaryViewAll />} />
           <Route path="/SalaryNew" element={<SalaryNew />} />
           <Route path="/SalaryUpdate/:id" element={<SalaryUpdate />} />
+          <Route path="/SalaryPreview" element={<PreviewSalary />} />
+
 
           {/* machinery management  */}
           <Route path="/MachineryDashboard" element={<MachineryDashboard />} />
@@ -83,6 +88,8 @@ const App = () => {
           <Route path="/MachineryCreate" element={<MachineryNew />} />
           <Route path="/MachineryUpdate/:id" element={<MachineryUpdate />} />
           <Route path="/MachineryReport/" element={<MachineryReport />} />
+          <Route path="/MachineryDateRange/" element={<MachineryDateRange />} />
+          <Route path="/MachMaintenanceHistory/:id" element={<MachMaintenanceHistory />} />
 
           {/* maintenance management  */}
           <Route path="/MaintenanceDashboard" element={<MaintenanceDashboard />} />
@@ -91,12 +98,17 @@ const App = () => {
           <Route path="/MaintenanceUpdate/:id" element={<MaintenanceUpdate />} />
           <Route path="/MaintainenceTask/" element={<MaintainenceTask />} />
           <Route path="/MaintainenceReport" element={<MaintainenceReport />} />
+          <Route path="/MaintainenceDateRange" element={<MaintainenceDateRange />} />
           <Route path="/MachMaintenanceViewAll" element={<MachMaintenanceViewAll />} />
           <Route path="/MachMaintenanceNew" element={<MachMaintenanceNew />} />
           <Route path="/MachMaintenanceUpdate/:id" element={<MachMaintenanceUpdate />} />
           <Route path="/MachMaintenanceReport" element={<MachMaintenanceReport />} />
+          <Route path="/MachManitenanceDateRange/" element={<MachManitenanceDateRange />} />
           <Route path="/VehiMaintenanceViewAll" element={<VehiMaintenanceViewAll />} />
           <Route path="/VehiMaintenanceNew" element={<VehiMaintenanceNew />} />
+          <Route path="/VehiMaintenanceUpdate/:id" element={<VehiMaintenanceUpdate />} />
+          <Route path="/VehiMaintenanceReport" element={<VehiMaintenanceReport />} />
+          <Route path="/VehiMaintenanceDateRange/" element={<VehiMaintenanceDateRange />} />
                 
           {/* sales management  */}
           <Route path="/SalesDashboard" element={<SalesDashboard />} />
@@ -105,6 +117,7 @@ const App = () => {
           <Route path="/SalesUpdate/:id" element={<SalesUpdate />} />
           <Route path="/SalesInvoice/:id" element={<SalesInvoice />} />
           <Route path="/SalesPreview" element={<SalesPreview />} />
+          <Route path="/SalesDateRange" element={<SalesDateRange />} />
 
           {/* production management  */}
           <Route path="/vieworders" element={<OrderViewAll />} />
@@ -118,10 +131,22 @@ const App = () => {
           <Route path="/StockView" element={<StockView />} />
           <Route path="/StockAdd" element={<StockAdd />} />
           <Route path="/StockUpdate/:id" element={<StockUpdate />} />
-          <Route path="/generatePDF" element={<StockPDF />} />
+          <Route path="/generateSPDF" element={<StockPDF />} />
+
+          <Route path="/StockBreakdown" element={<StockBreakdown/>} />
+          <Route path="/StockBreakdownUpdate/:id" element={<StockBreakdownUpdate/>} />
+          <Route path="/generateSBPDF" element={<StockBreakdownPDF/>} />
+          
+          <Route path="/PendingStockView" element={<PendingStockView />} />
+          <Route path="PendingStockAdd" element={<PendingStockAdd />} />
+          <Route path="PendingStockUpdate/:id" element={<PendingStockUpdate />} />
+          <Route path="/generatePSPDF" element={<PendingStockPDf />}/>
+
+          <Route path="/StockUtilisationDashboard" element={<StockUtilisationDashboard/>} />
           <Route path="/StockUtilisation" element={<StockUtilisation />} />
-          <Route path="/StockUtilUpdate" element={<StockUtilUpdate />} />
-          <Route path="/StockUtilPDF" element={<StockUtilPDF />} />
+          <Route path="/StockAddExisting" element={<StockAddExisting />} />
+          <Route path="/StockUtilUpdate/:id" element={<StockUtilUpdate />} />
+          <Route path="/generateSUPDF" element={<StockUtilPDF />} />
 
           <Route path="/DamagedStockDashboard" element={<DamagedStockDashboard />} />
           <Route path="/DamagedStockView" element={<DamagedStockView />} />

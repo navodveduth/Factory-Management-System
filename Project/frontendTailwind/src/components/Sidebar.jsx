@@ -5,7 +5,7 @@ import { FiUser, FiCalendar, FiBarChart, FiUsers, FiFileText, FiTool, FiPackage,
 import { GiSewingMachine , GiSteeringWheel} from 'react-icons/gi';
 import { IoBagHandleOutline } from 'react-icons/io5';
 import { TbBuildingWarehouse, TbTruckDelivery, TbReportMoney, TbBuildingFactory2 } from 'react-icons/tb';
-import { FaHouseDamage, FaRegMoneyBillAlt } from 'react-icons/fa';
+import { FaHouseDamage, FaRegMoneyBillAlt, FaChartLine } from 'react-icons/fa';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { useStateContext } from '../contexts/ContextProvider';
@@ -20,7 +20,7 @@ const Sidebar = () => {
   };
 
   const activeLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white  text-md m-2';
-  const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2';
+  const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2 transition duration-300 ease-in-out';
 
   return (
     <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
@@ -38,7 +38,7 @@ const Sidebar = () => {
             </TooltipComponent>
           </div>
 
-          <div className="mt-10 ">
+          <div className="mt-10 " >
             
             {/*  menu ---------------------------------------------------------------------------------- menu  */}
             <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
@@ -211,21 +211,21 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <TbBuildingWarehouse /> {/*  icon  */}
-              <span className="capitalize ">Stock</span> {/*  link name  */}
+              <span className="capitalize ">Stock Information</span> {/*  link name  */}
             </NavLink>
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/DamagedStockDashboard"
+              to="/StockUtilisationDashboard"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <FaHouseDamage /> {/*  icon  */}
-              <span className="capitalize ">Damaged stock</span>{' '}
+              <FaChartLine /> {/*  icon  */}
+              <span className="capitalize ">Stock Utilisation</span>{' '}
               {/*  link name  */}
             </NavLink>
             {/*  done ---------------------------------------------------------------------------------- done  */}
@@ -280,7 +280,7 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <GiSewingMachine /> {/*  icon  */}
-              <span className="capitalize ">Machinery</span> {/*  link name  */}
+              <span className="capitalize ">Machinery Details</span> {/*  link name  */}
             </NavLink>
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
@@ -294,7 +294,7 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <FiTool /> {/*  icon  */}
-              <span className="capitalize ">Maintenance</span>{' '}
+              <span className="capitalize ">Maintenance Records</span>{' '}
               {/*  link name  */}
             </NavLink>
 
@@ -318,7 +318,7 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <TbTruckDelivery /> {/*  icon  */}
-              <span className="capitalize ">Transport</span> {/*  link name  */}
+              <span className="capitalize ">Transport Details</span> {/*  link name  */}
             </NavLink>
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
@@ -332,7 +332,7 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <GiSteeringWheel /> {/*  icon  */}
-              <span className="capitalize ">Driver</span> {/*  link name  */}
+              <span className="capitalize ">Drivers</span> {/*  link name  */}
             </NavLink>
             {/*  done ---------------------------------------------------------------------------------- done  */}
           </div>

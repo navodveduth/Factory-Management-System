@@ -23,8 +23,32 @@ export const getAllSalesDetails = async (req, res) => {
 export const getOneOrderDetail = async (req, res) =>{
     try {
         const id= req.params.id;
-        const sales= await Sales.findById(id);
-        res.status(200).json(sales);
+        const invoice = await Sales.findById(id);
+        res.status(200).json(invoice);
+    } catch (error) {
+        res.status(404).json({ message : error});
+    }
+
+}
+
+export const printOneInvoice = async (req, res) =>{
+    try {
+        const id= req.params.id;
+        const invoice = await Sales.aggregate([
+            {
+                $match: { _id: new mongoose.Types.ObjectId(id) }
+            },
+            {
+                $lookup: 
+                {
+                    from: "customers",
+                    localField: "customerID" ,
+                    foreignField: "customerID",
+                    as: "customerDetailss"
+                }
+            }  
+        ]);
+        res.status(200).json(invoice);
     } catch (error) {
         res.status(404).json({ message : error});
     }
@@ -69,4 +93,19 @@ export const deleteOrderDetails = async (req, res) =>{
         res.status(404).json({ message : error});
     }
 
+}
+
+export const getSalesByDateRange = async (req, res) =>{
+    try {
+        const DS = req.params.DS;
+        const DE = req.params.DE;
+        const invoices = await Sales.aggregate([
+            {
+                $match: { orderDate: { $gte: new Date(DS), $lte: new Date(DE) } }
+            }
+        ]);
+        res.status(200).json(invoices);
+    } catch (error) {
+        res.status(404).json({message : error});
+    }
 }

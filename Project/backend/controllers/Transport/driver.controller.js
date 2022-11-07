@@ -1,11 +1,23 @@
 import Driver from '../../models/Transport/driver.model.js';
+import employee from '../../models/Employee/employee.model.js';
 
 // @desc    Fetch all driver details
 // @route   GET /driver
 // @access  Public
 export const getDriverDetails = async (req, res) => {
   try {
-    const drivers = await Driver.find();
+    const drivers = await Driver.aggregate([
+      // Aggregate is used to join two collections
+      {
+        $lookup: {
+          // Lookup is used to join two collections
+          from: 'employees', // Collection name
+          localField: 'fullName', // Field name in the current collection
+          foreignField: 'employeeFullName', // Field name in the other collection
+          as: 'driverDetails', // Name of the new field in the current collection
+        },
+      },
+    ]);
     res.status(200).json(drivers);
   } catch (error) {
     res.status(404).json({ message: error });

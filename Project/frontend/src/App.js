@@ -6,8 +6,6 @@ import SalesRoutes from "./routes/SalesAppRoutes"
 function App() {
   return (
     <div className="App">
-      <AppRoutes />
-      <ProdRoutes/>
       <SalesRoutes/>
     </div>
   );
