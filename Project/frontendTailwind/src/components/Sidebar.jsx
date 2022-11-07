@@ -253,7 +253,7 @@ const Sidebar = () => {
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/SupplierRecordsDashboard"
+              to="/PurchaseOrderDetailsDashboard"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
@@ -261,7 +261,7 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <FiFileText /> {/*  icon  */}
-              <span className="capitalize ">Supplier Records</span> {/*  link name  */}
+              <span className="capitalize ">Purchase Order Details</span> {/*  link name  */}
             </NavLink>
             {/*  done ---------------------------------------------------------------------------------- done  */}
 

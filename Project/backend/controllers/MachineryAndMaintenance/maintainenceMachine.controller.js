@@ -94,5 +94,21 @@ export const deleteMMaintainenceDetails = async (req, res) =>{
 
 }
 
+export const getDateRangeMachMaint = async (req, res) => {
+    try {
+        const DS = req.params.DS;
+        const DE = req.params.DE;
+        const MaintainenceMachines = await MaintainenceMachine.aggregate([
+        
+            {
+                $match: { lastMaintainedDate: { $gte: new Date(DS), $lte: new Date(DE) } }
+            }
+        ]);
+        res.status(200).json(MaintainenceMachines);
+    } catch (error) {
+        res.status(404).json({message : error});
+    }
+}
+
 
 

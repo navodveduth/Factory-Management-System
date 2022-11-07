@@ -72,5 +72,20 @@ export const deleteVMaintainenceDetails = async (req, res) =>{
 
 }
 
+export const getDateRangeVehiMaint = async (req, res) => {
+    try {
+        const DS = req.params.DS;
+        const DE = req.params.DE;
+        const VehiMaintainence = await MaintainenceVehicle.aggregate([
+        
+            {
+                $match: { lastMaintainedDate: { $gte: new Date(DS), $lte: new Date(DE) } }
+            }
+        ]);
+        res.status(200).json(VehiMaintainence);
+    } catch (error) {
+        res.status(404).json({message : error});
+    }
+}
 
 
