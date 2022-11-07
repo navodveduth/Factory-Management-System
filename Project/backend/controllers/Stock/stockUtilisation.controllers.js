@@ -37,6 +37,17 @@ export const getOneStockUtilDetails = async (req, res) => {
     }
 }
 
+export const getOneStockUtilByStockCode = async (req, res) =>{
+    try {
+        const stockID= req.params.stockID;
+       const stockUtil= await StockUtilisation.find({stockCode: stockID});
+        res.status(200).json(stockUtil);
+    } catch (error) {
+        res.status(404).json({ message : error});
+    }
+
+}
+
 //adding a stock item
 export const addStockUtil = async (req , res) => {
     try {//gets values to add stock
