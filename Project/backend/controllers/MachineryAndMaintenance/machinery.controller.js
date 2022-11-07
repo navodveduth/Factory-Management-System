@@ -2,7 +2,17 @@ import Machinery from "../../models/MachineryAndMaintenance/machinery.model.js";
 
 export const getAllMachineryDetails = async (req, res) => {
     try {
-        const machinery = await Machinery.find();
+        const machinery = await Machinery.aggregate([
+            {
+                $lookup: 
+                {
+                    from: "maintainencemachines",
+                    localField: "machineID" ,
+                    foreignField: "machineID",
+                    as: "machineDetails"
+                }
+            }
+        ]);
         res.status(200).json(machinery);    
     } catch (error) {
         res.status(404).json({ message : error});
@@ -59,4 +69,20 @@ export const deleteMachineryDetails = async (req, res) =>{
         res.status(404).json({ message : error});
     }
 
+}
+
+export const getDateRangeMachinery = async (req, res) => {
+    try {
+        const DS = req.params.DS;
+        const DE = req.params.DE;
+        const machinery = await Machinery.aggregate([
+        
+            {
+                $match: { dateOfPurchased: { $gte: new Date(DS), $lte: new Date(DE) } }
+            }
+        ]);
+        res.status(200).json(machinery);
+    } catch (error) {
+        res.status(404).json({message : error});
+    }
 }

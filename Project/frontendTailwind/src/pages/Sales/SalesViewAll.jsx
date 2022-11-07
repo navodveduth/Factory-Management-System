@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import {jsPDF} from "jspdf";
 import { useStateContext } from '../../contexts/ContextProvider';
@@ -12,9 +12,11 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 const SalesViewAll = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
-
   const [sales, setSale] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [dateStart, setDateStart] = useState("");
+  const [dateEnd, setDateEnd] = useState("");
+  const navigate = useNavigate();
 
   const getSale = async () => {
     axios
@@ -46,22 +48,31 @@ const SalesViewAll = () => {
       })
       .catch((err) => {
         alert(err.message);
-      });
-  };
+      })
+  }
+
+  const toDateRange = () => {
+    navigate('/SalesDateRange',{state:{DS:dateStart,DE:dateEnd}});
+  }
 
   const confirmFunc = (id)=>{
-
 		if (confirm("Do you want to delete?") == true) {
         deleteSale(id);
 		} else {
 			  navigate('/SalesViewAll');
 		}
-
     }
 
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+      })
+    
   return (
+    
     <div>
-
     {/* DON'T CHANGE ANYTHING HERE */}
 
       <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -119,10 +130,29 @@ const SalesViewAll = () => {
                                   setSearchTerm(e.target.value);
                                   }} />
                               </div>
+
+                              <div>
+                                <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date" 
+                                    onChange={(e) => {
+                                    setDateStart(e.target.value);
+                                    }} />
+                              </div>
+
+                              <div>
+                                <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date" 
+                                    onChange={(e) => {
+                                    setDateEnd(e.target.value);
+                                    }} />
+                              </div>
+
+                              <div className=" mx-1">
+                                  <button type="button" className = "py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}>Filter by Date</button>
+                              </div>
+
                               <div className="mr-0 ml-auto">
                                   {/* change this link your preview page */}
                                   <Link to={"/SalesPreview"}>
-                                  <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+                                  <button type="button" className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
                                   </Link>
                               </div>
 
@@ -156,9 +186,9 @@ const SalesViewAll = () => {
                                           return data;
                                           }
                                       }).map((data, key) => {
+                                        let formattedAmount = formatter.format(data.totalAmount)
+
                                           return( 
-
-
                                               <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
 
                                                   <TableData value={data.invoiceNo} />
@@ -166,15 +196,14 @@ const SalesViewAll = () => {
                                                   <TableData value={data.customerDetailss.map((data3) => {
                                                       return (
                                                       <div>
-                                                          <TableData value = {data3.customerName} /> 
+                                                          {data3.customerName}
                                                       </div>
                                                       )
                                                   
                                                   })} />
-                                  
                                                   <TableData value={data.itemName} />
                                                   <TableData value={data.quantity} />
-                                                  <TableData value={"Rs."+data.totalAmount} />
+                                                  <TableData value={formattedAmount} />
                                                   <TableData value={data.status} />
 
                                       <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">

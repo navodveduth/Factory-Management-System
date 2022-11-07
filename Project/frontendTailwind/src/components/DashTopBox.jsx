@@ -4,7 +4,7 @@ import { useStateContext } from '../contexts/ContextProvider';
 const DashTopBox = ({icon, label, data}) => {
     const { currentColor } = useStateContext();
   return (
-    <div className="flex w-60 items-start bg-white p-4 py-8 dark:text-gray-200 dark:bg-secondary-dark-bg rounded-2xl m-2 hover:drop-shadow-xl ">
+    <div className="flex items-start bg-white p-4 py-8 dark:text-gray-200 dark:bg-secondary-dark-bg rounded-2xl m-2 hover:drop-shadow-xl ">
       <div>
       <button
             type="button"
