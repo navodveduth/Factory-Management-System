@@ -8,8 +8,6 @@ import TableHeader from '../../components/Table/TableHeader';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import MachMaintenanceViewAll from '../MachineryAndMaintenance/MachMaintenanceViewAll';
-import MachMaintenanceCreateForm from '../MachineryAndMaintenance/MachMaintenanceNew';
 
 
 
