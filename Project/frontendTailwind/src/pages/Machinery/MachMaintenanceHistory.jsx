@@ -6,6 +6,7 @@ import { VscSymbolProperty } from 'react-icons/vsc';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
+import {DateRangePickerComponent} from '@syncfusion/ej2-react-calendars' // this code needed for the datesort function
 
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -17,8 +18,8 @@ const MachMaintenanceHistory = () => {
 
     const [machinery, setMachinery] = useState([]);
     const [maintainenceMachine, setMaintainenceMachine] = useState([]);
-    const [month, setMonth] = useState("");
-    const [year, setYear] = useState("");
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
 
 
 
@@ -63,7 +64,44 @@ const MachMaintenanceHistory = () => {
         }
     }, [machinery.machineID]);
 
-
+    let dateRangeRef = (dateRange) => {
+        // dateRangeRef is a reference to the DateRangePickerComponent
+        dateRangeRef = dateRange;
+      };
+    
+      const convertDate = (format) => {
+        function convert(s) {
+          return s < 10 ? `0${s}` : s;
+        }
+        const date = new Date(format);
+        return [
+          date.getFullYear(),
+          convert(date.getMonth() + 1),
+          convert(date.getDate()),
+        ].join('-');
+      };
+    
+      const filterDate = () => {
+        if (dateRangeRef.value && dateRangeRef.value.length > 0) {
+          const start = convertDate(dateRangeRef.value[0]);
+          const end = convertDate(dateRangeRef.value[1]);
+    
+          let date1 = JSON.stringify(start);
+          date1 = date1.substring(1, 11);
+          setStartDate(date1);
+    
+          let date2 = JSON.stringify(end);
+          date2 = date2.substring(1, 11);
+          setEndDate(date2);
+    
+          console.log(startDate);
+          console.log(endDate);
+        } else {
+          setStartDate('');
+          setEndDate('');
+        }
+      };
+    
 
     return (
         <div>
@@ -140,6 +178,14 @@ const MachMaintenanceHistory = () => {
                                     <h1 className="text-2xl font-bold">Maintenance History</h1>
 
                                     <div className="text-md ml-12 pt-5">
+                                    <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
+                                    <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
+                                        <DateRangePickerComponent ref={dateRangeRef}  placeholder="Select a date range"/>
+                                    </div>
+                                    <div className="ml-5">
+                                        <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={filterDate}>Filter</button>
+                                    </div>
+                                </div>
 
                                         <div className="block w-full overflow-x-auto rounded-lg">
                                             <table className="w-full rounded-lg">
