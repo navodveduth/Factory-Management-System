@@ -27,15 +27,7 @@ const PageTemplate = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT TO YOU
   */
 
 
-  useEffect(() => {
-    getEmployee(); // <== CHANGE ACCORDING TO YOUR OWN FUNCTIONS, YOU CAN REMOVE THIS LINE IF YOU DON'T NEED IT
-    const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
-    const currentThemeMode = localStorage.getItem('themeMode');
-    if (currentThemeColor && currentThemeMode) {
-      setCurrentColor(currentThemeColor);
-      setCurrentMode(currentThemeMode);
-    }
-  }, []);
+c
 
   return (
     <div>
@@ -86,10 +78,7 @@ const PageTemplate = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT TO YOU
                     <div>
                         {themeSettings && <ThemeSettings />}
                         <div>
-                            {/* YOUR COMPONENT IMPLEMENTATION GOES HERE */}
-                            {/* COPY YOUR ORIGINAL COMPONENT CODE HERE */}
-                            {/* PART AFTER THE RETURN STATEMENT */}
-                            
+                           {/* Paste your content Here */}
                         </div>
                         <Footer />
                     </div>  
