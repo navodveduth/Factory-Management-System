@@ -43,7 +43,10 @@ const TransportNew = () => {
   const [transportCost, setTransportCost] = useState('');
   const [description, setDescription] = useState('');
   const [driver, setDriver] = useState('');
+  const [typeInfo, setTypeInfo] = useState('');
   const [drivers, setDrivers] = useState([]);
+  const [employees, setEmployees] = useState([]);
+  const [goods, setGoods] = useState([]);
 
   const currentDate = new Date().toISOString().split('T')[0];
 
@@ -58,8 +61,32 @@ const TransportNew = () => {
       });
   };
 
+  const getEmployees = async () => {
+    axios
+      .get('http://localhost:8070/employee/viewEmployee')
+      .then((res) => {
+        setEmployees(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
+  const getGoods = async () => {
+    axios
+      .get('http://localhost:8070/sales/')
+      .then((res) => {
+        setGoods(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
   useEffect(() => {
     getDrivers();
+    getEmployees();
+    getGoods();
   }, []);
 
   return (
@@ -108,7 +135,7 @@ const TransportNew = () => {
               {themeSettings && <ThemeSettings />}
               <div>
                 <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-                  <Header category="Form" title="Create New Transport Record" />
+                  <Header category="Form" title="Add New Transport Record" />
                   <div className="flex items-center justify-center ">
                     <form
                       onSubmit={async (e) => {
@@ -116,6 +143,7 @@ const TransportNew = () => {
 
                         const newTransport = {
                           type,
+                          typeInfo,
                           destinationAddress,
                           date,
                           distance,
@@ -141,11 +169,13 @@ const TransportNew = () => {
                       }}
                     >
                       <div className="mb-3">
-                        <label className="form-label">Type</label>
+                        <label className="form-label" className="block">
+                          Transportation Type
+                        </label>
                         <select
                           id="type"
                           name="type"
-                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                          className="mt-1  w-200 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           required
                           onChange={(e) => {
                             setType(e.target.value);
@@ -156,6 +186,40 @@ const TransportNew = () => {
                           <option value="Employee">Employee</option>
                           <option value="Goods">Goods</option>
                         </select>
+                        {type === 'Staff' || type === 'Employee' ? (
+                          <select
+                            id="trInfo"
+                            name="trInfo"
+                            className="mt-1 ml-8 w-640 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                            required
+                            onChange={(e) => {
+                              setTypeInfo(e.target.value);
+                            }}
+                          >
+                            <option selected>Select...</option>
+                            {employees.map((item, index) => (
+                              <option value={item.employeeFullName} key={index}>
+                                {item.employeeFullName}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <select
+                            id="trInfo"
+                            name="trInfo"
+                            className="mt-1 ml-8 w-640 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                            required
+                            onChange={(e) => {
+                              setTypeInfo(e.target.value);
+                            }}
+                          >
+                            {goods.map((item, index) => (
+                              <option value={item.invoiceNo} key={index}>
+                                {`${item.invoiceNo} - ${item.itemName} x ${item.quantity}`}
+                              </option>
+                            ))}
+                          </select>
+                        )}
                       </div>
 
                       <div className="mb-3">
