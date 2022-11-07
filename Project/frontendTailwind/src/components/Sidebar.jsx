@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { MdOutlineCancel } from 'react-icons/md';
 import { FiUser, FiCalendar, FiBarChart, FiUsers, FiFileText, FiTool, FiPackage, FiTrendingUp, FiShoppingBag, FiGift } from 'react-icons/fi';
 import { GiSewingMachine , GiSteeringWheel} from 'react-icons/gi';
+import { HiUserGroup} from 'react-icons/hi';
 import { IoBagHandleOutline } from 'react-icons/io5';
 import { TbBuildingWarehouse, TbTruckDelivery, TbReportMoney, TbBuildingFactory2 } from 'react-icons/tb';
 import { FaHouseDamage, FaRegMoneyBillAlt, FaChartLine } from 'react-icons/fa';
@@ -153,7 +154,7 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineCancel />{/*  icon  */}
+              <HiUserGroup />{/*  icon  */}
               <span className="capitalize ">Customer Management</span> {/*  link name  */}
                 </NavLink>
 
