@@ -20,10 +20,12 @@ const StockInformation = () => {
     const [stockUtil, setStockUtil] = useState([]);
     var lastIssue = 0;
     var lastAdd = 0;
-    var id = 0;
+    var code = 0;
 
+    const { id } = useParams(); //get the id from the url
+    
     const getStock = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stock")
+        axios.get(`http://localhost:8070/stock/${id}`)
             .then((res) => {
                 setStock(res.data); //setStock is used to update the state variable
                 console.log(res.data);
@@ -32,9 +34,10 @@ const StockInformation = () => {
                 alert(err.message);
             })
     }
+    const stockNo = stock.stockCode;
 
     const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stockUtilisation")
+        axios.get(`http://localhost:8070/stockUtilisation//ViewStockUtil/${stockNo}`)
             .then((res) => {
                 setStockUtil(res.data); //setStock is used to update the state variable
                 console.log(res.data);
@@ -53,16 +56,23 @@ const StockInformation = () => {
             setCurrentColor(currentThemeColor);
             setCurrentMode(currentThemeMode);
         }
-    }, [])
+    }, [stock.stockCode])
 
     const createPDF = async () => {
         const date = new Date().toISOString().split('T')[0];
         const pdf = new jsPDF("landscape", "px", "a1", false);
         const data = await document.querySelector("#report");
         pdf.html(data).then(() => {
-            pdf.save("stocks_" + id + "_" + date + ".pdf");
+            pdf.save("stocks_" + code + "_" + date + ".pdf");
         });
     };
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+    })
 
     return (
         <div>
@@ -125,7 +135,7 @@ const StockInformation = () => {
                                     var totIssues = 0;
                                     var quantity = 0;
                                     var totalValue = 0;
-                                    id = stock.stockCode;
+                                    code = stock.stockCode;
 
                                     {
                                         stockUtil.filter((stockUtil) => stockUtil.type == "Additions" &&
@@ -161,7 +171,7 @@ const StockInformation = () => {
 
                                     return (
                                         <div id="report">
-                                            <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
+                                            <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5" >
                                                 <h1 className="text-2xl font-bold">Stock Details</h1>
                                                 <div className="text-md ml-12 pt-5">
                                                     <div className="p-1"> <span className="font-bold"> Stock Code </span> : {stock.stockCode}</div>
@@ -203,8 +213,8 @@ const StockInformation = () => {
                                                 <h1 className="text-2xl font-bold">Stock Valuation</h1>
                                                 <div className="text-md ml-12 pt-5">
                                                     <div className="p-1"> <span className="font-bold"> Quantity </span> : {quantity}</div>
-                                                    <div className="p-1"> <span className="font-bold"> Unit price </span> : {stock.unitPrice}</div>
-                                                    <div className="p-1"> <span className="font-bold"> Total value </span> : {quantity * stock.unitPrice}</div>
+                                                    <div className="p-1"> <span className="font-bold"> Unit price </span> : {formatter.format(stock.unitPrice)}</div>
+                                                    <div className="p-1"> <span className="font-bold"> Total value </span> : {formatter.format(quantity * stock.unitPrice)}</div>
                                                 </div>
                                             </div>
                                         </div>

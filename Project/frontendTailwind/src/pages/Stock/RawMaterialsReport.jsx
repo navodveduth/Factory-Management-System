@@ -6,6 +6,11 @@ import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 import { jsPDF } from "jspdf";
 
+import { FiSettings } from 'react-icons/fi';
+import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
+import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import { DashTopBox, DashTopButton,  } from '../../components';
+
 function RawMaterialsReport() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
