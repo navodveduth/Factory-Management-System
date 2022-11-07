@@ -297,6 +297,15 @@ const TransportViewAll = () => {
                                   </td>
 
                                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                    <Link to={`/TransportRecord/${data._id}`}>
+                                      <button
+                                        type="button"
+                                        className="bg-neutral-500 font-bold py-1 px-4 rounded-full mx-3 text-white"
+                                      >
+                                        <i className="fa-regular fa-file-lines" />
+                                      </button>
+                                    </Link>
+
                                     <Link to={`/transportUpdate/${data._id}`}>
                                       <button
                                         type="button"
