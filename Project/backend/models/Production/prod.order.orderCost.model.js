@@ -17,13 +17,13 @@ const orderSchema = new Schema({
         required:true,
         unique:true
     },
-    orderName:{
-        type: String,
-        required:true
-    },
-    costDate:{
+    customerName:{
         type:String,
-        required:true
+        
+    },
+    product: {
+        type:String, 
+        required:true,
     },
     materialCost:{
         type: Number,
@@ -33,9 +33,37 @@ const orderSchema = new Schema({
         type: Number,
         required:true
     },
+    requestDate:{
+        type:Date,
+        required:true
+    },
+    approvedDate:{
+        type:Date,
+           
+    },
+    costedDate:{
+        type:Date,
+    },
+
+    supervisor:{
+        type: String,
+    },
+    teamLead:{
+        type: String,
+    },
+    member1:{
+        type: String,
+    },
+    member2:{
+        type: String,
+    },
     totalMatCost:{
       type: Number,
       required:true
+    },
+    totalLabCost:{
+        type:Number,
+        required:true
     },
     overHeadCost:{
         type: Number,
@@ -44,7 +72,11 @@ const orderSchema = new Schema({
     totalCost:{
         type: Number,
         required:true
-    }
+    },
+    status:{
+        type:String,
+        required:true
+    },
 });
 
 const orderCost = mongoose.model("OrderCost",orderSchema);
