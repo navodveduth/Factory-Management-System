@@ -61,8 +61,6 @@ function StockPDF() {
     return (
         <div>
 
-            {/* DON'T CHANGE ANYTHING HERE */}
-
             <div className={currentMode === 'Dark' ? 'dark' : ''}>
 
                 <div className="flex relative dark:bg-main-dark-bg">
@@ -141,13 +139,13 @@ function StockPDF() {
 
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type == "Additions" &&
-                                                            stockUtil.stockCode == data.stockCode).map((stockUtil) => {
+                                                            stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totAdds += stockUtil.quantity
                                                             })
                                                     }
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
-                                                            stockUtil.stockCode == data.stockCode).map((stockUtil) => {
+                                                            stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totIssues += stockUtil.quantity
                                                             })
                                                     }

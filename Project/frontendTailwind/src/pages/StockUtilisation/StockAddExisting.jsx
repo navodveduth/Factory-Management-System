@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Header } from '../../components';
 import { FiUser } from 'react-icons/fi';
@@ -17,13 +17,14 @@ function StockAddExisting() {
     const navigate = useNavigate();
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
-    const [stock, setStock] = useState('');
-    const [stockUtil, setStockUtil] = useState('');
+    //const [stock, setStock] = useState([]);
+    //const [stockUtil,setStockUtil] = useState([]);
     const [stockCode, setStockCode] = useState('');
-    var [stockName, setstockName] = useState('');
+    var [stockName, setStockName] = useState('');
     var [stockCategory, setStockCategory] = useState('');
     const [quantity, setQuantity] = useState('');
     const [date, setDate] = useState('');
+    const [firstPurchaseDate, setFirstPurchaseDate] = useState('');
     const [type, setType] = useState('');
     const [unitPrice, setUnitPrice] = useState('');
     var [supplier, setSupplier] = useState('');
@@ -31,7 +32,6 @@ function StockAddExisting() {
 
     //gets the current date
     var currentDate = new Date().toISOString().split('T')[0];
-    console.log(currentDate)
 
     // var displayM = true;
     // if (stockCategory === ''){
@@ -43,32 +43,34 @@ function StockAddExisting() {
     //     displayM = true;
     //     supplier  = "-";
     // }
+    const {id} = useParams();
 
-    const getStock = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stock")
-            .then((res) => {
-                setStock(res.data); //setStock is used to update the state variable
-                console.log(res.data);
-            })
-            .catch((err) => {
-                alert(err.message);
-            })
+    const getStock = () => {
+        axios.get("http://localhost:8070/stock/" + id).then((res) => {
+            setStockCode(res.data.stockCode);
+            setStockName(res.data.stockName);
+            setStockCategory(res.data.stockCategory);
+            setFirstPurchaseDate(res.data.firstPurchaseDate);
+        }).catch((err) => {
+            alert(err);
+        })
     }
 
-    const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stockUtilisation")
-            .then((res) => {
-                setStockUtil(res.data); //setStock is used to update the state variable
-                console.log(res.data);
-            })
-            .catch((err) => {
-                alert(err.message);
-            })
-    }
+    // const getStockUtil = async () => {  //getStock is the function to get the data from the backend
+    //     axios.get("http://localhost:8070/stockUtilisation")
+    //         .then((res) => {
+    //             setStockUtil(res.data); //setStock is used to update the state variable
+    //             console.log(res.data);
+    //         })
+    //         .catch((err) => {
+    //             alert(err.message);
+    //         })
+    // }
+
 
     useEffect(() => { //useEffect is used to call the function getStock
         getStock();
-        getStockUtil();
+        //getStockUtil();
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
         if (currentThemeColor && currentThemeMode) {
@@ -77,12 +79,11 @@ function StockAddExisting() {
         }
     }, [])
 
+    var minDate = firstPurchaseDate.split('T')[0]
+
     return (
 
         <div>
-
-            {/* DON'T CHANGE ANYTHING HERE */}
-
             <div className={currentMode === 'Dark' ? 'dark' : ''}>
 
                 <div className="flex relative dark:bg-main-dark-bg">
@@ -135,26 +136,27 @@ function StockAddExisting() {
                                         <form onSubmit={async (e) => {
                                             e.preventDefault();
 
-                                            var checkExists = "";
-                                            var checkAddition = 0;
-                                            var checkIssues = 0;
+                                            // var checkExists = "";
+                                            // var checkAddition = 0;
+                                            // var checkIssues = 0;
 
-                                            {
-                                                stock.filter((stock) => stock.stockCode === stockCode).map((stock) => {
-                                                    checkExists = stock.stockCode,
-                                                        stockName = stock.stockName,
-                                                        stockCategory = stock.stockCategory
+                                            // {
+                                            //     stock.filter((stock) => stock.stockCode === stockCode).map((stock) => {
+                                            //         checkExists = stock.stockCode,
+                                            //             stockName = stock.stockName,
+                                            //             stockCategory = stock.stockCategory,
+                                            //             firstPurchaseDate = stock.firstPurchaseDate
 
-                                                    {
-                                                        if (stock.type === "Additions") {
-                                                            { checkAddition = 1 }
-                                                        } else if (stock.type === "Issues") {
-                                                            { checkIssues = 1 }
-                                                        }
-                                                    }
+                                            //         {
+                                            //             if (stock.type === "Additions") {
+                                            //                 { checkAddition = 1 }
+                                            //             } else if (stock.type === "Issues") {
+                                            //                 { checkIssues = 1 }
+                                            //             }
+                                            //         }
 
-                                                })
-                                            }
+                                            //     })
+                                            // }
 
                                             { totalValue = quantity * unitPrice }
 
@@ -167,6 +169,7 @@ function StockAddExisting() {
                                                 stockName,
                                                 stockCategory,
                                                 date,
+                                                firstPurchaseDate,
                                                 type,
                                                 supplier,
                                                 unitPrice,
@@ -185,29 +188,29 @@ function StockAddExisting() {
                                             //     navigate('/StockAdd');
                                             // })
 
-                                            {
-                                                if (checkExists === "") {
-                                                    alert('Entry does not exist in stock information.For non existing stocks addition, please add from stock information page');
-                                                    navigate('/StockDashboard')
-                                                } else {
-                                                    // if (checkExists === stockCode && date === currentDate && checkAddition === 1 && checkIssues ===1) {
+                                            // {
+                                            //     if (checkExists === "") {
+                                            //         alert('Entry does not exist in stock information.For non existing stocks addition, please add from stock information page');
+                                            //         navigate('/StockDashboard')
+                                            //     } else {
+                                            //         // if (checkExists === stockCode && date === currentDate && checkAddition === 1 && checkIssues ===1) {
 
-                                                    //     alert("An entry with " + stockCode + " and additions and issues already exists for today's date");
-                                                    //     navigate('/StockUtilisation')
+                                            //         //     alert("An entry with " + stockCode + " and additions and issues already exists for today's date");
+                                            //         //     navigate('/StockUtilisation')
 
-                                                    // } 
-                                                    // else if (checkExists === stockCode && date === currentDate && checkAddition === 1) {
+                                            //         // } 
+                                            //         // else if (checkExists === stockCode && date === currentDate && checkAddition === 1) {
 
-                                                    //     alert("An entry with " + stockCode + " and " + type + " already exists for today's date");
-                                                    //     navigate('/StockUtilisation')
+                                            //         //     alert("An entry with " + stockCode + " and " + type + " already exists for today's date");
+                                            //         //     navigate('/StockUtilisation')
 
-                                                    // }
-                                                    // else if (checkExists === stockCode && date === currentDate && checkIssues === 1) {
+                                            //         // }
+                                            //         // else if (checkExists === stockCode && date === currentDate && checkIssues === 1) {
 
-                                                    //     alert("An entry with " + stockCode + " and " + type + " already exists for today's date");
-                                                    //     navigate('/StockUtilisation')
+                                            //         //     alert("An entry with " + stockCode + " and " + type + " already exists for today's date");
+                                            //         //     navigate('/StockUtilisation')
 
-                                                    // }else {
+                                            //         // }else {
                                                     await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
                                                         alert("Data saved successfully");
                                                         navigate('/StockUtilisation');
@@ -217,8 +220,8 @@ function StockAddExisting() {
                                                         alert("ERROR: Could not add stock");
                                                         navigate('/StockAddExisting');
                                                     })
-                                                }
-                                            }
+                                            //     }
+                                            // }
 
 
                                         }}>
@@ -226,16 +229,14 @@ function StockAddExisting() {
                                             <div className="mb-3">
                                                 <label for="stockCode" className="form-label">Stock Code: </label>
                                                 <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="code" placeholder="Enter stock code..." pattern="[A-Z]{1}[0-9]{3,7}"
-                                                    title="The code needs to start with one uppercase letter, atleast 3 digits and should not exceed 8 characters" required onChange={(e) => {
-                                                        setStockCode(e.target.value);
-                                                    }} />
+                                                     value={stockCode} readOnly />
                                             </div>
 
                                             {/* max uses the above date variable and sets the max date to select from*/}
                                             <div className="mb-3">
                                                 <label for="date" className="form-label">Date: </label>
                                                 <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date"
-                                                    min="2010-01-01" max={currentDate} required onChange={(e) => {
+                                                    min={minDate} max={currentDate} required onChange={(e) => {
                                                         setDate(e.target.value);
                                                     }} />
                                             </div>
@@ -281,7 +282,7 @@ function StockAddExisting() {
                                                 <input type="number" min="0" step="0.01" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="totalCost" value={quantity * unitPrice} readOnly />
                                             </div>
 
-                                            <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Add new stock</button>
+                                            <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Add entry for existing stock</button>
 
                                         </form>
                                     </div>

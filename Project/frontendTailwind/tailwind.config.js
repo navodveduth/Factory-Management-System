@@ -24,7 +24,9 @@ module.exports = {
         color: 'rgba(0, 0, 0, 0.1)',
       },
       width: {
+        200: '200px',
         400: '400px',
+        640: '640px',
         760: '760px',
         780: '780px',
         800: '800px',
@@ -39,12 +41,9 @@ module.exports = {
         590: '590px',
       },
       backgroundImage: {
-        'hero-pattern':
-          "url('https://i.ibb.co/MkvLDfb/Rectangle-4389.png')",
+        'hero-pattern': "url('https://i.ibb.co/MkvLDfb/Rectangle-4389.png')",
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-  ],
+  plugins: [require('@tailwindcss/forms')],
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
@@ -16,6 +16,15 @@ function StockBreakdown() {
     const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
     const [stockUtil, setStockUtil] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+
+    const [dateStart, setDateStart] = useState("");
+    const [dateEnd, setDateEnd] = useState("");
+
+    const navigate = useNavigate();
+
+    const toDateRange = () => {
+        navigate('/StockBreakdownDateRange/', { state: { DS: dateStart, DE: dateEnd } });
+    }
 
     const getStock = async () => {  //getStock is the function to get the data from the backend
         axios.get("http://localhost:8070/stock")
@@ -76,18 +85,12 @@ function StockBreakdown() {
 
     }
 
-    // var totAdds = 0;
-    // var totIssues = 0;
-    // var price =0;
-
-    // stock.stockUtilisationDetails.filter((stk) => stk.type === "Additions" && stockCode == stockCode).map(
-    //     totAdds += stk.units,
-    //     price = stk.unitPrice
-    // )
-
-    // stock.stockUtilisationDetails.filter((stk) => stk.type === "Issues" && stockCode == stockCode).map(
-    //     totIssues += stk.units
-    // )
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+    })
 
     return (
 
@@ -147,6 +150,23 @@ function StockBreakdown() {
                                                     setSearchTerm(e.target.value);
                                                 }} />
                                         </div>
+
+                                        <div>
+                                            <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date"
+                                                onChange={(e) => {
+                                                    setDateStart(e.target.value);
+                                                }} />
+                                        </div>
+
+                                        <div>
+                                            <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date"
+                                                onChange={(e) => {
+                                                    setDateEnd(e.target.value);
+                                                }} />
+                                        </div>
+                                        <div className=" mx-1">
+                                            <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => { toDateRange() }}  >filter</button>
+                                        </div>
                                         <div className="mr-0 ml-auto">
                                             <Link to={"/generateSBPDF"}> {/* change this link your preview page */}
                                                 <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
@@ -161,7 +181,6 @@ function StockBreakdown() {
                                                 <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
-                                                    <TableHeader value="Category" />
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Additions" />
                                                     <TableHeader value="Issues" />
@@ -192,13 +211,13 @@ function StockBreakdown() {
 
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Additions" &&
-                                                            stockUtil.stockCode === data.stockCode).map((stockUtil) => {
+                                                            stockUtil.stockCode === data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totAdds += stockUtil.quantity
                                                             })
                                                     }
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
-                                                            stockUtil.stockCode === data.stockCode).map((stockUtil) => {
+                                                            stockUtil.stockCode === data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totIssues += stockUtil.quantity
                                                             })
                                                     }
@@ -226,12 +245,11 @@ function StockBreakdown() {
                                                         <tr className="text-sm h-10 border dark:border-slate-600">
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
-                                                            <TableData value={data.stockCategory} />
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
                                                             <TableData value={totAdds} />
                                                             <TableData value={totIssues} />
                                                             <TableData value={data.damagedQty} />
-                                                            <TableData value={"Rs." + data.unitPrice} />
+                                                            <TableData value={"Rs." + formatter.format(data.unitPrice)} />
                                                             <TableData value={data.reorderLevel} />
                                                             <td className={`${dcolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`} >{data.sufficientStock} </td>
 
