@@ -13,7 +13,7 @@ import { MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, Ma
 
 import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice } from './pages/Sales';
 
-import { OrderViewAll, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder } from './pages/Production/Index';
+import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders} from './pages/Production/Index';
 
 import { StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockUtilisation, StockUtilUpdate, StockUtilPDF, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF } from './pages/Stock';
 
@@ -107,11 +107,12 @@ const App = () => {
           <Route path="/SalesPreview" element={<SalesPreview />} />
 
           {/* production management  */}
-          <Route path="/vieworders" element={<OrderViewAll />} />
+          <Route path="/viewRequested" element={<RequestedStocks />} />
           <Route path="/production" element={<ProductionDashBoard />} />
           <Route path="/newOrder" element={<AddOrder />} />
           <Route path="/updateCost/:id" element={<UpdateOrder />} />
           <Route path="/costpreview" element={<PreviewOrder />} />
+          <Route path="/pendingOrders" element ={<PendingOrders/>}/>
 
           {/* stock management  */}
           <Route path="/StockDashboard" element={<StocksDashboard />} />
