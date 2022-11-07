@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link,useLocation ,useNavigate} from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider.js';
 import TableData from '../../components/Table/TableData';
@@ -8,21 +8,26 @@ import TableHeader from '../../components/Table/TableHeader';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import MachMaintenanceViewAll from './MachMaintenanceViewAll';
-import MachMaintenanceCreateForm from './MachMaintenanceNew';
+import MachMaintenanceViewAll from '../MachineryAndMaintenance/MachMaintenanceViewAll';
+import MachMaintenanceCreateForm from '../MachineryAndMaintenance/MachMaintenanceNew';
 
 
 
 /* IMPORT ALL YOUR IMPORTS AS USUAL ABOVE HERE, REMOVE UNNECESSARY ONES*/
 
-const MachineryDateRange = () => {
+const MachineryViewAll = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [machinery, setMachinery] = useState([]); // <== THIS IS THE COMPONENT NAME, CHANGE IT TO YOUR COMPONENT NAME
   const [dateStart, setDateStart] = useState("");
   const [dateEnd, setDateEnd] = useState("");
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
-  const location = useLocation();
+
+  const navigate = useNavigate();
+  
+  const toDateRange=()=>{
+    navigate('/MachineryDateRange',{state:{DS:dateStart,DE:dateEnd}});
+  }
 
   var TotalDepreciation = 0;
   var TotalCost = 0;
@@ -37,9 +42,11 @@ const MachineryDateRange = () => {
   })
 
 
-  
+
+
+
   const getMachinery = async () => {  //getMachinery is the function to get the data from the backend
-    axios.get("http://localhost:8070/machinery/date/"+location.state.DS+"/"+location.state.DE)
+    axios.get("http://localhost:8070/machinery/")
       .then((res) => {
         setMachinery(res.data); //setMachinery is used to update the state variable
 
@@ -50,12 +57,6 @@ const MachineryDateRange = () => {
       })
   }
 
-
-  const navigate = useNavigate();
-  
-  const toDateRange=()=>{
-    navigate('/MachineryViewAll');
-  }
 
 
   useEffect(() => {
@@ -153,12 +154,24 @@ const MachineryDateRange = () => {
                           }} />
                       </div>
 
-                      <div className="mx-10 ml-auto">
-                                <Link to={"/financeViewAll"}> {/* change this link your previous page */}
-                                  <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Reset Date</button>
-                                </Link>
+                      <div>
+                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date" 
+                                onChange={(e) => {
+                                  setDateStart(e.target.value);
+                                }} />
                               </div>
-                              
+
+                              <div>
+                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date" 
+                                onChange={(e) => {
+                                  setDateEnd(e.target.value);
+                                }} />
+                              </div>
+
+                              <div className=" mx-1">
+                                  <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}  >filter</button>
+                              </div>
+
                       <div className="mr-0 ml-auto">
                         <Link to={"/MachineryReport"}> {/* change this link your preview page */}
                           <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
@@ -300,4 +313,4 @@ const MachineryDateRange = () => {
   );
 };
 
-export default MachineryDateRange;
+export default MachineryViewAll;
