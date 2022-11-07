@@ -67,3 +67,18 @@ export const getOneEmployeeDetailsByEmployeeNumber = async (req, res) => {
         res.status(404).json({ message: error });
     }
 }
+
+// Find a employee details and salary details with id with lookup
+export const getOneEmployeeDetailsWithSalaryDetails = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const employee = await Employee.aggregate([
+            {
+                $match: { _id: ObjectId(id) }
+            }
+        ]);
+        res.status(200).json(employee);
+    } catch (error) {
+        res.status(404).json({ message: error });
+    }
+}

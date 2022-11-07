@@ -5,10 +5,10 @@ import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 import { jsPDF } from "jspdf";
-import { DashTopBox, DashTopButton, } from '../../components';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import { DashTopBox, DashTopButton,  } from '../../components';
 
 function IssuesReport() {
 
@@ -16,7 +16,7 @@ function IssuesReport() {
 
     const [stockUtil, setStockUtilisation] = useState([]); //stock is the state variable and setStock is the function to update the state variable
     const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stockUtilisation")
+        axios.get("http://localhost:8070/stockUtilisation/type/" + "Issues")
             .then((res) => {
                 setStockUtilisation(res.data); //setStock is used to update the state variable
                 console.log(res.data);
