@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate,useLocation } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
@@ -10,7 +10,7 @@ import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-function StockBreakdown() {
+function StockBreakdownDateRange() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
     const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
@@ -21,13 +21,14 @@ function StockBreakdown() {
     const [dateEnd, setDateEnd] = useState("");
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const toDateRange = () => {
-        navigate('/StockBreakdownDateRange/', { state: { DS: dateStart, DE: dateEnd } });
+        navigate('/StockBreakdown');
     }
 
     const getStock = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stock")
+        axios.get("http://localhost:8070/stock/date/" + location.state.DS+"/"+location.state.DE)
             .then((res) => {
                 setStock(res.data); //setStock is used to update the state variable
                 console.log(res.data);
@@ -38,7 +39,7 @@ function StockBreakdown() {
     }
 
     const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stockUtilisation")
+        axios.get("http://localhost:8070/stockUtilisation/date/" + location.state.DS+"/"+location.state.DE)
             .then((res) => {
                 setStockUtil(res.data); //setStock is used to update the state variable
                 console.log(res.data);
@@ -150,22 +151,10 @@ function StockBreakdown() {
                                                     setSearchTerm(e.target.value);
                                                 }} />
                                         </div>
-
-                                        <div>
-                                            <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date"
-                                                onChange={(e) => {
-                                                    setDateStart(e.target.value);
-                                                }} />
-                                        </div>
-
-                                        <div>
-                                            <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date"
-                                                onChange={(e) => {
-                                                    setDateEnd(e.target.value);
-                                                }} />
-                                        </div>
-                                        <div className=" mx-1">
-                                            <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => { toDateRange() }}  >filter</button>
+                                        <div className="mx-10 ml-auto">
+                                            <Link to={"/StockBreakdown"}> {/* change this link your previous page */}
+                                                <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Reset Date</button>
+                                            </Link>
                                         </div>
                                         <div className="mr-0 ml-auto">
                                             <Link to={"/generateSBPDF"}> {/* change this link your preview page */}
@@ -291,4 +280,4 @@ function StockBreakdown() {
     );
 };
 
-export default StockBreakdown
+export default StockBreakdownDateRange

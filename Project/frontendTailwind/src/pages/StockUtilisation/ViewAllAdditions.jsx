@@ -11,7 +11,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { DashTopBox, DashTopButton,  } from '../../components';
 
 
-function StockUtilisation() {
+function ViewAllAdditions() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
     const navigate = useNavigate();
 
@@ -123,7 +123,7 @@ function StockUtilisation() {
             }} />
           </div>
           <div className="mr-0 ml-auto">
-            <Link to={"/generateSUPDF"}> {/* change this link your preview page */}
+            <Link to={"/generateAPDF"}> {/* change this link your preview page */}
               <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
             </Link>
           </div>
@@ -149,9 +149,11 @@ function StockUtilisation() {
                         <tbody>
                             {stockUtil.filter((data) => {
                                 if(searchTerm == ""){
-                                    return data;
+                                    stockUtil.filter((data) => stockUtil.type === "Additions").map((data) => {
+                                        return data;
+                                    })
                                 }else if((data.stockCode.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                  (data.type.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                  (data.stockName.toLowerCase().includes(searchTerm.toLowerCase())) ||
                                   (data.supplier.toLowerCase().includes(searchTerm.toLowerCase())))
                                   
                                   {
@@ -218,4 +220,4 @@ function StockUtilisation() {
   );
 };
 
-export default StockUtilisation
+export default ViewAllAdditions

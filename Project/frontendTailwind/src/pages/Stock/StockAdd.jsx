@@ -25,6 +25,7 @@ function StockAdd() {
     const [date, setDate] = useState('');
     var [type, setType] = useState('');
     const [unitPrice, setUnitPrice] = useState('');
+    const [firstPurchaseDate, setFirstPurchaseDate] = useState('');
     var [supplier, setSupplier] = useState('');
     var [totalValue, setTotalValue] = useState('');
     var [additions, setAdditions] = useState('');
@@ -128,6 +129,7 @@ function StockAdd() {
                                                 stockName,
                                                 stockCategory,
                                                 description,
+                                                firstPurchaseDate,
                                                 reorderLevel,
                                                 unitPrice,
                                                 totalValue,
@@ -140,6 +142,7 @@ function StockAdd() {
                                                 stockName,
                                                 stockCategory,
                                                 date,
+                                                firstPurchaseDate,
                                                 type,
                                                 supplier,
                                                 unitPrice,
@@ -211,6 +214,7 @@ function StockAdd() {
                                                 <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date"
                                                     min="2010-01-01" max={currentDate} required onChange={(e) => {
                                                         setDate(e.target.value);
+                                                        setFirstPurchaseDate(e.target.value);
                                                     }} />
                                             </div>
 

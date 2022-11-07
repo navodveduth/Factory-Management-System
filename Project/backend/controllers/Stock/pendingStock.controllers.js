@@ -71,3 +71,52 @@ export const deletePendingStock = async (req, res) => {
         })
     }
 }
+
+//date sort
+export const getDateRangePendingStock = async (req, res) => {
+    try {
+        const DS = req.params.DS;
+        const DE = req.params.DE;
+        const pendingStockDate = await StockPending.aggregate([
+            /* {
+                $lookup:
+                {
+                    from: "finances",
+                    localField: "local",  
+                    foreignField: "foreign", 
+                    as: "newField" 
+                }
+            }, */
+            {
+                $match: { date: { $gte: new Date(DS), $lte: new Date(DE) } }
+            }
+        ]);
+        res.status(200).json(pendingStockDate);
+    } catch (error) {
+        res.status(404).json({message : error});
+    }
+}
+
+//get one stock status
+export const getOneStockStatus = async (req, res) => {
+    try {
+        const stat = req.params.ST;
+
+        var paramtype = "";
+        if(stat === "Pending"){
+            paramtype = "Pending"
+        }else if(stat === "Processing"){
+            paramtype = "Processing"
+        }else{
+            paramtype = "Resolved"
+        }
+        const pstockType = await StockPending.find(
+            {
+                "status": paramtype
+            }
+        );
+        res.status(200).json(pstockType);
+    } catch (error) {
+        res.status(404).json({message : error});
+    }
+}

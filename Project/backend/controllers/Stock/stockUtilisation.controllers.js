@@ -81,3 +81,72 @@ export const deleteStockUtil = async (req, res) => {
         })
     }
 }
+
+//date sort
+export const getDateRangeStockUtil = async (req, res) => {
+    try {
+        const DS = req.params.DS;
+        const DE = req.params.DE;
+        const stockUtilDate = await StockUtilisation.aggregate([
+            /* {
+                $lookup:
+                {
+                    from: "finances",
+                    localField: "local",  
+                    foreignField: "foreign", 
+                    as: "newField" 
+                }
+            }, */
+            {
+                $match: { date: { $gte: new Date(DS), $lte: new Date(DE) } }
+            }
+        ]);
+        res.status(200).json(stockUtilDate);
+    } catch (error) {
+        res.status(404).json({message : error});
+    }
+}
+
+//get one stock category
+export const getOneStockUtilCategory = async (req, res) => {
+    try {
+        const cat = req.params.categ;
+
+        var category = "";
+        if(cat === "Raw materials"){
+            category = "Raw materials"
+        }else{
+            category = "Work in progress"
+        }
+        const stockCat = await StockUtilisation.find(
+            {
+                "stockCategory": category
+            }
+        );
+        res.status(200).json(stockCat);
+    } catch (error) {
+        res.status(404).json({message : error});
+    }
+}
+
+//get one stock type
+export const getOneStockType = async (req, res) => {
+    try {
+        const utilType = req.params.T;
+
+        var paramtype = "";
+        if(utilType === "Additions"){
+            paramtype = "Additions"
+        }else{
+            paramtype = "Issues"
+        }
+        const stockType = await StockUtilisation.find(
+            {
+                "type": paramtype
+            }
+        );
+        res.status(200).json(stockType);
+    } catch (error) {
+        res.status(404).json({message : error});
+    }
+}
