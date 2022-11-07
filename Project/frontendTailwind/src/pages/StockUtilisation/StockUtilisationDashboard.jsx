@@ -97,11 +97,37 @@ const StockUtilisationDashboard = () => {
                       <Link to="/StockUtilisation">
                         <DashTopButton icon={<FaChartBar />} value="View All Stocks Transactions" />
                       </Link>
-                      <Link to="/StockAddExisting">
+
+                      <Link to="/ViewAllAdditions">
+                        <DashTopButton icon={<FaChartBar />} value="View All Addition Transactions" />
+                      </Link>
+
+                      <Link to="/ViewAllIssues">
+                        <DashTopButton icon={<FaChartBar />} value="View All Issued Transactions" />
+                      </Link>
+
+                      <Link to="/StockUtilAddOption">
                         <DashTopButton icon={<BiAddToQueue/>} value="Add New Entry for exisitng stock" />
                       </Link>
+
+                      <Link to="/PendingStockView">
+                        <DashTopButton icon={<FaInbox/>} value="View all stock requests" />
+                      </Link>
+
                       <Link to="/PendingStockAdd">
                         <DashTopButton icon={<FaInbox/>} value="Add new stock request" />
+                      </Link>
+
+                      <Link to="/PendingRequest">
+                        <DashTopButton icon={<FaInbox/>} value="View all pendings" />
+                      </Link>
+
+                      <Link to="/ProcessingRequest">
+                        <DashTopButton icon={<FaInbox/>} value="View all processing" />
+                      </Link>
+
+                      <Link to="/ResolvedRequest">
+                        <DashTopButton icon={<FaInbox/>} value="View all resolved" />
                       </Link>
                     </div>
                   </div>
