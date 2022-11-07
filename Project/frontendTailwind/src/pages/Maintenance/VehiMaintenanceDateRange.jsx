@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link,useLocation ,useNavigate } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider.js';
 import TableData from '../../components/Table/TableData';
@@ -9,12 +9,13 @@ import TableHeader from '../../components/Table/TableHeader';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import VehiMaintenanceViewAll from './VehiMaintenanceViewAll';
 
 
 const VehiMaintenanceDateRange = () => {
   const [maintainenceVehi, setMaintainenceVehi] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const location = useLocation();
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
   var TotalCost = 0;
@@ -28,7 +29,7 @@ const VehiMaintenanceDateRange = () => {
   })
 
   const getVMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainenceVehicle/")
+    axios.get("http://localhost:8070/maintainenceVehicle/date/" +location.state.DS +"/"+location.state.DE)
       .then((res) => {
         setMaintainenceVehi(res.data); //setMaintainence  is used to update the state variable
 
@@ -36,6 +37,13 @@ const VehiMaintenanceDateRange = () => {
       .catch((err) => {
         alert(err.message);
       })
+  }
+
+  
+  const navigate = useNavigate();
+  
+  const toDateRange=()=>{
+    navigate('/VehiMaintenanceViewAll');
   }
 
 
@@ -133,6 +141,11 @@ const VehiMaintenanceDateRange = () => {
                             setSearchTerm(e.target.value);
                           }} />
                       </div>
+                      <div className="mx-10 ml-auto">
+                                <Link to={"/VehiMaintenanceViewAll"}> {/* change this link your previous page */}
+                                  <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Reset Date</button>
+                                </Link>
+                              </div>
                       <div className="mr-0 ml-auto">
                         <Link to={"/VehiMaintenanceReport"}> {/* change this link your preview page */}
                           <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
