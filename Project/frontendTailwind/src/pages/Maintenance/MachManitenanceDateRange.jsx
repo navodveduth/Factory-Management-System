@@ -162,7 +162,6 @@ const MachManitenanceDateRange = () => {
                           <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                             <TableHeader value="Code" />
                             <TableHeader value="Machine ID" />
-                            <TableHeader value="Item" />
                             <TableHeader value="Repairs" />
                             <TableHeader value="Repair started" />
                             <TableHeader value="Repaired by" />
@@ -207,15 +206,6 @@ const MachManitenanceDateRange = () => {
 
                                 <TableData value={data.mid} />
                                 <TableData value={data.machineID} />
-                                <TableData value={data.machineDetailss.map((data1) => {
-                                  return (
-                                    <div>
-                                      <Link to={`/MachineryViewAll/`}>
-                                        <TableData value={data1.name} />
-                                      </Link>
-                                    </div>
-                                  )
-                                })} />
                                 <TableData value={data.Description} />
                                 <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
                                 <TableData value={data.Location} />
