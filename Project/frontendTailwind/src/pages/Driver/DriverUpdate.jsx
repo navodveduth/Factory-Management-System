@@ -150,7 +150,7 @@ const DriverUpdate = () => {
                             setFullName(e.target.value);
                           }}
                         >
-                          <option selected>Select...</option>
+                          <option value={fullName}>{fullName}</option>
                           {employees.map((item, index) =>
                             item.employeeDesignation === 'Driver' ? (
                               <option value={item.employeeFullName} key={index}>

@@ -25,6 +25,7 @@ function StockUtilUpdate() {
     const [unitPrice, setUnitPrice] = useState('');
     const [supplier, setSupplier] = useState('');
     var [totalValue, setTotalValue] = useState('');
+    const [ firstPurchaseDate, setFirstPurchaseDate] = useState('');
 
     const { id } = useParams();
 
@@ -34,10 +35,12 @@ function StockUtilUpdate() {
             setStockName(res.data.stockName);
             setStockCategory(res.data.stockCategory);
             setDate(res.data.date);
+            setFirstPurchaseDate(res.data.firstPurchaseDate);
             setQuantity(res.data.quantity);
             setType(res.data.type);
             setUnitPrice(res.data.unitPrice);
             setSupplier(res.data.supplier);
+            setTotalValue(res.data.totalValue);
         }).catch((err) => {
             alert(err);
         })
@@ -124,7 +127,10 @@ function StockUtilUpdate() {
 
                                             const newStockUtil = {
                                                 stockCode,
+                                                stockName,
+                                                stockCategory,
                                                 date,
+                                                firstPurchaseDate,
                                                 type,
                                                 supplier,
                                                 unitPrice,
