@@ -254,6 +254,15 @@ function StockBreakdown() {
                                                             <td className={`${dcolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`} >{data.sufficientStock} </td>
 
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                                            <Link to={`/StockInformation/${data._id}`}>
+                                                                    <button
+                                                                        type="button"
+                                                                        className="bg-neutral-500 font-bold py-1 px-4 rounded-full mx-3 text-white"
+                                                                    >
+                                                                        <i className="fas fa-info-circle" />
+                                                                    </button>
+                                                                </Link>
+                                                                
                                                                 <Link to={`/StockBreakdownUpdate/${data._id}`}>
                                                                     <button
                                                                         type="button"
