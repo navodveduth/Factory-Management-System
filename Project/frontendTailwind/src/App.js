@@ -9,7 +9,7 @@ import { WelfareDashboard, WelfareNew, WelfareReport, WelfareUpdate, WelfareView
 
 import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll, PreviewSalary, FinanceDateRange } from './pages/Finance';
 
-import { MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport,MachMaintenanceHistory, MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport} from './pages/MachineryAndMaintenance';
+import { MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory, MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport,MaintainenceDateRange, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachManitenanceDateRange,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport,VehiMaintenanceDateRange} from './pages/MachineryAndMaintenance';
 
 import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice, SalesDateRange } from './pages/Sales';
 
@@ -88,6 +88,7 @@ const App = () => {
           <Route path="/MachineryCreate" element={<MachineryNew />} />
           <Route path="/MachineryUpdate/:id" element={<MachineryUpdate />} />
           <Route path="/MachineryReport/" element={<MachineryReport />} />
+          <Route path="/MachineryDateRange/" element={<MachineryDateRange />} />
           <Route path="/MachMaintenanceHistory/:id" element={<MachMaintenanceHistory />} />
 
           {/* maintenance management  */}
@@ -97,14 +98,17 @@ const App = () => {
           <Route path="/MaintenanceUpdate/:id" element={<MaintenanceUpdate />} />
           <Route path="/MaintainenceTask/" element={<MaintainenceTask />} />
           <Route path="/MaintainenceReport" element={<MaintainenceReport />} />
+          <Route path="/MaintainenceDateRange" element={<MaintainenceDateRange />} />
           <Route path="/MachMaintenanceViewAll" element={<MachMaintenanceViewAll />} />
           <Route path="/MachMaintenanceNew" element={<MachMaintenanceNew />} />
           <Route path="/MachMaintenanceUpdate/:id" element={<MachMaintenanceUpdate />} />
           <Route path="/MachMaintenanceReport" element={<MachMaintenanceReport />} />
+          <Route path="/MachManitenanceDateRange/" element={<MachManitenanceDateRange />} />
           <Route path="/VehiMaintenanceViewAll" element={<VehiMaintenanceViewAll />} />
           <Route path="/VehiMaintenanceNew" element={<VehiMaintenanceNew />} />
           <Route path="/VehiMaintenanceUpdate/:id" element={<VehiMaintenanceUpdate />} />
           <Route path="/VehiMaintenanceReport" element={<VehiMaintenanceReport />} />
+          <Route path="/VehiMaintenanceDateRange/" element={<VehiMaintenanceDateRange />} />
                 
           {/* sales management  */}
           <Route path="/SalesDashboard" element={<SalesDashboard />} />
