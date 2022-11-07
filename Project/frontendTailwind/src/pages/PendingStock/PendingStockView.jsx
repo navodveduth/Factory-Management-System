@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
@@ -17,6 +17,14 @@ function PendingStockView() {
     const [pendingStock, setPendingStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
     const [searchTerm, setSearchTerm] = useState("");
 
+    const [dateStart, setDateStart] = useState("");
+    const [dateEnd, setDateEnd] = useState("");
+
+    const navigate = useNavigate();
+
+    const toDateRange = () => {
+        navigate('/PendingStockViewDateRange', { state: { DS: dateStart, DE: dateEnd } });
+    }
 
     const getPendingStock = async () => {  //getStock is the function to get the data from the backend
         axios.get("http://localhost:8070/pendingStock")
@@ -61,6 +69,13 @@ function PendingStockView() {
         }
 
     }
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+    })
 
     return (
 
@@ -119,6 +134,23 @@ function PendingStockView() {
                                                     setSearchTerm(e.target.value);
                                                 }} />
                                         </div>
+
+                                        <div>
+                                            <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date"
+                                                onChange={(e) => {
+                                                    setDateStart(e.target.value);
+                                                }} />
+                                        </div>
+
+                                        <div>
+                                            <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date"
+                                                onChange={(e) => {
+                                                    setDateEnd(e.target.value);
+                                                }} />
+                                        </div>
+                                        <div className=" mx-1">
+                                            <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => { toDateRange() }}  >filter</button>
+                                        </div>
                                         <div className="mr-0 ml-auto">
                                             <Link to={"/generatePSPDF"}> {/* change this link your preview page */}
                                                 <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
@@ -154,13 +186,13 @@ function PendingStockView() {
                                                 }).map((data, key) => {//map is used to iterate the array
                                                     const psdate = data.date.split('T')[0];
 
-                                                    
+
                                                     var datacolor = "text-black";
                                                     if (data.status === "Pending") {
                                                         datacolor = "text-red-600 font-bold";
-                                                    }else if (data.status === "Resolved"){
+                                                    } else if (data.status === "Resolved") {
                                                         datacolor = "text-green-500 font-bold";
-                                                    }else{
+                                                    } else {
                                                         datacolor = "text-yellow-500 font-bold";
                                                     }
 
