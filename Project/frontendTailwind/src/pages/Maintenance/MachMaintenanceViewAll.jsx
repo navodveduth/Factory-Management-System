@@ -9,11 +9,11 @@ import TableHeader from '../../components/Table/TableHeader';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import MachineryViewAll from './MachineryViewAll';
 
 
 
-const MachManitenanceDateRange = () => {
+
+const MachMaintenanceViewAll = () => {
   const [maintainenceMachine, setMaintainenceMachine] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -154,7 +154,6 @@ const MachManitenanceDateRange = () => {
                         <thead>
                           <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                             <TableHeader value="Code" />
-                            <TableHeader value="Machine ID" />
                             <TableHeader value="Item" />
                             <TableHeader value="Repairs" />
                             <TableHeader value="Repair started" />
@@ -199,7 +198,7 @@ const MachManitenanceDateRange = () => {
 
 
                                 <TableData value={data.mid} />
-                                <TableData value={data.machineID} />
+                            
                                 <TableData value={data.machineDetailss.map((data1) => {
                                   return (
                                     <div>
@@ -264,5 +263,5 @@ const MachManitenanceDateRange = () => {
   );
 };
 
-export default MachManitenanceDateRange;
+export default MachMaintenanceViewAll;
 

@@ -9,11 +9,11 @@ import TableHeader from '../../components/Table/TableHeader';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import MachineryViewAll from './MachineryViewAll';
 
 
 
-const MachMaintenanceViewAll = () => {
+
+const MachManitenanceDateRange = () => {
   const [maintainenceMachine, setMaintainenceMachine] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -264,5 +264,5 @@ const MachMaintenanceViewAll = () => {
   );
 };
 
-export default MachMaintenanceViewAll;
+export default MachManitenanceDateRange;
 
