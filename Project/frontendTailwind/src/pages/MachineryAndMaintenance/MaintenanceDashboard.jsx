@@ -13,6 +13,8 @@ import { useStateContext } from '../../contexts/ContextProvider';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import MachMaintenanceViewAll from './MachMaintenanceViewAll';
+import VehiMaintenanceViewAll from './VehiMaintenanceViewAll';
 
 
 
@@ -218,18 +220,6 @@ const MaintenanceDashboard = () => { // <== THIS IS THE COMPONENT NAME, CHANGE I
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
-                    <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
-                      {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-
-
-                      <DashTopBox icon={<BiBuildingHouse />} label="Property Under Maintenance" data={maintprog} />
-                      <DashTopBox icon={<GiSewingMachine />} label="Machines Under Maintenance" data={maintainenceMachinep} />
-                      <DashTopBox icon={<MdOutlineDirectionsBusFilled />} label="Vehicles Under Maintenance" data={maintainenceVehip} />
-
-                    </div>
-                  </div>
-
 
                   <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
@@ -239,6 +229,25 @@ const MaintenanceDashboard = () => { // <== THIS IS THE COMPONENT NAME, CHANGE I
 
                     </div>
                   </div>
+
+                  <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                    <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
+                      {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
+
+                      <Link to="/MaintenanceViewAll">
+                      <DashTopBox icon={<BiBuildingHouse />} label="Property Under Maintenance" data={maintprog} />
+                      </Link>
+                      <Link to="/MachMaintenanceViewAll">
+                      <DashTopBox icon={<GiSewingMachine />} label="Machines Under Maintenance" data={maintainenceMachinep} />
+                      </Link>
+                      <Link to="/VehiMaintenanceViewAll">
+                      <DashTopBox icon={<MdOutlineDirectionsBusFilled />} label="Vehicles Under Maintenance" data={maintainenceVehip} />
+                      </Link>
+                    </div>
+                  </div>
+
+
+                
 
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
                     < MaintainBarChart />

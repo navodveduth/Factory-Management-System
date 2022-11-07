@@ -148,8 +148,9 @@ const MachineryDashboard = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT 
                   <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                       {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-
+                      <Link to="/MachineryViewAll">
                       <DashTopBox icon={<GiSewingMachine />} label="Total Machines" data={machCount} />
+                      </Link>
                       <DashTopBox icon={<GiSewingMachine />} label="Avalable Machines" data={machAvailable} />
                     </div>
 

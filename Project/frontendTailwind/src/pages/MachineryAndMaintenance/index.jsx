@@ -21,7 +21,7 @@ export {default as VehiMaintenanceReport}  from './VehiMaintenanceReport';
 export {default as MaintainenceTask}  from './MaintainenceTask';
 export {default as MaintainenceReport} from './MaintainenceReport';
 export {default as MachineryReport} from './MachineryReport';
-
+export {default as MachMaintenanceHistory} from './MachMaintenanceHistory';
 
 
 

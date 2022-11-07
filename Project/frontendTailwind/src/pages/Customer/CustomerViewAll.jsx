@@ -162,7 +162,7 @@ const CustomerViewAll = () => {
                                                     
                                                       return(
                                                         <div>
-                                                          <TableData value={data2.invoiceNo} />
+                                                          {data2.invoiceNo}
                                                         </div>
                                                       )
                                                     })} />
