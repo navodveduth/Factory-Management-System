@@ -76,7 +76,7 @@ const Navbar = () => {
           </div>
         </TooltipComponent>
 
-        {isClicked.userProfile && (<FilterPopup />)}
+        {isClicked.userProfile && (<UserProfile />)}
       </div>
     </div>
   );
