@@ -28,6 +28,7 @@ function StockBreakdownUpdate() {
     const [type, setType] = useState('');
     const [date, setDate] = useState('');
     var [totalValue, setTotalValue] = useState('');
+    const [firstPurchaseDate,setfirstPurchaseDate] = useState('');
     var totAdds = 0;
     var totIssues = 0;
     var quantity = 0
@@ -44,6 +45,7 @@ function StockBreakdownUpdate() {
             setStockName(res.data.stockName);
             setStockCategory(res.data.stockCategory);
             setDescription(res.data.description);
+            setfirstPurchaseDate(res.data.firstPurchaseDate);
             setReorderLevel(res.data.reorderLevel);
             setDamagedQty(res.data.damagedQty);
             setUnitPrice(res.data.unitPrice);
@@ -135,13 +137,13 @@ function StockBreakdownUpdate() {
                                             e.preventDefault();
                                             {
                                                 stockUtil.filter((stockUtil) => stockUtil.type == "Additions" &&
-                                                    stockUtil.stockCode == stockCode).map((stockUtil) => {
+                                                    stockUtil.stockCode == stockCode && stockUtil.firstPurchaseDate === firstPurchaseDate).map((stockUtil) => {
                                                         totAdds += stockUtil.quantity
                                                     })
                                             }
                                             {
                                                 stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
-                                                    stockUtil.stockCode == stockCode).map((stockUtil) => {
+                                                    stockUtil.stockCode == stockCode && stockUtil.firstPurchaseDate === firstPurchaseDate).map((stockUtil) => {
                                                         totIssues += stockUtil.quantity
                                                     })
                                             }
@@ -159,6 +161,7 @@ function StockBreakdownUpdate() {
                                                 stockName,
                                                 stockCategory,
                                                 description,
+                                                firstPurchaseDate,
                                                 reorderLevel,
                                                 unitPrice,
                                                 totalValue,
@@ -241,7 +244,7 @@ function StockBreakdownUpdate() {
                                                     }} />
                                             </div>
 
-                                            <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Submit</button>
+                                            <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Update</button>
                                         </form>
                                     </div>
                                 </div >

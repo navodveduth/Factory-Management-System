@@ -82,47 +82,49 @@ export const deleteStock = async (req, res) => {
     }
 }
 
-//reading details of one stock category
-// export const getOneStockCategory = async (req, res) => {
-//     try {//retrieves stock based on id
-//         const stockCategory = req.body.stockCategory;
-//         const stock = await Stock.find(stockCategory);
-//         res.status(200).json(stock);
-//     } catch (error) {
-//         res.status(404).json({
-//             message: error
-//         })
-//     }
-// }
+//date sort
+export const getDateRangeStock = async (req, res) => {
+    try {
+        const DS = req.params.DS;
+        const DE = req.params.DE;
+        const stockDate = await Stock.aggregate([
+            /* {
+                $lookup:
+                {
+                    from: "finances",
+                    localField: "local",  
+                    foreignField: "foreign", 
+                    as: "newField" 
+                }
+            }, */
+            {
+                $match: { firstPurchaseDate: { $gte: new Date(DS), $lte: new Date(DE) } }
+            }
+        ]);
+        res.status(200).json(stockDate);
+    } catch (error) {
+        res.status(404).json({message : error});
+    }
+}
 
-// export const viewFDByRevenue = async (req, res) => {
-//     try {
-//         const amount = req.params.revenue;
-//         const financedata = await FD.find({
-//             revenue : amount
-//           });
+//get one stock category
+export const getOneStockCategory = async (req, res) => {
+    try {
+        const cat = req.params.categ;
 
-//        /*  const financedata = await FD.collection.aggregate([
-//             {
-//                 $addFields: {
-//                     date: {
-//                         $dateToString: {
-//                             format: "%Y-%m-%d",
-//                             date: "$recordedDate"
-//                         }
-//                     }
-//                 }
-//             },
-//             {
-//                 $match: {
-//                     date: date
-//                 }
-//             }
-//         ]).toArray(); */
-//         res.status(200).json(financedata);
-//     } catch (error) {
-//         res.status(404).json({
-//             message : error
-//         })
-//     }
-// }
+        var category = "";
+        if(cat === "Raw materials"){
+            category = "Raw materials"
+        }else{
+            category = "Work in progress"
+        }
+        const stockCat = await Stock.find(
+            {
+                "stockCategory": category
+            }
+        );
+        res.status(200).json(stockCat);
+    } catch (error) {
+        res.status(404).json({message : error});
+    }
+}

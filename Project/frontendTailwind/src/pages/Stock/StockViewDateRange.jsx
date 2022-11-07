@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
-import { DashTopBox, DashTopButton, } from '../../components';
+
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-function StockBreakdown() {
+
+function StockViewDateRange() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
     const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
@@ -21,13 +22,14 @@ function StockBreakdown() {
     const [dateEnd, setDateEnd] = useState("");
 
     const navigate = useNavigate();
-
-    const toDateRange = () => {
-        navigate('/StockBreakdownDateRange/', { state: { DS: dateStart, DE: dateEnd } });
-    }
+    const location = useLocation();
+  
+  const toDateRange=()=>{
+    navigate('/StockView');
+  }
 
     const getStock = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stock")
+        axios.get("http://localhost:8070/stock/date/"+ location.state.DS+"/"+location.state.DE)
             .then((res) => {
                 setStock(res.data); //setStock is used to update the state variable
                 console.log(res.data);
@@ -38,7 +40,7 @@ function StockBreakdown() {
     }
 
     const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stockUtilisation")
+        axios.get("http://localhost:8070/stockUtilisation/date/"+ location.state.DS+"/"+location.state.DE)
             .then((res) => {
                 setStockUtil(res.data); //setStock is used to update the state variable
                 console.log(res.data);
@@ -75,12 +77,13 @@ function StockBreakdown() {
         getStockUtil();
     }, [])
 
+
     const confirmFunc = (id) => {
 
         if (confirm("Do you want to delete?") == true) {
             deleteStock(id);
         } else {
-            navigate('/StockBreakdown');
+            navigate('/StockView');
         }
 
     }
@@ -90,7 +93,7 @@ function StockBreakdown() {
         currency: 'LKR',
         minimumFractionDigits: 2,
         currencyDisplay: 'symbol'
-    })
+      })
 
     return (
 
@@ -139,7 +142,6 @@ function StockBreakdown() {
                         <div>
                             {themeSettings && <ThemeSettings />}
                             <div>
-
                                 <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
                                     <Header category="Table" title="Stocks" />
 
@@ -150,25 +152,13 @@ function StockBreakdown() {
                                                     setSearchTerm(e.target.value);
                                                 }} />
                                         </div>
-
-                                        <div>
-                                            <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date"
-                                                onChange={(e) => {
-                                                    setDateStart(e.target.value);
-                                                }} />
-                                        </div>
-
-                                        <div>
-                                            <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date"
-                                                onChange={(e) => {
-                                                    setDateEnd(e.target.value);
-                                                }} />
-                                        </div>
-                                        <div className=" mx-1">
-                                            <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => { toDateRange() }}  >filter</button>
+                                        <div className="mx-10 ml-auto">
+                                            <Link to={"/StockView"}> {/* change this link your previous page */}
+                                                <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Reset Date</button>
+                                            </Link>
                                         </div>
                                         <div className="mr-0 ml-auto">
-                                            <Link to={"/generateSBPDF"}> {/* change this link your preview page */}
+                                            <Link to={"/generateSPDF"}> {/* change this link your preview page */}
                                                 <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
                                             </Link>
                                         </div>
@@ -181,13 +171,11 @@ function StockBreakdown() {
                                                 <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
+                                                    <TableHeader value="Category" />
+                                                    <th className='px-4 py-3 text-md whitespace-nowrap font-semibold text-center text-black-300'>Description</th>
                                                     <TableHeader value="Units" />
-                                                    <TableHeader value="Additions" />
-                                                    <TableHeader value="Issues" />
-                                                    <TableHeader value="Damaged Units" />
                                                     <TableHeader value="Unit price" />
-                                                    <TableHeader value="Reorder Level" />
-                                                    <TableHeader value="Buffer stock" />
+                                                    <TableHeader value="Total value" />
                                                     <TableHeader value="Manage" />
                                                 </tr>
                                             </thead>
@@ -203,35 +191,30 @@ function StockBreakdown() {
                                                 }).map((data, key) => {//map is used to iterate the array
                                                     //const date = new Date(data.lastUpdated).toISOString().split('T')[0];
 
-                                                    {
-                                                        var totAdds = 0;
-                                                        var totIssues = 0;
-                                                        var quantity = 0
-                                                    }
+                                                    var totAdds = 0;
+                                                    var totIssues = 0;
+                                                    var quantity = 0;
+                                                    var totalValue = 0;
 
                                                     {
-                                                        stockUtil.filter((stockUtil) => stockUtil.type === "Additions" &&
-                                                            stockUtil.stockCode === data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
+                                                        stockUtil.filter((stockUtil) => stockUtil.type == "Additions" &&
+                                                            stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totAdds += stockUtil.quantity
                                                             })
                                                     }
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
-                                                            stockUtil.stockCode === data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
+                                                            stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totIssues += stockUtil.quantity
                                                             })
                                                     }
 
                                                     { quantity = totAdds - totIssues - data.damagedQty }
+                                                    { totalValue = data.unitPrice * quantity }
+
                                                     if (quantity < 0) {
                                                         { quantity = "No usable stocks left" }
-                                                    }
-
-                                                    var dcolor = "text-black";
-                                                    if (data.sufficientStock === "Available") {
-                                                        dcolor = "text-green-500 font-bold";
-                                                    } else {
-                                                        dcolor = "text-red-600 font-bold";
+                                                        { totalValue = 0 }
                                                     }
 
                                                     var datacolor = "text-black";
@@ -239,22 +222,28 @@ function StockBreakdown() {
                                                         datacolor = "text-red-600 font-bold";
                                                     }
 
-                                                    console.log(data.damagedQty)
-
                                                     return (
-                                                        <tr className="text-sm h-10 border dark:border-slate-600">
+                                                        < tr className="text-sm h-10 border dark:border-slate-600" >
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
+                                                            <TableData value={data.stockCategory} />
+                                                            {/* change the column width */}
+                                                            <td className={"max-w-200 text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3"}>{data.description}</td>
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
-                                                            <TableData value={totAdds} />
-                                                            <TableData value={totIssues} />
-                                                            <TableData value={data.damagedQty} />
-                                                            <TableData value={"Rs." + formatter.format(data.unitPrice)} />
-                                                            <TableData value={data.reorderLevel} />
-                                                            <td className={`${dcolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`} >{data.sufficientStock} </td>
+                                                            <TableData value={formatter.format(data.unitPrice)} />
+                                                            <TableData value={"Rs." + formatter.format(totalValue)} />
 
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                                                <Link to={`/StockBreakdownUpdate/${data._id}`}>
+                                                                <Link to={`/StockInformation/${data._id}`}>
+                                                                    <button
+                                                                        type="button"
+                                                                        className="bg-neutral-500 font-bold py-1 px-4 rounded-full mx-3 text-white"
+                                                                    >
+                                                                        <i className="fas fa-info-circle" />
+                                                                    </button>
+                                                                </Link>
+
+                                                                <Link to={`/StockUpdate/${data._id}`}>
                                                                     <button
                                                                         type="button"
                                                                         className="font-bold py-1 px-4 rounded-full mx-3 text-white"
@@ -279,8 +268,7 @@ function StockBreakdown() {
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-
+                                </div >
                             </div>
                             <Footer />
                         </div>
@@ -291,4 +279,4 @@ function StockBreakdown() {
     );
 };
 
-export default StockBreakdown
+export default StockViewDateRange

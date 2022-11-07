@@ -29,7 +29,7 @@ function StockUpdate() {
     const [type, setType] = useState('');
     const [date, setDate] = useState('');
     var [totalValue, setTotalValue] = useState('');
-
+    const [ firstPurchaseDate,setFirstPurchaseDate] = useState('');
 
     //const [supplier, setSupplier] = useState('');
     //var [totalValue, setTotalValue] = useState('');
@@ -43,6 +43,7 @@ function StockUpdate() {
             setStockName(res.data.stockName);
             setStockCategory(res.data.stockCategory);
             setDescription(res.data.description);
+            setFirstPurchaseDate(res.data.firstPurchaseDate);
             setReorderLevel(res.data.reorderLevel);
             setDamagedQty(res.data.damagedQty);
             setUnitPrice(res.data.unitPrice);
@@ -141,6 +142,7 @@ function StockUpdate() {
                                                 stockName,
                                                 stockCategory,
                                                 description,
+                                                firstPurchaseDate,
                                                 reorderLevel,
                                                 unitPrice,
                                                 totalValue,
@@ -194,7 +196,7 @@ function StockUpdate() {
                                                     }} />
                                             </div>
 
-                                            <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Submit</button>
+                                            <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Update</button>
                                         </form>
                                     </div>
                                 </div>

@@ -24,6 +24,7 @@ module.exports = {
         color: 'rgba(0, 0, 0, 0.1)',
       },
       width: {
+        200: '200px',
         400: '400px',
         640: '640px',
         760: '760px',
