@@ -9,6 +9,7 @@ import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import MachMaintenanceViewAll from './MachMaintenanceViewAll';
+import MachMaintenanceCreateForm from './MachMaintenanceNew';
 
 
 
@@ -170,7 +171,7 @@ const MachineryViewAll = () => {
                             <TableHeader value="Purchased Cost" />
                             <TableHeader value="Depreciation" />
                             <TableHeader value="Availibility" />
-                            <TableHeader value="Maintenance records" />
+                            <TableHeader value="Maintenance Records" />
                             <TableHeader value="Manage" />
                           </tr>
                         </thead>
@@ -209,7 +210,7 @@ const MachineryViewAll = () => {
                                 <TableData value={"Rs." + data.machineryCost} />
                                 <TableData value={"Rs." + parseFloat((data.machineryCost - data.salvage) / data.numberOfYrs).toFixed(2)} />
                                 <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.others} </td>
-                                <TableData value={data.machineDetails.map((data2) => {
+                                {/* <TableData value={data.machineDetails.map((data2) => {
 
                                   return (
                                     <div>
@@ -218,9 +219,23 @@ const MachineryViewAll = () => {
                                       </Link>
                                     </div>
                                   )
-                                })} />
+                                })} /> */}
+                                 <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                 <Link to={`/MachMaintenanceHistory/${data._id}`}>
+                                  
+                                  <button
+                                    type="button"
+                                    className="font-bold py-1 px-4 rounded-full mx-3 text-white"
+                                    style={{ background: '#747478' }}
+                                  >
+                                    <i className="fas fa-wrench" />
+                                  </button>
+                                </Link>
+
+                                 </td>
 
                                 <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                
                                   <Link to={`/MachineryUpdate/${data._id}`}>
                                     <button
                                       type="button"
