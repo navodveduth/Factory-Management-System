@@ -25,21 +25,21 @@ export const getAllCustomers = async (req, res) => {
 export const getOneCustomer = async (req, res) =>{
     try {
         const id= req.params.id;
-        const customer = await Customer.findById(id);
-        // const customer= await Customer.aggregate([
-        //     {
-        //         $match: { _id: new mongoose.Types.ObjectId(id) }
-        //     },
-        //     {
-        //         $lookup: 
-        //         {
-        //             from: "sales",
-        //             localField: "customerID" ,
-        //             foreignField: "customerID",
-        //             as: "customerDetails"
-        //         }
-        //     }  
-        // ]);
+        //const customer = await Customer.findById(id);
+        const customer= await Customer.aggregate([
+            {
+                $match: { _id: new mongoose.Types.ObjectId(id) }
+            },
+            {
+                $lookup: 
+                {
+                    from: "sales",
+                    localField: "customerID" ,
+                    foreignField: "customerID",
+                    as: "customerDetails"
+                }
+            }  
+        ]);
         res.status(200).json(customer);
 
     } catch (error) {
