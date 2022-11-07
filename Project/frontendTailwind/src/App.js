@@ -15,7 +15,9 @@ import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, Sale
 
 import { OrderViewAll, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder } from './pages/Production/Index';
 
-import { StocksDashboard, StockView, StockInformation, StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, StockUtilisationDashboard, StockUtilisation, StockAddExisting, StockUtilAddOption, StockUtilUpdate, StockUtilPDF, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF, PendingStockView, PendingStockAdd, PendingStockUpdate, PendingStockPDf } from './pages/Stock';
+import { StocksDashboard, StockView, StockInformation, StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, ViewAllRawMaterials, RawMaterialsReport, ViewAllWorkInProgress, WorkInProgressReport, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF } from './pages/Stock';
+import { PendingStockView, PendingStockAdd, PendingStockUpdate, PendingStockPDf, PendingRequest, PendingRequestPDF, ProcessingRequest, ProcessingRequestPDF, ResolvedRequest, ResolvedRequestPDF } from './pages/PendingStock';
+import { StockUtilisationDashboard, StockUtilPDF,StockUtilisation, StockAddExisting, StockUtilAddOption, StockUtilUpdate, ViewAllAdditions, AdditionsReport, ViewAllIssues, IssuesReport } from './pages/StockUtilisation';
 
 import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, SupplierRecordsDashboard, SupplierDetailsPreview } from './pages/Suppliers';
 
@@ -124,6 +126,10 @@ const App = () => {
           <Route path="/StockAdd" element={<StockAdd />} />
           <Route path="/StockUpdate/:id" element={<StockUpdate />} />
           <Route path="/generateSPDF" element={<StockPDF />} />
+          <Route path="/ViewAllRawMaterials" element={<ViewAllRawMaterials />} />
+          <Route path="/generateRMPDF" element={<RawMaterialsReport />} />
+          <Route path="/ViewAllWorkInProgress" element={<ViewAllWorkInProgress />} />
+          <Route path="/generateWIPPDF" element={<WorkInProgressReport />} />
 
           <Route path="/StockBreakdown" element={<StockBreakdown/>} />
           <Route path="/StockBreakdownUpdate/:id" element={<StockBreakdownUpdate/>} />
@@ -133,6 +139,12 @@ const App = () => {
           <Route path="PendingStockAdd" element={<PendingStockAdd />} />
           <Route path="PendingStockUpdate/:id" element={<PendingStockUpdate />} />
           <Route path="/generatePSPDF" element={<PendingStockPDf />}/>
+          <Route path="/PendingRequest" element={<PendingRequest />}/>
+          <Route path="/generatePendingRPDF" element={<PendingRequestPDF />}/>
+          <Route path="/ProcessingRequest" element={<ProcessingRequest />}/>
+          <Route path="/generateProcessingRPDF" element={<ProcessingRequestPDF />}/>
+          <Route path="/ResolvedRequest" element={<ResolvedRequest />}/>
+          <Route path="/generateResolvedRPDF" element={<ResolvedRequestPDF />}/>
 
           <Route path="/StockUtilisationDashboard" element={<StockUtilisationDashboard/>} />
           <Route path="/StockUtilisation" element={<StockUtilisation />} />
@@ -140,6 +152,10 @@ const App = () => {
           <Route path="/StockAddExisting/:id" element={<StockAddExisting />} />
           <Route path="/StockUtilUpdate/:id" element={<StockUtilUpdate />} />
           <Route path="/generateSUPDF" element={<StockUtilPDF />} />
+          <Route path="/ViewAllAdditions" element={<ViewAllAdditions />} />
+          <Route path="/generateAPDF" element={<AdditionsReport />} />
+          <Route path="/ViewAllIssues" element={<ViewAllIssues />} />
+          <Route path="/generateIPDF" element={<IssuesReport />} />
 
           <Route path="/DamagedStockDashboard" element={<DamagedStockDashboard />} />
           <Route path="/DamagedStockView" element={<DamagedStockView />} />
