@@ -46,17 +46,11 @@ const barPrimaryXAxis = {
           { x: 'Under 50,000 LKR ', y: under50 },
         ],
         [
-          { x: 'Between 50,001 LKR & 150,000 LKR', y: between50and150 },
+          { x: 'Between 50,001 LKR & 250,000 LKR', y: between50and150 },
         ],
         [
-          { x: 'Between 150,001 LKR & 250,000 LKR', y: over150 },
+          { x: 'Between 250,001 LKR & 500,000 LKR', y: over150 },
         ],
-        [
-          { x: 'Between 250,001 LKR & 250,000 LKR', y: over150 },
-        ],
-        [
-          { x: 'Between 350,001 LKR & 500,000 LKR', y: over150 },
-        ],  
         [
           { x: 'Over 500,001 LKR', y: over150 },
         ],
