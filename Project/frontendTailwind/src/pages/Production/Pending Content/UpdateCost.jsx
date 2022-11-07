@@ -37,9 +37,22 @@ export default function UpdateOrder(){
             alert(err);
         })
     }
+    const [employee,setEmployee] = useState([]);
+    const getEmployees = async () => {
+        axios
+          .get('http://localhost:8070/employee/viewEmployee')
+          .then((res) => {
+            setEmployee(res.data);
+          })
+          .catch((err) => {
+            alert(err.message);
+          });
+      };
+      
         useEffect(()=>{ //This will run the page when loaded
         getOrder();
-    },[])
+        getEmployees();
+    },[]);
 
     return (
         <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '>
@@ -77,14 +90,20 @@ export default function UpdateOrder(){
 
                 <div className="mb-3">
                         <label for="category" className="form-label">Select the Product</label>
-                        < select placeholder={orderName} class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"  id="category" required onChange={(e) => {
+                            < select placeholder={orderName}  class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"  id="category" required onChange={(e) => {
                             setOrderName(e.target.value);  
                         }}>
-                            <option selected value={orderName}>{orderName}</option>
+                            {/* <option selected value={orderName}>{orderName}</option>
                             <option value="T-Shirts">T-Shirts</option>
                             <option value="Collars">Collars</option>
                             <option value="Trousers">Trousers</option>
-                            <option value="Shirts">Shirts</option>
+                            <option value="Shirts">Shirts</option> */}
+                            {employee.map((data)=>{
+                                return(
+                                        <option value={data.employeeFullName} label={data.employeeFullName}>{data.employeeFullName} </option>
+                                    )
+                             })}
+
                         </select>
                     </div>
 
