@@ -11,7 +11,7 @@ import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePre
 
 import { MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport,MachMaintenanceHistory, MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport} from './pages/MachineryAndMaintenance';
 
-import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice } from './pages/Sales';
+import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice, SalesDateRange } from './pages/Sales';
 
 import { OrderViewAll, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder } from './pages/Production/Index';
 
@@ -113,6 +113,7 @@ const App = () => {
           <Route path="/SalesUpdate/:id" element={<SalesUpdate />} />
           <Route path="/SalesInvoice/:id" element={<SalesInvoice />} />
           <Route path="/SalesPreview" element={<SalesPreview />} />
+          <Route path="/SalesDateRange" element={<SalesDateRange />} />
 
           {/* production management  */}
           <Route path="/vieworders" element={<OrderViewAll />} />
