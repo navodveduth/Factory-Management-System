@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
 import {
   Header,
   Navbar,
@@ -15,7 +14,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 
-const TransportViewAll = () => {
+const TransportDateRange = () => {
   const {
     setCurrentColor,
     setCurrentMode,
@@ -26,9 +25,8 @@ const TransportViewAll = () => {
     setThemeSettings,
   } = useStateContext();
 
+  const location = useLocation();
   const [transport, setTransport] = useState([]);
-  const [startDate, setStartDate] = useState(''); // dateStart
-  const [endDate, setEndDate] = useState(''); // dateEnd
   const [searchTerm, setSearchTerm] = useState(''); // search term state for search bar functionality in table
 
   // const [value, setValue] = useState('');
@@ -48,51 +46,11 @@ const TransportViewAll = () => {
   //   }
   // };
 
-  // const toDateRange = () => {
-  //   navigate('/TransportDateRange', { state: { DS: dateStart, DE: dateEnd } });
-  // };
-
-  const convertDate = (format) => {
-    function convert(s) {
-      return s < 10 ? `0${s}` : s;
-    }
-    const date = new Date(format);
-    return [
-      date.getFullYear(),
-      convert(date.getMonth() + 1),
-      convert(date.getDate()),
-    ].join('-');
-  };
-
-  let dateRangeRef = (dateRange) => {
-    // dateRangeRef is a reference to the DateRangePickerComponent
-    dateRangeRef = dateRange;
-  };
-
-  const filterDate = () => {
-    if (dateRangeRef.value && dateRangeRef.value.length > 0) {
-      const start = convertDate(dateRangeRef.value[0]);
-      const end = convertDate(dateRangeRef.value[1]);
-
-      let date1 = JSON.stringify(start);
-      date1 = date1.substring(1, 11);
-      setStartDate(date1);
-
-      let date2 = JSON.stringify(end);
-      date2 = date2.substring(1, 11);
-      setEndDate(date2);
-
-      console.log(startDate);
-      console.log(endDate);
-    } else {
-      setStartDate('');
-      setEndDate('');
-    }
-  };
-
   const getTransport = async () => {
     axios
-      .get('http://localhost:8070/transport/')
+      .get(
+        `http://localhost:8070/transport/date/${location.state.DS}/${location.state.DE}`
+      )
       .then((res) => {
         setTransport(res.data);
       })
@@ -181,11 +139,11 @@ const TransportViewAll = () => {
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
                     <Header category="Table" title="Transport" />
 
-                    <div className=" flex items-center mb-5 ">
+                    <div className="flex items-center mb-5 ">
                       <div>
                         <input
                           type="text"
-                          className="block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                          className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           placeholder="Search Here"
                           onChange={(e) => {
                             setSearchTerm(e.target.value);
@@ -193,22 +151,16 @@ const TransportViewAll = () => {
                         />
                       </div>
 
-                      <div className="ml-5">
-                        <div className="bg-slate-100 pt-1 rounded-lg px-5 w-55">
-                          <DateRangePickerComponent
-                            ref={dateRangeRef}
-                            placeholder="Select a date range"
-                          />
-                        </div>
-                      </div>
-                      <div className="ml-5">
-                        <button
-                          type="button"
-                          className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500"
-                          onClick={filterDate}
-                        >
-                          Filter
-                        </button>
+                      <div className="mx-10 ml-auto">
+                        <Link to="/TransportViewAll">
+                          {/* change this link your previous page */}
+                          <button
+                            type="button"
+                            className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500"
+                          >
+                            Reset Date
+                          </button>
+                        </Link>
                       </div>
 
                       <div className="mr-0 ml-auto">
@@ -241,12 +193,7 @@ const TransportViewAll = () => {
                         <tbody>
                           {transport
                             .filter((data) => {
-                              if (startDate && endDate) {
-                                return (
-                                  data.date >= startDate && data.date <= endDate
-                                );
-                              }
-                              if (searchTerm === '') {
+                              if (searchTerm == '') {
                                 return data;
                               }
                               if (
@@ -365,4 +312,4 @@ const TransportViewAll = () => {
   );
 };
 
-export default TransportViewAll;
+export default TransportDateRange;

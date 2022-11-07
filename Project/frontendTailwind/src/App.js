@@ -22,7 +22,7 @@ import { StockUtilisationDashboard, StockUtilPDF,StockUtilisationDateRange ,Stoc
 import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview } from './pages/Suppliers';
 
 import { DriverDashboard, DriverViewAll, DriverNew, DriverUpdate, DriverReport } from './pages/Driver';
-import { TransportDashboard, TransportViewAll, TransportNew, TransportUpdate, TransportReport } from './pages/Transport';
+import { TransportDashboard, TransportViewAll, TransportDateRange, TransportNew, TransportUpdate, TransportRecord, TransportReport } from './pages/Transport';
 
 import UserLogin from './pages/UserLogin';
 import UserRegistration from './pages/UserRegistration'
@@ -187,8 +187,10 @@ const App = () => {
           {/* Transport management  */}
           <Route path="/TransportDashboard" element={<TransportDashboard />} />
           <Route path="/TransportViewAll" element={<TransportViewAll />} />
+          <Route path="/TransportDateRange/" element={<TransportDateRange />} />\
           <Route path="/TransportCreate" element={<TransportNew />} />
           <Route path="/TransportUpdate/:id" element={<TransportUpdate />} />
+          <Route path="/TransportRecord/:id" element={<TransportRecord />} />
           <Route path="/TransportReport" element={<TransportReport />} />
 
           <Route path="/DriverDashboard" element={<DriverDashboard />} />
