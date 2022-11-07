@@ -29,7 +29,7 @@ const VehiMaintenanceDateRange = () => {
   })
 
   const getVMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainenceVehicle/date/" +location.state.DS +"/"+location.state.DE)
+    axios.get("http://localhost:8070/maintainenceVehicle/date/" +location.state.DS+"/"+location.state.DE)
       .then((res) => {
         setMaintainenceVehi(res.data); //setMaintainence  is used to update the state variable
 
@@ -162,7 +162,6 @@ const VehiMaintenanceDateRange = () => {
                           <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                             <TableHeader value="Code" />
                             <TableHeader value="vehicle No" />
-                            <TableHeader value="Model" />
                             <TableHeader value="Mileage" />
                             <TableHeader value="Service schedule" />
                             <TableHeader value="Last Maintained" />
@@ -209,15 +208,6 @@ const VehiMaintenanceDateRange = () => {
                                 <TableData value={data.mainID} />
 
                                 <TableData value={data.vehicleNo} />
-                                <TableData value={data.vehicleDetails.map((data2) => {
-                                  return (
-                                    <div>
-                                      <Link to={"/DriverViewAll/"}>
-                                        <TableData value={data2.vehicleModel} />
-                                      </Link>
-                                    </div>
-                                  )
-                                })} />
                                 <TableData value={data.mileage} />
                                 <TableData value={data.Description} />
                                 <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
