@@ -163,14 +163,14 @@ const MachMaintenanceHistory = () => {
                                     <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
                                         <h1 className="text-2xl font-bold">Machinery Details</h1>
                                         <div className="text-md ml-12 pt-5">
-                                            <div className="p-1"> <span  className="font-bold"> + Code </span> : {machinery.machineID}</div>
+                                            <div className="p-1"> <span  className="font-bold"> + Machine Code </span> : {machinery.machineID}</div>
                                             <div className="p-1 "> <span className="font-bold"> + Machine Model </span> : {machinery.name}</div>
                                             <div className="p-1 "> <span className="font-bold"> + Purchased Date </span> : {new Date(machinery.dateOfPurchased).toDateString()}</div>
                                             <div className="p-1 text-green-600 "> <span  className="font-bold"> + Purchased Cost </span> : {formatter.format(machinery.machineryCost)}</div>
                                             <div className="p-1 text-green-600 "> <span  className="font-bold"> + Salvage Value </span> : {formatter.format(machinery.salvage)}</div>
                                             <div className="p-1 text-green-600 "> <span  className="font-bold"> + Average Life Years </span> : {machinery.numberOfYrs}</div>
                                             <div className="p-1 text-red-600 "> <span className="font-bold"> + Depreciation Cost </span> : {formatter.format(parseFloat((machinery.machineryCost - machinery.salvage) / machinery.numberOfYrs).toFixed(2))}</div>
-                                            <div className="p-1 text-red-600"> <span className="font-bold"> + Depreciation rate </span> : {
+                                            <div className="p-1 text-red-600"> <span className="font-bold"> + Depreciation Rate </span> : {
                                                 
                                             (parseFloat(
                                                 ((machinery.machineryCost - machinery.salvage) / machinery.numberOfYrs)/machinery.machineryCost*100).toFixed(2))+"%"}</div>
