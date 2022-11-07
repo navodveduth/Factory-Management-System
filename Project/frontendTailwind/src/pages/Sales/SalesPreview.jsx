@@ -42,8 +42,15 @@ const createPDF = () => {
     const data = document.querySelector("#tableContainer");
     pdf.html(data).then(() => {
         pdf.save("SalesInvoices-" + toDayte +".pdf");
-       });
-};
+       })
+}
+
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'LKR',
+  minimumFractionDigits: 2,
+  currencyDisplay: 'symbol'
+})
 
 return (
   <div>
@@ -119,6 +126,8 @@ return (
         <tbody>
 
        { sales.map((data) => {
+             let formattedAmount = formatter.format(data.totalAmount)
+
                 return(
 
             <tr className="text-sm h-10 border dark:border-slate-600" >
@@ -128,14 +137,14 @@ return (
               <TableData value={data.customerDetailss.map((data3) => {
                             return (
                               <div>
-                                <TableData value = {data3.customerName} /> 
+                                {data3.customerName}
                               </div>
                             )
                           
                         })} />
               <TableData value={data.itemName} />
               <TableData value={data.quantity} />
-              <TableData value={data.totalAmount} />
+              <TableData value={formattedAmount} />
               <TableData value={data.status} />
               
             </tr>
