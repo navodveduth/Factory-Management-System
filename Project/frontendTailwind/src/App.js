@@ -9,7 +9,7 @@ import { WelfareDashboard, WelfareNew, WelfareReport, WelfareUpdate, WelfareView
 
 import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll, PreviewSalary, FinanceDateRange } from './pages/Finance';
 
-import { MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport} from './pages/MachineryAndMaintenance';
+import { MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport,MachMaintenanceHistory, MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport} from './pages/MachineryAndMaintenance';
 
 import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice, SalesDateRange } from './pages/Sales';
 
@@ -88,6 +88,7 @@ const App = () => {
           <Route path="/MachineryCreate" element={<MachineryNew />} />
           <Route path="/MachineryUpdate/:id" element={<MachineryUpdate />} />
           <Route path="/MachineryReport/" element={<MachineryReport />} />
+          <Route path="/MachMaintenanceHistory/:id" element={<MachMaintenanceHistory />} />
 
           {/* maintenance management  */}
           <Route path="/MaintenanceDashboard" element={<MaintenanceDashboard />} />
