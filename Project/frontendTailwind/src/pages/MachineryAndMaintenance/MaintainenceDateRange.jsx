@@ -1,38 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider.js';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
+
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import MachMaintenanceViewAll from './MachMaintenanceViewAll';
-import MachMaintenanceCreateForm from './MachMaintenanceNew';
 
 
 
-/* IMPORT ALL YOUR IMPORTS AS USUAL ABOVE HERE, REMOVE UNNECESSARY ONES*/
-
-const MachineryViewAll = () => {
-
+const MaintainenceDateRange = () => {
+  const [maintainence, setMaintainence] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [machinery, setMachinery] = useState([]); // <== THIS IS THE COMPONENT NAME, CHANGE IT TO YOUR COMPONENT NAME
-  const [dateStart, setDateStart] = useState("");
-  const [dateEnd, setDateEnd] = useState("");
+
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
-  const navigate = useNavigate();
-  
-  const toDateRange=()=>{
-    navigate('/MachineryDateRange',{state:{DS:dateStart,DE:dateEnd}});
-  }
-
-  var TotalDepreciation = 0;
   var TotalCost = 0;
   var total = 0;
-  var totalDep = 0;
 
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -41,15 +28,10 @@ const MachineryViewAll = () => {
     currencyDisplay: 'symbol'
   })
 
-
-
-
-
-  const getMachinery = async () => {  //getMachinery is the function to get the data from the backend
-    axios.get("http://localhost:8070/machinery/")
+  const getMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+    axios.get("http://localhost:8070/maintainence/")
       .then((res) => {
-        setMachinery(res.data); //setMachinery is used to update the state variable
-
+        setMaintainence(res.data); //setMaintainence  is used to update the state variable
 
       })
       .catch((err) => {
@@ -57,10 +39,8 @@ const MachineryViewAll = () => {
       })
   }
 
-
-
   useEffect(() => {
-    getMachinery(); // <== CHANGE ACCORDING TO YOUR OWN FUNCTIONS, YOU CAN REMOVE THIS LINE IF YOU DON'T NEED IT
+    getMaintainence(); // 
     const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
     const currentThemeMode = localStorage.getItem('themeMode');
     if (currentThemeColor && currentThemeMode) {
@@ -69,11 +49,11 @@ const MachineryViewAll = () => {
     }
   }, []);
 
-  const deleteMachinery = async (id) => {
-    await axios.delete(`http://localhost:8070/machinery/delete/${id}`)
+  const deleteMaintainence = async (id) => {
+    await axios.delete(`http://localhost:8070/maintainence/delete/${id}`)
       .then((res) => {
         alert("Data deleted successfully");
-        getMachinery();
+        getMaintainence();
       })
       .catch((err) => {
         alert(err.message);
@@ -83,9 +63,9 @@ const MachineryViewAll = () => {
   const confirmFunc = (id) => {
 
     if (confirm("Do you want to delete?") == true) {
-      deleteMachinery(id);
+      deleteMaintainence(id);
     } else {
-      navigate('/MachineryViewAll');
+      navigate('/MaintenanceViewAll');
     }
 
   }
@@ -144,7 +124,7 @@ const MachineryViewAll = () => {
                 {/* PART AFTER THE RETURN STATEMENT */}
                 <div>
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                    <Header category="Table" title="Machinery " />
+                    <Header category="Table" title="Property Maintenance " />
 
                     <div className=" flex items-center mb-5 ">
                       <div>
@@ -153,27 +133,8 @@ const MachineryViewAll = () => {
                             setSearchTerm(e.target.value);
                           }} />
                       </div>
-
-                      <div>
-                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date" 
-                                onChange={(e) => {
-                                  setDateStart(e.target.value);
-                                }} />
-                              </div>
-
-                              <div>
-                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date" 
-                                onChange={(e) => {
-                                  setDateEnd(e.target.value);
-                                }} />
-                              </div>
-
-                              <div className=" mx-1">
-                                  <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}  >filter</button>
-                              </div>
-
                       <div className="mr-0 ml-auto">
-                        <Link to={"/MachineryReport"}> {/* change this link your preview page */}
+                        <Link to={"/MaintainenceReport"}> {/* change this link your preview page */}
                           <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
                         </Link>
                       </div>
@@ -182,37 +143,35 @@ const MachineryViewAll = () => {
 
 
 
-
-
-
-
                     <div className="block w-full overflow-x-auto rounded-lg">
                       <table className="w-full rounded-lg" >
                         <thead>
                           <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                             <TableHeader value="Code" />
-                            <TableHeader value="Name" />
-                            <TableHeader value="Purchased date" />
-                            <TableHeader value="Purchased Cost" />
-                            <TableHeader value="Depreciation" />
-                            <TableHeader value="Availibility" />
-                            <TableHeader value="Maintenance Records" />
+                            <TableHeader value="Type" />
+                            <TableHeader value="Repair needed " />
+                            <TableHeader value="Last Maintained" />
+                            <TableHeader value="Next due" />
+                            <TableHeader value="Cost" />
+                            <TableHeader value="Status" />
                             <TableHeader value="Manage" />
                           </tr>
                         </thead>
                         <tbody>
-                          {machinery.filter((data) => {
+                          {maintainence.filter((data) => {
                             if (searchTerm == "") {
                               return data;
-                            } else if ((data.machineID.toLowerCase().toLowerCase().includes(searchTerm.toLowerCase())) ||
+                            } else if ((data.Type.toLowerCase().includes(searchTerm.toLowerCase())) ||
                               (data.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                              (data.others.toLowerCase().includes(searchTerm.toLowerCase()))) {
+                              (data.Description.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                              (data.midprop.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                              (data.status.toLowerCase().includes(searchTerm.toLowerCase()))) {
                               return data;
                             }
                           }).map((data, key) => {
 
                             var datacolor = "text-black";
-                            if (data.others === "Unavailable") {
+                            if (data.status === "In progress") {
                               datacolor = "text-red-600 font-bold";
 
                             } else {
@@ -221,47 +180,27 @@ const MachineryViewAll = () => {
 
                             return (
 
-
-                              TotalDepreciation = TotalDepreciation + parseFloat(parseFloat((data.machineryCost - data.salvage) / data.numberOfYrs).toFixed(2)),
-                              TotalCost = TotalCost + parseFloat(data.machineryCost),
+                              // const LMdate = new Date(data.lastMaintainedDate).toLocaleDateString();
+                              // const NSdate = new Date(data.nextServiceDate).toLocaleDateString();
+                              TotalCost = TotalCost + data.others,
                               total = formatter.format(TotalCost),
-                              totalDep = formatter.format(TotalDepreciation),
+
+                              <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
+
+                                <TableData value={data.midprop} />
+                                <TableData value={data.Type} />
+                                <TableData value={data.Description} />
+                                <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
+                                <TableData value={data.nextServiceDate.toString().split('T')[0]} />
+                                <TableData value={"Rs." + data.others} />
+
+                                <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
 
 
-                              <tr className="text-sm h-10 border dark:border-slate-600">
-                                <TableData value={data.machineID} />
-                                <TableData value={data.name} />
-                                <TableData value={data.dateOfPurchased.toString().split('T')[0]} />
-                                <TableData value={"Rs." + data.machineryCost} />
-                                <TableData value={"Rs." + parseFloat((data.machineryCost - data.salvage) / data.numberOfYrs).toFixed(2)} />
-                                <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.others} </td>
-                                {/* <TableData value={data.machineDetails.map((data2) => {
-
-                                  return (
-                                    <div>
-                                      <Link to={`/MachMaintenanceViewAll`}>
-                                        <TableData value={data2.mid} />
-                                      </Link>
-                                    </div>
-                                  )
-                                })} /> */}
-                                 <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                 <Link to={`/MachMaintenanceHistory/${data._id}`}>
-                                  
-                                  <button
-                                    type="button"
-                                    className="font-bold py-1 px-4 rounded-full mx-3 text-white"
-                                    style={{ background: '#747478' }}
-                                  >
-                                    <i className="fas fa-wrench" />
-                                  </button>
-                                </Link>
-
-                                 </td>
 
                                 <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                
-                                  <Link to={`/MachineryUpdate/${data._id}`}>
+
+                                  <Link to={`/MaintenanceUpdate/${data._id}`}>
                                     <button
                                       type="button"
                                       className="font-bold py-1 px-4 rounded-full mx-3 text-white"
@@ -285,24 +224,14 @@ const MachineryViewAll = () => {
                           })}
                         </tbody>
                       </table><br></br><br></br>
-
                       <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-                        Total Depreciation : {totalDep}
+                        Total Cost of property Maintenance : {total}
 
-                      </span><br></br>
-
-                      <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-
-                        Total Purchase Cost : {total}
                       </span>
 
                     </div>
                   </div>
-
-
-
                 </div>
-
               </div>
               <Footer />
             </div>
@@ -313,4 +242,5 @@ const MachineryViewAll = () => {
   );
 };
 
-export default MachineryViewAll;
+export default MaintainenceDateRange;
+
