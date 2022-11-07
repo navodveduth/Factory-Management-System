@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider.js';
 import TableData from '../../components/Table/TableData';
@@ -19,9 +19,15 @@ const MachineryViewAll = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [machinery, setMachinery] = useState([]); // <== THIS IS THE COMPONENT NAME, CHANGE IT TO YOUR COMPONENT NAME
-
+  const [dateStart, setDateStart] = useState("");
+  const [dateEnd, setDateEnd] = useState("");
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
+  const navigate = useNavigate();
+  
+  const toDateRange=()=>{
+    navigate('/MachineryDateRange',{state:{DS:dateStart,DE:dateEnd}});
+  }
 
   var TotalDepreciation = 0;
   var TotalCost = 0;
@@ -147,6 +153,25 @@ const MachineryViewAll = () => {
                             setSearchTerm(e.target.value);
                           }} />
                       </div>
+
+                      <div>
+                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date" 
+                                onChange={(e) => {
+                                  setDateStart(e.target.value);
+                                }} />
+                              </div>
+
+                              <div>
+                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date" 
+                                onChange={(e) => {
+                                  setDateEnd(e.target.value);
+                                }} />
+                              </div>
+
+                              <div className=" mx-1">
+                                  <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}  >filter</button>
+                              </div>
+
                       <div className="mr-0 ml-auto">
                         <Link to={"/MachineryReport"}> {/* change this link your preview page */}
                           <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
