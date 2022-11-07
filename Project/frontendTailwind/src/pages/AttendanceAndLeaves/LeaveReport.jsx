@@ -29,8 +29,8 @@ const LeaveReport = () => {
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
         if (currentThemeColor && currentThemeMode) {
-        setCurrentColor(currentThemeColor);
-        setCurrentMode(currentThemeMode);
+            setCurrentColor(currentThemeColor);
+            setCurrentMode(currentThemeMode);
         }
       }, []);
     

@@ -1,8 +1,11 @@
 import React, { useState, useEffect }from 'react'
 import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective, Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip } from '@syncfusion/ej2-react-charts';
 import axios from 'axios';
+import ChartsHeader from './ChartsHeader'
+import { useStateContext } from '../contexts/ContextProvider';
 
 const TransactionPieChart = () => {
+    const { currentMode } = useStateContext();
     const [TRN, setTransactions] = useState([]);
 
     const getFinance = async () => {
@@ -20,29 +23,48 @@ const TransactionPieChart = () => {
       getFinance();
     }, []);
   
-    const trnCount = TRN.length;
-    const trnRev= TRN.filter((trn) => trn.trnType === 'Revenue').length;
-    const trnExpenses= TRN.filter((trn) => trn.trnType === 'Expense').length;
+    var totalRev = 0, totalExp = 0, total = 0;;
+
   return (
     <div >
-        <AccumulationChartComponent title='Transaction Distribution by Type' legendSettings={{position:"Bottom"}} tooltip={{enable:true}}>
+
+      {TRN.filter((TRN) => TRN.trnType === 'Revenue').map((TRN) => {
+        totalRev += TRN.trnAmount;
+        total += TRN.trnAmount; 
+        })}
+        {TRN.filter((TRN) => TRN.trnType === 'Expense').map((TRN) => {
+          totalExp += TRN.trnAmount;
+          total += TRN.trnAmount; 
+          })}
+          
+          <ChartsHeader category="Chart" title="Transaction Distribution by Type" />
+          <AccumulationChartComponent legendSettings={{position:"Right", background: "white"}} tooltip={{enable:true}} background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'} >
             <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]} />
             <AccumulationSeriesCollectionDirective>
                 <AccumulationSeriesDirective 
                     type="Pie"
-                    innerRadius="50%"
                     dataSource={
                         [
-                            { x: 'Revenue', y: (trnRev/trnCount*100).toPrecision(4), text: (trnRev/trnCount*100).toPrecision(2) + '%'},
-                            { x: 'Expenses', y: (trnExpenses/trnCount*100).toPrecision(4), text: (trnExpenses/trnCount*100).toPrecision(2) + '%'},
+                            { x: 'Revenue', y: (totalRev), text: (totalRev/total*100).toPrecision(2) + '%'},
+                            { x: 'Expenses', y: (totalExp), text: (totalExp/total*100).toPrecision(2) + '%'},
                         ]
                     }
                     xName="x"
                     yName="y"
+                    innerRadius="40%"
+                    startAngle={0}
+                    endAngle={360}
+                    radius="70%"
+                    explode
+                    explodeOffset="10%"
+                    explodeIndex={2}
                     dataLabel={{
-                        visible: true,
-                        position: 'Outside',
-                        name: 'text',
+                      visible: true,
+                      position: 'Outside',
+                      name: 'text',
+                      font: {
+                        fontWeight: '600',
+                      },
                     }}
                     >
                     
