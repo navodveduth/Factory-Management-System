@@ -9,15 +9,15 @@ import { WelfareDashboard, WelfareNew, WelfareReport, WelfareUpdate, WelfareView
 
 import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll, PreviewSalary, FinanceDateRange } from './pages/Finance';
 
-import { MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport,MachMaintenanceHistory, MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport} from './pages/MachineryAndMaintenance';
-
-import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice } from './pages/Sales';
+import {  MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport,MaintainenceDateRange, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachManitenanceDateRange,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport,VehiMaintenanceDateRange} from './pages/Maintenance';
+import {MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory} from './pages//Machinery';
+import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice, SalesDateRange } from './pages/Sales';
 
 import { OrderViewAll, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder } from './pages/Production/Index';
 
 import { StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, StockUtilisationDashboard, StockUtilisation, StockAddExisting, StockUtilUpdate, StockUtilPDF, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF, PendingStockView, PendingStockAdd, PendingStockUpdate, PendingStockPDf } from './pages/Stock';
 
-import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, SupplierRecordsDashboard, SupplierDetailsPreview } from './pages/Suppliers';
+import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview } from './pages/Suppliers';
 
 import { DriverDashboard, DriverViewAll, DriverNew, DriverUpdate, DriverReport } from './pages/Driver';
 import { TransportDashboard, TransportViewAll, TransportNew, TransportUpdate, TransportReport } from './pages/Transport';
@@ -88,6 +88,7 @@ const App = () => {
           <Route path="/MachineryCreate" element={<MachineryNew />} />
           <Route path="/MachineryUpdate/:id" element={<MachineryUpdate />} />
           <Route path="/MachineryReport/" element={<MachineryReport />} />
+          <Route path="/MachineryDateRange/" element={<MachineryDateRange />} />
           <Route path="/MachMaintenanceHistory/:id" element={<MachMaintenanceHistory />} />
 
           {/* maintenance management  */}
@@ -97,14 +98,17 @@ const App = () => {
           <Route path="/MaintenanceUpdate/:id" element={<MaintenanceUpdate />} />
           <Route path="/MaintainenceTask/" element={<MaintainenceTask />} />
           <Route path="/MaintainenceReport" element={<MaintainenceReport />} />
+          <Route path="/MaintainenceDateRange" element={<MaintainenceDateRange />} />
           <Route path="/MachMaintenanceViewAll" element={<MachMaintenanceViewAll />} />
           <Route path="/MachMaintenanceNew" element={<MachMaintenanceNew />} />
           <Route path="/MachMaintenanceUpdate/:id" element={<MachMaintenanceUpdate />} />
           <Route path="/MachMaintenanceReport" element={<MachMaintenanceReport />} />
+          <Route path="/MachManitenanceDateRange/" element={<MachManitenanceDateRange />} />
           <Route path="/VehiMaintenanceViewAll" element={<VehiMaintenanceViewAll />} />
           <Route path="/VehiMaintenanceNew" element={<VehiMaintenanceNew />} />
           <Route path="/VehiMaintenanceUpdate/:id" element={<VehiMaintenanceUpdate />} />
           <Route path="/VehiMaintenanceReport" element={<VehiMaintenanceReport />} />
+          <Route path="/VehiMaintenanceDateRange/" element={<VehiMaintenanceDateRange />} />
                 
           {/* sales management  */}
           <Route path="/SalesDashboard" element={<SalesDashboard />} />
@@ -113,6 +117,7 @@ const App = () => {
           <Route path="/SalesUpdate/:id" element={<SalesUpdate />} />
           <Route path="/SalesInvoice/:id" element={<SalesInvoice />} />
           <Route path="/SalesPreview" element={<SalesPreview />} />
+          <Route path="/SalesDateRange" element={<SalesDateRange />} />
 
           {/* production management  */}
           <Route path="/vieworders" element={<OrderViewAll />} />
@@ -154,7 +159,7 @@ const App = () => {
           <Route path="/SupplierViewAll" element={<SupplierViewAll />} />
           <Route path="/SupplierCreate" element={<SupplierNew />} />
           <Route path="/SupplierUpdate/:id" element={<SupplierUpdate />} />
-          <Route path="/SupplierRecordsDashboard" element={<SupplierRecordsDashboard />} />
+          <Route path="/PurchaseOrderDetailsDashboard" element={<PurchaseOrderDetailsDashboard />} />
           <Route path="/SupplierDetailsPreview" element={<SupplierDetailsPreview />} />
 
           {/* Transport management  */}
