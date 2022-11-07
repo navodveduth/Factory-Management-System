@@ -52,6 +52,18 @@ const TransportViewAll = () => {
   //   navigate('/TransportDateRange', { state: { DS: dateStart, DE: dateEnd } });
   // };
 
+  const convertDate = (format) => {
+    function convert(s) {
+      return s < 10 ? `0${s}` : s;
+    }
+    const date = new Date(format);
+    return [
+      date.getFullYear(),
+      convert(date.getMonth() + 1),
+      convert(date.getDate()),
+    ].join('-');
+  };
+
   let dateRangeRef = (dateRange) => {
     // dateRangeRef is a reference to the DateRangePickerComponent
     dateRangeRef = dateRange;
@@ -59,8 +71,8 @@ const TransportViewAll = () => {
 
   const filterDate = () => {
     if (dateRangeRef.value && dateRangeRef.value.length > 0) {
-      const start = dateRangeRef.value[0];
-      const end = dateRangeRef.value[1];
+      const start = convertDate(dateRangeRef.value[0]);
+      const end = convertDate(dateRangeRef.value[1]);
 
       let date1 = JSON.stringify(start);
       date1 = date1.substring(1, 11);
