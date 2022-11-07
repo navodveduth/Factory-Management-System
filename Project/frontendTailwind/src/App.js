@@ -17,7 +17,7 @@ import { OrderViewAll, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder 
 
 import { StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, StockUtilisationDashboard, StockUtilisation, StockAddExisting, StockUtilUpdate, StockUtilPDF, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF, PendingStockView, PendingStockAdd, PendingStockUpdate, PendingStockPDf } from './pages/Stock';
 
-import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, SupplierRecordsDashboard, SupplierDetailsPreview } from './pages/Suppliers';
+import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview } from './pages/Suppliers';
 
 import { DriverDashboard, DriverViewAll, DriverNew, DriverUpdate, DriverReport } from './pages/Driver';
 import { TransportDashboard, TransportViewAll, TransportNew, TransportUpdate, TransportReport } from './pages/Transport';
@@ -159,7 +159,7 @@ const App = () => {
           <Route path="/SupplierViewAll" element={<SupplierViewAll />} />
           <Route path="/SupplierCreate" element={<SupplierNew />} />
           <Route path="/SupplierUpdate/:id" element={<SupplierUpdate />} />
-          <Route path="/SupplierRecordsDashboard" element={<SupplierRecordsDashboard />} />
+          <Route path="/PurchaseOrderDetailsDashboard" element={<PurchaseOrderDetailsDashboard />} />
           <Route path="/SupplierDetailsPreview" element={<SupplierDetailsPreview />} />
 
           {/* Transport management  */}
