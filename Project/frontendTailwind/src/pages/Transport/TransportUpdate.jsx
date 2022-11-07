@@ -26,16 +26,20 @@ const TransportUpdate = () => {
     setThemeSettings,
   } = useStateContext();
 
+  const [transportID, setTransportID] = useState('');
   const [type, setType] = useState('');
+  const [typeInfo, setTypeInfo] = useState('');
   const [destinationAddress, setDestinationAddress] = useState('');
   const [date, setDate] = useState('');
   const [distance, setDistance] = useState('');
   const [timeOfDispatch, setTimeOfDispatch] = useState('');
   const [transportCost, setTransportCost] = useState('');
-  const [status, setStatus] = useState('');
-  const [driver, setDriver] = useState('');
-  const [drivers, setDrivers] = useState([]);
   const [description, setDescription] = useState('');
+  const [driver, setDriver] = useState('');
+  const [status, setStatus] = useState('');
+  const [drivers, setDrivers] = useState([]);
+  const [employees, setEmployees] = useState([]);
+  const [goods, setGoods] = useState([]);
 
   const getDrivers = async () => {
     axios
@@ -48,8 +52,32 @@ const TransportUpdate = () => {
       });
   };
 
+  const getEmployees = async () => {
+    axios
+      .get('http://localhost:8070/employee/viewEmployee')
+      .then((res) => {
+        setEmployees(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
+  const getGoods = async () => {
+    axios
+      .get('http://localhost:8070/sales/')
+      .then((res) => {
+        setGoods(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
   useEffect(() => {
     getDrivers();
+    getEmployees();
+    getGoods();
     const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
     const currentThemeMode = localStorage.getItem('themeMode');
     if (currentThemeColor && currentThemeMode) {
@@ -62,7 +90,9 @@ const TransportUpdate = () => {
     axios
       .get(`http://localhost:8070/transport/${id}`)
       .then((res) => {
+        setTransportID(res.data.transportID);
         setType(res.data.type);
+        setTypeInfo(res.data.typeInfo);
         setDestinationAddress(res.data.destinationAddress);
         setDate(res.data.date);
         setDistance(res.data.distance);
@@ -130,7 +160,9 @@ const TransportUpdate = () => {
                         e.preventDefault();
 
                         const newTransport = {
+                          transportID,
                           type,
+                          typeInfo,
                           destinationAddress,
                           date,
                           distance,
@@ -157,22 +189,77 @@ const TransportUpdate = () => {
                       }}
                     >
                       <div className="mb-3">
-                        <label className="form-label">Type</label>
+                        <label htmlFor="transportID" className="form-label">
+                          Transport Number :
+                        </label>
+                        <input
+                          type="text"
+                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                          pattern="[A-Z]{1}[0-9]{3,7}"
+                          id="transportID"
+                          required
+                          value={transportID}
+                          onChange={(e) => {
+                            setTransportID(e.target.value);
+                          }}
+                        />
+                      </div>
+
+                      <div className="mb-3">
+                        <label className="form-label" className="block">
+                          Transportation Type
+                        </label>
                         <select
                           id="type"
                           name="type"
-                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                          value={type}
+                          className="mt-1  w-200 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           required
                           onChange={(e) => {
                             setType(e.target.value);
                           }}
                         >
+                          <option value={type}>{type}</option>
                           <option value="Staff">Staff</option>
                           <option value="Employee">Employee</option>
                           <option value="Goods">Goods</option>
                         </select>
+                        {type === 'Staff' || type === 'Employee' ? (
+                          <select
+                            id="trInfo"
+                            name="trInfo"
+                            className="mt-1 ml-8 w-640 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                            required
+                            onChange={(e) => {
+                              setTypeInfo(e.target.value);
+                            }}
+                          >
+                            <option value={typeInfo}>{typeInfo}</option>
+                            {employees.map((item, index) => (
+                              <option value={item.employeeFullName} key={index}>
+                                {item.employeeFullName}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <select
+                            id="trInfo"
+                            name="trInfo"
+                            className="mt-1 ml-8 w-640 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                            required
+                            onChange={(e) => {
+                              setTypeInfo(e.target.value);
+                            }}
+                          >
+                            <option value={typeInfo}>{typeInfo}</option>
+                            {goods.map((item, index) => (
+                              <option value={item.invoiceNo} key={index}>
+                                {`${item.invoiceNo} - ${item.itemName} x ${item.quantity}`}
+                              </option>
+                            ))}
+                          </select>
+                        )}
                       </div>
+
                       <div className="mb-3">
                         <label className="form-label">
                           Destination Address
@@ -199,20 +286,7 @@ const TransportUpdate = () => {
                           }}
                         />
                       </div>
-                      <div className="mb-3">
-                        <label className="form-label">Distance</label>
-                        <input
-                          type="text"
-                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                          id="distance"
-                          value={distance}
-                          min="0"
-                          onChange={(e) => {
-                            setDistance(e.target.value);
-                            setTransportCost(e.target.value * 100 + 250);
-                          }}
-                        />
-                      </div>
+
                       <div className="mb-3">
                         <label className="form-label">Time Of Dispatch</label>
                         <input
@@ -225,6 +299,22 @@ const TransportUpdate = () => {
                           }}
                         />
                       </div>
+
+                      <div className="mb-3">
+                        <label className="form-label">Distance (Km)</label>
+                        <input
+                          type="text"
+                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                          id="distance"
+                          value={distance}
+                          min="0"
+                          onChange={(e) => {
+                            setDistance(e.target.value);
+                            setTransportCost(e.target.value * 100 + 250);
+                          }}
+                        />
+                      </div>
+
                       <div className="mb-3">
                         <label className="form-label">Driver</label>
                         <select
@@ -244,18 +334,35 @@ const TransportUpdate = () => {
                           ))}
                         </select>
                       </div>
-                      {/* <div className='mb-3'>
-          <label className='form-label'>Transport Cost</label>
-          <input
-            type='number'
-            className='form-control'
-            id='cost'
-            value={distance * 1.5 + 50}
-            onChange={(e) => {
-              setTransportCost(e.target.value);
-            }}
-          />
-        </div> */}
+
+                      <div className="mb-3">
+                        <label className="form-label">Description</label>
+                        <input
+                          type="text"
+                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                          id="description"
+                          value={description}
+                          onChange={(e) => {
+                            setDescription(e.target.value);
+                          }}
+                        />
+                      </div>
+
+                      <div className="mb-3">
+                        <label htmlFor="totalCost" className="form-label">
+                          Transportation Cost:
+                        </label>
+                        <input
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                          id="totalCost"
+                          value={distance * 100}
+                          readOnly
+                        />
+                      </div>
+
                       <div className="mb-3">
                         <label className="form-label">Status</label>
                         <select
@@ -272,18 +379,6 @@ const TransportUpdate = () => {
                         </select>
                       </div>
 
-                      <div className="mb-3">
-                        <label className="form-label">Description</label>
-                        <input
-                          type="text"
-                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                          id="description"
-                          value={description}
-                          onChange={(e) => {
-                            setDescription(e.target.value);
-                          }}
-                        />
-                      </div>
                       <button
                         type="submit"
                         className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600"
