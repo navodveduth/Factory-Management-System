@@ -1,33 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link,useLocation,useNavigate } from 'react-router-dom';
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
-import {jsPDF} from "jspdf";
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-const SalesViewAll = () => {
+const SalesDateRange = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
   const [sales, setSale] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [dateStart, setDateStart] = useState("");
-  const [dateEnd, setDateEnd] = useState("");
-  const navigate = useNavigate();
+  const location = useLocation();
 
   const getSale = async () => {
     axios
-      .get(`http://localhost:8070/sales/`)
+      .get('http://localhost:8070/sales/date/'+location.state.DS+'/'+location.state.DE)
       .then((res) => {
         setSale(res.data);
       })
       .catch((err) => {
         alert(err.message);
-      });
-  };
+      })
+  }
+
+  const navigate = useNavigate();
+  const toDateRange=()=>{
+    navigate('/SalesViewAll');
+  }
 
   useEffect(() => {
     getSale();
@@ -37,7 +39,7 @@ const SalesViewAll = () => {
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);
     }
-  }, []);
+  }, [])
 
   const deleteSale = async (id) => {
     await axios
@@ -47,13 +49,11 @@ const SalesViewAll = () => {
         getSale();
       })
       .catch((err) => {
-        alert(err.message);
+        alert(err.message)
       })
   }
 
-  const toDateRange = () => {
-    navigate('/SalesDateRange',{state:{DS:dateStart,DE:dateEnd}});
-  }
+  
 
   const confirmFunc = (id)=>{
 		if (confirm("Do you want to delete?") == true) {
@@ -131,28 +131,16 @@ const SalesViewAll = () => {
                                   }} />
                               </div>
 
-                              <div>
-                                <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date" 
-                                    onChange={(e) => {
-                                    setDateStart(e.target.value);
-                                    }} />
-                              </div>
-
-                              <div>
-                                <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date" 
-                                    onChange={(e) => {
-                                    setDateEnd(e.target.value);
-                                    }} />
-                              </div>
-
-                              <div className=" mx-1">
-                                  <button type="button" className = "py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}>Filter by Date</button>
+                              <div className="mx-3">
+                                <Link to={"/SalesViewAll"}> {/* change this link your previous page */}
+                                  <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Reset Date</button>
+                                </Link>
                               </div>
 
                               <div className="mr-0 ml-auto">
                                   {/* change this link your preview page */}
                                   <Link to={"/SalesPreview"}>
-                                  <button type="button" className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+                                  <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
                                   </Link>
                               </div>
 
@@ -165,7 +153,7 @@ const SalesViewAll = () => {
                                   <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                                       <TableHeader value="Invoice No." />
                                       <TableHeader value="Date of Order" />
-                                      <TableHeader value="Customer Name" />
+                                      {/* <TableHeader value="Customer Name" /> */}
                                       <TableHeader value="Item Name" />
                                       <TableHeader value="Quantity" />
                                       <TableHeader value="Total Amount" />
@@ -175,7 +163,7 @@ const SalesViewAll = () => {
                                   </thead>
                                   <tbody>
 
-                                  {sales.filter((data) => {
+                                  {sales && sales.filter((data) => {
                                           if(searchTerm == ""){
                                               return data;
                                           }else if(
@@ -193,14 +181,14 @@ const SalesViewAll = () => {
 
                                                   <TableData value={data.invoiceNo} />
                                                   <TableData value={new Date(data.orderDate).toISOString().split('T')[0]} />
-                                                  <TableData value={data.customerDetailss.map((data3) => {
+                                                  {/* <TableData value={data.customerDetailss.map((data3) => {
                                                       return (
                                                       <div>
                                                           {data3.customerName}
                                                       </div>
                                                       )
                                                   
-                                                  })} />
+                                                  })} /> */}
                                                   <TableData value={data.itemName} />
                                                   <TableData value={data.quantity} />
                                                   <TableData value={formattedAmount} />
@@ -255,4 +243,4 @@ const SalesViewAll = () => {
   );
 };
 
-export default SalesViewAll;
+export default SalesDateRange;
