@@ -9,7 +9,7 @@ import TableHeader from '../../components/Table/TableHeader';
 
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import MachMaintenanceViewAll from './MachMaintenanceViewAll';
+import MachMaintenanceViewAll from '../MachineryAndMaintenance/MachMaintenanceViewAll';
 
 const MachMaintenanceHistory = () => {
 
