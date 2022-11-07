@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { FiPackage, FiSettings, FiFileText, FiFilePlus } from 'react-icons/fi';
+import { RiLoader4Line } from "react-icons/ri";
+import { AiOutlineClockCircle } from "react-icons/ai";
+import { FcProcess } from "react-icons/fc";
+import { FiPackage, FiSettings, FiFileText, FiFilePlus, FiCheck } from 'react-icons/fi';
 import { DashTopBox, DashTopButton, SalesChart, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -31,11 +34,7 @@ const SalesDashboard = () => {
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);
     }
-  }, []);
-
-  // useEffect(() => {
-  //   getSale();
-  // }, []);
+  }, [])
 
   const salesCount = sales.length;
   const finishedOrders= sales.filter((sale) => sale.status === 'Finished').length;
@@ -111,9 +110,9 @@ const SalesDashboard = () => {
                                 <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                                   {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
                                   <DashTopBox icon={<FiPackage />} label="Total Sales" data={salesCount} />
-                                  <DashTopBox icon={<FiPackage />} label="Pending Orders" data={pendingOrders} />
-                                  <DashTopBox icon={<FiPackage />} label="Processing Orders" data={ongoingOrders} />
-                                  <DashTopBox icon={<FiPackage />} label="Finished Orders" data={finishedOrders} />       
+                                  <DashTopBox icon={<AiOutlineClockCircle />} label="Pending Orders" data={pendingOrders} />
+                                  <DashTopBox icon={<RiLoader4Line />} label="Processing Orders" data={ongoingOrders} />
+                                  <DashTopBox icon={<FiCheck />} label="Finished Orders" data={finishedOrders} />       
                                 </div>
                               </div>
                             

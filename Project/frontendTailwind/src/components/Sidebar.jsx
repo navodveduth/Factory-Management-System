@@ -20,7 +20,7 @@ const Sidebar = () => {
   };
 
   const activeLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white  text-md m-2';
-  const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2';
+  const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2 transition duration-300 ease-in-out';
 
   return (
     <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
@@ -38,7 +38,7 @@ const Sidebar = () => {
             </TooltipComponent>
           </div>
 
-          <div className="mt-10 ">
+          <div className="mt-10 " >
             
             {/*  menu ---------------------------------------------------------------------------------- menu  */}
             <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
@@ -252,7 +252,7 @@ const Sidebar = () => {
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/SupplierRecordsDashboard"
+              to="/PurchaseOrderDetailsDashboard"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
@@ -260,7 +260,7 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <FiFileText /> {/*  icon  */}
-              <span className="capitalize ">Supplier Records</span> {/*  link name  */}
+              <span className="capitalize ">Purchase Order Details</span> {/*  link name  */}
             </NavLink>
             {/*  done ---------------------------------------------------------------------------------- done  */}
 
