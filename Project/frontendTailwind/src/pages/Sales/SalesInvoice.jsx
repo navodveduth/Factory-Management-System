@@ -65,9 +65,11 @@ function SalesInvoice() {
       var month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
       var year = d.getFullYear();
       var formateDate = year + "-" + month + "-" + date;
+      var cusName;
 
   
     return (
+
       <div>
 
       {/* DON'T CHANGE ANYTHING HERE */}
@@ -117,6 +119,13 @@ function SalesInvoice() {
                         {themeSettings && <ThemeSettings />}
                         <div>
                         <div>
+
+        {/* {sales.map((data) => {
+          data.customerDetailss.map((customer) => {
+            cusName = customer.customerName
+          }
+          )})}; */}
+
         <p className="text-center text-4xl  dark:text-white">Invoice Preview    <button className="text-4xl right-4" onClick={createPDF} type="button" >
           <i className="fa-solid fa-download"></i></button>
         </p>
@@ -145,7 +154,7 @@ function SalesInvoice() {
  
           <div className="mt-5 text-left">
               <p className="text-xl mb-3">Billed to:</p>
-              <p>Name: {}</p>
+              <p>Name: {cusName}</p>
               <p>PhoneNo: {}</p>
               <p>Customer ID: {customerID}</p>
          </div>

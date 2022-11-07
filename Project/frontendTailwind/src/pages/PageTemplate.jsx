@@ -3,12 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+
+import { useStateContext } from '../../contexts/ContextProvider';
 import { FiUser } from 'react-icons/fi';
 import { DashTopBox, DashTopButton,  } from '../../components';
-import { useStateContext } from '../../contexts/ContextProvider';
-
 import { FiSettings } from 'react-icons/fi';
-import { Navbar, Footer, Sidebar, ThemeSettings } from '../components';
+import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 

@@ -65,6 +65,40 @@ const AttendanceAndLeaveDashboard = () => {
     }
   }, []);
 
+  const confirmFunc = (id)=>{
+
+		if (confirm("Do you want to delete?") == true) {
+      deleteAttendance(id);
+		} else {
+			navigate('/AttendanceAndLeaveDashboard');
+		}
+
+  }
+
+  const deleteLeave = async (id) => {
+    await axios
+      .delete(`http://localhost:8070/leave/deleteLeave/${id}`)
+      .then((res) => {
+        alert('Data deleted successfully');
+        getLeave();
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
+  const deleteAttendance = async (id) => {
+    await axios
+      .delete(`http://localhost:8070/attendance/deleteAttendance/${id}`)
+      .then((res) => {
+        alert('Data deleted successfully');
+        getAttendance();
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
   const empCount = employee.length;
   const date = new Date().toISOString();
   const countPresent = attendance.filter((att) => new Date(att.employeeInTime).toISOString().slice(0, 10) === date.slice(0, 10)).length;
@@ -121,7 +155,7 @@ const AttendanceAndLeaveDashboard = () => {
                         {themeSettings && <ThemeSettings />}
                         <div>
                           <div className="mt-5">
-                            <div className="flex flex-wrap lg:flex-nowrap justify-left ml-10 mt-5">
+                            <div className="flex flex-wrap lg:flex-nowrap justify-left ml-5 mt-5">
                               <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                                 {/* top buttons in the dashboard */} {/* use for navigation buttons*/}
                                 <Link to="/AttendanceViewAll">
@@ -169,11 +203,13 @@ const AttendanceAndLeaveDashboard = () => {
                                 <table className="w-full rounded-lg">
                                   <thead>
                                     <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                      <TableHeader value="Employee ID" />
-                                      <TableHeader value="Date" />
-                                      <TableHeader value="In-Time" />
-                                      <TableHeader value="Out-Time" />
-                                      <TableHeader value="Status" />
+                                    <TableHeader value="Employee ID" />
+                                        <TableHeader value="Date" />
+                                        <TableHeader value="In-Time" />
+                                        <TableHeader value="Out-Time" />
+                                        <TableHeader value="Total Hours" />
+                                        <TableHeader value="Status" />
+                                        <TableHeader value="Manage" />
                                       </tr>
                                   </thead>
 
@@ -190,7 +226,29 @@ const AttendanceAndLeaveDashboard = () => {
                                           <TableData value={new Date(data.employeeInTime).toISOString().split('T')[0]} />
                                           <TableData value={new Date(data.employeeInTime).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })} />
                                           <TableData value={new Date(data.employeeOutTime).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })} />
+                                          <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.employeeTotalHours} </td>
                                           <TableData value={data.attendanceStatus} />
+
+                                          <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                            <Link to={`/AttendanceUpdate/${data._id}`}>
+                                              <button
+                                                type="button"
+                                                className="font-bold py-1 px-4 rounded-full mx-3 text-white"
+                                                style={{ background: currentColor }}
+                                              >
+                                                <i className="fas fa-edit" />
+                                              </button>
+                                            </Link>
+                                            <button
+                                              type="button"
+                                              className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
+                                              onClick={() => {
+                                                confirmFunc(data._id);
+                                              }}
+                                            >
+                                              <i className="fas fa-trash" />
+                                            </button>
+                                          </td>
                                         </tr>
                                       )
                                       })}
@@ -208,11 +266,13 @@ const AttendanceAndLeaveDashboard = () => {
                                     <thead>
                                     <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                                         <TableHeader value="Employee ID" />
+                                        <TableHeader value="Employee Name" />
                                         <TableHeader value="Leave Type" />
                                         <TableHeader value="Start Date" />
                                         <TableHeader value="End Date" />
                                         <TableHeader value="Reason" />
                                         <TableHeader value="Status" />
+                                        <TableHeader value="Manage" />
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -224,11 +284,39 @@ const AttendanceAndLeaveDashboard = () => {
                                     }).map((data, key) => (
                                         <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                                             <TableData value={data.employeeNumber} />
+                                            <TableData value={data.employeeDetails.map((data3) => {
+                                                    return (
+                                                    <div>
+                                                        {data3.employeeFullName} 
+                                                    </div>
+                                                    )
+                                                })} />
                                             <TableData value={data.leaveType} />
                                             <TableData value={new Date(data.leaveStartDate).toISOString().split('T')[0]} />
                                             <TableData value={new Date(data.leaveEndDate).toISOString().split('T')[0]} />
                                             <TableData value={data.leaveReason} />
                                             <TableData value={data.leaveStatus} />
+
+                                            <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                              <Link to={`/LeaveUpdate/${data._id}`}>
+                                                <button
+                                                  type="button"
+                                                  className="font-bold py-1 px-4 rounded-full mx-3 text-white"
+                                                  style={{ background: currentColor }}
+                                                >
+                                                  <i className="fas fa-edit" />
+                                                </button>
+                                              </Link>
+                                              <button
+                                                type="button"
+                                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
+                                                onClick={() => {
+                                                  confirmFunc(data._id);
+                                                }}
+                                              >
+                                                <i className="fas fa-trash" />
+                                              </button>
+                                            </td>
                                         </tr>
                                     ))}
                                     </tbody>

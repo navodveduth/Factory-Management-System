@@ -16,7 +16,16 @@ export const createLeave = async (req, res) => {
 // Retrieve and return all leaves from the database.
 export const getAllLeaveDetails = async (req, res) => {
     try {
-        const leaves = await Leave.find();
+        const leaves = await Leave.aggregate([
+            {
+                $lookup:{
+                    from: "employees",
+                    localField: "employeeNumber" ,
+                    foreignField: "employeeNumber",
+                    as: "employeeDetails"
+                }
+            }
+        ]);
         res.status(200).json(leaves);
     } catch (error) {
         res.status(404).json({ message: error });
