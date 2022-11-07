@@ -19,8 +19,19 @@ function ViewAllRawMaterials() {
     const [searchTerm, setSearchTerm] = useState("");
 
 
+    // const getStock = async () => {  //getStock is the function to get the data from the backend
+    //     axios.get("http://localhost:8070/stock")
+    //         .then((res) => {
+    //             setStock(res.data); //setStock is used to update the state variable
+    //             console.log(res.data);
+    //         })
+    //         .catch((err) => {
+    //             alert(err.message);
+    //         })
+    // }
+
     const getStock = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stock")
+        axios.get("http://localhost:8070/stock/category/" + "Raw materials")
             .then((res) => {
                 setStock(res.data); //setStock is used to update the state variable
                 console.log(res.data);
@@ -31,7 +42,7 @@ function ViewAllRawMaterials() {
     }
 
     const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stockUtilisation")
+        axios.get("http://localhost:8070/stockUtilisation/category/" + "Raw materials")
             .then((res) => {
                 setStockUtil(res.data); //setStock is used to update the state variable
                 console.log(res.data);
@@ -161,9 +172,7 @@ function ViewAllRawMaterials() {
                                             <tbody>
                                                 {stock.filter((data) => { 
                                                     if (searchTerm == "") {
-                                                        stock.filter((data) => data.stockCategory === "Raw materials").map((data) => {
-                                                            return data;
-                                                        })
+                                                        return data;
                                                     } else if ((data.stockCode.toLowerCase().includes(searchTerm.toLowerCase())) ||
                                                         (data.stockName.toLowerCase().includes(searchTerm.toLowerCase()))) {
                                                         return data;

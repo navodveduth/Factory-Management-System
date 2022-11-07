@@ -16,7 +16,7 @@ function AdditionsReport() {
 
     const [stockUtil, setStockUtilisation] = useState([]); //stock is the state variable and setStock is the function to update the state variable
     const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stockUtilisation")
+        axios.get("http://localhost:8070/stockUtilisation/type/" + "Additions")
             .then((res) => {
                 setStockUtilisation(res.data); //setStock is used to update the state variable
                 console.log(res.data);
