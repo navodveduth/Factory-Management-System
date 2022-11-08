@@ -5,6 +5,8 @@ import Sales from "../../models/Sales/sales.model.js"
 //All CRUD Operations regarding this schema will happen here
 
 //get the status of the sale according to the invoice 
+
+//****************** GET THE INVOICE DETAILS FROM THE INVOICE NUMBER IN SALES TABLE ******************
 export const getFromInvoice = async(req,res)=>{
     try{
         const invoice = req.params.invoiceNo;
@@ -32,6 +34,7 @@ export const updateCost = async(req,res)=>{
 }
 
 
+//****************** GET THE INVOICE DETAILS FROM THE INVOICE NUMBER IN PRODUCTION TABLE ******************
 export const getOrderFromInvoice = async(req,res)=>{
     try{
         const invoice = req.params.invoiceNo;
@@ -45,6 +48,7 @@ export const getOrderFromInvoice = async(req,res)=>{
 }
 
 //set the sale status only 
+//****************** UPDATE THE STATUS ACCORDING TO THE INVOICE ***********
 export const setSaleStatus = async(req,res)=>{
     try{
       //  const invoice = req.params.invoiceNo;
