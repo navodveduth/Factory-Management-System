@@ -15,11 +15,11 @@ import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, Sale
 
 import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders,CompletedOrders, FinalCostOrder} from './pages/Production/Index';
 
-import { StocksDashboard, StockView, StockInformation, StockViewDateRange, StockBreakdownDateRange , StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, ViewAllRawMaterials, RawMaterialsReport, ViewAllWorkInProgress, WorkInProgressReport, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF } from './pages/Stock';
+import { StocksDashboard, StockView, StockInformation, StockViewDateRange, StockBreakdownDateRange , StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, ViewAllRawMaterials, RawMaterialsReport, ViewAllWorkInProgress, WorkInProgressReport } from './pages/Stock';
 import { PendingStockView, PendingStockAdd, PendingStockUpdate, PendingStockPDf, PendingRequest, PendingRequestPDF, ProcessingRequest, ProcessingRequestPDF, ResolvedRequest, ResolvedRequestPDF } from './pages/PendingStock';
 import { StockUtilisationDashboard, StockUtilPDF,StockUtilisationDateRange ,StockUtilisation, StockAddExisting, StockUtilAddOption, StockUtilUpdate, ViewAllAdditions, AdditionsReport, ViewAllIssues, IssuesReport } from './pages/StockUtilisation';
 
-import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview } from './pages/Suppliers';
+import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview, PurchaseOrderAdd, PurchaseOrderUpdate, PurchaseOrderPreview, PurchaseOrderView } from './pages/Suppliers';
 
 import { DriverDashboard, DriverViewAll, DriverNew, DriverUpdate, DriverReport } from './pages/Driver';
 import { TransportDashboard, TransportViewAll, TransportDateRange, TransportNew, TransportUpdate, TransportRecord, TransportReport } from './pages/Transport';
@@ -174,12 +174,6 @@ const App = () => {
           <Route path="/generateIPDF" element={<IssuesReport />} />
           <Route path="/StockUtilisationDateRange/" element={<StockUtilisationDateRange/>} />
 
-          <Route path="/DamagedStockDashboard" element={<DamagedStockDashboard />} />
-          <Route path="/DamagedStockView" element={<DamagedStockView />} />
-          <Route path="/DamagedStockAdd" element={<DamagedStockAdd />} />
-          <Route path="/DamagedStockUpdate/:id" element={<DamagedStockUpdate />} />
-          <Route path="/generatePDF" element={<DStockPDF />} />
-
           {/* Supplier management  */}
           <Route path="/SupplierDashboard" element={<SupplierDashboard />} />
           <Route path="/SupplierViewAll" element={<SupplierViewAll />} />
@@ -187,6 +181,13 @@ const App = () => {
           <Route path="/SupplierUpdate/:id" element={<SupplierUpdate />} />
           <Route path="/PurchaseOrderDetailsDashboard" element={<PurchaseOrderDetailsDashboard />} />
           <Route path="/SupplierDetailsPreview" element={<SupplierDetailsPreview />} />
+
+          {/* Purchase Order management  */}
+         
+        <Route path="/PurchaseOrderAdd" element={<PurchaseOrderAdd />} />
+        <Route path="/PurchaseOrderUpdate/:id" element={<PurchaseOrderUpdate />} />
+        <Route path="/PurchaseOrderView" element={<PurchaseOrderView />} />
+        <Route path="/PurchaseOrderPreview" element={<PurchaseOrderPreview />} />
 
           {/* Transport management  */}
           <Route path="/TransportDashboard" element={<TransportDashboard />} />

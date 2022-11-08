@@ -113,12 +113,11 @@ function StockUtilPDF() {
                                                     <TableHeader value="unitPrice" />
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Total value" />
-                                                    <TableHeader value="Supplier" />
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {stockUtil.map((data) => {//map is used to iterate the array
-                                                    //const date = new Date(data.lastUpdated).toISOString().split('T')[0];
+                                                    const dbDate = new Date(data.date).toISOString().split('T')[0];
 
                                                     var datacolor = "text-black";
                                                     if (data.type === "Additions") {
@@ -132,12 +131,11 @@ function StockUtilPDF() {
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
                                                             <TableData value={data.stockCategory} />
-                                                            <TableData value={data.date} />
-                                                            <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}><TableData value={data.type} /></td>
+                                                            <TableData value={dbDate} />
+                                                            <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.type}</td>
                                                             <TableData value={"Rs." + data.unitPrice} />
                                                             <TableData value={data.quantity} />
                                                             <TableData value={"Rs." + data.totalValue} />
-                                                            <TableData value={data.supplier} />
                                                         </tr>
                                                     )
                                                 })}

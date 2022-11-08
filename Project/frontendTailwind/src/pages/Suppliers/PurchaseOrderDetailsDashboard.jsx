@@ -67,10 +67,10 @@ const PurchaseOrderDetailsDashboard = () => {
       <div className="flex flex-wrap lg:flex-nowrap justify-left ml-10 mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* top buttons in the dashboard */} {/* use for navigation buttons*/}
-          <Link to="/PurchaseOrderDetailsView">
+          <Link to="/PurchaseOrderView">
             <DashTopButton value="Purchase orders" />
           </Link>
-          <Link to="/PurchaseOrderDetailsForm">
+          <Link to="/PurchaseOrderAdd">
             <DashTopButton value="Place a new order" />
           </Link>
 
