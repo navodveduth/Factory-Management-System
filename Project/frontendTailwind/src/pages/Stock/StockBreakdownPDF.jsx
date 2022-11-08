@@ -123,7 +123,6 @@ function StockBreakdownPDF() {
                                                 <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
-                                                    <TableHeader value="Category" />
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Additions" />
                                                     <TableHeader value="Issues" />
@@ -145,13 +144,13 @@ function StockBreakdownPDF() {
                                                     
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Additions" &&
-                                                            stockUtil.stockCode === data.stockCode).map((stockUtil) => {
+                                                            stockUtil.stockCode === data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totAdds += stockUtil.quantity
                                                             })
                                                     }
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
-                                                            stockUtil.stockCode === data.stockCode).map((stockUtil) => {
+                                                            stockUtil.stockCode === data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totIssues += stockUtil.quantity
                                                             })
                                                     }
@@ -177,7 +176,6 @@ function StockBreakdownPDF() {
                                                         <tr className="text-sm h-10 border dark:border-slate-600">
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
-                                                            <TableData value={data.stockCategory} />
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
                                                             <TableData value={totAdds} />
                                                             <TableData value={totIssues} />

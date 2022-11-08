@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { FiUser } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings, Header  } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
@@ -17,13 +16,14 @@ const EmployeeProfile = () => {
 
     const [employee, setEmployee] = useState([]);
     const [leave, setLeave] = useState([]);
+    const [salary, setSalary] = useState([]);
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
     const {id} = useParams(); //get the id from the url
   
     const getEmployee = async () => {
-        axios.get(`http://localhost:8070/employee/viewEmployee/${id}`).then((res) => {
+        await axios.get(`http://localhost:8070/employee/viewEmployee/${id}`).then((res) => {
             setEmployee(res.data);
         })
         .catch((err) => {
@@ -35,17 +35,34 @@ const EmployeeProfile = () => {
     
 
     const getLeaves = async () => {
-        axios.get(`http://localhost:8070/leave/viewLeavesNum/${empNo}`).then((res) => {
+        await axios.get(`http://localhost:8070/leave/viewLeavesNum/${empNo}`).then((res) => {
             setLeave(res.data);
         })
         .catch((err) => {
             alert(err.message);
         });
     };
+
+    /*const getSalary = async () => {
+        await axios.get(`http://localhost:8070/salary/SalaryViewEmp/${empNo}`).then((res) => {
+            setSalary(res.data);
+        })
+        .catch((err) => {
+            alert(err.message);
+        });
+    };*/
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+    });
     
 
     useEffect(() => {
         getEmployee();
+        //getSalary();
         getLeaves();
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
@@ -53,32 +70,53 @@ const EmployeeProfile = () => {
             setCurrentColor(currentThemeColor);
             setCurrentMode(currentThemeMode);
         }
-    }, [employee.employeeNumber]);
+    }, [employee.employeeNumber], [empNo]);
 
     const thisYear = new Date().getFullYear();
     const leaveCount = 14 - (leave.filter((leave) => leave.leaveStartDate.substring(0, 4) == thisYear).length);
 
-    // this code needed for the datesort function
-    function onClick(){
-        if(dateRangeRef.value && dateRangeRef.value.length > 0){
-            const start = dateRangeRef.value[0];
-            const end = dateRangeRef.value[1];
-            let date1 = JSON.stringify(start)
-            date1 = date1.substring(1,11)
-            setStartDate(date1)
-            let date2 = JSON.stringify(end)
-            date2 = date2.substring(1,11)
-            setEndDate(date2)
-            console.log(startDate)
-            console.log(endDate)
-        }
-        else{
-            setStartDate("")
-            setEndDate("")
-        }
-    }
+    let dateRangeRef = (dateRange) => {
+    // dateRangeRef is a reference to the DateRangePickerComponent
+    dateRangeRef = dateRange;
+  };
 
-    let dateRangeRef =  dateRange => dateRangeRef = dateRange; // this code needed for the datesort function
+  const convertDate = (format) => {
+    function convert(s) {
+      return s < 10 ? `0${s}` : s;
+    }
+    const date = new Date(format);
+    return [
+      date.getFullYear(),
+      convert(date.getMonth() + 1),
+      convert(date.getDate()),
+    ].join('-');
+  };
+
+  const filterDate = () => {
+    if (dateRangeRef.value && dateRangeRef.value.length > 0) {
+      const start = convertDate(dateRangeRef.value[0]);
+      const end = convertDate(dateRangeRef.value[1]);
+
+      let date1 = JSON.stringify(start);
+      date1 = date1.substring(1, 11);
+      setStartDate(date1);
+
+      let date2 = JSON.stringify(end);
+      date2 = date2.substring(1, 11);
+      setEndDate(date2);
+
+      console.log(startDate);
+      console.log(endDate);
+    } else {
+      setStartDate('');
+      setEndDate('');
+    }
+  };
+
+    console.log(employee);
+    console.log(empNo);
+    console.log(leave);
+    console.log(salary);
 
     return (
         <div>
@@ -160,6 +198,15 @@ const EmployeeProfile = () => {
                                             <div className="p-1"> <span className="font-bold"> Type </span> : {employee.employeeType}</div>
                                         </div>
                                     </div>
+                                    {/*<div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
+                                        <h1 className="text-2xl font-bold">Salary Details</h1>
+                                        <div className="text-md ml-12 pt-5">
+                                            <div className="p-1"> <span className="font-bold"> Basic salary </span> : {salary.employeeBasicSalary}</div>
+                                            <div className="p-1"> <span className="font-bold"> Allowances </span> : {salary.employeeAllowance}</div>
+                                            <div className="p-1"> <span className="font-bold"> Incentives </span> : {salary.employeeIncentive}</div>
+                                            <div className="p-1"> <span className="font-bold"> Net Salary </span> : {salary.employeeIncentive + salary.employeeAllowance + salary.employeeBasicSalary}</div>
+                                        </div>
+                    </div>*/}
                                 </div>
                             </div>
 
@@ -170,11 +217,11 @@ const EmployeeProfile = () => {
                                 </div>
 
                                 <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
-                                    <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-48">
+                                    <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
                                         <DateRangePickerComponent ref={dateRangeRef}  placeholder="Select a date range"/>
                                     </div>
                                     <div className="ml-5">
-                                        <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={onClick}>Filter</button>
+                                        <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={filterDate}>Filter</button>
                                     </div>
                                 </div>
 

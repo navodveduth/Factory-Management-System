@@ -15,12 +15,14 @@ import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, Sale
 
 import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders,CompletedOrders, FinalCostOrder} from './pages/Production/Index';
 
-import { StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, StockUtilisationDashboard, StockUtilisation, StockAddExisting, StockUtilUpdate, StockUtilPDF, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF, PendingStockView, PendingStockAdd, PendingStockUpdate, PendingStockPDf } from './pages/Stock';
+import { StocksDashboard, StockView, StockInformation, StockViewDateRange, StockBreakdownDateRange , StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, ViewAllRawMaterials, RawMaterialsReport, ViewAllWorkInProgress, WorkInProgressReport, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF } from './pages/Stock';
+import { PendingStockView, PendingStockAdd, PendingStockUpdate, PendingStockPDf, PendingRequest, PendingRequestPDF, ProcessingRequest, ProcessingRequestPDF, ResolvedRequest, ResolvedRequestPDF } from './pages/PendingStock';
+import { StockUtilisationDashboard, StockUtilPDF,StockUtilisationDateRange ,StockUtilisation, StockAddExisting, StockUtilAddOption, StockUtilUpdate, ViewAllAdditions, AdditionsReport, ViewAllIssues, IssuesReport } from './pages/StockUtilisation';
 
 import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview } from './pages/Suppliers';
 
 import { DriverDashboard, DriverViewAll, DriverNew, DriverUpdate, DriverReport } from './pages/Driver';
-import { TransportDashboard, TransportViewAll, TransportNew, TransportUpdate, TransportReport } from './pages/Transport';
+import { TransportDashboard, TransportViewAll, TransportDateRange, TransportNew, TransportUpdate, TransportRecord, TransportReport } from './pages/Transport';
 
 import UserLogin from './pages/UserLogin';
 import UserRegistration from './pages/UserRegistration'
@@ -133,24 +135,43 @@ const App = () => {
           {/* stock management  */}
           <Route path="/StockDashboard" element={<StocksDashboard />} />
           <Route path="/StockView" element={<StockView />} />
+          <Route path="/StockInformation/:id" element={<StockInformation />} />
           <Route path="/StockAdd" element={<StockAdd />} />
           <Route path="/StockUpdate/:id" element={<StockUpdate />} />
           <Route path="/generateSPDF" element={<StockPDF />} />
+          <Route path="/ViewAllRawMaterials" element={<ViewAllRawMaterials />} />
+          <Route path="/generateRMPDF" element={<RawMaterialsReport />} />
+          <Route path="/ViewAllWorkInProgress" element={<ViewAllWorkInProgress />} />
+          <Route path="/generateWIPPDF" element={<WorkInProgressReport />} />
+          <Route path="/StockViewDateRange/" element={<StockViewDateRange />} />
 
           <Route path="/StockBreakdown" element={<StockBreakdown/>} />
           <Route path="/StockBreakdownUpdate/:id" element={<StockBreakdownUpdate/>} />
           <Route path="/generateSBPDF" element={<StockBreakdownPDF/>} />
+          <Route path="/StockBreakdownDateRange/" element={<StockBreakdownDateRange/>} />
           
           <Route path="/PendingStockView" element={<PendingStockView />} />
           <Route path="PendingStockAdd" element={<PendingStockAdd />} />
           <Route path="PendingStockUpdate/:id" element={<PendingStockUpdate />} />
           <Route path="/generatePSPDF" element={<PendingStockPDf />}/>
+          <Route path="/PendingRequest" element={<PendingRequest />}/>
+          <Route path="/generatePendingRPDF" element={<PendingRequestPDF />}/>
+          <Route path="/ProcessingRequest" element={<ProcessingRequest />}/>
+          <Route path="/generateProcessingRPDF" element={<ProcessingRequestPDF />}/>
+          <Route path="/ResolvedRequest" element={<ResolvedRequest />}/>
+          <Route path="/generateResolvedRPDF" element={<ResolvedRequestPDF />}/>
 
           <Route path="/StockUtilisationDashboard" element={<StockUtilisationDashboard/>} />
           <Route path="/StockUtilisation" element={<StockUtilisation />} />
-          <Route path="/StockAddExisting" element={<StockAddExisting />} />
+          <Route path="/StockUtilAddOption" element={<StockUtilAddOption />} />
+          <Route path="/StockAddExisting/:id" element={<StockAddExisting />} />
           <Route path="/StockUtilUpdate/:id" element={<StockUtilUpdate />} />
           <Route path="/generateSUPDF" element={<StockUtilPDF />} />
+          <Route path="/ViewAllAdditions" element={<ViewAllAdditions />} />
+          <Route path="/generateAPDF" element={<AdditionsReport />} />
+          <Route path="/ViewAllIssues" element={<ViewAllIssues />} />
+          <Route path="/generateIPDF" element={<IssuesReport />} />
+          <Route path="/StockUtilisationDateRange/" element={<StockUtilisationDateRange/>} />
 
           <Route path="/DamagedStockDashboard" element={<DamagedStockDashboard />} />
           <Route path="/DamagedStockView" element={<DamagedStockView />} />
@@ -169,8 +190,10 @@ const App = () => {
           {/* Transport management  */}
           <Route path="/TransportDashboard" element={<TransportDashboard />} />
           <Route path="/TransportViewAll" element={<TransportViewAll />} />
+          <Route path="/TransportDateRange/" element={<TransportDateRange />} />\
           <Route path="/TransportCreate" element={<TransportNew />} />
           <Route path="/TransportUpdate/:id" element={<TransportUpdate />} />
+          <Route path="/TransportRecord/:id" element={<TransportRecord />} />
           <Route path="/TransportReport" element={<TransportReport />} />
 
           <Route path="/DriverDashboard" element={<DriverDashboard />} />

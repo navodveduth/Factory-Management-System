@@ -4,8 +4,20 @@ const Schema = mongoose.Schema;
 
 const transportSchema = new Schema(
   {
+    transportID: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      minlength: 1,
+      maxLength: 20,
+    },
     type: {
       // Staff, Employee, Goods
+      type: String,
+      required: true,
+    },
+    typeInfo: {
       type: String,
       required: true,
     },
