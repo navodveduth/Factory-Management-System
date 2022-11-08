@@ -35,10 +35,10 @@ const stockUtilSchema = new Schema({
         required: true,
         enum: ['Additions', 'Issues'],
     },
-    supplier: {
-        type: String,
-        default: "-",
-    },
+    // supplier: {
+    //     type: String,
+    //     default: "-",
+    // },
     unitPrice: {
         type: Number,
         required: true,
