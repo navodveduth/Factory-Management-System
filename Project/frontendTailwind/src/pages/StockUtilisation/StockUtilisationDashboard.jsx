@@ -111,7 +111,7 @@ const StockUtilisationDashboard = () => {
                       </Link>
 
                       <Link to="/PendingStockView">
-                        <DashTopButton icon={<FaInbox/>} value="View all stock requests" />
+                        <DashTopButton icon={<FaInbox/>} value="View all stock requisitions" />
                       </Link>
 
                       <Link to="/PendingStockAdd">
