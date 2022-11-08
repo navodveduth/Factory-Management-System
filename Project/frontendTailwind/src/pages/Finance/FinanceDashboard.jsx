@@ -5,9 +5,8 @@ import{RiMoneyDollarCircleFill} from 'react-icons/ri';
 import { DashTopBox, DashTopButton, TransactionPieChart } from '../../components';
 
 import { useStateContext } from '../../contexts/ContextProvider';
-import { ParetoSeries } from '@syncfusion/ej2-react-charts';
-
-import { FiUser } from 'react-icons/fi';
+import {BiTransferAlt} from 'react-icons/bi';
+import {MdOutlinePayments} from 'react-icons/md';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -105,10 +104,13 @@ const FinanceDashboard = () => {
                               <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                                 {/* top buttons in the dashboard */} {/* use for navigation buttons*/}
                                 <Link to="/FinanceViewAll">
-                                  <DashTopButton value="View All Transactions" />
+                                  <DashTopButton value="View All Transactions" icon={<MdOutlinePayments/>} />
                                 </Link>
                                 <Link to="/FinanceNew">
-                                  <DashTopButton value="Cash Transactions" />
+                                  <DashTopButton value="Cash Transactions" icon={<BiTransferAlt/>}/>
+                                </Link>
+                                <Link to="/IncomeStatement">
+                                  <DashTopButton value="Income Statement" icon={<BiTransferAlt/>}/>
                                 </Link>
                               </div>
                             </div>
