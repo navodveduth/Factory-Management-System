@@ -19,6 +19,7 @@ function StockBreakdown() {
 
     const [dateStart, setDateStart] = useState("");
     const [dateEnd, setDateEnd] = useState("");
+    var price = 0;
 
     const navigate = useNavigate();
 
@@ -213,6 +214,7 @@ function StockBreakdown() {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Additions" &&
                                                             stockUtil.stockCode === data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totAdds += stockUtil.quantity
+                                                                price = stockUtil.unitPrice
                                                             })
                                                     }
                                                     {
@@ -249,7 +251,7 @@ function StockBreakdown() {
                                                             <TableData value={totAdds} />
                                                             <TableData value={totIssues} />
                                                             <TableData value={data.damagedQty} />
-                                                            <TableData value={"Rs." + formatter.format(data.unitPrice)} />
+                                                            <TableData value={"Rs." + formatter.format(price)} />
                                                             <TableData value={data.reorderLevel} />
                                                             <td className={`${dcolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`} >{data.sufficientStock} </td>
 

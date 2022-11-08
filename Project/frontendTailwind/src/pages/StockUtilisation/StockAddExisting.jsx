@@ -26,23 +26,18 @@ function StockAddExisting() {
     const [date, setDate] = useState('');
     const [firstPurchaseDate, setFirstPurchaseDate] = useState('');
     const [type, setType] = useState('');
-    const [unitPrice, setUnitPrice] = useState('');
+    var [unitPrice, setUnitPrice] = useState('');
     var [supplier, setSupplier] = useState('');
     var [totalValue, setTotalValue] = useState('');
+    const [ description,setDescription] = useState('');
+    const [reorderLevel,setReorderLevel] = useState('');
+    const [ sufficientStock,setSufficientStock] = useState('');
+    const[damagedQty,setDamagedQty] = useState('');
 
     //gets the current date
     var currentDate = new Date().toISOString().split('T')[0];
 
-    // var displayM = true;
-    // if (stockCategory === ''){
-    //     displayM = true;
-    // }
-    // else if (stockCategory != "Finished goods") {
-    //     displayM = false;
-    // } else{
-    //     displayM = true;
-    //     supplier  = "-";
-    // }
+
     const {id} = useParams();
 
     const getStock = () => {
@@ -51,6 +46,11 @@ function StockAddExisting() {
             setStockName(res.data.stockName);
             setStockCategory(res.data.stockCategory);
             setFirstPurchaseDate(res.data.firstPurchaseDate);
+            setDescription(res.data.description);
+            setUnitPrice(res.data.unitPrice);
+            setReorderLevel(res.data.reorderLevel);
+            setSufficientStock(res.data.sufficientStock);
+            setDamagedQty(res.data.damagedQty);
         }).catch((err) => {
             alert(err);
         })
@@ -80,6 +80,17 @@ function StockAddExisting() {
     }, [])
 
     var minDate = firstPurchaseDate.split('T')[0]
+
+    // var view = true;
+    // if(type === "Additions"){
+    //     view = false;
+    // }else if(type === "Issues"){
+    //     unitPrice = "-";
+    //     view = true;
+    // }else{
+    //     unitPrice = "-";
+    //     view = true;
+    // }
 
     return (
 
@@ -177,6 +188,18 @@ function StockAddExisting() {
                                                 totalValue
                                             }
 
+                                            const newStock = {
+                                                stockCode,
+                                                stockName,
+                                                stockCategory,
+                                                description,
+                                                firstPurchaseDate,
+                                                reorderLevel,
+                                                unitPrice,
+                                                sufficientStock,
+                                                damagedQty
+                                            }
+
                                             // console.log(newStock)
                                             // await axios.post("http://localhost:8070/stock/create", newStock).then(() => {
                                             //     alert("Data saved successfully");
@@ -218,9 +241,21 @@ function StockAddExisting() {
                                                     }).catch((err) => {
                                                         console.log(err);
                                                         alert("ERROR: Could not add stock");
-                                                        navigate('/StockAddExisting');
+                                                        navigate('/StockAddExisting/' + id);
                                                     })
                                             //     }
+                                            await axios.put("http://localhost:8070/stock/update/" + id, newStock)
+                                                    .then((res) => {
+                                                        alert("Data updated successfully");
+                                                        console.log(newStock);
+                                                        //navigate to the stock view page
+                                                        navigate('/StockUtilisation');
+                                                    })
+                                                    .catch((err) => {
+                                                        console.log(err);
+                                                        alert("ERROR: Could not update stock");
+                                                        navigate('/StockAddExisting/' + id);
+                                                    })
                                             // }
 
 
@@ -264,7 +299,7 @@ function StockAddExisting() {
                                             <div className="mb-3">
                                                 <label for="unitPrice" className="form-label">Unit price: </label>
                                                 <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice" placeholder='Enter price per unit...'
-                                                    min="0" title="If the unit price is not avilable please enter 0" step="0.01" onChange={(e) => {
+                                                    min="0" value={unitPrice} required title="If the unit price is not avilable please enter 0" step="0.01" onChange={(e) => {
                                                         setUnitPrice(e.target.value);
                                                     }} />
                                             </div>
