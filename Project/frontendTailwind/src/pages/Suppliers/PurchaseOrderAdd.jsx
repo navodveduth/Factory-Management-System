@@ -101,7 +101,9 @@ function PurchaseOrderAdd() {
                         orderStatus
                     }
 
-                    await axios.post('http://localhost:8070/purchaseorders/create', newPurchaseOrder)
+                    console.log(newPurchaseOrder);
+
+                    await axios.post('http://localhost:8070/purchaseOrder/create', newPurchaseOrder)
                     .then((res)=>{
                         alert("Purchase order details added successfully");
                         navigate("/PurchaseOrderView");
@@ -188,7 +190,7 @@ function PurchaseOrderAdd() {
                 <div className="mb-3">
                             <label htmlFor="orderStatus" className="form-label">Order Status</label>
                             < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                            id="orderStatus" defaultValue={orderStatus} placeholder="Enter the Order Status" required
+                            id="orderStatus" defaultValue="Enter the Order Status" required
                             onChange={(e) => {
                             setStatus(e.target.value);
                         }}>
