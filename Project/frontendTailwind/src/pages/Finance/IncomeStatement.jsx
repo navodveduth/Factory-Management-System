@@ -21,40 +21,46 @@ const IncomeStatement = () => {
   const [transport, setTransport] = useState([]);
   const [salary, setSalary] = useState([]);
   const [prodCost, setProdCost] = useState([]);
-  const [maintainence, setMaintainence] = useState([]);
+  const [maintainance, setMaintainence] = useState([]);
+  const [mach_maintainance, setMaintainenceMachine] = useState([]);
+  const [vehi_maintainance, setMaintainenceVehi] = useState([]);
+  const [machinery, setMachinery] = useState([]);
 
-  const getMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainence/")
+  
+  const navigate = useNavigate();
+  
+  const toDateRange=()=>{
+    navigate('/FinanceDateRange',{state:{DS:dateStart,DE:dateEnd}});
+  }
+
+  //finance get function
+  const getFinanceDate = async () => {
+    axios
+    .get('http://localhost:8070/finance/date/'+(curDate.getFullYear() - 1)+'/'+curDate)
+    .then((res) => {
+      setTransactions(res.data);
+    })
+    .catch((err) => {
+      alert(err.message);
+    });
+  };
+  //sales get function
+  const getSale = async () => {
+    axios
+      .get('http://localhost:8070/sales/date/'+(curDate.getFullYear() - 1)+'/'+curDate)
       .then((res) => {
-        setMaintainence(res.data); //setMaintainence  is used to update the state variable
-
+        setSales(res.data);
       })
       .catch((err) => {
         alert(err.message);
       })
   }
+  //purchases get function
 
-  //vehicles
-  const [maintainenceVehi, setMaintainenceVehi] = useState([]);
-
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const getVMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainenceVehicle/")
-      .then((res) => {
-        setMaintainenceVehi(res.data); //setMaintainence  is used to update the state variable
-
-      })
-      .catch((err) => {
-        alert(err.message);
-      })
-  }
-
-  //machines
-  const [maintainenceMachine, setMaintainenceMachine] = useState([]);
+  //machinery maintainance get function
 
   const getMMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainenceMachine/")
+    axios.get("http://localhost:8070/maintainenceMachine/date/"+(curDate.getFullYear() - 1)+'/'+curDate)
       .then((res) => {
         setMaintainenceMachine(res.data); //setMaintainence  is used to update the state variable
 
@@ -64,11 +70,71 @@ const IncomeStatement = () => {
       })
   }
 
+  //noraml maintinance get function
+
+  const getMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+    axios.get("http://localhost:8070/maintainence/date/"+(curDate.getFullYear() - 1)+'/'+curDate)
+      .then((res) => {
+        setMaintainence(res.data); //setMaintainence  is used to update the state variable
+
+      })
+      .catch((err) => {
+        alert(err.message);
+      })
+  }
+
+  //vehicle maintainance get function
+
+  const getVMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+    axios.get("http://localhost:8070/maintainenceVehicle/date/"+(curDate.getFullYear() - 1)+'/'+curDate)
+      .then((res) => {
+        setMaintainenceVehi(res.data); //setMaintainence  is used to update the state variable
+
+      })
+      .catch((err) => {
+        alert(err.message);
+      })
+  }
+
+  //machinery get function
+
+  const getMachinery = async () => {  //getMachinery is the function to get the data from the backend
+    axios.get("http://localhost:8070/machinery/date/"+(curDate.getFullYear() - 1)+'/'+curDate)
+      .then((res) => {
+        setMachinery(res.data); //setMachinery is used to update the state variable
+
+
+      })
+      .catch((err) => {
+        alert(err.message);
+      })
+  }
+
+  //transport get function
+
+  const getTransport = async () => {
+    axios
+      .get(
+        "http://localhost:8070/transport/date/"+(curDate.getFullYear() - 1)+'/'+curDate)
+      .then((res) => {
+        setTransport(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
+
+
+  
   useEffect(() => {
-    getFinance();
+    getFinanceDate();
+    getSale();
     getMMaintainence();
     getVMaintainence();
     getMaintainence();
+    getMachinery();
+    getTransport();
     const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
     const currentThemeMode = localStorage.getItem('themeMode');
     if (currentThemeColor && currentThemeMode) {
@@ -77,81 +143,35 @@ const IncomeStatement = () => {
     }
   }, []);
 
-  const maintCount = maintainence.length;
-  const vehiMaintCount = maintainenceVehi.length;
-  const machineMaintCount = maintainenceMachine.length;
+  var saleTotal , revenueTotal, expenseTotal , MMaintTotal , VehiMaintTotal , maintTotal , transportTotal, machineryTotal;
+  saleTotal = expenseTotal = revenueTotal = expenseTotal  = MMaintTotal = VehiMaintTotal = maintTotal = transportTotal = machineryTotal = 0;
 
-  var prototal = 0;
-  for (let index = 0; index < maintCount; index++) {
-    prototal = prototal + maintainence[index].others;
-
+  for (var i = 0; i < sales.length; i++) {
+    saleTotal += sales[i].totalAmount;
   }
 
-
-  var vehitotal = 0;
-  for (let index = 0; index < vehiMaintCount; index++) {
-    vehitotal = vehitotal + maintainenceVehi[index].others;
-  }
-
-
-  var machtotal = 0;
-  for (let index = 0; index < machineMaintCount; index++) {
-    machtotal = machtotal + maintainenceMachine[index].others;
-  }
-
-  var total = vehitotal + machtotal + prototal;
-  total = Math.round(total * 100) / 100;
-
-  const navigate = useNavigate();
-  
-  const toDateRange=()=>{
-    navigate('/FinanceDateRange',{state:{DS:dateStart,DE:dateEnd}});
-  }
-
-  const getFinance = async () => {
-    axios
-      .get('http://localhost:8070/finance/viewTransaction')
-      .then((res) => {
-        setTransactions(res.data);
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-  };
-
-  const getFinanceDate = async () => {
-    axios
-      .get('http://localhost:8070/finance/date/'+dateStart+'/'+dateEnd)
-      .then((res) => {
-        setTransactions(res.data);
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-  };
-
-
-  const deleteFinance = async (id) => {
-    await axios
-      .delete(`http://localhost:8070/finance/deleteTransaction/${id}`)
-      .then((res) => {
-        alert('Transaction Deleted Sucessfully');
-        getFinance();
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-  };
-
-  const confirmFunc = (id)=>{
-
-		if (confirm("Do you want to delete?") == true) {
-        deleteFinance(id);
-		} else {
-			navigate('/FinanceViewAll');
-		}
-
+  for(var i = 0; i < transactions.length; i++){
+    if(transactions[i].trnType == "Revenue"){
+      revenueTotal += transactions[i].trnAmount;
+    }else{
+      expenseTotal += transactions[i].trnAmount;
     }
+  }
+  for(var i = 0; i < transport.length; i++){
+    transportTotal += transport[i].transportCost;
+  }
+  for(var i = 0; i < mach_maintainance.length; i++){
+    MMaintTotal += mach_maintainance[i].others;
+  }
+  for(var i = 0; i < vehi_maintainance.length; i++){
+    VehiMaintTotal += vehi_maintainance[i].others;
+  }
+  for(var i = 0; i < maintainance.length; i++){
+    maintTotal += maintainance[i].others;
+  }
+  for(var i = 0; i < machinery.length; i++){
+    machineryTotal += machinery[i].machineryCost;
+  }
 
  const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -161,11 +181,11 @@ const IncomeStatement = () => {
     })
 
   var curDate = new Date();
-  var datetime = curDate.toLocaleDateString()
+  var dateStart = curDate.toLocaleDateString()
 
-  var datetimeOld = new Date(curDate.toLocaleDateString());
-  datetimeOld.setFullYear(datetimeOld.getFullYear() - 1);
-  datetimeOld = datetimeOld.toLocaleDateString();
+  var dateEnd = new Date(curDate.toLocaleDateString());
+  dateEnd.setFullYear(dateEnd.getFullYear() - 1);
+  dateEnd = dateEnd.toLocaleDateString();
 
 
   
@@ -223,7 +243,7 @@ const IncomeStatement = () => {
                           <div>
                           <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
 
-                            <Header category="Table" title={`Income Statement from `+datetimeOld+` to ` + datetime}/>
+                            <Header category="Table" title={`Income Statement from `+dateStart+` to ` + dateEnd}/>
 
                               <div className="mr-0 ml-auto">
                                 <Link to={"/financePreview"}> {/* change this link your preview page */}
@@ -241,8 +261,29 @@ const IncomeStatement = () => {
                                 </thead>
                                 <tbody>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Maintainance Expenses</td>
-                                    <td>{formatter.format(total)}</td>
+                                    <td>Sales Income</td>
+                                    <td>{formatter.format(saleTotal)}</td>
+                                  </tr>
+                                  <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
+                                    <td>Purchase Expense</td>
+                                    <td>{}</td>
+                                  </tr>
+                                  <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
+                                    <td>Other Income</td>
+                                    <td>{formatter.format(revenueTotal)}</td>
+                                  </tr>
+                                  <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
+                                    <td>Gross Profit</td>
+                                    <td>{formatter.format(saleTotal+revenueTotal)}</td>
+                                  </tr>
+                                  <br></br>
+                                  <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
+                                    <td>Transport Expenses</td>
+                                    <td>{formatter.format(transportTotal)}</td>
+                                  </tr>
+                                  <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
+                                    <td>Maintance Expenses</td>
+                                    <td>{formatter.format(MMaintTotal+VehiMaintTotal+maintTotal)}</td>
                                   </tr>
                                   {/* {transactions.filter((data) => {
                                         if(searchTerm == ""){
