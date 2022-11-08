@@ -4,6 +4,61 @@ import Sales from "../../models/Sales/sales.model.js"
 
 //All CRUD Operations regarding this schema will happen here
 
+//get the status of the sale according to the invoice 
+export const getFromInvoice = async(req,res)=>{
+    try{
+        const invoice = req.params.invoiceNo;
+        const sale = await Sales.findOne({invoiceNo: invoice });
+        res.status(200).json(sale);
+    }catch(error){
+        res.status(404).json(({
+            message: error
+        }));
+    }
+}
+
+export const updateCost = async(req,res)=>{
+    try {
+        const invoice= req.params.invoiceNo;
+        const order = req.body;
+        await orderCost.findOneAndUpdate(invoice, order);
+        res.status(200).json({
+            status : "Granted Stock Finalized"
+        });
+
+    } catch (error) {
+        res.status(404).json({ message : error});
+    }
+}
+
+
+export const getOrderFromInvoice = async(req,res)=>{
+    try{
+        const invoice = req.params.invoiceNo;
+        const order = await orderCost.findOne({invoiceNo: invoice });
+        res.status(200).json(order);
+    }catch(error){
+        res.status(404).json(({
+            message: error
+        }));
+    }
+}
+
+//set the sale status only 
+export const setSaleStatus = async(req,res)=>{
+    try{
+      //  const invoice = req.params.invoiceNo;
+        const setStatus = req.body.status;
+        const invoiceNo = req.params.invoiceNo;
+        const setSaleStatus = await Sales.updateOne({invoiceNo: invoiceNo},{$set:{status: setStatus}});
+        res.status(200).json(setSaleStatus);
+    }catch(error){
+        res.status(404).json(({
+            message: error
+        }));
+    }
+}
+
 //Get All info relating to orderCost
 
 export const getAllOrders = async(req,res)=>{
@@ -17,24 +72,6 @@ export const getAllOrders = async(req,res)=>{
     }
 }
 
-// export const getAllOrders = async (req, res) => {
-//     try {
-//         const order = await orderCost.aggregate([
-//             {
-//                 $lookup: 
-//                 {
-//                     from: "sales",
-//                     localField: "invoiceNo" ,
-//                     foreignField: "invoiceNo",
-//                     as: "orderDetails"
-//                 }
-//             }
-//         ]);
-//         res.status(200).json(order);
-//     } catch (error) {
-//         res.status(404).json({message : error});
-//     }
-// }
 
 export const getOneOrder = async (req, res) =>{
     try {
