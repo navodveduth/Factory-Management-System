@@ -8,6 +8,7 @@ import TableHeader from '../../components/Table/TableHeader';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import MachineryViewAll from './MachineryViewAll';
 
 
 
@@ -153,7 +154,7 @@ const MachineryDateRange = () => {
                       </div>
 
                       <div className="mx-10 ml-auto">
-                                <Link to={"/financeViewAll"}> {/* change this link your previous page */}
+                                <Link to={"/MachineryViewAll"}> {/* change this link your previous page */}
                                   <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Reset Date</button>
                                 </Link>
                               </div>

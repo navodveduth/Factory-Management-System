@@ -107,6 +107,14 @@ const StocksDashboard = () => {
                         <DashTopButton icon={<FaFileSignature/>} value="View Stocks Breakdown" />
                       </Link>
 
+                      <Link to="/ViewAllRawMaterials">
+                        <DashTopButton icon={<BiAddToQueue/>} value="View all raw materials" />
+                      </Link>
+
+                      <Link to="/ViewAllWorkInProgress">
+                        <DashTopButton icon={<BiAddToQueue/>} value="View all work in progress" />
+                      </Link>
+
                       <Link to="/StockAdd">
                         <DashTopButton icon={<BiAddToQueue/>} value="Add New Stock" />
                       </Link>
