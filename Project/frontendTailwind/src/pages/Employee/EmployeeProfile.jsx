@@ -1,56 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Navbar, Footer, Sidebar, ThemeSettings, Header  } from '../../components';
+import { Navbar, Footer, Sidebar, ThemeSettings, Header, AttendanceChart } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 import {DateRangePickerComponent} from '@syncfusion/ej2-react-calendars' // this code needed for the datesort function
-
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 const EmployeeProfile = () => {
-
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
-
+    
     const [employee, setEmployee] = useState([]);
-    const [leave, setLeave] = useState([]);
-    const [salary, setSalary] = useState([]);
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
-    const {id} = useParams(); //get the id from the url
-  
+    const {id} = useParams();
+
     const getEmployee = async () => {
-        await axios.get(`http://localhost:8070/employee/viewEmployee/${id}`).then((res) => {
+        await axios.get(`http://localhost:8070/employee/viewEmployeeAndSalary/${id}`).then((res) => {
             setEmployee(res.data);
         })
         .catch((err) => {
             alert(err.message);
         })
-    }
-
-    const empNo = employee.employeeNumber;
-    
-
-    const getLeaves = async () => {
-        await axios.get(`http://localhost:8070/leave/viewLeavesNum/${empNo}`).then((res) => {
-            setLeave(res.data);
-        })
-        .catch((err) => {
-            alert(err.message);
-        });
     };
-
-    /*const getSalary = async () => {
-        await axios.get(`http://localhost:8070/salary/SalaryViewEmp/${empNo}`).then((res) => {
-            setSalary(res.data);
-        })
-        .catch((err) => {
-            alert(err.message);
-        });
-    };*/
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -58,65 +33,52 @@ const EmployeeProfile = () => {
         minimumFractionDigits: 2,
         currencyDisplay: 'symbol'
     });
-    
 
     useEffect(() => {
         getEmployee();
-        //getSalary();
-        getLeaves();
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
         if (currentThemeColor && currentThemeMode) {
             setCurrentColor(currentThemeColor);
             setCurrentMode(currentThemeMode);
         }
-    }, [employee.employeeNumber], [empNo]);
-
-    const thisYear = new Date().getFullYear();
-    const leaveCount = 14 - (leave.filter((leave) => leave.leaveStartDate.substring(0, 4) == thisYear).length);
+    }, []);
 
     let dateRangeRef = (dateRange) => {
-    // dateRangeRef is a reference to the DateRangePickerComponent
-    dateRangeRef = dateRange;
-  };
+        dateRangeRef = dateRange; // dateRangeRef is a reference to the DateRangePickerComponent
+    };
 
-  const convertDate = (format) => {
-    function convert(s) {
-      return s < 10 ? `0${s}` : s;
-    }
-    const date = new Date(format);
-    return [
-      date.getFullYear(),
-      convert(date.getMonth() + 1),
-      convert(date.getDate()),
-    ].join('-');
-  };
+    /*const convertDate = (format) => {
+        function convert(s) {
+        return s < 10 ? `0${s}` : s;
+        }
+        const date = new Date(format);
+        return [
+        date.getFullYear(),
+        convert(date.getMonth() + 1),
+        convert(date.getDate()),
+        ].join('-');
+    };*/
 
-  const filterDate = () => {
-    if (dateRangeRef.value && dateRangeRef.value.length > 0) {
-      const start = convertDate(dateRangeRef.value[0]);
-      const end = convertDate(dateRangeRef.value[1]);
+    const filterDate = () => {
+        if (dateRangeRef.value && dateRangeRef.value.length > 0) {
 
-      let date1 = JSON.stringify(start);
-      date1 = date1.substring(1, 11);
-      setStartDate(date1);
+            const start = (dateRangeRef.value[0]);
+            const end = (dateRangeRef.value[1]);
 
-      let date2 = JSON.stringify(end);
-      date2 = date2.substring(1, 11);
-      setEndDate(date2);
+            let date1 = JSON.stringify(start);
+            date1 = date1.substring(1, 11);
+            setStartDate(date1);
 
-      console.log(startDate);
-      console.log(endDate);
-    } else {
-      setStartDate('');
-      setEndDate('');
-    }
-  };
+            let date2 = JSON.stringify(end);
+            date2 = date2.substring(1, 11);
+            setEndDate(date2);
 
-    console.log(employee);
-    console.log(empNo);
-    console.log(leave);
-    console.log(salary);
+        } else {
+            setStartDate('');
+            setEndDate('');
+        }
+    };
 
     return (
         <div>
@@ -166,99 +128,108 @@ const EmployeeProfile = () => {
 
                         <div>
                             {themeSettings && <ThemeSettings />}
-                            <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '>
-                                <Header category="Report" title="Employee Profile" />
-                                <div>
-                                    <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
-                                        <h1 className="text-2xl font-bold">Personal Details</h1>
-                                        <div className="text-md ml-12 pt-5">
-                                            <div className="p-1"> <span className="font-bold"> Employee Number </span> : {employee.employeeNumber}</div>
-                                            <div className="p-1"> <span className="font-bold"> Full Name </span> : {employee.employeeFullName}</div>
-                                            <div className="p-1"> <span className="font-bold"> Name with initials </span> : {employee.employeeNameWithInitials}</div>
-                                            <div className="p-1"> <span className="font-bold"> NIC number </span> : {employee.employeeNIC}</div>
-                                            <div className="p-1"> <span className="font-bold"> Gender </span> : {employee.employeeGender}</div>
-                                            <div className="p-1"> <span className="font-bold"> Date of birth </span> : {new Date(employee.employeeDOB).toDateString()}</div>
+                            {employee.map((data,key) => {
+                                const thisYear = new Date().getFullYear();
+                                const leaveCount = 14 - (data.leavesDetails.filter((leave) => leave.leaveStartDate.substring(0, 4) == thisYear).length);
+                                return (
+                                    <div key={key}>
+                                        <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '>
+                                            <Header category="Report" title="Employee Profile" />
+                                            <div>
+                                                <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
+                                                    <h1 className="text-2xl font-bold">Personal Details</h1>
+                                                    <div className="text-md ml-12 pt-5">
+                                                        <div className="p-1"> <span className="font-bold"> Employee Number </span> : {data.employeeNumber}</div>
+                                                        <div className="p-1"> <span className="font-bold"> Full Name </span> : {data.employeeFullName}</div>
+                                                        <div className="p-1"> <span className="font-bold"> Name with initials </span> : {data.employeeNameWithInitials}</div>
+                                                        <div className="p-1"> <span className="font-bold"> NIC number </span> : {data.employeeNIC}</div>
+                                                        <div className="p-1"> <span className="font-bold"> Gender </span> : {data.employeeGender}</div>
+                                                        <div className="p-1"> <span className="font-bold"> Date of birth </span> : {new Date(data.employeeDOB).toDateString()}</div>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
+                                                    <h1 className="text-2xl font-bold">Contact Details</h1>
+                                                    <div className="text-md ml-12 pt-5">
+                                                        <div className="p-1"> <span className="font-bold"> Address </span> : {data.employeeAddress}</div>
+                                                        <div className="p-1"> <span className="font-bold"> Contact number </span> : {data.employeeContactNumber}</div>
+                                                        <div className="p-1"> <span className="font-bold"> Email </span> : {data.employeeEmail}</div>
+                                                    </div>
+                                                </div>
+                                                <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
+                                                    <h1 className="text-2xl font-bold">Work Details</h1>
+                                                    <div className="text-md ml-12 pt-5">
+                                                        <div className="p-1"> <span className="font-bold"> Date joined </span> : {new Date(data.employeeDateOfJoin).toDateString()}</div>
+                                                        <div className="p-1"> <span className="font-bold"> Designation </span> : {data.employeeDesignation}</div>
+                                                        <div className="p-1"> <span className="font-bold"> Department </span> : {data.employeeDepartment}</div>
+                                                        <div className="p-1"> <span className="font-bold"> Type </span> : {data.employeeType}</div>
+                                                    </div>
+                                                </div>
+                                                <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
+                                                    <h1 className="text-2xl font-bold">Salary Details</h1>
+                                                        <div className="text-md ml-12 pt-5">
+                                                            <div className="p-1"> <span className="font-bold"> Basic salary </span> : {formatter.format(data.salaryDetails.employeeBasicSalary)}</div>
+                                                            <div className="p-1"> <span className="font-bold"> Allowances </span> : {formatter.format(data.salaryDetails.employeeAllowance)}</div>
+                                                            <div className="p-1"> <span className="font-bold"> Incentives </span> : {formatter.format(data.salaryDetails.employeeIncentive)}</div>
+                                                            <div className="p-1"> <span className="font-bold"> Net Salary </span> : {formatter.format(data.salaryDetails.employeeBasicSalary + data.salaryDetails.employeeAllowance + data.salaryDetails.employeeIncentive)}</div>
+                                                        </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        
-                                    </div>
-                                    <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
-                                        <h1 className="text-2xl font-bold">Contact Details</h1>
-                                        <div className="text-md ml-12 pt-5">
-                                            <div className="p-1"> <span className="font-bold"> Address </span> : {employee.employeeAddress}</div>
-                                            <div className="p-1"> <span className="font-bold"> Contact number </span> : {employee.employeeContactNumber}</div>
-                                            <div className="p-1"> <span className="font-bold"> Email </span> : {employee.employeeEmail}</div>
-                                        </div>
-                                    </div>
-                                    <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
-                                        <h1 className="text-2xl font-bold">Work Details</h1>
-                                        <div className="text-md ml-12 pt-5">
-                                            <div className="p-1"> <span className="font-bold"> Date joined </span> : {new Date(employee.employeeDateOfJoin).toDateString()}</div>
-                                            <div className="p-1"> <span className="font-bold"> Designation </span> : {employee.employeeDesignation}</div>
-                                            <div className="p-1"> <span className="font-bold"> Department </span> : {employee.employeeDepartment}</div>
-                                            <div className="p-1"> <span className="font-bold"> Type </span> : {employee.employeeType}</div>
-                                        </div>
-                                    </div>
-                                    {/*<div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
-                                        <h1 className="text-2xl font-bold">Salary Details</h1>
-                                        <div className="text-md ml-12 pt-5">
-                                            <div className="p-1"> <span className="font-bold"> Basic salary </span> : {salary.employeeBasicSalary}</div>
-                                            <div className="p-1"> <span className="font-bold"> Allowances </span> : {salary.employeeAllowance}</div>
-                                            <div className="p-1"> <span className="font-bold"> Incentives </span> : {salary.employeeIncentive}</div>
-                                            <div className="p-1"> <span className="font-bold"> Net Salary </span> : {salary.employeeIncentive + salary.employeeAllowance + salary.employeeBasicSalary}</div>
-                                        </div>
-                    </div>*/}
-                                </div>
-                            </div>
 
-                            <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '>
-                                <Header category="Report" title="Employee Leaves" />
-                                <div className=" flex items-center mb-5 ">
-                                    <div className="font-bold text-lg" > <span> Leaves left for {thisYear} </span> : {leaveCount}</div>
-                                </div>
+                                        <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '>
+                                            <Header category="Report" title="Employee Leaves" />
+                                            <div className=" flex items-center mb-5 ">
+                                                <div className="font-bold text-lg" > <span> Leaves left for {thisYear} </span> : {leaveCount}</div>
+                                            </div>
+                                            <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
+                                                <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
+                                                    <DateRangePickerComponent ref={dateRangeRef}  placeholder="Select a date range"/>
+                                                </div>
+                                                <div className="ml-5">
+                                                    <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={filterDate}>Filter</button>
+                                                </div>
+                                            </div>
 
-                                <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
-                                    <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
-                                        <DateRangePickerComponent ref={dateRangeRef}  placeholder="Select a date range"/>
+                                            <div className="block w-full overflow-x-auto rounded-lg">
+                                                <table className="w-full rounded-lg">
+                                                    <thead>
+                                                        <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                                                            <TableHeader value="Leave Type" />
+                                                            <TableHeader value="Start Date" />
+                                                            <TableHeader value="End Date" />
+                                                            <TableHeader value="Reason" />
+                                                            <TableHeader value="Status" />
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {data.leavesDetails.filter((data3) => {
+                                                        if(startDate == "" && endDate == ""){
+                                                            return data3
+                                                        }else if(data3.leaveStartDate >= startDate && data3.leaveStartDate <= endDate){
+                                                            return data3
+                                                        }
+                                                    }).map((data3, key) => {
+                                                        return(
+                                                        <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
+                                                            <TableData value={data3.leaveType} />
+                                                            <TableData value={new Date(data3.leaveStartDate).toISOString().split('T')[0]} />
+                                                            <TableData value={new Date(data3.leaveEndDate).toISOString().split('T')[0]} />
+                                                            <TableData value={data3.leaveReason} />
+                                                            <TableData value={data3.leaveStatus} />
+                                                        </tr>
+                                                    )
+                                                    })}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+                                                <AttendanceChart employeeNumber={data.employeeNumber} />
+                                        </div>
                                     </div>
-                                    <div className="ml-5">
-                                        <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={filterDate}>Filter</button>
-                                    </div>
-                                </div>
-
-                                <div className="block w-full overflow-x-auto rounded-lg">
-                                    <table className="w-full rounded-lg">
-                                        <thead>
-                                            <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                                <TableHeader value="Leave Type" />
-                                                <TableHeader value="Start Date" />
-                                                <TableHeader value="End Date" />
-                                                <TableHeader value="Reason" />
-                                                <TableHeader value="Status" />
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        {leave.filter((data) => {
-                                            if (startDate && endDate) {
-                                                return data.leaveStartDate >= startDate && data.leaveEndDate <= endDate;
-                                            }
-                                            else {
-                                                return data;
-                                            }
-                                        }).map((data, key) => {
-                                            return(
-                                            <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
-                                                <TableData value={data.leaveType} />
-                                                <TableData value={new Date(data.leaveStartDate).toISOString().split('T')[0]} />
-                                                <TableData value={new Date(data.leaveEndDate).toISOString().split('T')[0]} />
-                                                <TableData value={data.leaveReason} />
-                                                <TableData value={data.leaveStatus} />
-                                            </tr>
-                                        )
-                                        })}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                                )
+                            })}
                             <Footer />
                         </div>  
                     </div>
@@ -269,4 +240,3 @@ const EmployeeProfile = () => {
 };
 
 export default EmployeeProfile;
-

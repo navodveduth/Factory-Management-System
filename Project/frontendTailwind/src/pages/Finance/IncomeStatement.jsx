@@ -12,13 +12,95 @@ import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-const FinanceViewAll = () => {
+const IncomeStatement = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
   const [transactions, setTransactions] = useState([]);
-  const [dateStart, setDateStart] = useState("");
-  const [dateEnd, setDateEnd] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");  //add this state to save filter word
+  const [sales, setSales] = useState([]);
+  const [expenses, setExpenses] = useState([]);
+  const [transport, setTransport] = useState([]);
+  const [salary, setSalary] = useState([]);
+  const [prodCost, setProdCost] = useState([]);
+  const [maintainence, setMaintainence] = useState([]);
+
+  const getMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+    axios.get("http://localhost:8070/maintainence/")
+      .then((res) => {
+        setMaintainence(res.data); //setMaintainence  is used to update the state variable
+
+      })
+      .catch((err) => {
+        alert(err.message);
+      })
+  }
+
+  //vehicles
+  const [maintainenceVehi, setMaintainenceVehi] = useState([]);
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const getVMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+    axios.get("http://localhost:8070/maintainenceVehicle/")
+      .then((res) => {
+        setMaintainenceVehi(res.data); //setMaintainence  is used to update the state variable
+
+      })
+      .catch((err) => {
+        alert(err.message);
+      })
+  }
+
+  //machines
+  const [maintainenceMachine, setMaintainenceMachine] = useState([]);
+
+  const getMMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+    axios.get("http://localhost:8070/maintainenceMachine/")
+      .then((res) => {
+        setMaintainenceMachine(res.data); //setMaintainence  is used to update the state variable
+
+      })
+      .catch((err) => {
+        alert(err.message);
+      })
+  }
+
+  useEffect(() => {
+    getFinance();
+    getMMaintainence();
+    getVMaintainence();
+    getMaintainence();
+    const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
+    const currentThemeMode = localStorage.getItem('themeMode');
+    if (currentThemeColor && currentThemeMode) {
+      setCurrentColor(currentThemeColor);
+      setCurrentMode(currentThemeMode);
+    }
+  }, []);
+
+  const maintCount = maintainence.length;
+  const vehiMaintCount = maintainenceVehi.length;
+  const machineMaintCount = maintainenceMachine.length;
+
+  var prototal = 0;
+  for (let index = 0; index < maintCount; index++) {
+    prototal = prototal + maintainence[index].others;
+
+  }
+
+
+  var vehitotal = 0;
+  for (let index = 0; index < vehiMaintCount; index++) {
+    vehitotal = vehitotal + maintainenceVehi[index].others;
+  }
+
+
+  var machtotal = 0;
+  for (let index = 0; index < machineMaintCount; index++) {
+    machtotal = machtotal + maintainenceMachine[index].others;
+  }
+
+  var total = vehitotal + machtotal + prototal;
+  total = Math.round(total * 100) / 100;
 
   const navigate = useNavigate();
   
@@ -49,16 +131,6 @@ const FinanceViewAll = () => {
   };
 
 
-  useEffect(() => {
-    getFinance();
-    const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
-    const currentThemeMode = localStorage.getItem('themeMode');
-    if (currentThemeColor && currentThemeMode) {
-      setCurrentColor(currentThemeColor);
-      setCurrentMode(currentThemeMode);
-    }
-  }, []);
-
   const deleteFinance = async (id) => {
     await axios
       .delete(`http://localhost:8070/finance/deleteTransaction/${id}`)
@@ -88,7 +160,15 @@ const FinanceViewAll = () => {
       currencyDisplay: 'symbol'
     })
 
+  var curDate = new Date();
+  var datetime = curDate.toLocaleDateString()
 
+  var datetimeOld = new Date(curDate.toLocaleDateString());
+  datetimeOld.setFullYear(datetimeOld.getFullYear() - 1);
+  datetimeOld = datetimeOld.toLocaleDateString();
+
+
+  
   return (
 
     <div>
@@ -143,33 +223,7 @@ const FinanceViewAll = () => {
                           <div>
                           <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
 
-                            <Header category="Table" title="Cash Transactions" />
-
-                            <div className=" flex items-center mb-5 ">
-                              <div>
-                                <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
-                                onChange={(e) => {
-                                  setSearchTerm(e.target.value);
-                                }} />
-                              </div>
-
-                              <div>
-                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date" 
-                                onChange={(e) => {
-                                  setDateStart(e.target.value);
-                                }} />
-                              </div>
-
-                              <div>
-                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date" 
-                                onChange={(e) => {
-                                  setDateEnd(e.target.value);
-                                }} />
-                              </div>
-
-                              <div className=" mx-1">
-                                  <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}  >filter</button>
-                              </div>
+                            <Header category="Table" title={`Income Statement from `+datetimeOld+` to ` + datetime}/>
 
                               <div className="mr-0 ml-auto">
                                 <Link to={"/financePreview"}> {/* change this link your preview page */}
@@ -177,22 +231,20 @@ const FinanceViewAll = () => {
                                 </Link>
                               </div>
 
-                              </div>
-
                             <div className="block w-full overflow-x-auto rounded-lg">
                               <table className="w-full rounded-lg">
                                 <thead>
-                                  <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                    <TableHeader value="Transaction ID" />
+                                  <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800 dark:text-white">
                                     <TableHeader value="Description" />
                                     <TableHeader value="Amount" />
-                                    <TableHeader value="Type" />
-                                    <TableHeader value="Date of Transaction" />
-                                    <TableHeader value="Manage" />
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  {transactions.filter((data) => {
+                                  <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
+                                    <td>Maintainance Expenses</td>
+                                    <td>{formatter.format(total)}</td>
+                                  </tr>
+                                  {/* {transactions.filter((data) => {
                                         if(searchTerm == ""){
                                             return data;
                                         }else if(data.trnID.toString().toLowerCase().includes(searchTerm.toLowerCase())){
@@ -230,7 +282,7 @@ const FinanceViewAll = () => {
                                       </td>
                                     </tr>
                                     )
-                                  })}
+                                  })} */}
                                 </tbody>
                               </table>
                             </div>
@@ -243,8 +295,9 @@ const FinanceViewAll = () => {
                 </div>
             </div>
         </div>
-    </div>
+        </div>
+                                
   );
 };
 
-export default FinanceViewAll;
+export default IncomeStatement;

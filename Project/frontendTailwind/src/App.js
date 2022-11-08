@@ -7,19 +7,19 @@ import { EmployeeDashboard, EmployeeViewAll, EmployeeNew, EmployeeUpdate, Employ
 import { AttendanceAndLeaveDashboard, AttendanceViewAll, AttendanceNew, AttendanceUpdate, AttendanceReport, AttendanceNewRecord, LeaveViewAll, LeaveNew, LeaveUpdate, LeaveReport } from './pages/AttendanceAndLeaves';
 import { WelfareDashboard, WelfareNew, WelfareReport, WelfareUpdate, WelfareViewAll } from './pages/Welfare';
 
-import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll, PreviewSalary, FinanceDateRange } from './pages/Finance';
+import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll, PreviewSalary, FinanceDateRange, IncomeStatement } from './pages/Finance';
 
 import {  MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport,MaintainenceDateRange, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachManitenanceDateRange,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport,VehiMaintenanceDateRange} from './pages/Maintenance';
 import {MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory} from './pages//Machinery';
 import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice, SalesDateRange } from './pages/Sales';
 
-import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders} from './pages/Production/Index';
+import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders,CompletedOrders, FinalCostOrder} from './pages/Production/Index';
 
 import { StocksDashboard, StockView, StockInformation, StockViewDateRange, StockBreakdownDateRange , StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, ViewAllRawMaterials, RawMaterialsReport, ViewAllWorkInProgress, WorkInProgressReport, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF } from './pages/Stock';
 import { PendingStockView, PendingStockAdd, PendingStockUpdate, PendingStockPDf, PendingRequest, PendingRequestPDF, ProcessingRequest, ProcessingRequestPDF, ResolvedRequest, ResolvedRequestPDF } from './pages/PendingStock';
 import { StockUtilisationDashboard, StockUtilPDF,StockUtilisationDateRange ,StockUtilisation, StockAddExisting, StockUtilAddOption, StockUtilUpdate, ViewAllAdditions, AdditionsReport, ViewAllIssues, IssuesReport } from './pages/StockUtilisation';
 
-import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview } from './pages/Suppliers';
+import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview, PurchaseOrderAdd, PurchaseOrderUpdate, PurchaseOrderPreview, PurchaseOrderView } from './pages/Suppliers';
 
 import { DriverDashboard, DriverViewAll, DriverNew, DriverUpdate, DriverReport } from './pages/Driver';
 import { TransportDashboard, TransportViewAll, TransportDateRange, TransportNew, TransportUpdate, TransportRecord, TransportReport } from './pages/Transport';
@@ -74,7 +74,8 @@ const App = () => {
           <Route path="/FinanceViewAll" element={<FinanceViewAll />} />
           <Route path="/FinanceUpdate/:id" element={<FinanceUpdate />} />
           <Route path="/FinancePreview/" element={<FinancePreview />} />
-          <Route path="/FinanceDateRange/" element={<FinanceDateRange />} />\
+          <Route path="/FinanceDateRange/" element={<FinanceDateRange />} />
+          <Route path="/IncomeStatement" element={<IncomeStatement />} />
 
           {/* salary management  */}
           <Route path="/SalaryDashboard" element={<SalaryDashboard />} />
@@ -125,9 +126,12 @@ const App = () => {
           <Route path="/viewRequested" element={<RequestedStocks />} />
           <Route path="/production" element={<ProductionDashBoard />} />
           <Route path="/newOrder" element={<AddOrder />} />
-          <Route path="/updateCost/:id" element={<UpdateOrder />} />
+          <Route path="/requestStock/:id" element={<UpdateOrder />} />
           <Route path="/costpreview" element={<PreviewOrder />} />
           <Route path="/pendingOrders" element ={<PendingOrders/>}/>
+          <Route path="/completedOrders" element ={<CompletedOrders/>}/>
+          <Route path="/costingOrder/:id" element ={<FinalCostOrder/>}/>
+          
 
           {/* stock management  */}
           <Route path="/StockDashboard" element={<StocksDashboard />} />
@@ -183,6 +187,13 @@ const App = () => {
           <Route path="/SupplierUpdate/:id" element={<SupplierUpdate />} />
           <Route path="/PurchaseOrderDetailsDashboard" element={<PurchaseOrderDetailsDashboard />} />
           <Route path="/SupplierDetailsPreview" element={<SupplierDetailsPreview />} />
+
+          {/* Purchase Order management  */}
+         
+        <Route path="/PurchaseOrderAdd" element={<PurchaseOrderAdd />} />
+        <Route path="/PurchaseOrderUpdate/:id" element={<PurchaseOrderUpdate />} />
+        <Route path="/PurchaseOrderView" element={<PurchaseOrderView />} />
+        <Route path="/PurchaseOrderPreview" element={<PurchaseOrderPreview />} />
 
           {/* Transport management  */}
           <Route path="/TransportDashboard" element={<TransportDashboard />} />
