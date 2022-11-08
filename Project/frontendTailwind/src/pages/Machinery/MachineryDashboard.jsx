@@ -5,7 +5,7 @@ import { GiSewingMachine } from 'react-icons/gi';
 import { GiMoneyStack } from 'react-icons/gi';
 import { FaChartBar } from 'react-icons/fa';
 import { BiAddToQueue } from 'react-icons/bi';
-import { DashTopBox, DashTopButton, MachineryPieChart, ChartsHeader } from '../../components';
+import { DashTopBox, DashTopButton, MachineryPieChart, ChartsHeader,DepreciationChart } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 
 import { FiSettings } from 'react-icons/fi';
@@ -176,7 +176,10 @@ const MachineryDashboard = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT 
 
 
 
-
+                  {/* <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+                    <DepreciationChart />
+                  </div> */}
+                
 
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
                     <MachineryPieChart />
