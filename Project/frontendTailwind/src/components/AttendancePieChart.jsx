@@ -34,10 +34,6 @@ const AttendancePieChart = () => {
     useEffect(() => {
       getEmployee();
       getAttendance();
-      return () => {
-        setEmployee({});
-        setAttendance({});
-      };
     }, []);
   
     const empCount = employee.length;
