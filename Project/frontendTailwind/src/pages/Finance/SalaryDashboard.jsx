@@ -4,7 +4,9 @@ import axios from 'axios';
 
 import { useStateContext } from '../../contexts/ContextProvider';
 import { FiUser } from 'react-icons/fi';
-import { DashTopBox, DashTopButton,  } from '../../components';
+import {GiPayMoney} from 'react-icons/gi';
+import {MdOutlinePayments} from 'react-icons/md';
+import { DashTopBox, DashTopButton, SalaryBarChart } from '../../components';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -95,10 +97,10 @@ const SalaryDashboard = () => {
                             <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                               {/* top buttons in the dashboard */} {/* use for navigation buttons*/}
                               <Link to="/SalaryViewAll">
-                                <DashTopButton value="View Salary List" />
+                                <DashTopButton value="View Salary List" icon={<MdOutlinePayments/>}  />
                               </Link>
                               <Link to="/SalaryNew">
-                                <DashTopButton value="Transfer Salary" />
+                                <DashTopButton value="Transfer Salary" icon={<GiPayMoney/>} />
                               </Link>
                             </div>
                           </div>
@@ -110,6 +112,10 @@ const SalaryDashboard = () => {
                               <DashTopBox icon={<FiUser />} label="Total Number of Managers" data="4" />     
                             </div>
                           </div>
+
+                          <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+                                <SalaryBarChart />
+                            </div>
                         </div>
                           {/* PART AFTER THE RETURN STATEMENT */}
                           
