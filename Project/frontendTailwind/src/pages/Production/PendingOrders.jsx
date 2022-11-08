@@ -101,8 +101,6 @@ const PendingOrders = () => {
                   }).map((data, key) => {
                     if(data.status == "Pending"){
                         return( 
-
-                        
                             <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
   
                               <TableData value={data.invoiceNo} />
@@ -122,7 +120,7 @@ const PendingOrders = () => {
                               <TableData value={data.status} />
   
                     <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                      <Link to={"/updateCost/" +data._id }>
+                      <Link to={"/requestStock/" +data.invoiceNo }>
                         <button
                           type="button"
                           className=" bg-green-500 hover:bg-green-700 font-bold py-1 px-4 rounded-full mx-3  text-white"

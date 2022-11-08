@@ -11,7 +11,7 @@ import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-export default function RequestedStocks(){
+export default function CompletedOrders(){
     const navigate = useNavigate();
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings,  } = useStateContext();
     const [Order,setOrder] = useState([])
@@ -57,7 +57,7 @@ export default function RequestedStocks(){
             if (confirm("Do you want to delete?") == true) {
                 deletesOrder(id);
             } else {
-                navigate('/vieworders');
+                navigate('/completedOrders');
             }
     
         }
@@ -113,7 +113,7 @@ export default function RequestedStocks(){
                         {themeSettings && <ThemeSettings />}
                         <div>
                              <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                                    <Header category="Table" title="Stock Requisitions" />
+                                    <Header category="Table" title="Stock Granted Orders" />
                                     <div className=" flex items-center mb-5 ">
                                 <div>
                                     <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
@@ -138,6 +138,7 @@ export default function RequestedStocks(){
                                             <TableHeader value ="Requested Date"></TableHeader>
                                             <TableHeader value ="Supervisor"></TableHeader>
                                             <TableHeader value ="Team Lead"></TableHeader>
+                                            <TableHeader value ="Status"></TableHeader>
                                             <TableHeader value="Manage"/>
                                             </tr>
                                         </thead>
@@ -147,38 +148,41 @@ export default function RequestedStocks(){
                                                     return data;
                                                 }else if((data.invoiceNo.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
                                                         (data.product.toLowerCase().includes(searchTerm.toLowerCase())) || 
-                                                        (data.supervisor.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                                        (data.supervisor.teamLead().includes(searchTerm.toLowerCase()))){
+                                                        (data.supervisor.toLowerCase().includes(searchTerm.toLowerCase()))){
                                                     return data;
                                                 }
                                             }).map((data,key)=>{
-                                                return ( 
-                                                    <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
-                                                        <TableData value={data.invoiceNo}/>
-                                                        <TableData value={data.product}/>
-                                                        <TableData value={data.unitQty}/>
-                                                        <TableData value={new Date(data.requestDate).toISOString().split('T')[0]}/>
-                                                        <TableData value={data.supervisor}/>
-                                                        <TableData value={data.teamLead}/>
-                                                        <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                                            <Link to={"/updateCost/" +data._id }>
-                                                                <button 
-                                                                    type="button" 
-                                                                    className="font-bold py-1 px-4 rounded-full mx-3 text-white" 
-                                                                    style={{ background: currentColor }}><i className="fas fa-edit"/>
+                                                if(data.status == "Completed" || "Costed"){
+                                                    return ( 
+                                                        <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
+                                                            <TableData value={data.invoiceNo}/>
+                                                            <TableData value={data.product}/>
+                                                            <TableData value={data.unitQty}/>
+                                                            <TableData value={new Date(data.requestDate).toISOString().split('T')[0]}/>
+                                                            <TableData value={data.supervisor}/>
+                                                            <TableData value={data.teamLead}/>
+                                                            <TableData value={data.status}/>
+                                                            <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                                                <Link to={"/costingOrder/" +data.invoiceNo }>
+                                                                    <button 
+                                                                        type="button" 
+                                                                        className="font-bold py-1 px-4 rounded-full mx-3 text-white" 
+                                                                        style={{ background: currentColor }}><i className="fas fa-edit"/>
+                                                                    </button>
+                                                                </Link>
+                                                            
+                                                                <button onClick={()=>{
+                                                                confirmFunc(data._id);
+                                                                }}
+                                                                type="button" 
+                                                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full">
+                                                                <i className="fas fa-trash" />
                                                                 </button>
-                                                            </Link>
-                                                        
-                                                            <button onClick={()=>{
-                                                            confirmFunc(data._id);
-                                                            }}
-                                                            type="button" 
-                                                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full">
-                                                            <i className="fas fa-trash" />
-                                                            </button>
-                                                    </td>
-                                                 </tr>
-                                                )
+                                                        </td>
+                                                     </tr>
+                                                    )
+                                                }
+
                                             })}
                                         </tbody>
                                     </table>
