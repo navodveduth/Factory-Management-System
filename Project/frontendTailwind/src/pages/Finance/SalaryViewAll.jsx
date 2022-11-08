@@ -58,6 +58,12 @@ const FinanceViewAll = () => {
 
     }
 
+    const formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'LKR',
+      minimumFractionDigits: 2,
+      currencyDisplay: 'symbol'
+    })
 
   return (
     <div>
@@ -147,23 +153,21 @@ const FinanceViewAll = () => {
                                     {Salary.filter((data) => {
                                             if(searchTerm == ""){
                                                 return data;
-                                            }else if((data.employeeNumber.toString().toLowerCase().includes(searchTerm.toLowerCase()))){
+                                            }else if((data.employeeNumber.toString().toLowerCase().includes(searchTerm.toLowerCase()))||
+                                            (data.employeeInfo.employeeNameWithInitials.toString().toLowerCase().includes(searchTerm.toLowerCase()))||
+                                            (data.employeeInfo.employeeDesignation.toString().toLowerCase().includes(searchTerm.toLowerCase()))){
                                                 return data;
                                             }
                                         }).map((data) => (
                                         <tr className="text-sm h-10 border dark:border-slate-600">
 
                                             <TableData value={data.employeeNumber}/>
-                                            <TableData value={data.employeeInfo.map(((data2)=>{
-                                                return data2.employeeNameWithInitials;
-                                            }))}/>
-                                            <TableData value={data.employeeInfo.map(((data2)=>{
-                                                return data2.employeeDesignation;
-                                            }))}/>
-                                            <TableData value={"Rs." + data.employeeBasicSalary} />
-                                            <TableData value={"Rs." + data.employeeAllowance} />
-                                            <TableData value={"Rs." + data.employeeIncentive} />
-                                            <TableData value={"Rs." + (data.employeeIncentive + data.employeeAllowance + data.employeeBasicSalary)}/>
+                                            <TableData value={data.employeeInfo.employeeNameWithInitials}/>
+                                            <TableData value={data.employeeInfo.employeeDesignation}/>
+                                            <TableData value={formatter.format(data.employeeBasicSalary)} />
+                                            <TableData value={formatter.format(data.employeeAllowance)} />
+                                            <TableData value={formatter.format(data.employeeIncentive)} />
+                                            <TableData value={formatter.format(data.employeeIncentive + data.employeeAllowance + data.employeeBasicSalary)}/>
 
                                           <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                                             <Link to={`/SalaryUpdate/${data._id}`}>
