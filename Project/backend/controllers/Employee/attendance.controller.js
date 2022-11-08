@@ -67,3 +67,14 @@ export const getAttendanceByEmployeeNumber = async (req, res) => {
         res.status(404).json({ message: error });
     }
 }
+
+// Find a all attendace with a employee number
+export const getAllAttendanceByEmployeeNumber = async (req, res) => {
+    try {
+        const employeeNumber = req.params.employeeNumber;
+        const attendace = await Attendace.find({ employeeNumber: employeeNumber });
+        res.status(200).json(attendace);
+    } catch (error) {
+        res.status(404).json({ message: error });
+    }
+}
