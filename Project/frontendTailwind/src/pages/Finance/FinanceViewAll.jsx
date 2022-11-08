@@ -37,6 +37,17 @@ const FinanceViewAll = () => {
       });
   };
 
+  const getFinanceDate = async () => {
+    axios
+      .get('http://localhost:8070/finance/date/'+dateStart+'/'+dateEnd)
+      .then((res) => {
+        setTransactions(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
 
   useEffect(() => {
     getFinance();

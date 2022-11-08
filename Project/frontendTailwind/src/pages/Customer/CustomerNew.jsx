@@ -124,7 +124,7 @@ function NewCustomerForm() {
               <div className="mb-3">
                 <label for="customerContactNo" className="form-label">Contact Number</label>
                 <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                id="customerContactNo" placeholder="Enter Customer's Contact Number" pattern="[0-9]{10}" required
+                id="customerContactNo" placeholder="Enter Contact Number" pattern="[0-9]{10}" required
                 onChange={(e) =>{
                   setCustomerContactNo(e.target.value);
                 }}/>
@@ -133,7 +133,7 @@ function NewCustomerForm() {
               <div className="mb-3">
                 <label for="customerAddress" className="form-label">Customer Address</label>
                 <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                id="customerAddress" required
+                id="customerAddress" placeholder="Enter Address  " required
                 onChange={(e) =>{
                   setCustomerAddress(e.target.value);
                 }}/>
@@ -145,7 +145,7 @@ function NewCustomerForm() {
             
   </div>
                           
-                      </div>
+                      </div><br></br><br></br>
                       <Footer />
                   </div>  
               </div>
