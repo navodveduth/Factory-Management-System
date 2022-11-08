@@ -1,4 +1,6 @@
+import mongoose from "mongoose";
 import Stock from "../../models/Stock/stock.models.js";  //always add the file extension .js
+import production from "../../models/Production/prod.order.orderCost.model.js";
 
 //includes all CRUD operations
 
@@ -9,7 +11,7 @@ export const getAllStockDetails = async (req, res) => {
             {
                 $lookup:
                 {
-                    from: "stockUtilisations",
+                    from: "stockutilisations",
                     localField: "stockCode",
                     foreignField: "stockCode",
                     as: "stockUtilisationDetails"
@@ -29,6 +31,28 @@ export const getOneStockDetails = async (req, res) => {
     try {//retrieves stock based on id
         const id = req.params.id;
         const stock = await Stock.findById(id);
+        res.status(200).json(stock);
+    } catch (error) {
+        res.status(404).json({
+            message: error
+        })
+    }
+}
+
+//get one stock info
+export const getOneStockInfo = async (req, res) => {
+    try {//retrieves stock based on id
+        const id = req.params.id;
+        const stock = await Stock.aggregate([
+            {$match: {_id: new mongoose.Types.ObjectId(id)},},
+            {$lookup: {
+                from: 'stockutilisations',
+                localField: 'stockCode',
+                foreignField: 'stockCode',
+                as: 'stockUtilisationDetails',
+            },
+        }, 
+        ]);
         res.status(200).json(stock);
     } catch (error) {
         res.status(404).json({
@@ -127,4 +151,54 @@ export const getOneStockCategory = async (req, res) => {
     } catch (error) {
         res.status(404).json({message : error});
     }
+}
+
+export const getOneStockByStockCode = async (req, res) =>{
+    try {
+        const stockID= req.params.stockID;
+       const stock= await Stock.find({'stockCode': stockID});
+        res.status(200).json(stock);
+    } catch (error) {
+        res.status(404).json({ message : error});
+    }
+
+}
+
+export const updateStockByStockCode = async (req, res) => {
+    try {//gets id and updates stock with new values
+        const stock = req.body;
+        const id = req.params.id;
+        await Stock.updateOne(id, stock);
+        res.status(200).json({
+            status: "Stock updated"
+        })
+    } catch (error) {
+        res.status(404).json({
+            message: error
+        })
+    }
+}
+
+//getting order from production
+export const getOrderFromInvoice = async(req,res)=>{
+    try{
+        const invoice = req.params.invoiceNo;
+        const order = await production.findOne({invoiceNo: invoice });
+        res.status(200).json(order);
+    }catch(error){
+        res.status(404).json(({
+            message: error
+        }));
+    }
+}
+
+export const getOneStockByStockName = async (req, res) =>{
+    try {
+        const stockID= req.params.name;
+       const stock= await Stock.find({'stockName': stockID});
+        res.status(200).json(stock);
+    } catch (error) {
+        res.status(404).json({ message : error});
+    }
+
 }

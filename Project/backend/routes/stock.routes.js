@@ -2,7 +2,7 @@
 import express from "express";
 
 //importing controllers
-import {getAllStockDetails , getOneStockDetails , addStock  ,deleteStock ,getDateRangeStock, getOneStockCategory, updateStock} from "../controllers/Stock/stock.controllers.js"
+import {getAllStockDetails,getOrderFromInvoice,updateStockByStockCode,getOneStockByStockCode ,getOneStockInfo, getOneStockDetails , addStock  ,deleteStock ,getDateRangeStock, getOneStockCategory, updateStock} from "../controllers/Stock/stock.controllers.js"
 
 const router = express.Router();
 
@@ -15,5 +15,10 @@ router.delete("/delete/:id", deleteStock);
 router.put("/update/:id", updateStock);
 router.get("/date/:DS/:DE", getDateRangeStock);
 router.get("/category/:categ", getOneStockCategory);
+router.get("/stockInfo/:id",getOneStockInfo);
+router.get("/ViewStock/:stockID",getOneStockByStockCode);
+router.put("/updateByCode/:code",updateStockByStockCode);
+router.get("/request/:invoiceNo",getOrderFromInvoice); 
+router.get("/ViewStock/:name",getOneStockByStockCode);
 
 export default router;
