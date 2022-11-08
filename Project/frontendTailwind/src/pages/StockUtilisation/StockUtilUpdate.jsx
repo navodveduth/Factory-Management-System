@@ -23,7 +23,6 @@ function StockUtilUpdate() {
     const [type, setType] = useState('');
     const [quantity, setQuantity] = useState('');
     const [unitPrice, setUnitPrice] = useState('');
-    const [supplier, setSupplier] = useState('');
     var [totalValue, setTotalValue] = useState('');
     const [ firstPurchaseDate, setFirstPurchaseDate] = useState('');
 
@@ -39,7 +38,6 @@ function StockUtilUpdate() {
             setQuantity(res.data.quantity);
             setType(res.data.type);
             setUnitPrice(res.data.unitPrice);
-            setSupplier(res.data.supplier);
             setTotalValue(res.data.totalValue);
         }).catch((err) => {
             alert(err);
@@ -56,15 +54,7 @@ function StockUtilUpdate() {
         }
     }, []);
     var formDate = date.split('T')[0];
-
-    // var displayM = true;
-    // if (stockCategory == ''){
-    //     displayM = true;
-    // }
-    // else if (stockCategory != "Finished goods") {
-    //     displayM = false;
-    // } else
-    //     displayM = true;
+    
 
     return (
 
@@ -132,7 +122,6 @@ function StockUtilUpdate() {
                                                 date,
                                                 firstPurchaseDate,
                                                 type,
-                                                supplier,
                                                 unitPrice,
                                                 quantity,
                                                 totalValue
@@ -148,7 +137,7 @@ function StockUtilUpdate() {
                                                 .catch((err) => {
                                                     console.log(err);
                                                     alert("ERROR: Could not update stock");
-                                                    navigate('/StockUtilUpdate');
+                                                    navigate('/StockUtilUpdate/'+id);
                                                 })
 
                                         }}>
@@ -194,13 +183,6 @@ function StockUtilUpdate() {
                                                     onChange={(e) => {
                                                         setUnitPrice(e.target.value);
                                                     }} />
-                                            </div>
-
-                                            <div className="mb-3">
-                                                <label htmlFor="supplier" className="form-label">Supplier: </label>
-                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white
-                         dark:text-black"  id="supplier" value={supplier}
-                                                    readOnly />
                                             </div>
 
                                             <div className="mb-3">

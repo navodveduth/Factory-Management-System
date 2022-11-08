@@ -19,7 +19,7 @@ function ProcessingRequest() {
 
 
     const getPendingStock = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/pendingStock")
+        axios.get("http://localhost:8070/pendingStock/status/"+ "Processing")
             .then((res) => {
                 setPendingStock(res.data); //setStock is used to update the state variable
                 console.log(res.data);
@@ -144,9 +144,7 @@ function ProcessingRequest() {
                                             <tbody>
                                                 {pendingStock.filter((data) => {
                                                     if (searchTerm == "") {
-                                                        pendingStock.filter((data) => pendingStock.status === "Processing").map((data) => {
-                                                            return data;
-                                                        })
+                                                        return data;
                                                     } else if ((data.stockCode.toLowerCase().includes(searchTerm.toLowerCase())) ||
                                                         (data.stockName.toLowerCase().includes(searchTerm.toLowerCase())) ||
                                                         (data.stockCategory.toLowerCase().includes(searchTerm.toLowerCase())) ||
