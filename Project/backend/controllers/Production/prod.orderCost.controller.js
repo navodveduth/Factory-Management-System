@@ -4,7 +4,34 @@ import Sales from "../../models/Sales/sales.model.js"
 
 //All CRUD Operations regarding this schema will happen here
 
+export const getDateRangeProduction = async (req, res) => {
+    try {
+        const DS = req.params.DS;
+        const DE = req.params.DE;
+        const productionData = await orderCost.aggregate([
+            /* {
+                $lookup:
+                {
+                    from: "finances",
+                    localField: "local",  
+                    foreignField: "foreign", 
+                    as: "newField" 
+                }
+            }, */
+            {
+                $match: { requestDate: { $gte: new Date(DS), $lte: new Date(DE) } }
+            }
+        ]);
+        res.status(200).json(productionData);
+    } catch (error) {
+        res.status(404).json({message : error});
+    }
+}
+
+
 //get the status of the sale according to the invoice 
+
+//****************** GET THE INVOICE DETAILS FROM THE INVOICE NUMBER IN SALES TABLE ******************
 export const getFromInvoice = async(req,res)=>{
     try{
         const invoice = req.params.invoiceNo;
@@ -32,6 +59,7 @@ export const updateCost = async(req,res)=>{
 }
 
 
+//****************** GET THE INVOICE DETAILS FROM THE INVOICE NUMBER IN PRODUCTION TABLE ******************
 export const getOrderFromInvoice = async(req,res)=>{
     try{
         const invoice = req.params.invoiceNo;
@@ -45,6 +73,7 @@ export const getOrderFromInvoice = async(req,res)=>{
 }
 
 //set the sale status only 
+//****************** UPDATE THE STATUS ACCORDING TO THE INVOICE ***********
 export const setSaleStatus = async(req,res)=>{
     try{
       //  const invoice = req.params.invoiceNo;

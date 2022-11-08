@@ -10,8 +10,25 @@ export default function SalesMonthlyChart() {
     const [sales, setSales] = useState([]);
 
     const tooltip = { enable: true, shared: false };
-    const primaryyAxis = { labelFormat: '{value}K', title: "Sales by Amount (LKR)" };
-    const primarxyAxis = { valueType: 'Category', title: "Month" };
+
+    const primaryYAxis = { labelFormat: '{value}K', 
+                           title: "Sales by Amount (LKR)", 
+                           labelStyle: { 
+                              color: currentMode === 'Dark' ? '#e9ecef' : '#343a40'}, 
+                           titleStyle: { 
+                            color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
+                            fontSize: '16px'},
+                           interval: 100000,
+                         };
+                         
+    const primaryXAxis = { valueType: 'Category', 
+                           title: "Month",
+                           labelStyle: { 
+                            color: currentMode === 'Dark' ? '#e9ecef' : '#343a40'}, 
+                           titleStyle: { 
+                            color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
+                            fontSize: '16px'} 
+                         };
 
     const getSales = async () => {
       axios
@@ -96,12 +113,12 @@ export default function SalesMonthlyChart() {
     <>
     
     <ChartsHeader category = "Chart" title = "Sales Analysis" />
-        <ChartComponent title="Monthly Analysis" primaryXAxis={primarxyAxis} primaryYAxis={primaryyAxis} tooltip={tooltip} 
-        background={currentMode === 'Dark' ? '#33373E' : '#f3f4f6'} legendSettings={{visible: true}}>
+        <ChartComponent primaryXAxis={primaryXAxis} primaryYAxis={primaryYAxis} tooltip={tooltip} 
+        background={currentMode === 'Dark' ? '#33373E' : '#f3f4f6'}>
 
-            <Inject services={[LineSeries, Legend, Tooltip, DataLabel, Category]} />
+            <Inject services={[LineSeries, Tooltip, DataLabel, Category]} />
               <SeriesCollectionDirective>
-                <SeriesDirective type = "Line" dataSource={data} xName="month" yName="sales" text-white
+                <SeriesDirective type = "Line" dataSource={data} xName="month" yName="sales"
                 name = "Monthly Sales" marker = {{dataLable: {visible: true}, visible: true}}>
                 </SeriesDirective>
               </SeriesCollectionDirective>

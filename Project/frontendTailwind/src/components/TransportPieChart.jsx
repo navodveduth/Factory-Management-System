@@ -58,24 +58,28 @@ const TransportPieChart = () => {
             type="Pie"
             dataSource={[
               {
-                x: 'Employee',
+                x: 'Employees',
                 y: ((empTr / totTransport) * 100).toPrecision(4),
                 text: `${((empTr / totTransport) * 100).toPrecision(2)}%`,
+                color: '#0454d9',
               },
               {
                 x: 'Staff',
                 y: ((staffTr / totTransport) * 100).toPrecision(4),
                 text: `${((staffTr / totTransport) * 100).toPrecision(2)}%`,
+                color: '#FF8B8B',
               },
               {
                 x: 'Goods',
                 y: ((goodsTr / totTransport) * 100).toPrecision(4),
                 text: `${((goodsTr / totTransport) * 100).toPrecision(2)}%`,
+                color: '#FD841F',
               },
             ]}
             xName="x"
             yName="y"
             innerRadius="40%"
+            pointColorMapping="color"
             startAngle={0}
             endAngle={360}
             radius="70%"
