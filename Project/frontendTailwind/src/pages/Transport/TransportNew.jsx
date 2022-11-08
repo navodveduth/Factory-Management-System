@@ -35,7 +35,9 @@ const TransportNew = () => {
 
   const navigate = useNavigate(); // useNavigate hook to redirect to another page after form submission is successful
 
+  const [transportID, setTransportID] = useState('');
   const [type, setType] = useState('');
+  const [typeInfo, setTypeInfo] = useState('');
   const [destinationAddress, setDestinationAddress] = useState('');
   const [date, setDate] = useState('');
   const [distance, setDistance] = useState('');
@@ -44,6 +46,8 @@ const TransportNew = () => {
   const [description, setDescription] = useState('');
   const [driver, setDriver] = useState('');
   const [drivers, setDrivers] = useState([]);
+  const [employees, setEmployees] = useState([]);
+  const [goods, setGoods] = useState([]);
 
   const currentDate = new Date().toISOString().split('T')[0];
 
@@ -58,8 +62,32 @@ const TransportNew = () => {
       });
   };
 
+  const getEmployees = async () => {
+    axios
+      .get('http://localhost:8070/employee/viewEmployee')
+      .then((res) => {
+        setEmployees(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
+  const getGoods = async () => {
+    axios
+      .get('http://localhost:8070/sales/')
+      .then((res) => {
+        setGoods(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
   useEffect(() => {
     getDrivers();
+    getEmployees();
+    getGoods();
   }, []);
 
   return (
@@ -67,7 +95,6 @@ const TransportNew = () => {
       <div className={currentMode === 'Dark' ? 'dark' : ''}>
         <div className="flex relative dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
-            {' '}
             {/* THEME SETTINGS BUTTON */}
             <TooltipComponent content="Settings" position="Top">
               <button
@@ -108,14 +135,16 @@ const TransportNew = () => {
               {themeSettings && <ThemeSettings />}
               <div>
                 <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-                  <Header category="Form" title="Create New Transport Record" />
+                  <Header category="Form" title="Add New Transport Record" />
                   <div className="flex items-center justify-center ">
                     <form
                       onSubmit={async (e) => {
                         e.preventDefault();
 
                         const newTransport = {
+                          transportID,
                           type,
+                          typeInfo,
                           destinationAddress,
                           date,
                           distance,
@@ -141,11 +170,29 @@ const TransportNew = () => {
                       }}
                     >
                       <div className="mb-3">
-                        <label className="form-label">Type</label>
+                        <label htmlFor="transportID" className="form-label">
+                          Transport Number :
+                        </label>
+                        <input
+                          type="text"
+                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                          pattern="[A-Z]{1}[0-9]{3,7}"
+                          id="transportID"
+                          required
+                          onChange={(e) => {
+                            setTransportID(e.target.value);
+                          }}
+                        />
+                      </div>
+
+                      <div className="mb-3">
+                        <label className="form-label" className="block">
+                          Transportation Type
+                        </label>
                         <select
                           id="type"
                           name="type"
-                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                          className="mt-1  w-200 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           required
                           onChange={(e) => {
                             setType(e.target.value);
@@ -156,6 +203,49 @@ const TransportNew = () => {
                           <option value="Employee">Employee</option>
                           <option value="Goods">Goods</option>
                         </select>
+                        {type === 'Staff' || type === 'Employee' ? ( // IF TYPE IS STAFF OR EMPLOYEE
+                          <select
+                            id="trInfo"
+                            name="trInfo"
+                            className="mt-1 ml-8 w-640 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                            required
+                            onChange={(e) => {
+                              setTypeInfo(e.target.value);
+                            }}
+                          >
+                            <option selected>Select...</option>
+                            {employees.map((item, index) => (
+                              <option value={item.employeeFullName} key={index}>
+                                {item.employeeFullName}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <select
+                            id="trInfo"
+                            name="trInfo"
+                            className="mt-1 ml-8 w-640 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                            required
+                            onChange={(e) => {
+                              setTypeInfo(e.target.value);
+                            }}
+                          >
+                            <option selected>Select...</option>
+                            {goods.map((item, index) =>
+                              item.status === 'Finished' ? ( // CHECKING IF THE GOODS ARE FINISHED
+                                <option
+                                  value={`${item.invoiceNo} - ${item.itemName} x ${item.quantity}`}
+                                  key={index}
+                                >
+                                  {`${item.invoiceNo} - ${item.itemName} x ${item.quantity}`}
+                                </option>
+                              ) : (
+                                // IF NOT FINISHED, IT WILL NOT BE DISPLAYED
+                                ''
+                              )
+                            )}
+                          </select>
+                        )}
                       </div>
 
                       <div className="mb-3">
@@ -166,7 +256,7 @@ const TransportNew = () => {
                           type="text"
                           className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           id="address"
-                          placeholder="Enter destination..."
+                          placeholder="Enter the destination..."
                           required
                           onChange={(e) => {
                             setDestinationAddress(e.target.value);
@@ -205,7 +295,7 @@ const TransportNew = () => {
                           type="text"
                           className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           id="distance"
-                          placeholder="Enter distance..."
+                          placeholder="Enter the distance..."
                           required
                           min="0"
                           onChange={(e) => {
@@ -239,11 +329,25 @@ const TransportNew = () => {
                           type="text"
                           className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           id="description"
-                          placeholder="Enter description..."
+                          placeholder="Enter the description..."
                           required
                           onChange={(e) => {
                             setDescription(e.target.value);
                           }}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label htmlFor="totalCost" className="form-label">
+                          Transportation Cost:
+                        </label>
+                        <input
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                          id="totalCost"
+                          value={distance * 100}
+                          readOnly
                         />
                       </div>
 
