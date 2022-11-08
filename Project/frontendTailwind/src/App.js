@@ -17,7 +17,7 @@ import { OrderViewAll, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder 
 
 import { StocksDashboard, StockView, StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, StockUtilisationDashboard, StockUtilisation, StockAddExisting, StockUtilUpdate, StockUtilPDF, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF, PendingStockView, PendingStockAdd, PendingStockUpdate, PendingStockPDf } from './pages/Stock';
 
-import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview } from './pages/Suppliers';
+import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview, PurchaseOrderAdd, PurchaseOrderUpdate, PurchaseOrderPreview, PurchaseOrderView } from './pages/Suppliers';
 
 import { DriverDashboard, DriverViewAll, DriverNew, DriverUpdate, DriverReport } from './pages/Driver';
 import { TransportDashboard, TransportViewAll, TransportNew, TransportUpdate, TransportReport } from './pages/Transport';
@@ -161,6 +161,13 @@ const App = () => {
           <Route path="/SupplierUpdate/:id" element={<SupplierUpdate />} />
           <Route path="/PurchaseOrderDetailsDashboard" element={<PurchaseOrderDetailsDashboard />} />
           <Route path="/SupplierDetailsPreview" element={<SupplierDetailsPreview />} />
+
+          {/* Purchase Order management  */}
+         
+        <Route path="/PurchaseOrderAdd" element={<PurchaseOrderAdd />} />
+        <Route path="/PurchaseOrderUpdate/:id" element={<PurchaseOrderUpdate />} />
+        <Route path="/PurchaseOrderView" element={<PurchaseOrderView />} />
+        <Route path="/PurchaseOrderPreview" element={<PurchaseOrderPreview />} />
 
           {/* Transport management  */}
           <Route path="/TransportDashboard" element={<TransportDashboard />} />
