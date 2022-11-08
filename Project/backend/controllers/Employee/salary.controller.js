@@ -25,6 +25,9 @@ export const getAllSalaryDetails = async (req, res) => {
                     foreignField: "employeeNumber", 
                     as: "employeeInfo" 
                 }
+            },
+            {
+                $unwind: "$employeeInfo"
             }
         ]);
         res.status(200).json(salaries);
