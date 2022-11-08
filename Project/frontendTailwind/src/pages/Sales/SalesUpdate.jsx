@@ -148,7 +148,7 @@ function SalesUpdate() {
                                           <div className="mb-3">
                                               <label htmlFor="customerID" className="form-label">Customer ID</label>
                                               <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                                  id="customerID" value={customerID} required disabled
+                                                  id="customerID" value={customerID}  disabled
                                                   onChange={(e) =>{
                                                       setCustomerID(e.target.value);
                                                   }}/>
@@ -156,11 +156,20 @@ function SalesUpdate() {
 
                                           <div className="mb-3">
                                               <label htmlFor="itemName" className="form-label">Item Name</label>
-                                              <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                                  id="itemName" value={itemName} required 
+                                              <select type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                                  id="itemName" value={itemName}  
                                                   onChange={(e) =>{
                                                       setItemName(e.target.value);
-                                                  }}/>
+                                                  }}>
+                                                    <option value='Shirts'>Shirts</option>
+                                                    <option value='T-Shirts'>T-Shirts</option>
+                                                    <option value='Blouse'>Blouse</option>
+                                                    <option value='Jeans'>Jeans</option>
+                                                    <option value='Pants'>Pants</option>
+                                                    <option value='Shorts'>Shorts</option>
+                                                    <option value='Skirts'>Skirts</option>
+                                                    <option value='Caps'>Caps</option>
+                                                </select>
                                           </div>
 
                                           <div className="mb-3">
@@ -184,18 +193,17 @@ function SalesUpdate() {
                                       
 
                                           <div className="mb-3">
-                                              <label for="status" className="form-label">Order Status</label>
-                                              <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                              id="status" aria-label="Default select example" value={status} required
-                                              onChange={(e) =>{
-                                                  setStatus(e.target.value);
-                                              }}>
-                                                  <option value=''>Select...</option>
-                                                  <option value='Pending'>Pending</option>
-                                                  <option value='Pending'>Processing</option>
-                                                  <option value='Finished'>Finished</option>
-                                              </select>
+                                          <label htmlFor="status" className="form-label">Status</label>
+                                              <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                                                  id="status" value={status} disabled
+                                                  onChange={(e) =>{
+                                                      setStatus(e.target.value);
+                                                  }}/>
                                           </div>
+
+                                                  {/* <option value='Pending'>Pending</option>
+                                                  <option value='Pending'>Processing</option>
+                                                  <option value='Finished'>Finished</option> */}
 
                                       <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Update Order</button>
                                       </form>
