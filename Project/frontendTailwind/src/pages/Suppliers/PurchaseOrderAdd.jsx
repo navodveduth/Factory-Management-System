@@ -11,7 +11,7 @@ import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 
-function PurchaseOrdersAdd() {
+function PurchaseOrderAdd() {
 
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
@@ -101,7 +101,7 @@ function PurchaseOrdersAdd() {
                         orderStatus
                     }
 
-                    await axios.post('http://localhost:5000/purchaseorders/create', newPurchaseOrder)
+                    await axios.post('http://localhost:8070/purchaseorders/create', newPurchaseOrder)
                     .then((res)=>{
                         alert("Purchase order details added successfully");
                         navigate("/PurchaseOrderView");
@@ -216,7 +216,7 @@ function PurchaseOrdersAdd() {
     );
 };
 
-export default PurchaseOrdersAdd;
+export default PurchaseOrderAdd;
 
 
 
