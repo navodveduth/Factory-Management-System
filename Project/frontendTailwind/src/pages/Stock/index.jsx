@@ -14,9 +14,3 @@ export { default as StockBreakdown } from './StockBreakdown';
 export { default as StockBreakdownUpdate } from './StockBreakdownUpdate';
 export { default as StockBreakdownPDF } from './StockBreakdownPDF';
 export { default as StockBreakdownDateRange } from './StockBreakdownDateRange';
-
-export { default as DamagedStockDashboard } from './DamagedStockDashboard';
-export { default as DamagedStockView } from './DamagedStockView';
-export { default as DamagedStockAdd } from './DamagedStockAdd';
-export { default as DamagedStockUpdate } from './DamagedStockUpdate';
-export { default as DStockPDF } from './DStockPDF';

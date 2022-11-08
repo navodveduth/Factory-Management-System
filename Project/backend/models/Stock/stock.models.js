@@ -42,16 +42,11 @@ const stockSchema = new Schema({
         min: 0,
         default:0,
     },
-    unitPrice:{
-        type: Number,
-        min: 0,
-        default:0,
-    },
-    totalValue: {
-        type: Number,
-        min: 0,
-        default: 0.0,
-    },
+    // unitPrice:{
+    //     type: Number,
+    //     min: 0,
+    //     default:0,
+    // },
     sufficientStock: {
         type: String,
         default: "-",
