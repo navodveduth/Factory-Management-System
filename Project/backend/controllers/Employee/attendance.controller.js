@@ -84,13 +84,8 @@ export const getAttendanceByMonth = async (req, res) => {
     try {
         const year = req.params.year;
         const attendace = await Attendace.aggregate([
-            { $match: { year: new Date().getFullYear() } },
-            {
-                $group: {
-                    _id: { month: "$month" },
-                    count: { $sum: 1 }
-                }
-            }
+            { $match: { year: year } },
+            { $group: { _id: { month: "$month" }, count: { $sum: 1 } } }
         ]);
         res.status(200).json(attendace);
     } catch (error) {
