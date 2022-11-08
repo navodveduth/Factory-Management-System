@@ -9,7 +9,7 @@ import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-export default function UpdateOrder(){
+export default function FinalCostOrder(){
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
     const navigate = useNavigate();
 
@@ -18,12 +18,23 @@ export default function UpdateOrder(){
     const [product, setItemName] =useState('');
     const [unitQty, setQuantity] =useState('');
     const [materialCost,setMatCost] = useState('');
-    const [requestDate,setOrderDate] = useState('');
+    const [requestDate,setRequestDate] = useState('');
+    const [costedDate,setCostedDate] = useState('');
     const [supervisor,setSupervisor] =useState('');
     const [teamLead, setTeamLead] = useState('');
     const [member1,setMember1] = useState('');
     const [member2,setMember2] = useState('');
+
+    //Actual Costs and Estimations 
+    //const [totalMatCost,setTotalMatCost] = useState('');
+    const [budgetedMatCost,setBudgetedMatCost] = useState('');
+    const [budgetedLabCost,setBudgetedLabCost] = useState('');
+   // const [totalLabCost,setLabCost] = useState('');
+    const [overHeadCost,setOverhead] = useState('');
     const [budgetedoverHeadCost,setBudgetOH] = useState('');
+    const [budgetedtotalCost, setBudgetedTotalCost] = useState('');
+    
+    
    // const [status,setStatus] = "Stock Requested";    
    // const [totalCost, setTotalCost] =useState('');
     
@@ -33,33 +44,44 @@ export default function UpdateOrder(){
     //auxiliary content to pass the value
     const [Days, setDays] = useState('');
     const [rate,setRate] = useState('');
-    const status =  "Stock Requested"
-    const costedDate = requestDate;
-    const overHeadCost = 0;
+    const status =  "Costed"
+   // const overHeadCost = 0;
    
-    const intDates = parseInt(Days);
-    const floatRate = parseFloat(rate);
+   // const intDates = parseInt(Days);
+   // const floatRate = parseFloat(rate);
        //Handling budgets
-    const budgetedMatCost = unitQty * materialCost;
-    const totalMatCost = 0;
+    const totalMatCost = unitQty * materialCost;
+  //  const totalMatCost = 0;
 
-    const budgetedLabCost = (Days * rate * 8 * 4);
-    const totalLabCost = 0;
+    const totalLabCost = (Days * rate * 8 * 4);
+  //  const totalLabCost = 0;
     
-    const budgetedtotalCost = (budgetedLabCost + budgetedMatCost + parseFloat(budgetedoverHeadCost));
-    const totalCost = 0;
+    const totalCost = (totalLabCost + budgetedMatCost + parseFloat(overHeadCost));
+    
 
     const {id} = useParams(); //get the id from the url
 
-    const getSale = () => {
+    const getCompleteOrder= () => {
        // http://localhost:8070/Production/order/pending/:invoiceNo
        // http://localhost:8070/sales/${id}
-        axios.get(`http://localhost:8070/Production/order/pending/${id}`)
+        axios.get(`http://localhost:8070/Production/order/completed/${id}`)
         .then((res) => {
             
             setInvoice(res.data.invoiceNo);
-            setItemName(res.data.itemName);
-            setQuantity(res.data.quantity);
+            setItemName(res.data.product);
+            setMatCost(res.data.materialCost);
+            setQuantity(res.data.unitQty);
+            setRequestDate(res.data.requestDate);
+            setCostedDate(res.data.costedDate);
+            setSupervisor(res.data.supervisor);
+            setTeamLead(res.data.teamLead);
+            setMember1(res.data.member1);
+            setMember2(res.data.member2);
+            setBudgetedMatCost(res.data.budgetedMatCost);
+            setBudgetOH(res.data.budgetedoverHeadCost);
+            setBudgetedLabCost(res.data.budgetedLabCost);
+            setBudgetedTotalCost(res.data.budgetedtotalCost);
+            
             })
             .catch((err) => {
                 alert(err.message);
@@ -82,7 +104,7 @@ export default function UpdateOrder(){
     
 
         useEffect(()=>{ //This will run the page when loaded
-        getSale();
+        getCompleteOrder();
         getEmployees();
     },[]);
 
@@ -142,7 +164,7 @@ export default function UpdateOrder(){
                                     <form onSubmit={async(e)=>{
                                                 e.preventDefault();
                                 
-                                            const newOrder = {
+                                            const updateOrder = {
                                                 invoiceNo,
                                                 product,
                                                 materialCost,
@@ -163,7 +185,8 @@ export default function UpdateOrder(){
                                                 budgetedtotalCost,
                                                 status,
                                         }
-                                        const salesStatus = "In Production"
+                                        console.log(updateOrder);
+                                        const salesStatus = "Completed"
                                         const statusPass = {salesStatus}
                                         await axios.put('http://localhost:8070/Production/order/updateStatus/'+id,{"status":salesStatus}).then((res)=>{
                                             alert("Sale Status Changed");
@@ -171,10 +194,10 @@ export default function UpdateOrder(){
                                             console.log(error)
                                             alert("Sale Status Change Unsuccessful");
                                         })
-                                        console.log(newOrder);
-                                        await axios.post("http://localhost:8070/production/order/orderCreate",newOrder).then(()=>{
-                                            alert("Order Created");
-                                            navigate('/viewRequested');
+                                        console.log(updateOrder);
+                                        await axios.put("http://localhost:8070/Production/order/finalCost/"+id,updateOrder).then(()=>{
+                                            alert("Granted Order Costed Successfully");
+                                            navigate('/completedOrders');
 
                                         }).catch((error)=>{
                                             console.log(error);
@@ -210,98 +233,20 @@ export default function UpdateOrder(){
                                         </div>
 
                                         <div className="mb-3">
-                                            <label for="name" className="text-md">Request Date</label>
+                                            <label for="name" className="text-md">Costed Date</label>
                                             <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" placeholder={materialCost} onChange={(e)=>{
-                                                setOrderDate(e.target.value);
+                                                setCostedDate(e.target.value);
                                             }} maximum={maxDate}/>
                                         </div>
 
                                         <div className="mb-3">
-                                                <label for="category" className="form-label">Select The Supervisor </label>
-                                                    < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"  id="category" required onChange={(e) => {
-                                                        setSupervisor(e.target.value);
-                                                }}
-                                                placeholder={"Select The Supervisor"}>
-
-                                                    {employee.filter((data)=>{
-                                                        return(
-                                                            data.employeeType == "Executive" && data.employeeDepartment == "Production"
-                                                        );
-                                                        
-                                                    }).map((data)=>{
-                                                        return(
-                                                                <option value={data.employeeFullName} label={data.employeeFullName}>{data.employeeFullName} </option>
-                                                            )
-                                                    })}
-
-                                                </select>
-                                            </div>
-                                            <div className="mb-3">
-                                                <label for="category" className="form-label">Select The Team Lead</label>
-                                                    < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"  id="category" required onChange={(e) => {
-                                                        setTeamLead(e.target.value);
-                                                }}>
-
-                                                    {employee.filter((data)=>{
-                                                        return(
-                                                            data.employeeType == "Non-Executive" && data.employeeDepartment == "Production"
-                                                        );
-                                                        
-                                                    }).map((data)=>{
-                                                        return(
-                                                                <option value={data.employeeFullName} label={data.employeeFullName}>{data.employeeFullName} </option>
-                                                            )
-                                                    })}
-
-                                                </select>
-                                            </div>
-
-                                            <div className="mb-3">
-                                                <label for="category" className="form-label">Select Technical Member</label>
-                                                    < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"  id="category" required onChange={(e) => {
-                                                        setMember1(e.target.value);
-                                                }}>
-
-                                                    {employee.filter((data)=>{
-                                                        return(
-                                                            data.employeeType == "Non-Executive" && data.employeeDepartment == "Production"
-                                                        );
-                                                        
-                                                    }).map((data)=>{
-                                                        return(
-                                                                <option value={data.employeeFullName} label={data.employeeFullName}>{data.employeeFullName} </option>
-                                                            )
-                                                    })}
-                                                </select>
-                                            </div>
-
-                                            <div className="mb-3">
-                                                <label for="category" className="form-label">Select Production Member</label>
-                                                    < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"  id="category" required onChange={(e) => {
-                                                        setMember2(e.target.value);
-                                                }}>
-
-                                                    {employee.filter((data)=>{
-                                                        return(
-                                                            data.employeeType == "Non-Executive" && data.employeeDepartment == "Production"
-                                                        );
-                                                        
-                                                    }).map((data)=>{
-                                                        return(
-                                                                <option value={data.employeeFullName} label={data.employeeFullName}>{data.employeeFullName} </option>
-                                                            )
-                                                    })}
-
-                                                </select>
-                                            </div>
-                                            <div className="mb-3">
-                                            <label for="name" className="text-md">Enter the Estimated Labour Rate</label>
+                                            <label for="name" className="text-md">Enter Actual Labour Rate</label>
                                             <input type="Number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name"  onChange={(e)=>{
                                                 setRate(e.target.value);
                                             }}/>
                                         </div>
                                             <div className="mb-3">
-                                            <label for="name" className="text-md">Enter the Estimated Days (8 hours a day)</label>
+                                            <label for="name" className="text-md">Enter The Actual Days (8 hours a day)</label>
                                             <input type="Number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name"  onChange={(e)=>{
                                                 setDays(e.target.value);
                                             }}/>
@@ -313,6 +258,15 @@ export default function UpdateOrder(){
                                                 //setTotalLabCost(); 
                                             }} readOnly/>
                                         </div>
+
+                                        <div className="mb-3">
+                                            <label for="address" className="text-md">Actual Labour Cost</label>
+                                            <input type="Number" placeholder={totalLabCost} className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="address"   onChange={(e)=>{
+                                                //setTotalLabCost(); 
+                                            }} readOnly/>
+                                        </div>
+                                        
+
                                         
                                         <div className="mb-3">
                                             <label for="address" className="text-md">Estimated Material Cost</label>
@@ -321,9 +275,20 @@ export default function UpdateOrder(){
                                             }} readOnly/>
                                         </div>
                                         <div className="mb-3">
+                                            <label for="address" className="text-md">Actual Material Cost</label>
+                                            <input type="Number" placeholder={totalMatCost} className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="address"   onChange={(e)=>{
+                                            }} readOnly/>
+                                        </div>
+                                        <div className="mb-3">
                                             <label for="address" className="text-md">Estimated Overhead Cost</label>
-                                            <input type="Number" placeholder="Enter the expected overhead cost" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="address"   onChange={(e)=>{
-                                                setBudgetOH(e.target.value);
+                                            <input type="Number" placeholder={budgetedoverHeadCost} className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="address"   onChange={(e)=>{
+                                            }}
+                                            readOnly/>
+                                        </div>
+                                        <div className="mb-3">
+                                            <label for="address" className="text-md">Actual Overhead Cost</label>
+                                            <input type="Number" placeholder="Enter the actual overhead cost" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="address"   onChange={(e)=>{
+                                                setOverhead(e.target.value);
                                             }}/>
                                         </div>
 
@@ -333,8 +298,14 @@ export default function UpdateOrder(){
                                                 //setTotalLabCost();
                                             }} readOnly/>
                                         </div>
-                                        
 
+                                        <div className="mb-3">
+                                            <label for="address" className="text-md">Actual Total Production Cost</label>
+                                            <input type="Number" placeholder={totalCost} className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="address"   onChange={(e)=>{
+                                                
+                                            }} readOnly/>
+                                        </div>
+                                        
                                         <div>
                                         <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Request Stock</button>
                                         </div>
