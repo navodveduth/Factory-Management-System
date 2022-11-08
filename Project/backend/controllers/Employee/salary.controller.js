@@ -16,7 +16,17 @@ export const createSalary = async (req, res) => {
 // Retrieve and return all salaries from the database.
 export const getAllSalaryDetails = async (req, res) => {
     try {
-        const salaries = await Salary.find();
+        const salaries = await Salary.aggregate([
+            {
+                $lookup:
+                {
+                    from: "employees",
+                    localField: "employeeNumber", 
+                    foreignField: "employeeNumber", 
+                    as: "employeeInfo" 
+                }
+            }
+        ]);
         res.status(200).json(salaries);
     } catch (error) {
         res.status(404).json({ message: error });
@@ -67,3 +77,6 @@ export const getOneSalaryDetailsByEmployeeNumber =  async (req, res) => {
         res.status(404).json({ message: error });
     }
 }
+
+
+

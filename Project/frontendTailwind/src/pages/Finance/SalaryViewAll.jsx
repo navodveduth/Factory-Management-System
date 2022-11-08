@@ -133,11 +133,13 @@ const FinanceViewAll = () => {
                                   <table className="w-full rounded-lg">
                                     <thead>
                                       <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                        <TableHeader value="Employee Number" />
+                                        <TableHeader value="Emp. ID" />
+                                        <TableHeader value="Emp. Name" />
+                                        <TableHeader value="Designation" />
                                         <TableHeader value="Basic Salary" />
                                         <TableHeader value="Allowance" />
                                         <TableHeader value="Incentives" />
-                                        <TableHeader value="Employee Nett Salary" />
+                                        <TableHeader value="Nett Salary" />
                                         <TableHeader value="Modify" />
                                       </tr>
                                     </thead>
@@ -145,13 +147,19 @@ const FinanceViewAll = () => {
                                     {Salary.filter((data) => {
                                             if(searchTerm == ""){
                                                 return data;
-                                            }else if(data.employeeNumber.toString().toLowerCase().includes(searchTerm.toLowerCase())){
+                                            }else if((data.employeeNumber.toString().toLowerCase().includes(searchTerm.toLowerCase()))){
                                                 return data;
                                             }
                                         }).map((data) => (
                                         <tr className="text-sm h-10 border dark:border-slate-600">
 
                                             <TableData value={data.employeeNumber}/>
+                                            <TableData value={data.employeeInfo.map(((data2)=>{
+                                                return data2.employeeNameWithInitials;
+                                            }))}/>
+                                            <TableData value={data.employeeInfo.map(((data2)=>{
+                                                return data2.employeeDesignation;
+                                            }))}/>
                                             <TableData value={"Rs." + data.employeeBasicSalary} />
                                             <TableData value={"Rs." + data.employeeAllowance} />
                                             <TableData value={"Rs." + data.employeeIncentive} />

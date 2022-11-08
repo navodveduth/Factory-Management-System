@@ -29,6 +29,9 @@ const stockSchema = new Schema({
         type: String,
         required:true
      },
+     firstPurchaseDate: {
+        type: Date,
+    },
     // quantity: {
     //     type: Number,
     //     min: 0,

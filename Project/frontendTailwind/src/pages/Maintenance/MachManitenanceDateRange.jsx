@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link,useLocation ,useNavigate } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider.js';
 import TableData from '../../components/Table/TableData';
@@ -9,6 +9,7 @@ import TableHeader from '../../components/Table/TableHeader';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import MachMaintenanceViewAll from './MachMaintenanceViewAll';
 
 
 
@@ -16,6 +17,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 const MachManitenanceDateRange = () => {
   const [maintainenceMachine, setMaintainenceMachine] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const location = useLocation();
 
 
   var TotalCost = 0;
@@ -33,7 +35,7 @@ const MachManitenanceDateRange = () => {
 
 
   const getMMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainenceMachine/")
+    axios.get("http://localhost:8070/maintainenceMachine/date/"+location.state.DS+"/"+location.state.DE)
       .then((res) => {
         setMaintainenceMachine(res.data); //setMaintainence  is used to update the state variable
 
@@ -43,6 +45,11 @@ const MachManitenanceDateRange = () => {
       })
   }
 
+  const navigate = useNavigate();
+  
+  const toDateRange=()=>{
+    navigate('/MachMaintenanceViewAll');
+  }
 
   useEffect(() => {
     getMMaintainence();
@@ -155,7 +162,6 @@ const MachManitenanceDateRange = () => {
                           <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                             <TableHeader value="Code" />
                             <TableHeader value="Machine ID" />
-                            <TableHeader value="Item" />
                             <TableHeader value="Repairs" />
                             <TableHeader value="Repair started" />
                             <TableHeader value="Repaired by" />
@@ -200,15 +206,6 @@ const MachManitenanceDateRange = () => {
 
                                 <TableData value={data.mid} />
                                 <TableData value={data.machineID} />
-                                <TableData value={data.machineDetailss.map((data1) => {
-                                  return (
-                                    <div>
-                                      <Link to={`/MachineryViewAll/`}>
-                                        <TableData value={data1.name} />
-                                      </Link>
-                                    </div>
-                                  )
-                                })} />
                                 <TableData value={data.Description} />
                                 <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
                                 <TableData value={data.Location} />

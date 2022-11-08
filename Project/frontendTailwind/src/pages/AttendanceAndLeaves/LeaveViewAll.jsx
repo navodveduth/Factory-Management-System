@@ -152,7 +152,6 @@ const LeaveViewAll = () => {
                                       if(searchTerm == ""){
                                         return data;
                                       }else if((data.employeeNumber.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                        (data.LeavesDetails.employeeFullName.toLowerCase().includes(searchTerm.toLowerCase())) ||
                                         (data.leaveType.toLowerCase().includes(searchTerm.toLowerCase())) ||
                                         (startDate.toLowerCase().includes(searchTerm.toLowerCase())) ||
                                         (endDate.toLowerCase().includes(searchTerm.toLowerCase())) ||
