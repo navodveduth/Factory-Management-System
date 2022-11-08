@@ -7,7 +7,7 @@ import { EmployeeDashboard, EmployeeViewAll, EmployeeNew, EmployeeUpdate, Employ
 import { AttendanceAndLeaveDashboard, AttendanceViewAll, AttendanceNew, AttendanceUpdate, AttendanceReport, AttendanceNewRecord, LeaveViewAll, LeaveNew, LeaveUpdate, LeaveReport } from './pages/AttendanceAndLeaves';
 import { WelfareDashboard, WelfareNew, WelfareReport, WelfareUpdate, WelfareViewAll } from './pages/Welfare';
 
-import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll, PreviewSalary, FinanceDateRange } from './pages/Finance';
+import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll, PreviewSalary, FinanceDateRange, IncomeStatement } from './pages/Finance';
 
 import {  MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport,MaintainenceDateRange, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachManitenanceDateRange,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport,VehiMaintenanceDateRange} from './pages/Maintenance';
 import {MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory} from './pages//Machinery';
@@ -74,7 +74,8 @@ const App = () => {
           <Route path="/FinanceViewAll" element={<FinanceViewAll />} />
           <Route path="/FinanceUpdate/:id" element={<FinanceUpdate />} />
           <Route path="/FinancePreview/" element={<FinancePreview />} />
-          <Route path="/FinanceDateRange/" element={<FinanceDateRange />} />\
+          <Route path="/FinanceDateRange/" element={<FinanceDateRange />} />
+          <Route path="/IncomeStatement" element={<IncomeStatement />} />
 
           {/* salary management  */}
           <Route path="/SalaryDashboard" element={<SalaryDashboard />} />
