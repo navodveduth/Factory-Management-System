@@ -37,10 +37,32 @@ export const getOneStockUtilDetails = async (req, res) => {
     }
 }
 
+//get one stock util info
+export const getOneStockUtilInfo = async (req, res) => {
+    try {//retrieves stock based on id
+        const id = req.params.id;
+        const stock = await Stock.aggregate([
+            {$match: {_id: new mongoose.Types.ObjectId(id)},},
+            {$lookup: {
+                from: 'stocks',
+                localField: 'stockCode',
+                foreignField: 'stockCode',
+                as: 'stockDetails',
+            },
+        }, 
+        ]);
+        res.status(200).json(stock);
+    } catch (error) {
+        res.status(404).json({
+            message: error
+        })
+    }
+}
+
 export const getOneStockUtilByStockCode = async (req, res) =>{
     try {
         const stockID= req.params.stockID;
-       const stockUtil= await StockUtilisation.find({stockCode: stockID});
+       const stockUtil= await StockUtilisation.find({'stockCode': stockID});
         res.status(200).json(stockUtil);
     } catch (error) {
         res.status(404).json({ message : error});
