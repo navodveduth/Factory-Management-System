@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Navbar, Footer, Sidebar, ThemeSettings, Header  } from '../../components';
+import { Navbar, Footer, Sidebar, ThemeSettings, Header, AttendanceChart } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
@@ -223,6 +223,9 @@ const EmployeeProfile = () => {
                                                     </tbody>
                                                 </table>
                                             </div>
+                                        </div>
+                                        <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+                                                <AttendanceChart employeeNumber={data.employeeNumber} />
                                         </div>
                                     </div>
                                 )

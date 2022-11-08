@@ -38,7 +38,8 @@ const purchaseOrderSchema = new Schema({
     },
     orderStatus:{
         type: String,
-        required:true
+        required:true,
+        enum: ['Order Placed','Order Completed']
     }
 });
 
