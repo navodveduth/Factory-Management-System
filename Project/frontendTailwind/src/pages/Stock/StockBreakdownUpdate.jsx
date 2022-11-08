@@ -49,7 +49,6 @@ function StockBreakdownUpdate() {
             setReorderLevel(res.data.reorderLevel);
             setDamagedQty(res.data.damagedQty);
             setUnitPrice(res.data.unitPrice);
-            setTotalValue(res.data.totalValue);
             setSufficientStock(res.data.sufficientStock);
         }).catch((err) => {
             alert(err);
@@ -164,7 +163,6 @@ function StockBreakdownUpdate() {
                                                 firstPurchaseDate,
                                                 reorderLevel,
                                                 unitPrice,
-                                                totalValue,
                                                 sufficientStock,
                                                 damagedQty
                                             }
@@ -225,14 +223,6 @@ function StockBreakdownUpdate() {
                                                 <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="reorder" value={reorderLevel} min="0"
                                                     onChange={(e) => {
                                                         setReorderLevel(e.target.value);
-                                                    }} />
-                                            </div>
-
-                                            <div className="mb-3">
-                                                <label for="unitPrice" className="form-label">Unit price: </label>
-                                                <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice" placeholder='Enter price per unit...'
-                                                    value={unitPrice} min="0" title="If the unit price is not avilable please enter 0" step="0.01" onChange={(e) => {
-                                                        setUnitPrice(e.target.value);
                                                     }} />
                                             </div>
 

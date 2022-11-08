@@ -132,7 +132,6 @@ function StockAdd() {
                                                 firstPurchaseDate,
                                                 reorderLevel,
                                                 unitPrice,
-                                                totalValue,
                                                 sufficientStock,
                                                 damagedQty
                                             }
