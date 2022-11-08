@@ -5,7 +5,7 @@ import { RiLoader4Line } from "react-icons/ri";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { FcProcess } from "react-icons/fc";
 import { FiPackage, FiSettings, FiFileText, FiFilePlus, FiCheck } from 'react-icons/fi';
-import { DashTopBox, DashTopButton, SalesChart, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
+import { DashTopBox, DashTopButton, SalesMonthlyChart, Navbar, Footer, Sidebar, ThemeSettings, SalesBarChart } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
@@ -118,7 +118,10 @@ const SalesDashboard = () => {
                             
 
                               <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-                                    <SalesChart/>
+                                    <SalesMonthlyChart/>
+                              </div>
+                              <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+                                    <SalesBarChart/>
                               </div>
                             </div>
                           

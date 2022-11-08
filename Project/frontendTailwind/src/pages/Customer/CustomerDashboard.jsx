@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FiSettings, FiUsers, FiUserPlus } from 'react-icons/fi';
-import { DashTopBox, DashTopButton, customerChart, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
+import { DashTopBox, DashTopButton, SalesPieChart, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { useStateContext } from '../../contexts/ContextProvider';
 
@@ -33,8 +33,8 @@ const CustomerDashboard = () => {
     }
   }, []);
 
-//   const customerCount = customer.length;
-//   const finishedOrders= customer.filter((sale) => sale.status === 'Finished').length;
+  const customerCount = customer.length;
+  //const totalCustomers= customer.filter((customer) => sale.status === 'Finished').length;
 //   const ongoingOrders= customer.filter((sale) => sale.status === 'Pending').length;
 //   const newOrders= customer.filter((sale) => sale.status === 'Placed').length;
 
@@ -89,7 +89,7 @@ const CustomerDashboard = () => {
                         <div>
                         <div className="mt-5">
 
-                            <div className="flex flex-wrap lg:flex-nowrap justify-left ml-10 mt-5">
+                            <div className="flex flex-wrap lg:flex-nowrap justify-left ml-5 mt-5">
                               <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                                 {/* top buttons in the dashboard */} {/* use for navigation buttons*/}
                                 <Link to="/CustomerViewAll">
@@ -101,20 +101,20 @@ const CustomerDashboard = () => {
                               </div>
                             </div>
 
-                            {/* <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
-                              <div className="flex m-3 flex-wrap justify-center gap-1 items-center"> */}
+                            <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                              <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                                 {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-                                {/* <DashTopBox icon={<FiPackage />} label="Total customer" data={customerCount} />
-                                <DashTopBox icon={<FiPackage />} label="Ongoing Orders" data={ongoingOrders} />
+                                <DashTopBox icon={<FiUsers />} label="Total Customers" data={customerCount} />
+                                {/* <DashTopBox icon={<FiPackage />} label="Ongoing Orders" data={ongoingOrders} />
                                 <DashTopBox icon={<FiPackage />} label="Placed Orders" data={newOrders} />
-                                <DashTopBox icon={<FiPackage />} label="Finished Orders" data={finishedOrders} />       
+                                <DashTopBox icon={<FiPackage />} label="Finished Orders" data={finishedOrders} /> */}
                               </div>
-                            </div> */}
+                            </div>
 
 
-                            {/* <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-                                <customerChart/>
-                            </div> */}
+                              <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+                                    <SalesPieChart/>
+                              </div>
                             </div>
                             
                         </div>
