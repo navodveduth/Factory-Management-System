@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { FiUser } from 'react-icons/fi';
 import { DashTopBox, DashTopButton, ProductionPieChart } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
+
+
+//importing icons
 import {RiShirtFill} from "react-icons/ri"
-import {FaTshirt} from "react-icons/fa"
 import {SiSpreadshirt} from "react-icons/si"
 import {GiArmoredPants} from "react-icons/gi"
 import {CgBox} from "react-icons/cg"
@@ -18,7 +19,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 const ProductionDashBoard = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
   const [Order,setOrder] = useState([]);
-
+  const [Sales, setSales] = useState([]);
   async function getOrders(){
       await axios.get("http://localhost:8070/production/order/allOrders").then((res)=>{
           setOrder(res.data);
@@ -27,8 +28,19 @@ const ProductionDashBoard = () => {
       })
   }
 
+  async function getSales(){
+    await axios.get("http://localhost:8070/sales/").then((res)=>{
+        setOrder(res.data);
+    }).catch((err)=>{
+        alert(err.message);
+    })
+}
+
+  //http://localhost:8070/sales/
+
   useEffect(() => {
     getOrders();// <== CHANGE ACCORDING TO YOUR OWN FUNCTIONS, YOU CAN REMOVE THIS LINE IF YOU DON'T NEED IT
+    getSales(); 
     const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
     const currentThemeMode = localStorage.getItem('themeMode');
     if (currentThemeColor && currentThemeMode) {
@@ -37,11 +49,11 @@ const ProductionDashBoard = () => {
     }
   }, []);
 
-  const prodCount = Order.length;
-  const prodT= Order.filter((Order) => Order.orderName == 'T-Shirts').length;
-  const prodCollars= Order.filter((Order) => Order.orderName == 'Collars').length;
-  const prodTrousers= Order.filter((Order) => Order.orderName == 'Trousers').length;
-  const prodShirts= Order.filter((Order) => Order.orderName == 'Shirts').length;
+ // const total = pending + requested + completed + costed;
+ // const pending= Sales.filter((Sales) => Sales.status == 'Pending').length;
+  const requested= Order.filter((Order) => Order.status == 'Stock Requested').length;
+  const completed= Order.filter((Order) => Order.status == 'Completed').length;
+  const costed= Order.filter((Order) => Order.status == 'Costed').length;
   return (
 
     <div>
@@ -108,11 +120,11 @@ const ProductionDashBoard = () => {
                           <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
                               <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                               {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-                              <Link to="/pendingOrders"><DashTopBox  icon={<CgBox />} label="Pending Orders" data={prodCount} /></Link>
-                              <Link to ="/viewRequested"><DashTopBox icon={<CgBox />} label="Stock Requisitions" data={prodT} /></Link>
-                              <Link to ="/completedOrders"><DashTopBox icon={<SiSpreadshirt/>} label="Granted Orders" data={prodCollars} /></Link>
-                              <DashTopBox icon={<GiArmoredPants/>} label="Total Trousers" data={prodTrousers} />
-                              <DashTopBox icon={<RiShirtFill />} label="Total Shirts" data={prodShirts} />       
+                              <Link to="/pendingOrders"><DashTopBox  icon={<CgBox />} label="Pending Orders" data={0} /></Link>
+                              <Link to ="/viewRequested"><DashTopBox icon={<CgBox />} label="Stock Requisitions" data={requested} /></Link>
+                              <Link to ="/completedOrders"><DashTopBox icon={<SiSpreadshirt/>} label="Granted Orders" data={completed} /></Link>
+                              <DashTopBox icon={<GiArmoredPants/>} label="Total Trousers" data={costed} />
+                              <DashTopBox icon={<RiShirtFill />} label="Total Shirts" data={0} />       
                               </div>
                           </div>
                       

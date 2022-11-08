@@ -5,7 +5,7 @@ import Header from './Header';
 import ChartsHeader from './ChartsHeader'
 import { useStateContext } from '../contexts/ContextProvider';
 
-const SalesChart = () => {
+const SalesPieChart = () => {
   const { currentMode } = useStateContext();
     const [sales, setSales] = useState([]);
 
@@ -63,4 +63,4 @@ const SalesChart = () => {
   )
 }
 
-export default SalesChart
+export default SalesPieChart
