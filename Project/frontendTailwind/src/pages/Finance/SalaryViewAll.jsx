@@ -58,6 +58,12 @@ const FinanceViewAll = () => {
 
     }
 
+    const formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'LKR',
+      minimumFractionDigits: 2,
+      currencyDisplay: 'symbol'
+    })
 
   return (
     <div>
@@ -133,11 +139,13 @@ const FinanceViewAll = () => {
                                   <table className="w-full rounded-lg">
                                     <thead>
                                       <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                        <TableHeader value="Employee Number" />
+                                        <TableHeader value="Emp. ID" />
+                                        <TableHeader value="Emp. Name" />
+                                        <TableHeader value="Designation" />
                                         <TableHeader value="Basic Salary" />
                                         <TableHeader value="Allowance" />
                                         <TableHeader value="Incentives" />
-                                        <TableHeader value="Employee Nett Salary" />
+                                        <TableHeader value="Nett Salary" />
                                         <TableHeader value="Modify" />
                                       </tr>
                                     </thead>
@@ -145,17 +153,21 @@ const FinanceViewAll = () => {
                                     {Salary.filter((data) => {
                                             if(searchTerm == ""){
                                                 return data;
-                                            }else if(data.employeeNumber.toString().toLowerCase().includes(searchTerm.toLowerCase())){
+                                            }else if((data.employeeNumber.toString().toLowerCase().includes(searchTerm.toLowerCase()))||
+                                            (data.employeeInfo.employeeNameWithInitials.toString().toLowerCase().includes(searchTerm.toLowerCase()))||
+                                            (data.employeeInfo.employeeDesignation.toString().toLowerCase().includes(searchTerm.toLowerCase()))){
                                                 return data;
                                             }
                                         }).map((data) => (
                                         <tr className="text-sm h-10 border dark:border-slate-600">
 
                                             <TableData value={data.employeeNumber}/>
-                                            <TableData value={"Rs." + data.employeeBasicSalary} />
-                                            <TableData value={"Rs." + data.employeeAllowance} />
-                                            <TableData value={"Rs." + data.employeeIncentive} />
-                                            <TableData value={"Rs." + (data.employeeIncentive + data.employeeAllowance + data.employeeBasicSalary)}/>
+                                            <TableData value={data.employeeInfo.employeeNameWithInitials}/>
+                                            <TableData value={data.employeeInfo.employeeDesignation}/>
+                                            <TableData value={formatter.format(data.employeeBasicSalary)} />
+                                            <TableData value={formatter.format(data.employeeAllowance)} />
+                                            <TableData value={formatter.format(data.employeeIncentive)} />
+                                            <TableData value={formatter.format(data.employeeIncentive + data.employeeAllowance + data.employeeBasicSalary)}/>
 
                                           <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                                             <Link to={`/SalaryUpdate/${data._id}`}>
