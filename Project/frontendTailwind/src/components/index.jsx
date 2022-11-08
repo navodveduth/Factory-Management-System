@@ -13,7 +13,6 @@ export { default as EmployeePieChart } from './EmployeePieChart';
 export { default as MachineryPieChart } from './MachineryPieChart';
 export { default as DepreciationChart } from './DepreciationChart';
 export { default as SalesPieChart } from './SalesPieChart';
-export { default as SalesChart } from './SalesChart';
 export { default as MaintainChart } from './MaintainChart';
 export { default as MaintainBarChart } from './MaintainBarChart';
 export { default as ProductionPieChart } from './ProductionPieChart';
