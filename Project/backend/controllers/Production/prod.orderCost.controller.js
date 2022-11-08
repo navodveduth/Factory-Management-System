@@ -4,6 +4,31 @@ import Sales from "../../models/Sales/sales.model.js"
 
 //All CRUD Operations regarding this schema will happen here
 
+export const getDateRangeProduction = async (req, res) => {
+    try {
+        const DS = req.params.DS;
+        const DE = req.params.DE;
+        const productionData = await orderCost.aggregate([
+            /* {
+                $lookup:
+                {
+                    from: "finances",
+                    localField: "local",  
+                    foreignField: "foreign", 
+                    as: "newField" 
+                }
+            }, */
+            {
+                $match: { requestDate: { $gte: new Date(DS), $lte: new Date(DE) } }
+            }
+        ]);
+        res.status(200).json(productionData);
+    } catch (error) {
+        res.status(404).json({message : error});
+    }
+}
+
+
 //get the status of the sale according to the invoice 
 
 //****************** GET THE INVOICE DETAILS FROM THE INVOICE NUMBER IN SALES TABLE ******************

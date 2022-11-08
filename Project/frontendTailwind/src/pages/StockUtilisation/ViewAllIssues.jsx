@@ -142,7 +142,6 @@ function ViewAllIssues() {
                                 <TableHeader value="unitPrice" />
                                 <TableHeader value="Units" />
                                 <TableHeader value="Total value" />
-                                <TableHeader value="Supplier" />
                                 <TableHeader value="Manage" />
                             </tr>
                         </thead>
@@ -177,7 +176,6 @@ function ViewAllIssues() {
                                         <TableData value={"Rs." + data.unitPrice} />
                                         <TableData value={data.quantity} />
                                         <TableData value={"Rs." + data.totalValue} />
-                                        <TableData value={data.supplier} />
                                     
 
                                         <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link ,useLocation,useNavigate} from "react-router-dom";
 import {jsPDF} from "jspdf";
 import TableHeader from "../../components/Table/TableHeader";
 import TableData from '../../components/Table/TableData';
@@ -11,18 +11,34 @@ import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-export default function CompletedOrders(){
+export default function CompletedOrdersDateRange(){
+
+    const location = useLocation();
     const navigate = useNavigate();
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings,  } = useStateContext();
     const [Order,setOrder] = useState([])
-    const [searchTerm, setSearchTerm] = useState(""); 
+    
 
+    const [searchTerm, setSearchTerm] = useState(""); 
     const [dateStart, setDateStart] = useState("");
-    const [dateEnd, setDateEnd] = useState("");
+    const [dateEnd, setDateEnd] = useState(""); 
+
+    const getFinance = async () => {
+        axios
+          .get('http://localhost:8070/production/order/date/'+location.state.DS+'/'+location.state.DE)
+          .then((res) => {
+            setOrder(res.data);
+          })
+          .catch((err) => {
+            alert(err.message);
+          });
+      };
 
     const toDateRange=()=>{
         navigate('/CompletedOrdersDateRange',{state:{DS:dateStart,DE:dateEnd}});
       }
+
+
 
         async function getOrders(){
             await axios.get("http://localhost:8070/production/order/allOrders").then((res)=>{
@@ -33,6 +49,7 @@ export default function CompletedOrders(){
         }
 
         useEffect(()=>{
+            getFinance();
             getOrders();
             const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
             const currentThemeMode = localStorage.getItem('themeMode');
@@ -53,6 +70,7 @@ export default function CompletedOrders(){
         async function deletesOrder(id){
             await axios.delete(`http://localhost:8070/production/order/delete/${id}`).then((res)=>{
                 alert("Production cost data deleted Successfully");
+                getFinance();
                getOrders();
             }).catch((err)=>{
                 alert(err.message);
@@ -134,7 +152,6 @@ export default function CompletedOrders(){
                                   setDateStart(e.target.value);
                                 }} />
                               </div>
-
                               <div>
                               <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date" 
                                 onChange={(e) => {
@@ -144,6 +161,11 @@ export default function CompletedOrders(){
                               <div className=" mx-1">
                                   <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}  >filter</button>
                               </div>
+                                <div className="mx-10 ml-auto">
+                                    <Link to={"/completedOrders"}> {/* change this link your previous page */}
+                                        <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Reset Date</button>
+                                    </Link>
+                                    </div>
                                 <div className="mr-0 ml-auto">
                                     <Link to={"/costpreview"}> {/* change this link your preview page */}
                                     <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
