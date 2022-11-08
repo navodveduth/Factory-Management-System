@@ -41,8 +41,15 @@ export default function PreviewSalary(){
             pdf.html(data).then(() => {
                 pdf.save("SalaryList-"+ date + ".pdf");
                });
-        };
 
+            };
+            
+        const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+        })
         return(
             <div>
 
@@ -103,11 +110,13 @@ export default function PreviewSalary(){
                                         <table className="w-full rounded-lg">
                                             <thead>
                                                 <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                                <TableHeader value="Employee Number" />
-                                                <TableHeader value="Basic Salary" />
-                                                <TableHeader value="Allowance" />
-                                                <TableHeader value="Incentive Pay" />
-                                                <TableHeader value="Gross Salary" />
+                                                    <TableHeader value="Employee Number" />
+                                                    <TableHeader value="Emp. Name" />
+                                                    <TableHeader value="Designation" />
+                                                    <TableHeader value="Basic Salary" />
+                                                    <TableHeader value="Allowance" />
+                                                    <TableHeader value="Incentive Pay" />
+                                                    <TableHeader value="Gross Salary" />
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -115,10 +124,16 @@ export default function PreviewSalary(){
                                                     return ( 
                                                         <tr className="text-sm h-10 border dark:border-slate-600">
                                                             <TableData value={data.employeeNumber} />
-                                                            <TableData value={"Rs. " + data.employeeBasicSalary} />
-                                                            <TableData value={"Rs. " + data.employeeAllowance} />
-                                                            <TableData value={"Rs. " + data.employeeIncentive} />
-                                                            <TableData value={"Rs. " + (data.employeeIncentive + data.employeeAllowance + data.employeeBasicSalary)} /> 
+                                                            <TableData value={data.employeeInfo.map(((data2)=>{
+                                                                return data2.employeeNameWithInitials;
+                                                            }))}/>
+                                                            <TableData value={data.employeeInfo.map(((data2)=>{
+                                                                return data2.employeeDesignation;
+                                                            }))}/>
+                                                            <TableData value={formatter.format(data.employeeBasicSalary)} />
+                                                            <TableData value={formatter.format(data.employeeAllowance)} />
+                                                            <TableData value={formatter.format(data.employeeIncentive)} />
+                                                            <TableData value={formatter.format(data.employeeIncentive + data.employeeAllowance + data.employeeBasicSalary)}/>
                                                         </tr>
                                                     )
                                                 })}

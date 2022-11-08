@@ -34,7 +34,7 @@ const MachineryPieChart = () => {
 
   return (
     <div>
-        <ChartsHeader category="Chart" title='Machinery Distribution ' />
+        <ChartsHeader  title='Machinery Distribution ' />
         <AccumulationChartComponent  legendSettings={{position:"Right", background: "white"}} tooltip={{enable:true}} >
             <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]} />
             <AccumulationSeriesCollectionDirective>
