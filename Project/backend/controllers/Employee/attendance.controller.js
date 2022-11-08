@@ -78,3 +78,22 @@ export const getAllAttendanceByEmployeeNumber = async (req, res) => {
         res.status(404).json({ message: error });
     }
 }
+
+// Find the number of attendance for each month in a year
+export const getAttendanceByMonth = async (req, res) => {
+    try {
+        const year = req.params.year;
+        const attendace = await Attendace.aggregate([
+            { $match: { year: new Date().getFullYear() } },
+            {
+                $group: {
+                    _id: { month: "$month" },
+                    count: { $sum: 1 }
+                }
+            }
+        ]);
+        res.status(200).json(attendace);
+    } catch (error) {
+        res.status(404).json({ message: error });
+    }
+}
