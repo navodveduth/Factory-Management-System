@@ -31,7 +31,8 @@ function StockBreakdownUpdate() {
     const [firstPurchaseDate,setfirstPurchaseDate] = useState('');
     var totAdds = 0;
     var totIssues = 0;
-    var quantity = 0
+    var quantity = 0;
+    var price =0;
 
     //const [supplier, setSupplier] = useState('');
     const [stockUtil, setStockUtilisation] = useState([]); //stock is the state variable and setStock is the function to update the state variable
@@ -48,7 +49,6 @@ function StockBreakdownUpdate() {
             setfirstPurchaseDate(res.data.firstPurchaseDate);
             setReorderLevel(res.data.reorderLevel);
             setDamagedQty(res.data.damagedQty);
-            setUnitPrice(res.data.unitPrice);
             setSufficientStock(res.data.sufficientStock);
         }).catch((err) => {
             alert(err);
@@ -162,7 +162,6 @@ function StockBreakdownUpdate() {
                                                 description,
                                                 firstPurchaseDate,
                                                 reorderLevel,
-                                                unitPrice,
                                                 sufficientStock,
                                                 damagedQty
                                             }

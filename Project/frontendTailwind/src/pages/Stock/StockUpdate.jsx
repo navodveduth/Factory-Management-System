@@ -46,7 +46,6 @@ function StockUpdate() {
             setFirstPurchaseDate(res.data.firstPurchaseDate);
             setReorderLevel(res.data.reorderLevel);
             setDamagedQty(res.data.damagedQty);
-            setUnitPrice(res.data.unitPrice);
             setSufficientStock(res.data.sufficientStock);
         }).catch((err) => {
             alert(err);
@@ -132,7 +131,6 @@ function StockUpdate() {
                                                 description,
                                                 firstPurchaseDate,
                                                 reorderLevel,
-                                                unitPrice,
                                                 sufficientStock,
                                                 damagedQty
                                             }

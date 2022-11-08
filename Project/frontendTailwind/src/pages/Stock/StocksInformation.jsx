@@ -37,6 +37,7 @@ const StockInformation = () => {
     let lastIssue = 0;
     let lastAdd = 0;
     let code=0;
+    var price = 0;
 
     const { id } = useParams(); // get the id from the url
 
@@ -179,6 +180,7 @@ const StockInformation = () => {
                                             .map((stockUtilData) => {
                                                 (totAdds += stockUtilData.quantity),
                                                     (lastAdd = stockUtilData.date.split('T')[0]);
+                                                    (price = stockUtilData.unitPrice)
                                             });
                                     }
                                     {
@@ -200,7 +202,7 @@ const StockInformation = () => {
                                         quantity = totAdds - totIssues - data.damagedQty;
                                     }
                                     {
-                                        totalValue = data.unitPrice * quantity;
+                                        totalValue = price * quantity;
                                     }
 
                                     if (quantity < 0) {
@@ -230,10 +232,6 @@ const StockInformation = () => {
                                                     <div className="p-1"><span className="font-bold">Bundle Name</span> : {data.stockName}</div>
                                                     <div className="p-1"><span className="font-bold"> Category </span> :{data.stockCategory}</div>
                                                     <div className="p-1"><span className="font-bold">Description</span> : {data.description}</div>
-                                                    {data.stockUtilisationDetails.map((data3) => (
-                                                        <div className="p-1">
-                                                            <span className="font-bold"> Supplier</span> : {data3.supplier}</div>
-                                                    ))}
                                                 </div>
                                             </div>
 
@@ -260,8 +258,8 @@ const StockInformation = () => {
                                                 <h1 className="text-2xl font-bold">Stock Valuation</h1>
                                                 <div className="text-md ml-12 pt-5">
                                                     <div className="p-1"><span className="font-bold"> Quantity </span> :{quantity}</div>
-                                                    <div className="p-1"><span className="font-bold">Unit price</span> : {formatter.format(data.unitPrice)}</div>
-                                                    <div className="p-1"><span className="font-bold">Total value</span> :{formatter.format(quantity * data.unitPrice)}</div>
+                                                    <div className="p-1"><span className="font-bold">Unit price</span> : {formatter.format(price)}</div>
+                                                    <div className="p-1"><span className="font-bold">Total value</span> :{formatter.format(quantity * price)}</div>
                                                 </div>
                                             </div>
                                         </div>

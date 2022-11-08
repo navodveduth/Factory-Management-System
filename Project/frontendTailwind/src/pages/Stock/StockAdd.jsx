@@ -16,6 +16,7 @@ function StockAdd() {
     const navigate = useNavigate();
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
+    var success = false;
     const [stockCode, setStockCode] = useState('');
     const [stockName, setStockName] = useState('');
     const [stockCategory, setStockCategory] = useState('');
@@ -112,10 +113,6 @@ function StockAdd() {
 
                                             { totalValue = quantity * unitPrice }
 
-                                            if (supplier === '') {
-                                                { supplier = "-" }
-                                            }
-
                                             {
                                                 sufficientStock = "-";
                                                 reorderLevel = 0;
@@ -131,7 +128,6 @@ function StockAdd() {
                                                 description,
                                                 firstPurchaseDate,
                                                 reorderLevel,
-                                                unitPrice,
                                                 sufficientStock,
                                                 damagedQty
                                             }
@@ -143,24 +139,26 @@ function StockAdd() {
                                                 date,
                                                 firstPurchaseDate,
                                                 type,
-                                                supplier,
                                                 unitPrice,
                                                 quantity,
                                                 totalValue
                                             }
-
+                                            
                                             console.log(newStock)
                                             await axios.post("http://localhost:8070/stock/create", newStock).then(() => {
                                                 alert("Data saved successfully");
                                                 navigate('/StockDashboard');
+                                                success = true;
 
                                             }).catch((err) => {
                                                 console.log(err);
-                                                alert("ERROR: Could not add stock");
-                                                navigate('/StockAdd');
+                                                alert("ERROR: Stock code already exists");
+                                                navigate('/StockView');
+                                                success = false;
                                             })
 
-                                            await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
+                                            if (success === true)
+                                            {await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
                                                 alert("Data saved successfully");
                                                 navigate('/StockDashboard');
 
@@ -168,7 +166,7 @@ function StockAdd() {
                                                 console.log(err);
                                                 alert("ERROR: Could not add stock");
                                                 navigate('/StockAdd');
-                                            })
+                                            })}
                                         }}>
 
                                             <div className="mb-3">
@@ -242,14 +240,6 @@ function StockAdd() {
                                                 <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice" placeholder='Enter price per unit...'
                                                     min="0" title="If the unit price is not avilable please enter 0" step="0.01" onChange={(e) => {
                                                         setUnitPrice(e.target.value);
-                                                    }} />
-                                            </div>
-
-                                            <div className="mb-3" >
-                                                <label for="supplier" className="form-label">Materials provided by: </label>
-                                                <input id="supplier" type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Enter supplier name..."
-                                                    value={supplier} onChange={(e) => {
-                                                        setSupplier(e.target.value);
                                                     }} />
                                             </div>
 
