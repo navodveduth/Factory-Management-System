@@ -17,6 +17,7 @@ import damagedStockRouter from './routes/damagedStock.routes.js';
 import stockUtilisationRouter from './routes/stockUtilisation.routes.js';
 import pendingStockRouter from './routes/pendingStock.routes.js';
 import supplierRouter from './routes/supplierDetails.route.js';
+import purchaseOrderRouter from './routes/purchaseOrders.routes.js';
 import salesRouter from './routes/sales.routes.js';
 import employeeRouter from "./routes/employee.routes.js";
 import attendanceRouter from "./routes/attendance.routes.js";
@@ -25,6 +26,7 @@ import leaveRouter from "./routes/leaves.routes.js";
 import salaryRouter from "./routes/salary.routes.js";
 import welfareFacilityRouter from "./routes/welfareFacility.routes.js";
 import customerRouter from "./routes/customer.routes.js";
+
 
 const app = express();
 const PORT = process.env.PORT || 8070;
@@ -45,6 +47,7 @@ app.use('/stockUtilisation', stockUtilisationRouter);
 app.use('/damagedStock',damagedStockRouter);
 app.use('/pendingStock',pendingStockRouter);
 app.use('/supplier', supplierRouter);
+app.use('/purchaseOrder', purchaseOrderRouter);
 app.use('/sales', salesRouter);
 app.use("/employee", employeeRouter);
 app.use("/attendance", attendanceRouter);
