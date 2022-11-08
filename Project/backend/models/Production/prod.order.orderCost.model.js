@@ -17,10 +17,6 @@ const orderSchema = new Schema({
         required:true,
         unique:true
     },
-    customerName:{
-        type:String,
-        
-    },
     product: {
         type:String, 
         required:true,
@@ -36,10 +32,6 @@ const orderSchema = new Schema({
     requestDate:{
         type:Date,
         required:true
-    },
-    approvedDate:{
-        type:Date,
-           
     },
     costedDate:{
         type:Date,
@@ -61,7 +53,15 @@ const orderSchema = new Schema({
       type: Number,
       required:true
     },
+    budgetedMatCost:{
+        type: Number,
+        required:true
+      },
     totalLabCost:{
+        type:Number,
+        required:true
+    },
+    budgetedLabCost:{
         type:Number,
         required:true
     },
@@ -69,7 +69,15 @@ const orderSchema = new Schema({
         type: Number,
         required:true
     },
+    budgetedoverHeadCost:{
+        type: Number,
+        required:true
+    },
     totalCost:{
+        type: Number,
+        required:true
+    },
+    budgetedtotalCost:{
         type: Number,
         required:true
     },
