@@ -15,7 +15,7 @@ import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, Sale
 
 import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders,CompletedOrders, FinalCostOrder} from './pages/Production/Index';
 
-import { StocksDashboard, StockView, StockInformation, StockViewDateRange, StockBreakdownDateRange , StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, ViewAllRawMaterials, RawMaterialsReport, ViewAllWorkInProgress, WorkInProgressReport, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF } from './pages/Stock';
+import { StocksDashboard, StockView, StockInformation, StockViewDateRange, StockBreakdownDateRange , StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, ViewAllRawMaterials, RawMaterialsReport, ViewAllWorkInProgress, WorkInProgressReport } from './pages/Stock';
 import { PendingStockView, PendingStockAdd, PendingStockUpdate, PendingStockPDf, PendingRequest, PendingRequestPDF, ProcessingRequest, ProcessingRequestPDF, ResolvedRequest, ResolvedRequestPDF } from './pages/PendingStock';
 import { StockUtilisationDashboard, StockUtilPDF,StockUtilisationDateRange ,StockUtilisation, StockAddExisting, StockUtilAddOption, StockUtilUpdate, ViewAllAdditions, AdditionsReport, ViewAllIssues, IssuesReport } from './pages/StockUtilisation';
 
@@ -173,12 +173,6 @@ const App = () => {
           <Route path="/ViewAllIssues" element={<ViewAllIssues />} />
           <Route path="/generateIPDF" element={<IssuesReport />} />
           <Route path="/StockUtilisationDateRange/" element={<StockUtilisationDateRange/>} />
-
-          <Route path="/DamagedStockDashboard" element={<DamagedStockDashboard />} />
-          <Route path="/DamagedStockView" element={<DamagedStockView />} />
-          <Route path="/DamagedStockAdd" element={<DamagedStockAdd />} />
-          <Route path="/DamagedStockUpdate/:id" element={<DamagedStockUpdate />} />
-          <Route path="/generatePDF" element={<DStockPDF />} />
 
           {/* Supplier management  */}
           <Route path="/SupplierDashboard" element={<SupplierDashboard />} />
