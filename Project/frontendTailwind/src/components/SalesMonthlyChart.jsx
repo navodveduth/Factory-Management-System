@@ -28,15 +28,66 @@ export default function SalesMonthlyChart() {
       getSales()
     }, [])
 
+
+
+
+    var salesLen = sales.length;
+    var janTotal, febTotal, marTotal, aprTotal, mayTotal, junTotal, julTotal, augTotal, sepTotal, octTotal, novTotal, decTotal;
+    janTotal= febTotal= marTotal= aprTotal= mayTotal= junTotal= julTotal= augTotal= sepTotal= octTotal=novTotal = decTotal = 0;
+    console.log("at assignment" + novTotal);
+    for (let index = 0; index < salesLen; index++) {
+      console.log(new Date(sales[index].orderDate).getMonth());
+      switch(new Date(sales[index].orderDate).getMonth()){
+      case(0):
+        janTotal = janTotal + sales[index].totalAmount;
+        break;
+      case(1):
+        febTotal = febTotal + sales[index].totalAmount;
+        break;
+      case(2):
+        marTotal = marTotal + sales[index].totalAmount;
+        break;
+      case(3):
+        aprTotal = aprTotal + sales[index].totalAmount;
+        break;
+      case(4):
+        mayTotal = mayTotal + sales[index].totalAmount;
+        break;
+      case(5):
+        junTotal = junTotal + sales[index].totalAmount;
+        break;
+      case(6):
+        julTotal = julTotal + sales[index].totalAmount;
+        break;
+      case(7):
+        augTotal = augTotal + sales[index].totalAmount;
+        break;
+      case(8):
+        sepTotal = sepTotal + sales[index].totalAmount;
+        break;
+      case(9):
+        octTotal = octTotal + sales[index].totalAmount;
+        break;
+      case(10):
+        novTotal  = (parseInt(novTotal) + sales[index].totalAmount);
+        break;
+      case(11):
+        decTotal = decTotal + sales[index].totalAmount;
+        break;
+      default:
+        break;
+    }
+    }
     
+    console.log(novTotal);
     
     let data = [
-      { month: 'Jan', sales: 35 }, { month: 'Feb', sales: 28 },
-      { month: 'Mar', sales: 34 }, { month: 'Apr', sales: 32 },
-      { month: 'May', sales: 40 }, { month: 'Jun', sales: 32 },
-      { month: 'Jul', sales: 35 }, { month: 'Aug', sales: 55 },
-      { month: 'Sep', sales: 38 }, { month: 'Oct', sales: 100 },
-      { month: 'Nov', sales: 25 }, { month: 'Dec', sales: 32 }
+      { month: 'Jan', sales: janTotal }, { month: 'Feb', sales: febTotal },
+      { month: 'Mar', sales: marTotal }, { month: 'Apr', sales: aprTotal },
+      { month: 'May', sales: mayTotal }, { month: 'Jun', sales: junTotal },
+      { month: 'Jul', sales: julTotal }, { month: 'Aug', sales: augTotal },
+      { month: 'Sep', sales: sepTotal }, { month: 'Oct', sales: octTotal },
+      { month: 'Nov', sales: parseInt(novTotal) }, { month: 'Dec', sales: decTotal }
   ];
 
   return (
@@ -50,7 +101,7 @@ export default function SalesMonthlyChart() {
 
             <Inject services={[LineSeries, Legend, Tooltip, DataLabel, Category]} />
               <SeriesCollectionDirective>
-                <SeriesDirective type = "Line" dataSource={data} xName="month" yName="sales" 
+                <SeriesDirective type = "Line" dataSource={data} xName="month" yName="sales" text-white
                 name = "Monthly Sales" marker = {{dataLable: {visible: true}, visible: true}}>
                 </SeriesDirective>
               </SeriesCollectionDirective>
