@@ -13,7 +13,7 @@ import {  MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceVi
 import {MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory} from './pages//Machinery';
 import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice, SalesDateRange } from './pages/Sales';
 
-import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders} from './pages/Production/Index';
+import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders,CompletedOrders, FinalCostOrder} from './pages/Production/Index';
 
 import { StocksDashboard, StockView, StockInformation, StockViewDateRange, StockBreakdownDateRange , StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, ViewAllRawMaterials, RawMaterialsReport, ViewAllWorkInProgress, WorkInProgressReport, DamagedStockDashboard, DamagedStockView, DamagedStockAdd, DamagedStockUpdate, DStockPDF } from './pages/Stock';
 import { PendingStockView, PendingStockAdd, PendingStockUpdate, PendingStockPDf, PendingRequest, PendingRequestPDF, ProcessingRequest, ProcessingRequestPDF, ResolvedRequest, ResolvedRequestPDF } from './pages/PendingStock';
@@ -125,9 +125,12 @@ const App = () => {
           <Route path="/viewRequested" element={<RequestedStocks />} />
           <Route path="/production" element={<ProductionDashBoard />} />
           <Route path="/newOrder" element={<AddOrder />} />
-          <Route path="/updateCost/:id" element={<UpdateOrder />} />
+          <Route path="/requestStock/:id" element={<UpdateOrder />} />
           <Route path="/costpreview" element={<PreviewOrder />} />
           <Route path="/pendingOrders" element ={<PendingOrders/>}/>
+          <Route path="/completedOrders" element ={<CompletedOrders/>}/>
+          <Route path="/costingOrder/:id" element ={<FinalCostOrder/>}/>
+          
 
           {/* stock management  */}
           <Route path="/StockDashboard" element={<StocksDashboard />} />

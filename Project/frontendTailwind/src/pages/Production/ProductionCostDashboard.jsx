@@ -110,7 +110,7 @@ const ProductionDashBoard = () => {
                               {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
                               <Link to="/pendingOrders"><DashTopBox  icon={<CgBox />} label="Pending Orders" data={prodCount} /></Link>
                               <Link to ="/viewRequested"><DashTopBox icon={<CgBox />} label="Stock Requisitions" data={prodT} /></Link>
-                              <DashTopBox icon={<SiSpreadshirt/>} label="Total Collars" data={prodCollars} />
+                              <Link to ="/completedOrders"><DashTopBox icon={<SiSpreadshirt/>} label="Granted Orders" data={prodCollars} /></Link>
                               <DashTopBox icon={<GiArmoredPants/>} label="Total Trousers" data={prodTrousers} />
                               <DashTopBox icon={<RiShirtFill />} label="Total Shirts" data={prodShirts} />       
                               </div>
