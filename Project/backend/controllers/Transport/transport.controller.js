@@ -24,6 +24,21 @@ export const getTransportDetailById = async (req, res) => {
   }
 };
 
+export const getDateRangeTransport = async (req, res) => {
+  try {
+    const DS = req.params.DS;
+    const DE = req.params.DE;
+    const data = await Transport.aggregate([
+      {
+        $match: { date: { $gte: new Date(DS), $lte: new Date(DE) } },
+      },
+    ]);
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+};
+
 // @desc    Create a transport detail
 // @route   POST /transport
 // @access  Public

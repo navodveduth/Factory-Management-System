@@ -141,10 +141,17 @@ const DriverReport = () => {
                               className="text-sm h-10 border dark:border-slate-600"
                               key={key}
                             >
-                              <TableData value={data.nic} />
+                              {data.driverDetails.map((driverData) => (
+                                <TableData value={driverData.employeeNIC} />
+                              ))}
+
                               <TableData value={data.fullName} />
                               <TableData value={data.drivingLicenseNo} />
-                              <TableData value={data.contactNo} />
+                              {data.driverDetails.map((driverData) => (
+                                <TableData
+                                  value={driverData.employeeContactNumber}
+                                />
+                              ))}
                               <TableData value={data.vehicleNo} />
                               <TableData value={data.vehicleModel} />
                               <TableData value={data.status} />

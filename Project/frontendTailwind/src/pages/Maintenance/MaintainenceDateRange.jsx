@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link,useLocation ,useNavigate } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider.js';
 import TableData from '../../components/Table/TableData';
@@ -9,13 +9,14 @@ import TableHeader from '../../components/Table/TableHeader';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import MaintenanceViewAll from './MaintenanceViewAll';
 
 
 
 const MaintainenceDateRange = () => {
   const [maintainence, setMaintainence] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const location = useLocation();
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
   var TotalCost = 0;
@@ -29,7 +30,7 @@ const MaintainenceDateRange = () => {
   })
 
   const getMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainence/")
+    axios.get("http://localhost:8070/maintainence/date/"+location.state.DS+"/"+location.state.DE)
       .then((res) => {
         setMaintainence(res.data); //setMaintainence  is used to update the state variable
 
@@ -37,6 +38,12 @@ const MaintainenceDateRange = () => {
       .catch((err) => {
         alert(err.message);
       })
+  }
+
+  const navigate = useNavigate();
+  
+  const toDateRange=()=>{
+    navigate('/MaintenanceViewAll');
   }
 
   useEffect(() => {
