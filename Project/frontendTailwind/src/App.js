@@ -154,7 +154,7 @@ const App = () => {
           
           <Route path="/PendingStockRequisitions" element={<PendingStockRequisitions />} />
           <Route path="PendingStockAdd" element={<PendingStockAdd />} />
-          <Route path="PendingStockAdd/:id" element={<AddStockForRequisition />} />
+          <Route path="PendingStockAddReq/:id" element={<AddStockForRequisition />} />
           <Route path="PendingStockUpdate/:id" element={<PendingStockUpdate />} />
           <Route path="/generatePSPDF" element={<PendingStockPDf />}/>
           <Route path="/PendingRequest" element={<PendingRequest />}/>
