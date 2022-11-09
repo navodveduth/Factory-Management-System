@@ -69,17 +69,30 @@ const MaintainBarChart = () => {
             const maintMachineCount = maintainenceMachine.length;
             const maintMachinep = maintainenceMachine.filter((maint) => maint.status === "In progress").length;
         
-    const barPrimaryXAxis = {
-        valueType: 'Category',
-        interval: 1,
-        majorGridLines: { width: 0 },
-        };
-        const barPrimaryYAxis = {
-        majorGridLines: { width: 0 },   
-        majorTickLines: { width: 0 },
-        lineStyle: { width: 0 },
-        labelStyle: { color: 'transparent' },
-        };
+            const barPrimaryXAxis = {
+              valueType: 'Category',
+              majorGridLines: { width: 0 },
+              majorTickLines: { width: 2 },
+              title: "Maintenance Type",
+              labelStyle: { 
+                color: currentMode === 'Dark' ? '#e9ecef' : '#343a40'}, 
+             titleStyle: { 
+              color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
+              fontSize: '16px'}
+              }
+      
+              const barPrimaryYAxis = {
+              majorGridLines: { width: 2 },   
+              majorTickLines: { width: 4 },
+              lineStyle: { width: 4 },
+              labelFormat: '{value}', 
+              title: "Maintenance Count",
+              labelStyle: { 
+                color: currentMode === 'Dark' ? '#e9ecef' : '#343a40'}, 
+             titleStyle: { 
+              color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
+              fontSize: '16px'}
+              }
 
         const barChartData = [
             [
@@ -101,13 +114,7 @@ const MaintainBarChart = () => {
               yName: 'y',
               name: 'Machines',
               type: 'Column',
-              marker: {
-                dataLabel: {
-                  visible: false,
-                  position: 'Top',
-                  font: { fontWeight: '600', color: '#ffffff' },
-                },
-              },
+              
             },
             {
               dataSource: barChartData[1],
@@ -115,13 +122,7 @@ const MaintainBarChart = () => {
               yName: 'y',
               name: 'Vehicles',
               type: 'Column',
-              marker: {
-                dataLabel: {
-                  visible: false,
-                  position: 'Top',
-                  font: { fontWeight: '600', color: '#ffffff' },
-                },
-              },
+             
             },
             {
               dataSource: barChartData[2],
@@ -129,27 +130,21 @@ const MaintainBarChart = () => {
               yName: 'y',
               name: 'Property & others',
               type: 'Column',
-              marker: {
-                dataLabel: {
-                  visible: false,
-                  position: 'Top',
-                  font: { fontWeight: '600', color: '#ffffff' },
-                },
-              },
+            
             },
           ];
         
         
           return (
             <div className="m-0 md:m-10 mt-0 p-0 max-h-21 bg-white dark:bg-secondary-dark-bg rounded-3xl">
-              <ChartsHeader category="Maintenance In Progress"  />
+              <ChartsHeader category="Chart" title= "Maintenance In Progress" />
               <div className=" w-full">
                 <ChartComponent
                 
                   id="charts"
                   primaryXAxis={barPrimaryXAxis}
                   primaryYAxis={barPrimaryYAxis}
-                  chartArea={{ border: { width: 0 } }}
+                  chartArea={{ border: { width: 2 } }}
                   tooltip={{ enable: true }}
                   background={currentMode === 'Dark' ? '#33373E' : '#f3f4f6'}
                   legendSettings={{ background: '#f3f4f6' }}

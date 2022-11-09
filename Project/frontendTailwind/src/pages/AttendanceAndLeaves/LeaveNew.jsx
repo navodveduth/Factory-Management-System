@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { Header, Navbar, Footer, Sidebar, ThemeSettings} from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 
@@ -97,8 +98,14 @@ function LeaveNew() {
 
                                 await axios.post("http://localhost:8070/leave/createLeave", newLeave)
                                     .then((res)=>{
-                                        alert("Data saved successfully");
-                                          //navigate to the machinery view page
+                                      Swal.fire({  
+                                        icon: 'success',
+                                        title: 'Data Saved Successfully',
+                                        color: '#f8f9fa',
+                                        background: '#6c757d',
+                                        showConfirmButton: false,
+                                        timer: 2000
+                                      })
                                     navigate('/LeaveViewAll');
                                     })
                                     .catch((err)=>{
@@ -130,10 +137,10 @@ function LeaveNew() {
                               </div>
                               <div className="mb-3">
                                 <label htmlFor="leaveType" className="form-label">Leave Type</label>
-                                <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="leaveType" placeholder="Enter Leave Type" value={leaveType} onChange={(e)=>{
+                                <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="leaveType" placeholder="Enter Leave Type" value={leaveType} required="required" onChange={(e)=>{
                                     setLeaveType(e.target.value);
                                 }}>
-                                  <option selected>Select leave type</option>
+                                  <option value="">Select leave type</option>
                                   <option value="Regular">Regular</option>
                                   <option value="Half Day">Half Day</option>
                                   <option value="Short Leave">Short Leave</option>
@@ -149,11 +156,11 @@ function LeaveNew() {
                               <div className="mb-3">
                                 <label htmlFor="leaveStatus" className="form-label">Leave Status</label>
                                 <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="leaveReason" aria-label="Default select example" required
+                                id="leaveReason" aria-label="Default select example" required="required"
                                 onChange={(e)=>{
                                   setLeaveStatus(e.target.value);
                                 }}>
-                                  <option selected>Select leave status</option>
+                                  <option value="">Select leave status</option>
                                   <option value="Pending">Pending</option>
                                 </select>
                               </div>

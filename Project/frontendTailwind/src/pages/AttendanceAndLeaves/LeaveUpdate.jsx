@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 
 import { useStateContext } from '../../contexts/ContextProvider';
@@ -121,7 +122,14 @@ const LeaveUpdate = () => {
 
                                                 await axios.put("http://localhost:8070/leave/updateLeave/"+ id, newEmployee)
                                                     .then((res)=>{
-                                                        alert("Data updated successfully");
+                                                        Swal.fire({  
+                                                            icon: 'success',
+                                                            title: 'Data Updated Successfully',
+                                                            color: '#f8f9fa',
+                                                            background: '#6c757d',
+                                                            showConfirmButton: false,
+                                                            timer: 2000
+                                                          })
                                                     navigate('/LeaveViewAll');
                                                     })
                                                     .catch((err)=>{

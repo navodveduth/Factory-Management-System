@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
@@ -37,20 +38,35 @@ const AttendanceViewAll = () => {
   }, []);
 
   const confirmFunc = (id)=>{
-
-		if (confirm("Do you want to delete?") == true) {
-      deleteAttendance(id);
-		} else {
-			navigate('/AttendanceViewAll');
-		}
-
-  }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteAttendance(id);
+        Swal.fire({  
+          icon: 'success',
+          title: 'Data Successfully Deleted',
+          color: '#f8f9fa',
+          background: '#6c757d',
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }else {
+        navigate('/AttendanceViewAll');
+      }
+    })
+  };
 
   const deleteAttendance = async (id) => {
     await axios
       .delete(`http://localhost:8070/attendance/deleteAttendance/${id}`)
       .then((res) => {
-        alert('Data deleted successfully');
         getAttendance();
       })
       .catch((err) => {
