@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
+import Swal from 'sweetalert2';
 import {
   Header,
   Navbar,
@@ -26,6 +27,7 @@ const TransportViewAll = () => {
     setThemeSettings,
   } = useStateContext();
 
+  const navigate = useNavigate();
   const [transport, setTransport] = useState([]);
   const [startDate, setStartDate] = useState(''); // dateStart
   const [endDate, setEndDate] = useState(''); // dateEnd
@@ -82,8 +84,8 @@ const TransportViewAll = () => {
       date2 = date2.substring(1, 11);
       setEndDate(date2);
 
-      console.log(startDate);
-      console.log(endDate);
+      // console.log(startDate);
+      // console.log(endDate);
     } else {
       setStartDate('');
       setEndDate('');
@@ -115,14 +117,30 @@ const TransportViewAll = () => {
     await axios
       .delete(`http://localhost:8070/transport/delete/${id}`)
       .then((res) => {
-        if (window.confirm('Do you want to delete?')) {
-          alert('Transport Details Deleted');
-          getTransport();
-        }
+        getTransport();
       })
       .catch((err) => {
         alert(err.message);
       });
+  };
+
+  const confirmDelete = (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteTransport(id);
+        Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+      } else {
+        navigate('/TransportViewAll');
+      }
+    });
   };
 
   const formatter = new Intl.NumberFormat('en-US', {
@@ -341,7 +359,7 @@ const TransportViewAll = () => {
                                       type="button"
                                       className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
                                       onClick={() => {
-                                        deleteTransport(data._id);
+                                        confirmDelete(data._id);
                                       }}
                                     >
                                       <i className="fas fa-trash" />

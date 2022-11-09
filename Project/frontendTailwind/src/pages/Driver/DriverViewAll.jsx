@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import {
@@ -28,6 +29,8 @@ const DriverViewViewAll = () => {
   const [driver, setDriver] = useState([]); // useState is a hook that is used to create a state variable and a function to update it
 
   const [searchTerm, setSearchTerm] = useState(''); // search term state for search bar functionality in table
+
+  const navigate = useNavigate();
 
   // const filterData = (e) => {
   //   console.log(driver);
@@ -69,14 +72,30 @@ const DriverViewViewAll = () => {
     await axios
       .delete(`http://localhost:8070/driver/delete/${id}`)
       .then((res) => {
-        if (window.confirm('Do you want to delete?')) {
-          alert('Driver Details Deleted');
-          getDriver();
-        }
+        getDriver();
       })
       .catch((err) => {
         alert(err.message);
       });
+  };
+
+  const confirmDelete = (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteDriver(id);
+        Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+      } else {
+        navigate('/DriverViewAll');
+      }
+    });
   };
 
   return (
@@ -241,7 +260,7 @@ const DriverViewViewAll = () => {
                                       type="button"
                                       className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
                                       onClick={() => {
-                                        deleteDriver(data._id);
+                                        confirmDelete(data._id);
                                       }}
                                     >
                                       <i className="fas fa-trash" />
