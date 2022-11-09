@@ -2,10 +2,10 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import {jsPDF} from "jspdf";
-import TableHeader from "../../components/Table/TableHeader";
-import TableData from '../../components/Table/TableData';
-import Header from "../../components/Header";
-import { useStateContext } from '../../contexts/ContextProvider';
+import TableHeader from "../../../components/Table/TableHeader";
+import TableData from '../../../components/Table/TableData';
+import Header from "../../../components/Header";
+import { useStateContext } from '../../../contexts/ContextProvider';
 
 export default function PreviewOrder(){
     const { currentColor } = useStateContext();

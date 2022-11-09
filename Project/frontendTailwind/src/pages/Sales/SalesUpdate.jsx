@@ -195,7 +195,7 @@ function SalesUpdate() {
                                           <div className="mb-3">
                                           <label htmlFor="status" className="form-label">Status</label>
                                               <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                                  id="status" value={status} disabled
+                                                  id="status" value={status} 
                                                   onChange={(e) =>{
                                                       setStatus(e.target.value);
                                                   }}/>
