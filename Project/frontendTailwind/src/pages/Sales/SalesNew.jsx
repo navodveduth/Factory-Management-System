@@ -109,7 +109,7 @@ function SalesCreateForm() {
                   })
                   .catch((err)=>{
                       console.log(err);
-                      alert("Error Occured!")
+                      alert("Invoice Number Exists");
                   }) 
                 }}>
 
