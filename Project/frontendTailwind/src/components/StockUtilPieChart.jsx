@@ -30,7 +30,7 @@ const StockUtilPieChart = () => {
   return (
     <div>
       <ChartsHeader category="Chart" title="Stock Utilisation Distribution By Requests" />
-      <AccumulationChartComponent  legendSettings={{position:"Right", background: "white"}} tooltip={{enable:true}} >
+      <AccumulationChartComponent  legendSettings={{position:"Right", background: "white"}} tooltip={{enable:true}} background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'} >
             <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]} />
             <AccumulationSeriesCollectionDirective>
                 <AccumulationSeriesDirective 
