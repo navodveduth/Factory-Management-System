@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react'
 import { useStateContext } from '../contexts/ContextProvider';
 import ChartsHeader from './ChartsHeader'
 import axios from 'axios'
-import { ChartComponent, LineSeries, Legend, Tooltip, DataLabel, Category, Inject, SeriesCollectionDirective, SeriesDirective } from '@syncfusion/ej2-react-charts';
+import { ChartComponent, LineSeries, Tooltip, DataLabel, Category, Inject, SeriesCollectionDirective, SeriesDirective } from '@syncfusion/ej2-react-charts';
 
 export default function SalesMonthlyChart() {
 
@@ -11,23 +11,16 @@ export default function SalesMonthlyChart() {
 
     const tooltip = { enable: true, shared: false };
 
-    const primaryYAxis = { labelFormat: '{value}K', 
+    const primaryYAxis = { labelFormat: '{value}', 
                            title: "Sales by Amount (LKR)", 
-                           labelStyle: { 
-                              color: currentMode === 'Dark' ? '#e9ecef' : '#343a40'}, 
-                           titleStyle: { 
-                            color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
-                            fontSize: '16px'},
-                           interval: 100000,
+                           labelStyle: { color: currentMode === 'Dark' ? '#e9ecef' : '#343a40' },
+                           titleStyle: { color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', fontSize: '16px'}, interval: 50000,
                          };
                          
     const primaryXAxis = { valueType: 'Category', 
                            title: "Month",
-                           labelStyle: { 
-                            color: currentMode === 'Dark' ? '#e9ecef' : '#343a40'}, 
-                           titleStyle: { 
-                            color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
-                            fontSize: '16px'} 
+                           labelStyle: { color: currentMode === 'Dark' ? '#e9ecef' : '#343a40' }, 
+                           titleStyle: { color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', fontSize: '16px' } 
                          };
 
     const getSales = async () => {
@@ -45,13 +38,11 @@ export default function SalesMonthlyChart() {
       getSales()
     }, [])
 
-
-
-
-    var salesLen = sales.length;
     var janTotal, febTotal, marTotal, aprTotal, mayTotal, junTotal, julTotal, augTotal, sepTotal, octTotal, novTotal, decTotal;
     janTotal= febTotal= marTotal= aprTotal= mayTotal= junTotal= julTotal= augTotal= sepTotal= octTotal=novTotal = decTotal = 0;
-    console.log("at assignment" + novTotal);
+
+    var salesLen = sales.length;
+
     for (let index = 0; index < salesLen; index++) {
       console.log(new Date(sales[index].orderDate).getMonth());
       switch(new Date(sales[index].orderDate).getMonth()){
@@ -96,36 +87,27 @@ export default function SalesMonthlyChart() {
     }
     }
     
-    console.log(novTotal);
-    
     let data = [
       { month: 'Jan', sales: janTotal }, { month: 'Feb', sales: febTotal },
       { month: 'Mar', sales: marTotal }, { month: 'Apr', sales: aprTotal },
       { month: 'May', sales: mayTotal }, { month: 'Jun', sales: junTotal },
       { month: 'Jul', sales: julTotal }, { month: 'Aug', sales: augTotal },
       { month: 'Sep', sales: sepTotal }, { month: 'Oct', sales: octTotal },
-      { month: 'Nov', sales: parseInt(novTotal) }, { month: 'Dec', sales: decTotal }
-  ];
+      { month: 'Nov', sales: novTotal }, { month: 'Dec' }
+  ]
 
   return (
-
-   
     <>
-    
     <ChartsHeader category = "Chart" title = "Sales Analysis" />
-        <ChartComponent primaryXAxis={primaryXAxis} primaryYAxis={primaryYAxis} tooltip={tooltip} 
+      <ChartComponent primaryXAxis={primaryXAxis} primaryYAxis={primaryYAxis} tooltip={tooltip} 
         background={currentMode === 'Dark' ? '#33373E' : '#f3f4f6'}>
-
-            <Inject services={[LineSeries, Tooltip, DataLabel, Category]} />
-              <SeriesCollectionDirective>
-                <SeriesDirective type = "Line" dataSource={data} xName="month" yName="sales"
+          <Inject services={[LineSeries, Tooltip, DataLabel, Category]} />
+            <SeriesCollectionDirective>
+              <SeriesDirective type = "Line" dataSource={data} xName="month" yName="sales"
                 name = "Monthly Sales" marker = {{dataLable: {visible: true}, visible: true}}>
-                </SeriesDirective>
-              </SeriesCollectionDirective>
-
-        </ChartComponent>
-
-        
-      </>
+              </SeriesDirective>
+            </SeriesCollectionDirective>
+      </ChartComponent>
+    </>
   )
 }
