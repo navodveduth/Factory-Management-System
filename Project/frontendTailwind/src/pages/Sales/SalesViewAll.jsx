@@ -64,14 +64,19 @@ const SalesViewAll = () => {
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
+          //background: '#393E46',
           confirmButtonText: 'Yes, Delete it!'})
           .then((result) => {
             if (result.isConfirmed) {
                 deleteSale(id);
-                Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Data Successfully Deleted!',
+                    color: '#f8f9fa',
+                    background: '#6c757d',
+                    showConfirmButton: false,
+                    timer: 2000
+                }   
                 )
             } else {
                 navigate('/SalesViewAll');
@@ -162,13 +167,13 @@ const SalesViewAll = () => {
                               </div>
 
                               <div className=" mx-1">
-                                  <button type="button" className = "py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}>Filter by Date</button>
+                                  <button type="button" className = "py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}>Filter by Date</button>
                               </div>
 
                               <div className="mr-0 ml-auto">
                                   {/* change this link your preview page */}
                                   <Link to={"/SalesPreview"}>
-                                  <button type="button" className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+                                  <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
                                   </Link>
                               </div>
 

@@ -125,7 +125,7 @@ return (
         </thead>
         <tbody>
 
-       { sales.map((data) => {
+       {sales.map((data) => {
              let formattedAmount = formatter.format(data.totalAmount)
 
                 return(
