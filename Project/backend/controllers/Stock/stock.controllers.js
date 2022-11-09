@@ -202,3 +202,18 @@ export const getOneStockByStockName = async (req, res) =>{
     }
 
 }
+
+//****************** UPDATE THE STATUS ACCORDING TO THE INVOICE ***********
+export const setProductionStatus = async(req,res)=>{
+    try{
+      //  const invoice = req.params.invoiceNo;
+        const setStatus = req.body.status;
+        const invoiceNo = req.params.invoiceNo;
+        const setSaleStatus = await production.updateOne({invoiceNo: invoiceNo},{$set:{status: setStatus}});
+        res.status(200).json(setSaleStatus);
+    }catch(error){
+        res.status(404).json(({
+            message: error
+        }));
+    }
+}

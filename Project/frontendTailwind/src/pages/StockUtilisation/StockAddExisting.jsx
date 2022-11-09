@@ -226,6 +226,12 @@ function StockAddExisting() {
                                                     value={stockCode} readOnly />
                                             </div>
 
+                                            <div className="mb-3">
+                                                <label for="stockName" className="form-label">Stock Name: </label>
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="code" 
+                                                    value={stockName} readOnly />
+                                            </div>
+
                                             {/* max uses the above date variable and sets the max date to select from*/}
                                             <div className="mb-3">
                                                 <label for="date" className="form-label">Date: </label>
