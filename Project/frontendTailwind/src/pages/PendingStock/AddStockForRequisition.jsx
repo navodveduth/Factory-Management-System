@@ -164,6 +164,7 @@ function AddStockForRequisition() {
                                         <form onSubmit={async (e) => {
                                             e.preventDefault();
 
+                                            {status = "Processing"}
                                             const newStock = {
                                                 stockCode,
                                                 stockName,
@@ -177,7 +178,7 @@ function AddStockForRequisition() {
                                             console.log(newStock)
                                             await axios.post("http://localhost:8070/pendingStock/create", newStock).then(() => {
                                                 alert("Data saved successfully");
-                                                navigate('/PendingStockView');
+                                                navigate('/ProcessingRequest');
 
                                             }).catch((err) => {
                                                 console.log(err);
@@ -214,23 +215,17 @@ function AddStockForRequisition() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <label for="status" className="form-label">Status: </label>
-                                                < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="status" title="Please choose one of the options" required onChange={(e) => {
-                                                    setStatus(e.target.value);
-                                                    //myFunction();
-                                                }}>
-                                                    <option selected  >Select option...</option>
-                                                    <option value="Processing">Processing</option>
-                                                    <option value="Resolved">Resolved</option>
-                                                </select>
-                                            </div>
-
-                                            <div className="mb-3">
                                                 <label for="quantity" className="form-label">Quantity Required: </label>
                                                 <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" placeholder="Enter quantity..." min="0"
                                                     title="Please input valid quantity" required onChange={(e) => {
                                                         setQuantity(e.target.value);
                                                     }} />
+                                            </div>
+
+                                            <div className="mb-3">
+                                                <label for="status" className="form-label">Status: </label>
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="stat" 
+                                                   value={"Processing"} readOnly />
                                             </div>
 
                                             <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Add stock request</button>
