@@ -1,9 +1,9 @@
-import React, { useState , useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Header } from '../../components';
 import { FiUser } from 'react-icons/fi';
-import { DashTopBox, DashTopButton,  } from '../../components';
+import { DashTopBox, DashTopButton, } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 
 import { FiSettings } from 'react-icons/fi';
@@ -51,10 +51,10 @@ function StockAdd() {
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
         if (currentThemeColor && currentThemeMode) {
-          setCurrentColor(currentThemeColor);
-          setCurrentMode(currentThemeMode);
+            setCurrentColor(currentThemeColor);
+            setCurrentMode(currentThemeMode);
         }
-      }, []);
+    }, []);
 
     return (
 
@@ -143,7 +143,7 @@ function StockAdd() {
                                                 quantity,
                                                 totalValue
                                             }
-                                            
+
                                             console.log(newStock)
                                             await axios.post("http://localhost:8070/stock/create", newStock).then(() => {
                                                 alert("Data saved successfully");
@@ -157,16 +157,17 @@ function StockAdd() {
                                                 success = false;
                                             })
 
-                                            if (success === true)
-                                            {await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
-                                                alert("Data saved successfully");
-                                                navigate('/StockDashboard');
+                                            if (success === true) {
+                                                await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
+                                                    alert("Data saved successfully");
+                                                    navigate('/StockDashboard');
 
-                                            }).catch((err) => {
-                                                console.log(err);
-                                                alert("ERROR: Could not add stock");
-                                                navigate('/StockAdd');
-                                            })}
+                                                }).catch((err) => {
+                                                    console.log(err);
+                                                    alert("ERROR: Could not add stock");
+                                                    navigate('/StockAdd');
+                                                })
+                                            }
                                         }}>
 
                                             <div className="mb-3">
@@ -176,7 +177,24 @@ function StockAdd() {
                                                         setStockCode(e.target.value);
                                                     }} />
                                             </div>
-
+                                            <div className="mb-3">
+                                                <label for="bundlename" className="form-label">Stock Name</label>
+                                                <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                                                    id="bundlename" placeholder="Enter Stock Bundle Name..." required
+                                                    onChange={(e) => {
+                                                        setStockName(e.target.value);
+                                                    }}>
+                                                    <option value=''>Select Item..</option>
+                                                    <option value='Shirts'>Shirts</option>
+                                                    <option value='T-Shirts'>T-Shirts</option>
+                                                    <option value='Blouse'>Blouse</option>
+                                                    <option value='Jeans'>Jeans</option>
+                                                    <option value='Pants'>Pants</option>
+                                                    <option value='Shorts'>Shorts</option>
+                                                    <option value='Skirts'>Skirts</option>
+                                                    <option value='Caps'>Caps</option>
+                                                </select>
+                                            </div>
                                             <div className="mb-3">
                                                 <label for="stockName" className="form-label">Stock Name: </label>
                                                 <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" placeholder="Enter stock name..."
