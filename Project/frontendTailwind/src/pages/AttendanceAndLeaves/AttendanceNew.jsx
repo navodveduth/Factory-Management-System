@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import  { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 
@@ -97,7 +98,14 @@ function AttendanceNew() {
                                           
                                           await axios.post("http://localhost:8070/attendance/createAttendance", newAttendance)
                                               .then((res)=>{
-                                                  alert("Data saved successfully");
+                                                Swal.fire({  
+                                                  icon: 'success',
+                                                  title: 'Data Updated Successfully',
+                                                  color: '#f8f9fa',
+                                                  background: '#6c757d',
+                                                  showConfirmButton: false,
+                                                  timer: 2000
+                                                })
                                               navigate('/AttendanceViewAll');
                                               })
                                               .catch((err)=>{
@@ -130,7 +138,7 @@ function AttendanceNew() {
                                         <div className="mb-3">
                                           <label htmlFor="attendanceStatus" className="form-label">Attendance Status : </label>
                                           <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                          id="attendanceStatus" aria-label="Default select example" title="Select the attendance status" defaultValue={"In"} required
+                                          id="attendanceStatus" aria-label="Default select example" title="Select the attendance status" defaultValue={"In"} required="required"
                                           onChange={(e) =>{
                                             setAttendanceStatus(e.target.value);
                                           }}>
