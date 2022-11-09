@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 
@@ -16,7 +17,9 @@ const AttendanceUpdate = () => {
   const [employeeNumber, setEmployeeNumber] = useState('');
   const [employeeInTime, setEmployeeInTime] = useState('');
   const [employeeOutTime, setEmployeeOutTime] = useState('');
-  const [attendanceStatus, setAttendanceStatus] = useState('');
+  var [employeeTotalHours, setEmployeeTotalHours] = useState('');
+  var [employeeOTHours, setEmployeeOTHours] = useState('');
+  var [attendanceStatus, setAttendanceStatus] = useState('');
 
   const {id} = useParams();
 
@@ -40,6 +43,8 @@ const AttendanceUpdate = () => {
       setEmployeeNumber(res.data.employeeNumber);
       setEmployeeInTime(startTime);
       setEmployeeOutTime(endTime);
+      setEmployeeTotalHours(res.data.employeeTotalHours);
+      setEmployeeOTHours(res.data.employeeOTHours);
       setAttendanceStatus(res.data.attendanceStatus);
     })
     .catch((err) => {
@@ -56,6 +61,18 @@ const AttendanceUpdate = () => {
       setCurrentMode(currentThemeMode);
     }
   }, []);
+
+  const date = new Date();
+  const currentDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().slice(0, -8);
+  const totalHours = new Date(employeeOutTime).getTime() - new Date(employeeInTime).getTime();
+  const totalHoursInHours = Math.floor(totalHours / 1000 / 60 / 60);
+  const otHours = totalHoursInHours - 8;
+
+  function otHoursCalc(otHours) {
+    if (otHours < 0) {
+      otHours = 0;
+    }
+  }
 
   return (
     <div>
@@ -117,24 +134,44 @@ const AttendanceUpdate = () => {
                                     <form className="" onSubmit={async(e)=>{
                                         e.preventDefault();
                                         
-                                        
-                                        const NewAttendace = {
-                                            employeeNumber,
-                                            employeeInTime,
-                                            employeeOutTime,
-                                            attendanceStatus
-                                        }
+                                        employeeTotalHours = totalHoursInHours;
+                                        employeeOTHours = otHours;
 
-                                        await axios.put("http://localhost:8070/attendance/updateAttendance/"+ id, NewAttendace)
+                                        if(employeeOutTime < employeeInTime){
+                                          alert("Out time cannot be less than In time");
+                                        }
+                                        if(employeeOutTime === employeeInTime){
+                                          alert("Out time cannot be equal to In time");
+                                        }
+                                        else{
+
+                                        
+                                          const NewAttendace = {
+                                              employeeNumber,
+                                              employeeInTime,
+                                              employeeOutTime,
+                                              employeeTotalHours,
+                                              employeeOTHours,
+                                              attendanceStatus
+                                          }
+
+                                          await axios.put("http://localhost:8070/attendance/updateAttendance/"+ id, NewAttendace)
                                             .then((res)=>{
-                                                alert("Data updated successfully");
+                                              Swal.fire({  
+                                                icon: 'success',
+                                                title: 'Data Updated Successfully',
+                                                color: '#f8f9fa',
+                                                background: '#6c757d',
+                                                showConfirmButton: false,
+                                                timer: 2000
+                                              })
                                             navigate('/AttendanceViewAll');
                                             })
                                             .catch((err)=>{
                                                 console.log(err);
                                                 alert("Error occured");
-                                            })
-                                            
+                                            });    
+                                        }
                                     }}>
 
                                       <div className="mb-3">
@@ -158,6 +195,20 @@ const AttendanceUpdate = () => {
                                                   setEmployeeOutTime(e.target.value);
                                               }}/>
                                       </div>
+                                      <div className="mb-3">
+                                          <label htmlFor="employeeTotalHours" className="text-md">Employee Total Hours : </label>
+                                          <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                                              id="employeeTotalHours" value={totalHoursInHours} placeholder="Enter the employee total hours" required disabled
+                                              />
+                                      </div>
+
+                                      <div className="mb-3">
+                                          <label htmlFor="employeeOTHours" className="text-md">Employee OT Hours : </label>
+                                          <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                                              id="employeeOTHours" value={otHours} placeholder="Enter the employee OT hours" required disabled
+                                              />
+                                      </div>
+
                                       <div className="mb-3">
                                           <label htmlFor="attendanceStatus" className="text-md">Attendance Status : </label>
                                           <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 

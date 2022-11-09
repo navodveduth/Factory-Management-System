@@ -144,7 +144,7 @@ const EmployeeProfile = () => {
                                                         <div className="p-1"> <span className="font-bold"> Name with initials </span> : {data.employeeNameWithInitials}</div>
                                                         <div className="p-1"> <span className="font-bold"> NIC number </span> : {data.employeeNIC}</div>
                                                         <div className="p-1"> <span className="font-bold"> Gender </span> : {data.employeeGender}</div>
-                                                        <div className="p-1"> <span className="font-bold"> Date of birth </span> : {new Date(data.employeeDOB).toDateString()}</div>
+                                                        <div className="p-1"> <span className="font-bold"> Date of birth </span> : {new Date(data.employeeDOB).toISOString().substring(0, 10)}</div>
                                                     </div>
                                                     
                                                 </div>
@@ -159,7 +159,7 @@ const EmployeeProfile = () => {
                                                 <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
                                                     <h1 className="text-2xl font-bold">Work Details</h1>
                                                     <div className="text-md ml-12 pt-5">
-                                                        <div className="p-1"> <span className="font-bold"> Date joined </span> : {new Date(data.employeeDateOfJoin).toDateString()}</div>
+                                                        <div className="p-1"> <span className="font-bold"> Date joined </span> : {new Date(data.employeeDateOfJoin).toISOString().substring(0, 10)}</div>
                                                         <div className="p-1"> <span className="font-bold"> Designation </span> : {data.employeeDesignation}</div>
                                                         <div className="p-1"> <span className="font-bold"> Department </span> : {data.employeeDepartment}</div>
                                                         <div className="p-1"> <span className="font-bold"> Type </span> : {data.employeeType}</div>
