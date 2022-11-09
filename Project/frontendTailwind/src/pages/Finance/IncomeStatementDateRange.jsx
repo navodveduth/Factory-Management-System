@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 import { FiUser } from 'react-icons/fi';
 import { DashTopBox, DashTopButton,  } from '../../components';
-import {SalesMonthlyChart} from '../../components';
+
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -16,7 +16,7 @@ const IncomeStatement = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
   const [transactions, setTransactions] = useState([]);
-   const [DS, setDateStart] = useState("");
+  const [DS, setDateStart] = useState("");
   const [DE, setDateEnd] = useState("");
   const [sales, setSales] = useState([]);
   const [expenses, setExpenses] = useState([]);
@@ -32,17 +32,15 @@ const IncomeStatement = () => {
   const navigate = useNavigate();
   
   const toDateRange=()=>{
-    if(DS==="" || DE===""){
-      alert("Please select a date range")
-    } else{
-      navigate('/IncomeStatementDateRange',{state:{DS:DS,DE:DE}});
-    }
+    navigate('/IncomeStatementDateRange',{state:{DS:DS,DE:DE}});
   }
+
+  const location = useLocation();
 
   //finance get function
   const getFinanceDate = async () => {
     axios
-    .get('http://localhost:8070/finance/date/'+(curDate.getFullYear() - 1)+'/'+curDate)
+    .get('http://localhost:8070/finance/date/'+location.state.DS+'/'+location.state.DE)
     .then((res) => {
       setTransactions(res.data);
     })
@@ -53,7 +51,7 @@ const IncomeStatement = () => {
   //sales get function
   const getSale = async () => {
     axios
-      .get('http://localhost:8070/sales/date/'+(curDate.getFullYear() - 1)+'/'+curDate)
+      .get('http://localhost:8070/sales/date/'+location.state.DS+'/'+location.state.DE)
       .then((res) => {
         setSales(res.data);
       })
@@ -66,7 +64,7 @@ const IncomeStatement = () => {
   //machinery maintainance get function
 
   const getMMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainenceMachine/date/"+(curDate.getFullYear() - 1)+'/'+curDate)
+    axios.get("http://localhost:8070/maintainenceMachine/date/"+location.state.DS+'/'+location.state.DE)
       .then((res) => {
         setMaintainenceMachine(res.data); //setMaintainence  is used to update the state variable
 
@@ -79,7 +77,7 @@ const IncomeStatement = () => {
   //noraml maintinance get function
 
   const getMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainence/date/"+(curDate.getFullYear() - 1)+'/'+curDate)
+    axios.get("http://localhost:8070/maintainence/date/"+location.state.DS+'/'+location.state.DE)
       .then((res) => {
         setMaintainence(res.data); //setMaintainence  is used to update the state variable
 
@@ -92,7 +90,7 @@ const IncomeStatement = () => {
   //vehicle maintainance get function
 
   const getVMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainenceVehicle/date/"+(curDate.getFullYear() - 1)+'/'+curDate)
+    axios.get("http://localhost:8070/maintainenceVehicle/date/"+location.state.DS+'/'+location.state.DE)
       .then((res) => {
         setMaintainenceVehi(res.data); //setMaintainence  is used to update the state variable
 
@@ -105,7 +103,7 @@ const IncomeStatement = () => {
   //machinery get function
 
   const getMachinery = async () => {  //getMachinery is the function to get the data from the backend
-    axios.get("http://localhost:8070/machinery/date/"+(curDate.getFullYear() - 1)+'/'+curDate)
+    axios.get("http://localhost:8070/machinery/date/"+location.state.DS+'/'+location.state.DE)
       .then((res) => {
         setMachinery(res.data); //setMachinery is used to update the state variable
 
@@ -121,7 +119,7 @@ const IncomeStatement = () => {
   const getTransport = async () => {
     axios
       .get(
-        "http://localhost:8070/transport/date/"+(curDate.getFullYear() - 1)+'/'+curDate)
+        "http://localhost:8070/transport/date/"+location.state.DS+'/'+location.state.DE)
       .then((res) => {
         setTransport(res.data);
       })
@@ -192,6 +190,8 @@ const IncomeStatement = () => {
   var dateEnd = new Date(curDate);
   dateEnd.setFullYear(dateEnd.getFullYear() - 1);
   dateEnd = dateEnd.toLocaleDateString();
+
+
   
   return (
 
@@ -247,7 +247,7 @@ const IncomeStatement = () => {
                           <div>
                           <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
 
-                            <Header category="Table" title={`Income Statement from `+dateStart+` to ` + dateEnd + SalesMonthlyChart.novTotal} />
+                            <Header category="Table" title={`Income Statement from `+location.state.DS+` to ` + location.state.DE}/>
                             <div>
                               <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date" 
                                 onChange={(e) => {
@@ -261,7 +261,6 @@ const IncomeStatement = () => {
                                   setDateEnd(e.target.value);
                                 }} />
                               </div>
-
                               <div className=" mx-1">
                                   <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}  >filter</button>
                               </div>
