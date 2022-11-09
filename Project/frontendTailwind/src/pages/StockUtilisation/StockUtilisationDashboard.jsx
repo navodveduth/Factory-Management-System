@@ -2,16 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { GiRolledCloth, GiSewingNeedle, GiClothes } from 'react-icons/gi';
-import { FaCoins,FaChartBar,FaInbox } from 'react-icons/fa';
+import { FaCoins, FaChartBar, FaInbox } from 'react-icons/fa';
 import { AiOutlineStock } from 'react-icons/ai';
 import { DashTopBox, DashTopButton } from '../../components';
 import { BiAddToQueue } from 'react-icons/bi';
 
 import { useStateContext } from '../../contexts/ContextProvider';
-import DamagedStockPieChart from '../../components/DamagedStockPieChart';
+import DamagedStockPieChart from '../../components/StockUtilPieChart';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import StockUtilPieChart from '../../components/StockUtilPieChart';
+import StockUtilLineChart from '../../components/StockUtilLineChart';
 
 
 const StockUtilisationDashboard = () => {
@@ -102,27 +104,27 @@ const StockUtilisationDashboard = () => {
                       </Link>
 
                       <Link to="/StockUtilAddOption">
-                        <DashTopButton icon={<BiAddToQueue/>} value="Add New Entry for exisitng stock" />
+                        <DashTopButton icon={<BiAddToQueue />} value="Add New Entry for exisitng stock" />
                       </Link>
 
                       <Link to="/PendingStockRequisitions">
-                        <DashTopButton icon={<FaInbox/>} value="View all stock requisitions" />
+                        <DashTopButton icon={<FaInbox />} value="View all stock requisitions" />
                       </Link>
 
                       <Link to="/PendingStockAdd">
-                        <DashTopButton icon={<FaInbox/>} value="Add new stock request" />
+                        <DashTopButton icon={<FaInbox />} value="Add new stock request" />
                       </Link>
 
                       <Link to="/PendingRequest">
-                        <DashTopButton icon={<FaInbox/>} value="View all stock order placed" />
+                        <DashTopButton icon={<FaInbox />} value="View all stock order placed" />
                       </Link>
 
                       <Link to="/ProcessingRequest">
-                        <DashTopButton icon={<FaInbox/>} value="View all processing" />
+                        <DashTopButton icon={<FaInbox />} value="View all processing" />
                       </Link>
 
                       <Link to="/ResolvedRequest">
-                        <DashTopButton icon={<FaInbox/>} value="View all resolved" />
+                        <DashTopButton icon={<FaInbox />} value="View all resolved" />
                       </Link>
                     </div>
                   </div>
@@ -147,10 +149,15 @@ const StockUtilisationDashboard = () => {
     <DashTopBox icon={<GiClothes />} label="Total Finished Goods" data={countFinishedGoods} /> */}
                     </div>
                   </div>
-
+                  {/* stock charts */}
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-                    {/* charts */}
+                    <StockUtilLineChart />
                   </div>
+                  
+                  <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+                    <StockUtilPieChart />
+                  </div>
+
                 </div>
 
               </div>

@@ -17,6 +17,8 @@ function ViewAllWorkInProgress() {
     const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
     const [stockUtil, setStockUtil] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    var totWIP = 0;
+    var price = 0;
 
 
     const getStock = async () => {  //getStock is the function to get the data from the backend
@@ -76,6 +78,13 @@ function ViewAllWorkInProgress() {
         }
 
     }
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+    })
 
     return (
 
@@ -149,7 +158,6 @@ function ViewAllWorkInProgress() {
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
-                                                    <th className='px-4 py-3 text-md whitespace-nowrap font-semibold text-center text-black-300'>Description</th>
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Unit price" />
                                                     <TableHeader value="Total value" />
@@ -176,12 +184,15 @@ function ViewAllWorkInProgress() {
                                                         stockUtil.filter((stockUtil) => stockUtil.type == "Additions" &&
                                                             stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totAdds += stockUtil.quantity
+                                                                totWIP += parseFloat((stockUtil.quantity * stockUtil.unitPrice));
+                                                                price = unitPrice
                                                             })
                                                     }
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
                                                             stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totIssues += stockUtil.quantity
+                                                                totWIP -= parseFloat((stockUtil.quantity * stockUtil.unitPrice));
                                                             })
                                                     }
 
@@ -243,6 +254,11 @@ function ViewAllWorkInProgress() {
                                                 })}
                                             </tbody>
                                         </table>
+                                        <br></br><br></br>
+                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+                                            Total Work in progress : {formatter.format(totWIP)}
+
+                                        </span>
                                     </div>
                                 </div >
                             </div>

@@ -82,7 +82,8 @@ function IssuesForm() {
             // setFirstPurchaseDate(res.data.firstPurchaseDate);
             // console.log(res.data.firstPurchaseDate)
         }).catch((err) => {
-            //alert(err);
+            alert("Stock unavailable! Please make a purchase order request");
+            navigate('/StockView');
         })
     }
 
