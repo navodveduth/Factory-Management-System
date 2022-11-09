@@ -39,8 +39,7 @@ const DriverView = () => {
   const [drivingLicenseNo, setDrivingLicenseNo] = useState('');
   const [vehicleNo, setVehicleNo] = useState('');
   const [vehicleModel, setVehicleModel] = useState('');
-
-  const [employees, setEmployees] = useState([]);
+  const [employees, setEmployees] = useState([]); // This is a state that will hold the list of employees
 
   const getEmployees = async () => {
     axios
