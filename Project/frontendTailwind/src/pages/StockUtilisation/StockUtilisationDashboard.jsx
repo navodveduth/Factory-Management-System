@@ -40,6 +40,9 @@ const StockUtilisationDashboard = () => {
     }
   }, [])
 
+  const itemCount = stockUtil.length;
+  const additions = stockUtil.filter((stk) => stk.type === 'Additions').length;
+  const issues = stockUtil.filter((stk) => stk.type === 'Issues').length;
 
   return (
     <div>
@@ -98,14 +101,6 @@ const StockUtilisationDashboard = () => {
                         <DashTopButton icon={<FaChartBar />} value="View All Stocks Transactions" />
                       </Link>
 
-                      <Link to="/ViewAllAdditions">
-                        <DashTopButton icon={<FaChartBar />} value="View All Addition Transactions" />
-                      </Link>
-
-                      <Link to="/ViewAllIssues">
-                        <DashTopButton icon={<FaChartBar />} value="View All Issued Transactions" />
-                      </Link>
-
                       <Link to="/StockUtilAddOption">
                         <DashTopButton icon={<BiAddToQueue/>} value="Add New Entry for exisitng stock" />
                       </Link>
@@ -119,7 +114,7 @@ const StockUtilisationDashboard = () => {
                       </Link>
 
                       <Link to="/PendingRequest">
-                        <DashTopButton icon={<FaInbox/>} value="View all pendings" />
+                        <DashTopButton icon={<FaInbox/>} value="View all stock order placed" />
                       </Link>
 
                       <Link to="/ProcessingRequest">
@@ -135,9 +130,17 @@ const StockUtilisationDashboard = () => {
                   <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                       {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-                      <DashTopBox icon={<FaCoins />} label="Total Stocks Value" date={0} />
-                      <Link to="/PendingStockView">
+                      <DashTopBox icon={<FaCoins />} label="Total Items " data={itemCount} />
+                      <Link to="/PendingRequest">
                         <DashTopBox icon={<AiOutlineStock />} label="Pending" data={0} />
+                      </Link>
+
+                      <Link to="/ViewAllAdditions">
+                        <DashTopBox icon={<AiOutlineStock />} label="Additions" data={additions} />
+                      </Link>
+
+                      <Link to="/ViewAllIssues">
+                        <DashTopBox icon={<AiOutlineStock />} label="Issues" data={issues} />
                       </Link>
                       {/* <DashTopBox icon={<GiRolledCloth />} label="Total Raw Materials" data={countRawMaterials} />
     <DashTopBox icon={<GiSewingNeedle />} label="Total Work in progress" data={countWorkInProgress} />
