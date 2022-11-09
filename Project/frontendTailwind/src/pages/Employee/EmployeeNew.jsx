@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 
@@ -115,8 +116,14 @@ function EmployeeCreateForm() {
 
                                         await axios.post("http://localhost:8070/employee/createEmployee", newEmployee)
                                             .then((res)=>{
-                                                alert("Data saved successfully");
-                                                  //navigate to the machinery view page
+                                              Swal.fire({  
+                                                icon: 'success',
+                                                title: 'Data Saved Successfully',
+                                                color: '#f8f9fa',
+                                                background: '#6c757d',
+                                                showConfirmButton: false,
+                                                timer: 2000
+                                              })
                                             navigate('/EmployeeViewAll');
                                             })
                                             .catch((err)=>{
@@ -211,11 +218,11 @@ function EmployeeCreateForm() {
                                       <div className="mb-3">
                                         <label for="employeeDepartment" className="form-label">Department : </label>
                                         <select type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                        id="employeeDepartment" required
+                                        id="employeeDepartment" required="required"
                                         onChange={(e) =>{
                                             setEmployeeDepartment(e.target.value);
                                         }}>
-                                          <option selected>Select Department</option>
+                                          <option value="">Select Department</option>
                                           <option value="Finance">Finance</option>
                                           <option value="Sales">Sales</option>
                                           <option value="Human Resources">Human Resources</option>
@@ -228,11 +235,11 @@ function EmployeeCreateForm() {
                                       <div className="mb-3">
                                         <label for="employeeType" className="form-label">Employee Type : </label>
                                         <select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                        id="employeeType" aria-label="Default select example" required
+                                        id="employeeType" aria-label="Default select example" required="required"
                                         onChange={(e) =>{
                                           setEmployeeType(e.target.value);
                                         }}>
-                                            <option selected>Select Employee Type</option>
+                                            <option value="">Select Employee Type</option>
                                             <option value="Executive">Executive</option>
                                             <option value="Non-Executive">Non-Executive</option>
                                         </select>
