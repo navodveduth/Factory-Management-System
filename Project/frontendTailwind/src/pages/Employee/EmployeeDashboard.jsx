@@ -41,7 +41,7 @@ const EmployeeDashboard = () => {
   const empCount = employee.length;
   const empCountManager= employee.filter((emp) => emp.employeeDesignation === 'Manager').length;
   const empCountHR= employee.filter((emp) => emp.employeeDepartment === 'Human Resources').length;
-
+  
   return (
     <div>
 
