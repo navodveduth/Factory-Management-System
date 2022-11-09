@@ -11,7 +11,7 @@ import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-export default function PendingStockRequisitions(){
+export default function PendingStockRequisition(){
     const navigate = useNavigate();
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings,  } = useStateContext();
     const [Order,setOrder] = useState([])
