@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { Link,useLocation ,useNavigate} from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider.js';
@@ -71,7 +72,7 @@ const MachineryDateRange = () => {
   const deleteMachinery = async (id) => {
     await axios.delete(`http://localhost:8070/machinery/delete/${id}`)
       .then((res) => {
-        alert("Data deleted successfully");
+       
         getMachinery();
       })
       .catch((err) => {
@@ -81,11 +82,29 @@ const MachineryDateRange = () => {
 
   const confirmFunc = (id) => {
 
-    if (confirm("Do you want to delete?") == true) {
-      deleteMachinery(id);
-    } else {
-      navigate('/MachineryViewAll');
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteMaintainence(id);
+        Swal.fire({  
+          icon: 'success',
+          title: 'Data Successfully Deleted',
+          color: '#f8f9fa',
+          background: '#6c757d',
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }else {
+        navigate('/MaintenanceViewAll');
+      }
+    })
 
   }
 
