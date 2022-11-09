@@ -142,11 +142,21 @@ function SalesCreateForm() {
 
                 <div className="mb-3">
                   <label for="itemName" className="form-label">Item Name</label>
-                  <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                  <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                   id="itemName" placeholder="Enter Item Name" required 
                   onChange={(e)=>{
                     setItemName(e.target.value);
-                  }}/>
+                  }}>
+                    <option value=''>Select Item..</option>
+                    <option value='Shirts'>Shirts</option>
+                    <option value='T-Shirts'>T-Shirts</option>
+                    <option value='Blouse'>Blouse</option>
+                    <option value='Jeans'>Jeans</option>
+                    <option value='Pants'>Pants</option>
+                    <option value='Shorts'>Shorts</option>
+                    <option value='Skirts'>Skirts</option>
+                    <option value='Caps'>Caps</option>
+                  </select>
                 </div>
 
                 <div className="mb-3">

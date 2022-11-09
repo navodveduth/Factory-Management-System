@@ -8,3 +8,4 @@ export {default as PreviewOrder} from "./CostPreview";
 export {default as PendingOrders} from "./PendingOrders";
 export {default as CompletedOrders} from "./CompletedOrders";
 export {default as FinalCostOrder} from "./UpdateCost";
+export {default as CompletedOrdersDateRange} from "./CompletedOrdersDateRange"
