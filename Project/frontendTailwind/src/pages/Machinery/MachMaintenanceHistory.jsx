@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Navbar, Footer, Sidebar, ThemeSettings, Header } from '../../components';
-import { VscSymbolProperty } from 'react-icons/vsc';
+import { Navbar, Footer, Sidebar, ThemeSettings, Header,MaintainChart } from '../../components';
+import {GrHostMaintenance } from 'react-icons/gr';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
@@ -109,6 +109,12 @@ const MachMaintenanceHistory = () => {
         currencyDisplay: 'symbol'
       })
 
+      const date = new Date()
+  // console.log(date)
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+
     return (
         <div>
 
@@ -157,8 +163,10 @@ const MachMaintenanceHistory = () => {
 
                         <div>
                             {themeSettings && <ThemeSettings />}
-                            <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '>
-                                <Header category="Records" title="Machinery Maintenace History" icon={<VscSymbolProperty/>} />
+                            <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '><GrHostMaintenance />
+                            
+                                <Header category="Records" title={"Machinery Maintenance Records"}/>
+                                {days[date.getDay()]}  {date.getDate()}  {months[date.getMonth()]}  {date.getFullYear()}
                                 <div>
                                     <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
                                         <h1 className="text-2xl font-bold">Machinery Details</h1>
@@ -235,6 +243,7 @@ const MachMaintenanceHistory = () => {
 
 
                                                             </tr>
+                                                            
                                                         )
                                                     })}
                                                 </tbody>
@@ -242,16 +251,41 @@ const MachMaintenanceHistory = () => {
                                         </div>
                                     </div>
 
-
-
-
-
-
-
-
-
+                                   
 
                                 </div>
+                            </div>
+
+                            
+                            {/* <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '>
+                              
+                                    
+
+
+                                        <div className="block w-full overflow-x-auto rounded-lg">
+                                            
+                                                    {maintainenceMachine.map((data, key) => {
+                                                        
+                                                        return (
+                                                            
+                                                            <MaintainChart machineID={data.machineID} />
+                                                    
+                                                        )
+                                                    })}
+                                           
+                                        </div> */}
+                                   
+
+                                   
+
+
+
+
+
+
+
+
+                                {/* </div> */}
                             </div>
                             <Footer />
                         </div>
@@ -262,7 +296,7 @@ const MachMaintenanceHistory = () => {
 
                 </div>
             </div>
-        </div>
+      
 
     );
 };

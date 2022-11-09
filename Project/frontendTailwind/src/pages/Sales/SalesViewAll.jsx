@@ -8,6 +8,7 @@ import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import Swal from "sweetalert2";
 
 const SalesViewAll = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
@@ -43,7 +44,6 @@ const SalesViewAll = () => {
     await axios
       .delete(`http://localhost:8070/sales/delete/${id}`)
       .then((res) => {
-        alert('Deleted Successfully');
         getSale();
       })
       .catch((err) => {
@@ -55,13 +55,34 @@ const SalesViewAll = () => {
     navigate('/SalesDateRange',{state:{DS:dateStart,DE:dateEnd}});
   }
 
-  const confirmFunc = (id)=>{
-		if (confirm("Do you want to delete?") == true) {
-        deleteSale(id);
-		} else {
-			  navigate('/SalesViewAll');
-		}
-    }
+    const confirmFunc = (id) => {
+
+        Swal.fire({
+          title: 'Confirm Delete?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          //background: '#393E46',
+          confirmButtonText: 'Yes, Delete it!'})
+          .then((result) => {
+            if (result.isConfirmed) {
+                deleteSale(id);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Data Successfully Deleted!',
+                    color: '#f8f9fa',
+                    background: '#6c757d',
+                    showConfirmButton: false,
+                    timer: 2000
+                }   
+                )
+            } else {
+                navigate('/SalesViewAll');
+            }
+        })
+      }
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -146,13 +167,13 @@ const SalesViewAll = () => {
                               </div>
 
                               <div className=" mx-1">
-                                  <button type="button" className = "py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}>Filter by Date</button>
+                                  <button type="button" className = "py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}>Filter by Date</button>
                               </div>
 
                               <div className="mr-0 ml-auto">
                                   {/* change this link your preview page */}
                                   <Link to={"/SalesPreview"}>
-                                  <button type="button" className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+                                  <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
                                   </Link>
                               </div>
 

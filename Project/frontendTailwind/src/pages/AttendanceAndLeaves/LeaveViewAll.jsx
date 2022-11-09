@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
@@ -37,20 +38,35 @@ const LeaveViewAll = () => {
   }, []);
 
   const confirmFunc = (id)=>{
-
-		if (confirm("Do you want to delete?") == true) {
-      deleteLeave(id);
-		} else {
-			navigate('/LeaveViewAll');
-		}
-
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      background: currentMode === 'dark' ? '#1e1e1e' : '#fff',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteLeave(id);
+        Swal.fire({  
+          icon: 'success',
+          title: 'Data Successfully Deleted',
+          color: '#f8f9fa',
+          background: '#6c757d',
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }else {
+        navigate('/LeaveViewAll');
+      }
+    })
   }
 
   const deleteLeave = async (id) => {
     await axios
       .delete(`http://localhost:8070/leave/deleteLeave/${id}`)
       .then((res) => {
-        alert('Data deleted successfully');
         getLeave();
       })
       .catch((err) => {

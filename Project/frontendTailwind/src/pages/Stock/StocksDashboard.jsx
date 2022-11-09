@@ -107,14 +107,6 @@ const StocksDashboard = () => {
                         <DashTopButton icon={<FaFileSignature/>} value="View Stocks Breakdown" />
                       </Link>
 
-                      <Link to="/ViewAllRawMaterials">
-                        <DashTopButton icon={<BiAddToQueue/>} value="View all raw materials" />
-                      </Link>
-
-                      <Link to="/ViewAllWorkInProgress">
-                        <DashTopButton icon={<BiAddToQueue/>} value="View all work in progress" />
-                      </Link>
-
                       <Link to="/StockAdd">
                         <DashTopButton icon={<BiAddToQueue/>} value="Add New Stock" />
                       </Link>
@@ -126,8 +118,13 @@ const StocksDashboard = () => {
                       {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
                       <DashTopBox icon={<FaCoins />} label="Total Stocks Value" data={total} />
                       <DashTopBox icon={<AiOutlineStock />} label="Total Items" data={itemCount} />
+                      <Link to="/ViewAllRawMaterials">
                       <DashTopBox icon={<GiRolledCloth />} label="Total Raw Materials" data={countRawMaterials} />
+                      </Link>
+
+                      <Link to="/ViewAllWorkInProgress">
                       <DashTopBox icon={<GiSewingNeedle />} label="Total Work In Progress" data={countWorkInProgress} />
+                      </Link>
                     </div>
                   </div>
 

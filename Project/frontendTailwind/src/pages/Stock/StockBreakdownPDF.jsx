@@ -18,6 +18,7 @@ function StockBreakdownPDF() {
     const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
     const [stockUtil,setStockUtil] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    var price = 0;
 
     const getStock = async () => {  //getStock is the function to get the data from the backend
         axios.get("http://localhost:8070/stock")
@@ -60,6 +61,13 @@ function StockBreakdownPDF() {
             pdf.save("stocksBreakdown_" + date + ".pdf");
         });
     };
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+    })
 
     return (
         <div>
@@ -141,11 +149,12 @@ function StockBreakdownPDF() {
                                                         var totIssues = 0;
                                                         var quantity = 0
                                                     }
-                                                    
+
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Additions" &&
                                                             stockUtil.stockCode === data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totAdds += stockUtil.quantity
+                                                                price = stockUtil.unitPrice
                                                             })
                                                     }
                                                     {
@@ -172,6 +181,8 @@ function StockBreakdownPDF() {
                                                         datacolor = "text-red-600 font-bold";
                                                     }
 
+                                                    console.log(data.damagedQty)
+
                                                     return (
                                                         <tr className="text-sm h-10 border dark:border-slate-600">
                                                             <TableData value={data.stockCode} />
@@ -180,7 +191,7 @@ function StockBreakdownPDF() {
                                                             <TableData value={totAdds} />
                                                             <TableData value={totIssues} />
                                                             <TableData value={data.damagedQty} />
-                                                            <TableData value={"Rs." + data.unitPrice} />
+                                                            <TableData value={formatter.format(price)} />
                                                             <TableData value={data.reorderLevel} />
                                                             <td className={`${dcolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`} >{data.sufficientStock} </td>
 

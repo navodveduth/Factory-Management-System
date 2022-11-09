@@ -25,25 +25,16 @@ function StockAddExisting() {
     const [quantity, setQuantity] = useState('');
     const [date, setDate] = useState('');
     const [firstPurchaseDate, setFirstPurchaseDate] = useState('');
-    const [type, setType] = useState('');
-    const [unitPrice, setUnitPrice] = useState('');
+    var [type, setType] = useState('');
+    var [unitPrice, setUnitPrice] = useState('');
     var [supplier, setSupplier] = useState('');
     var [totalValue, setTotalValue] = useState('');
 
     //gets the current date
     var currentDate = new Date().toISOString().split('T')[0];
 
-    // var displayM = true;
-    // if (stockCategory === ''){
-    //     displayM = true;
-    // }
-    // else if (stockCategory != "Finished goods") {
-    //     displayM = false;
-    // } else{
-    //     displayM = true;
-    //     supplier  = "-";
-    // }
-    const {id} = useParams();
+
+    const { id } = useParams();
 
     const getStock = () => {
         axios.get("http://localhost:8070/stock/" + id).then((res) => {
@@ -80,6 +71,13 @@ function StockAddExisting() {
     }, [])
 
     var minDate = firstPurchaseDate.split('T')[0]
+
+    // var view = true;
+    // if (type === "Additions") {
+    //     view = false;
+    // } else if (type === "Issues") {
+    //     view = true;
+    // }
 
     return (
 
@@ -157,12 +155,9 @@ function StockAddExisting() {
 
                                             //     })
                                             // }
-
+                                           
                                             { totalValue = quantity * unitPrice }
-
-                                            if (supplier === '') {
-                                                supplier = "-";
-                                            }
+                                            {type = "Additions"}
 
                                             const newStockUtil = {
                                                 stockCode,
@@ -171,7 +166,6 @@ function StockAddExisting() {
                                                 date,
                                                 firstPurchaseDate,
                                                 type,
-                                                supplier,
                                                 unitPrice,
                                                 quantity,
                                                 totalValue
@@ -211,15 +205,15 @@ function StockAddExisting() {
                                             //         //     navigate('/StockUtilisation')
 
                                             //         // }else {
-                                                    await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
-                                                        alert("Data saved successfully");
-                                                        navigate('/StockUtilisation');
+                                            await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
+                                                alert("Data saved successfully");
+                                                navigate('/StockUtilisation');
 
-                                                    }).catch((err) => {
-                                                        console.log(err);
-                                                        alert("ERROR: Could not add stock");
-                                                        navigate('/StockAddExisting');
-                                                    })
+                                            }).catch((err) => {
+                                                console.log(err);
+                                                alert("ERROR: Could not add stock");
+                                                navigate('/StockAddExisting/' + id);
+                                            })
                                             //     }
                                             // }
 
@@ -229,7 +223,13 @@ function StockAddExisting() {
                                             <div className="mb-3">
                                                 <label for="stockCode" className="form-label">Stock Code: </label>
                                                 <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="code" placeholder="Enter stock code..." pattern="[A-Z]{1}[0-9]{3,7}"
-                                                     value={stockCode} readOnly />
+                                                    value={stockCode} readOnly />
+                                            </div>
+
+                                            <div className="mb-3">
+                                                <label for="stockName" className="form-label">Stock Name: </label>
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="code" 
+                                                    value={stockName} readOnly />
                                             </div>
 
                                             {/* max uses the above date variable and sets the max date to select from*/}
@@ -241,7 +241,7 @@ function StockAddExisting() {
                                                     }} />
                                             </div>
 
-                                            <div className="mb-3">
+                                            {/* <div className="mb-3">
                                                 <label for="type" className="form-label">Type: </label>
                                                 < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="stockCategory" title="Please choose one of the options" required onChange={(e) => {
                                                     setType(e.target.value);
@@ -251,6 +251,12 @@ function StockAddExisting() {
                                                     <option value="Additions">Additions</option>
                                                     <option value="Issues">Issues</option>
                                                 </select>
+                                            </div> */}
+
+                                            <div className="mb-3">
+                                                <label for="additions" className="form-label">Type: </label>
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="addition" 
+                                                    value={"Additions"} readOnly />
                                             </div>
 
                                             <div className="mb-3">
@@ -264,16 +270,8 @@ function StockAddExisting() {
                                             <div className="mb-3">
                                                 <label for="unitPrice" className="form-label">Unit price: </label>
                                                 <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice" placeholder='Enter price per unit...'
-                                                    min="0" title="If the unit price is not avilable please enter 0" step="0.01" onChange={(e) => {
+                                                    min="0" required title="If the unit price is not avilable please enter 0" step="0.01" onChange={(e) => {
                                                         setUnitPrice(e.target.value);
-                                                    }} />
-                                            </div>
-
-                                            <div className="mb-3" >
-                                                <label for="supplier" className="form-label">Materials provided by: </label>
-                                                <input id="supplier" type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Enter supplier name..."
-                                                    value={supplier} onChange={(e) => {
-                                                        setSupplier(e.target.value);
                                                     }} />
                                             </div>
 

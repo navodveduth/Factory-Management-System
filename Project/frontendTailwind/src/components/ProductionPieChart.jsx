@@ -7,6 +7,7 @@ import { useStateContext } from '../contexts/ContextProvider';
 const ProductionPieChart = () => {
     const [Order,setOrder] = useState([]);
     const { currentMode } = useStateContext();
+    const [Sale,setSale] = useState([]);
 
     async function getOrders(){
         await axios.get("http://localhost:8070/production/order/allOrders").then((res)=>{
@@ -15,17 +16,28 @@ const ProductionPieChart = () => {
             alert(err.message);
         })
     }
+    async function getSale(){
+        axios
+          .get(`http://localhost:8070/sales/`)
+          .then((res) => {
+            setSale(res.data);
+          })
+          .catch((err) => {
+            alert(err.message);
+          });
+      };
   
     useEffect(() => {
+      getSale();
       getOrders();
     }, []);
   
-    const prodCount = Order.length;
-    const prodT= Order.filter((Order) => Order.orderName == 'T-Shirts').length;
-    const prodCollars= Order.filter((Order) => Order.orderName == 'Collars').length;
-    const prodTrousers= Order.filter((Order) => Order.orderName == 'Trousers').length;
-    const prodShirts= Order.filter((Order) => Order.orderName == 'Shirts').length;
-
+    
+    const prodT= Sale.filter((Sale) => Sale.status == 'Pending').length;
+    const prodCollars= Order.filter((Order) => Order.status == 'Stock Requested').length;
+    const prodTrousers= Order.filter((Order) => Order.status == 'Completed').length;
+    const prodShirts= Order.filter((Order) => Order.status == 'Costed').length;
+    const prodCount = prodT + prodCollars + prodTrousers + prodShirts;
   return (
     <div>
         <ChartsHeader category="Chart" title="Costed Product Distribution" />
@@ -36,10 +48,10 @@ const ProductionPieChart = () => {
                     type="Pie"
                     dataSource={
                         [
-                            { x: 'T-Shirts', y: (prodT/prodCount*100).toPrecision(4), text: (prodT/prodCount*100).toPrecision(2) + '%'},
-                            { x: 'Collars', y: (prodCollars/prodCount*100).toPrecision(4), text: (prodCollars/prodCount*100).toPrecision(2) + '%'},
-                            { x: 'Trousers', y: (prodTrousers/prodCount*100).toPrecision(4), text: (prodTrousers/prodCount*100).toPrecision(2) + '%'},
-                            { x: 'Shirts', y: (prodShirts/prodCount*100).toPrecision(4), text: (prodShirts/prodCount*100).toPrecision(2) + '%'},
+                            { x: 'Pending', y: (prodT/prodCount*100).toPrecision(4), text: (prodT/prodCount*100).toPrecision(2) + '%'},
+                            { x: 'Stock Requested', y: (prodCollars/prodCount*100).toPrecision(4), text: (prodCollars/prodCount*100).toPrecision(2) + '%'},
+                            { x: 'Completed', y: (prodTrousers/prodCount*100).toPrecision(4), text: (prodTrousers/prodCount*100).toPrecision(2) + '%'},
+                            { x: 'Costed', y: (prodShirts/prodCount*100).toPrecision(4), text: (prodShirts/prodCount*100).toPrecision(2) + '%'},
                         ]
                     }
                     xName="x"

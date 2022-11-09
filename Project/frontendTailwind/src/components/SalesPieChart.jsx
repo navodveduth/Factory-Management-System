@@ -5,7 +5,7 @@ import Header from './Header';
 import ChartsHeader from './ChartsHeader'
 import { useStateContext } from '../contexts/ContextProvider';
 
-const SalesChart = () => {
+const SalesPieChart = () => {
   const { currentMode } = useStateContext();
     const [sales, setSales] = useState([]);
 
@@ -40,14 +40,21 @@ const SalesChart = () => {
                     innerRadius="50%"
                     dataSource={
                         [
-                            { x: 'Orders > Rs.100,000', y: (newOrders/salesCount*100).toPrecision(4), text: (newOrders/salesCount*100).toPrecision(2) + '%'},
-                            { x: 'Orders < Rs.50,000', y: (ongoingOrders/salesCount*100).toPrecision(4), text: (ongoingOrders/salesCount*100).toPrecision(2) + '%'},
-                            { x: 'Orders > Rs.50,000', y: (finishedOrders/salesCount*100).toPrecision(4), text: (finishedOrders/salesCount*100).toPrecision(2) + '%'}
+                            { x: 'Orders > Rs.100,000', y: (newOrders/salesCount*100).toPrecision(4), text: (newOrders/salesCount*100).toPrecision(2) + '%', color: '#1363DF' },
+                            { x: 'Orders < Rs.50,000', y: (ongoingOrders/salesCount*100).toPrecision(4), text: (ongoingOrders/salesCount*100).toPrecision(2) + '%', color: '#F87474' },
+                            { x: 'Orders > Rs.50,000', y: (finishedOrders/salesCount*100).toPrecision(4), text: (finishedOrders/salesCount*100).toPrecision(2) + '%', color: '#47B5FF' }
                             
                         ]
                     }
+                    pointColorMapping = "color"
                     xName="x"
                     yName="y"
+                    startAngle={0}
+                    endAngle={360}
+                    radius="70%"
+                    explode
+                    explodeOffset="10%"
+                    explodeIndex={2}
                     dataLabel={{
                         visible: true,
                         position: 'Outside',
@@ -63,4 +70,4 @@ const SalesChart = () => {
   )
 }
 
-export default SalesChart
+export default SalesPieChart

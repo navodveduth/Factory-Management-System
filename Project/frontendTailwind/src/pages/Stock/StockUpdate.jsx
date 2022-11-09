@@ -46,8 +46,6 @@ function StockUpdate() {
             setFirstPurchaseDate(res.data.firstPurchaseDate);
             setReorderLevel(res.data.reorderLevel);
             setDamagedQty(res.data.damagedQty);
-            setUnitPrice(res.data.unitPrice);
-            setTotalValue(res.data.totalValue);
             setSufficientStock(res.data.sufficientStock);
         }).catch((err) => {
             alert(err);
@@ -65,6 +63,8 @@ function StockUpdate() {
     }, []);
 
     var currentDate = new Date().toISOString().split('T')[0];
+    var oldPrice = unitPrice;
+    var oldVal = totalValue;
 
     return (
 
@@ -124,19 +124,6 @@ function StockUpdate() {
                                         <form onSubmit={async (e) => {
                                             e.preventDefault();
 
-                                            // var totAdds = 0
-                                            // var totIssues = 0
-                                            // var quantity = 0
-                                            // data.stockUtilisationDetails.filter((stk) => stk.type === "Additions" &&
-                                            // stk.stockCode == stockCode).map(
-                                            //     totAdds += stk.units
-                                            // )
-
-                                            // data.stockUtilisationDetails.filter((stk) => stk.type === "Issues" &&
-                                            // stk.stockCode == stockCode).map(
-                                            //     totIssues += stk.units
-                                            // )
-
                                             const newStock = {
                                                 stockCode,
                                                 stockName,
@@ -144,8 +131,6 @@ function StockUpdate() {
                                                 description,
                                                 firstPurchaseDate,
                                                 reorderLevel,
-                                                unitPrice,
-                                                totalValue,
                                                 sufficientStock,
                                                 damagedQty
                                             }
@@ -185,14 +170,6 @@ function StockUpdate() {
                                                 <textarea className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" placeholder="Enter stock description..."
                                                     value={description} title="The name can contain only alphabets" required onChange={(e) => {
                                                         setDescription(e.target.value);
-                                                    }} />
-                                            </div>
-
-                                            <div className="mb-3">
-                                                <label for="unitPrice" className="form-label">Unit price: </label>
-                                                <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice" placeholder='Enter price per unit...'
-                                                    min="0" value={unitPrice} title="If the unit price is not avilable please enter 0" step="0.01" onChange={(e) => {
-                                                        setUnitPrice(e.target.value);
                                                     }} />
                                             </div>
 

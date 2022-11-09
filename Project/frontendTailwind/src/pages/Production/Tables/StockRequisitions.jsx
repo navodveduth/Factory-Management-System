@@ -2,13 +2,13 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { Link ,useNavigate} from "react-router-dom";
 import {jsPDF} from "jspdf";
-import TableHeader from "../../components/Table/TableHeader";
-import TableData from '../../components/Table/TableData';
-import Header from "../../components/Header";
-import { useStateContext } from '../../contexts/ContextProvider';
+import TableHeader from "../../../components/Table/TableHeader";
+import TableData from '../../../components/Table/TableData';
+import Header from "../../../components/Header";
+import { useStateContext } from '../../../contexts/ContextProvider';
 
 import { FiSettings } from 'react-icons/fi';
-import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
+import { Navbar, Footer, Sidebar, ThemeSettings } from '../../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 export default function RequestedStocks(){
@@ -52,9 +52,23 @@ export default function RequestedStocks(){
             })
         }
 
-        const confirmFunc = (id)=>{
+        async function updateSales(id){
+            const salesStatus = "Pending"
+            //  const statusPass = {salesStatus}
+              await axios.put('http://localhost:8070/Production/order/updateStatus/'+id,{"status":salesStatus}).then((res)=>{
+                  alert("Sale Status Changed");
+              }).catch((error)=>{
+                  console.log(error)
+                  alert("Sale Status Change Unsuccessful");
+              })
+            }
 
+
+        
+
+        const confirmFunc = (id,invoiceNo)=>{
             if (confirm("Do you want to delete?") == true) {
+                updateSales(invoiceNo);
                 deletesOrder(id);
             } else {
                 navigate('/vieworders');
@@ -167,16 +181,20 @@ export default function RequestedStocks(){
                                                                     <button 
                                                                         type="button" 
                                                                         className="font-bold py-1 px-4 rounded-full mx-3 text-white" 
-                                                                        style={{ background: currentColor }}><i className="fas fa-edit"/>
+                                                                        style={{ background: currentColor }}>
+                                                                            Update Request
+                                                                        {/* <i className="fas fa-edit"/> */}
                                                                     </button>
                                                                 </Link>
                                                             
-                                                                <button onClick={()=>{
-                                                                confirmFunc(data._id);
+                                                                <button value="Delete Request" onClick={()=>{
+                                                                confirmFunc(data._id,data.invoiceNo);
+                                                                
                                                                 }}
                                                                 type="button" 
                                                                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full">
-                                                                <i className="fas fa-trash" />
+                                                                 Delete Record 
+                                                                 {/* <i className="fas fa-trash" /> */}
                                                                 </button>
                                                         </td>
                                                      </tr>

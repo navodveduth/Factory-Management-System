@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Navbar, Footer, Sidebar, ThemeSettings, Header  } from '../../components';
+import { Navbar, Footer, Sidebar, ThemeSettings, Header, AttendanceChart } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
@@ -144,7 +144,7 @@ const EmployeeProfile = () => {
                                                         <div className="p-1"> <span className="font-bold"> Name with initials </span> : {data.employeeNameWithInitials}</div>
                                                         <div className="p-1"> <span className="font-bold"> NIC number </span> : {data.employeeNIC}</div>
                                                         <div className="p-1"> <span className="font-bold"> Gender </span> : {data.employeeGender}</div>
-                                                        <div className="p-1"> <span className="font-bold"> Date of birth </span> : {new Date(data.employeeDOB).toDateString()}</div>
+                                                        <div className="p-1"> <span className="font-bold"> Date of birth </span> : {new Date(data.employeeDOB).toISOString().substring(0, 10)}</div>
                                                     </div>
                                                     
                                                 </div>
@@ -159,7 +159,7 @@ const EmployeeProfile = () => {
                                                 <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
                                                     <h1 className="text-2xl font-bold">Work Details</h1>
                                                     <div className="text-md ml-12 pt-5">
-                                                        <div className="p-1"> <span className="font-bold"> Date joined </span> : {new Date(data.employeeDateOfJoin).toDateString()}</div>
+                                                        <div className="p-1"> <span className="font-bold"> Date joined </span> : {new Date(data.employeeDateOfJoin).toISOString().substring(0, 10)}</div>
                                                         <div className="p-1"> <span className="font-bold"> Designation </span> : {data.employeeDesignation}</div>
                                                         <div className="p-1"> <span className="font-bold"> Department </span> : {data.employeeDepartment}</div>
                                                         <div className="p-1"> <span className="font-bold"> Type </span> : {data.employeeType}</div>
@@ -223,6 +223,9 @@ const EmployeeProfile = () => {
                                                     </tbody>
                                                 </table>
                                             </div>
+                                        </div>
+                                        <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+                                                <AttendanceChart employeeNumber={data.employeeNumber} />
                                         </div>
                                     </div>
                                 )

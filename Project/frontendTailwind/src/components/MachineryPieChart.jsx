@@ -1,11 +1,14 @@
 import React, { useState, useEffect }from 'react'
 import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective, Inject, PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip } from '@syncfusion/ej2-react-charts';
 import axios from 'axios';
+import { useStateContext } from '../contexts/ContextProvider';
+
 
 import ChartsHeader from './ChartsHeader';
 
 const MachineryPieChart = () => {
     const [machinery, setMachinery] = useState([]);
+    const { currentMode } = useStateContext();
 
     const getMachinery = async () => {  //getMachinery is the function to get the data from the backend
         axios.get("http://localhost:8070/machinery/")
@@ -34,25 +37,26 @@ const MachineryPieChart = () => {
 
   return (
     <div>
-        <ChartsHeader category="Chart" title='Machinery Distribution ' />
-        <AccumulationChartComponent  legendSettings={{position:"Right", background: "white"}} tooltip={{enable:true}} >
+        <ChartsHeader  category="Chart" title='Machinery Distribution ' />
+        <AccumulationChartComponent  legendSettings={{position:"Right", background: "white"}} tooltip={{enable:true}} background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'} >
             <Inject services={[PieSeries, AccumulationDataLabel, AccumulationLegend, AccumulationTooltip]} />
             <AccumulationSeriesCollectionDirective>
                 <AccumulationSeriesDirective 
                     type="Pie"
                     dataSource={
                         [
-                            { x: 'Cutting machine', y: (machCut/machCount*100).toPrecision(4), text: (machCut/machCount*100).toPrecision(2) + '%'},
-                            { x: 'Fabrics Inspection machine', y: (machFabIn/machCount*100).toPrecision(4), text: (machFabIn/machCount*100).toPrecision(2) + '%'},
-                            { x: 'Embroidery machine', y: (machEmb/machCount*100).toPrecision(4), text: (machEmb/machCount*100).toPrecision(2) + '%'},
-                            { x: 'Sewing machine', y: (machSew/machCount*100).toPrecision(4), text: (machSew/machCount*100).toPrecision(2) + '%'},
-                            { x: 'Digital Hydrometer', y: (machHydro/machCount*100).toPrecision(4), text: (machHydro/machCount*100).toPrecision(2) + '%'},
-                            { x: 'Air compressor', y: (machAir/machCount*100).toPrecision(4), text: (machAir/machCount*100).toPrecision(2) + '%'},
-                            { x: 'Air conditioning', y: (machAC/machCount*100).toPrecision(4), text: (machAC/machCount*100).toPrecision(2) + '%'},
-                            { x: 'Generator', y: (machGen/machCount*100).toPrecision(4), text: (machGen/machCount*100).toPrecision(2) + '%'},
+                            { x: 'Cutting machine', y: (machCut/machCount*100).toPrecision(4), text: (machCut/machCount*100).toPrecision(2) + '%',color: '#1363DF'},
+                            { x: 'Fabrics Inspection machine', y: (machFabIn/machCount*100).toPrecision(4), text: (machFabIn/machCount*100).toPrecision(2) + '%',  color: '#419D78'},
+                            { x: 'Embroidery machine', y: (machEmb/machCount*100).toPrecision(4), text: (machEmb/machCount*100).toPrecision(2) + '%', color: '#C14953'},
+                            { x: 'Sewing machine', y: (machSew/machCount*100).toPrecision(4), text: (machSew/machCount*100).toPrecision(2) + '%', color: '#F87474'},
+                            { x: 'Digital Hydrometer', y: (machHydro/machCount*100).toPrecision(4), text: (machHydro/machCount*100).toPrecision(2) + '%', color: '#47B5FF'},
+                            { x: 'Air compressor', y: (machAir/machCount*100).toPrecision(4), text: (machAir/machCount*100).toPrecision(2) + '%',color: '#FF8B8B'},
+                            { x: 'Air conditioning', y: (machAC/machCount*100).toPrecision(4), text: (machAC/machCount*100).toPrecision(2) + '%',color: '#FE841F'},
+                            { x: 'Generator', y: (machGen/machCount*100).toPrecision(4), text: (machGen/machCount*100).toPrecision(2) + '%',color: '#fffb00'},
                             
                         ]
                     }
+                    pointColorMapping = "color"
                     xName="x"
                     yName="y"
                     innerRadius="40%"

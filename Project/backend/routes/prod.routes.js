@@ -1,4 +1,4 @@
-import { getAllOrders,createOrder, getOneOrder, updateOrderDetails, deleteOrder, showPending, setSaleStatus, getFromInvoice, getOrderFromInvoice,updateCost} from "../controllers/Production/prod.orderCost.controller.js";
+import { getAllOrders,createOrder, getOneOrder, updateOrderDetails, deleteOrder, showPending, setSaleStatus, getFromInvoice, getOrderFromInvoice,updateCost, getDateRangeProduction} from "../controllers/Production/prod.orderCost.controller.js";
 import express from "express";
 const router = express.Router();
 
@@ -15,6 +15,7 @@ router.get("/viewPending",showPending);
 router.get("/pending/:invoiceNo",getFromInvoice);
 router.put("/updateStatus/:invoiceNo",setSaleStatus);
 router.get("/completed/:invoiceNo",getOrderFromInvoice); 
+router.get("/date/:DS/:DE",getDateRangeProduction)
 
 
 

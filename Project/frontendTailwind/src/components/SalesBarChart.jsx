@@ -33,43 +33,61 @@ export default function SalesBarChart() {
       const blouse= sales.filter((sale) => sale.itemName === 'Blouse').length;
       const jeans= sales.filter((sale) => sale.itemName === 'Jeans').length;
       const pants= sales.filter((sale) => sale.itemName === 'Pants').length;
+      const shorts= sales.filter((sale) => sale.itemName === 'Shorts').length;
+      const skirts= sales.filter((sale) => sale.itemName === 'Skirts').length;
 
       const barPrimaryXAxis = {
         valueType: 'Category',
         majorGridLines: { width: 0 },
         majorTickLines: { width: 2 },
-        title: "Item Type"
+        title: "Item Type",
+        labelStyle: { 
+          color: currentMode === 'Dark' ? '#e9ecef' : '#343a40'}, 
+       titleStyle: { 
+        color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
+        fontSize: '16px'}
         }
 
         const barPrimaryYAxis = {
         majorGridLines: { width: 2 },   
         majorTickLines: { width: 4 },
         lineStyle: { width: 4 },
-        labelStyle: { color: 'black' },
         labelFormat: '{value}', 
-        title: "Sales Count"
+        title: "Sales Count",
+        labelStyle: { 
+          color: currentMode === 'Dark' ? '#e9ecef' : '#343a40'}, 
+       titleStyle: { 
+        color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
+        fontSize: '16px'}
         }
 
         const barChartData = [
             [
-                {x:' Shirts ', y: shirts },
+                {x:'Shirts', y: shirts },
             ],
             [
                 {x:'T-Shirts', y: tshirts },
             ],
             [
-                {x:'  Caps  ', y: caps },
+                {x:'Caps', y: caps },
             ],
             [
-                {x:' Blouse ', y: blouse },
+                {x:'Blouse', y: blouse },
             ],
             [
-                {x:' Pants ', y: pants },
+                {x:'Pants', y: pants },
             ],
             [
-                {x:' Jeans ', y: jeans },
-            ]
-          ]
+                {x:'Jeans', y: jeans },
+            ],
+            [
+              {x:'Shorts', y: shorts },
+          ],
+          [
+              {x:'Skirts', y:skirts },
+          ],
+          
+        ]
         
           const barCustomSeries = [
             {
@@ -78,13 +96,7 @@ export default function SalesBarChart() {
               yName: 'y',
               name: 'Shirts',
               type: 'Column',
-              marker: {
-                dataLabel: {
-                  visible: false,
-                  position: 'Top',
-                  font: { fontWeight: '600', color: '#ffffff' },
-                },
-              },
+              
             },
             {
               dataSource: barChartData[1],
@@ -92,13 +104,7 @@ export default function SalesBarChart() {
               yName: 'y',
               name: 'T-Shirts',
               type: 'Column',
-              marker: {
-                dataLabel: {
-                  visible: false,
-                  position: 'Top',
-                  font: { fontWeight: '600', color: '#ffffff' },
-                },
-              },
+              
             },
             {
               dataSource: barChartData[2],
@@ -106,13 +112,7 @@ export default function SalesBarChart() {
               yName: 'y',
               name: 'Caps',
               type: 'Column',
-              marker: {
-                dataLabel: {
-                  visible: false,
-                  position: 'Top',
-                  font: { fontWeight: '600', color: '#ffffff' },
-                },
-              },
+              
             },
             {
                 dataSource: barChartData[3],
@@ -120,13 +120,7 @@ export default function SalesBarChart() {
                 yName: 'y',
                 name: 'Blouse',
                 type: 'Column',
-                marker: {
-                  dataLabel: {
-                    visible: false,
-                    position: 'Top',
-                    font: { fontWeight: '600', color: '#ffffff' },
-                  },
-                },
+                
               },
               {
                 dataSource: barChartData[4],
@@ -134,13 +128,7 @@ export default function SalesBarChart() {
                 yName: 'y',
                 name: 'Pants',
                 type: 'Column',
-                marker: {
-                  dataLabel: {
-                    visible: false,
-                    position: 'Top',
-                    font: { fontWeight: '600', color: '#ffffff' },
-                  },
-                },
+                
               },
               {
                 dataSource: barChartData[5],
@@ -148,14 +136,24 @@ export default function SalesBarChart() {
                 yName: 'y',
                 name: 'Jeans',
                 type: 'Column',
-                marker: {
-                  dataLabel: {
-                    visible: false,
-                    position: 'Top',
-                    font: { fontWeight: '600', color: '#ffffff' },
-                  },
-                },
+                
               },
+              {
+                dataSource: barChartData[6],
+                xName: 'x',
+                yName: 'y',
+                name: 'Shorts',
+                type: 'Column',
+                
+              },
+              {
+                dataSource: barChartData[7],
+                xName: 'x',
+                yName: 'y',
+                name: 'Skirts',
+                type: 'Column',
+                
+              },          
           ];
   
   return (

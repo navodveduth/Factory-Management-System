@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Swal from "sweetalert2";
 import { Link,useNavigate  } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider.js';
@@ -67,7 +68,7 @@ const MachMaintenanceViewAll = () => {
   const deleteMMaintainence = async (id) => {
     await axios.delete(`http://localhost:8070/maintainenceMachine/delete/${id}`)
       .then((res) => {
-        alert("Data deleted successfully");
+        
         getMMaintainence();
       })
       .catch((err) => {
@@ -77,13 +78,33 @@ const MachMaintenanceViewAll = () => {
 
   const confirmFunc = (id) => {
 
-    if (confirm("Do you want to delete?") == true) {
-      deleteMMaintainence(id);
-    } else {
-      navigate('/MachMaintenanceViewAll');
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteMMaintainence(id);
+        Swal.fire({  
+          icon: 'success',
+          title: 'Data Successfully Deleted',
+          color: '#f8f9fa',
+          background: '#6c757d',
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }else {
+        navigate('/MachMaintenanceViewAll');
+      }
+    })
 
   }
+
+  
 
   return (
     <div>
@@ -165,7 +186,7 @@ const MachMaintenanceViewAll = () => {
                               </div>
 
                               <div className=" mx-1">
-                                  <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}  >filter</button>
+                                  <button type="button" className = "py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}>Filter by Date</button>
                               </div>
                               
                       <div className="mr-0 ml-auto">

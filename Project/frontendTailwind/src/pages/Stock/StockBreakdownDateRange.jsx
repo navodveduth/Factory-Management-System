@@ -19,6 +19,7 @@ function StockBreakdownDateRange() {
 
     const [dateStart, setDateStart] = useState("");
     const [dateEnd, setDateEnd] = useState("");
+    var price = 0;
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -191,7 +192,6 @@ function StockBreakdownDateRange() {
                                                     }
                                                 }).map((data, key) => {//map is used to iterate the array
                                                     //const date = new Date(data.lastUpdated).toISOString().split('T')[0];
-
                                                     {
                                                         var totAdds = 0;
                                                         var totIssues = 0;
@@ -202,6 +202,7 @@ function StockBreakdownDateRange() {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Additions" &&
                                                             stockUtil.stockCode === data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totAdds += stockUtil.quantity
+                                                                price = stockUtil.unitPrice
                                                             })
                                                     }
                                                     {
@@ -238,11 +239,20 @@ function StockBreakdownDateRange() {
                                                             <TableData value={totAdds} />
                                                             <TableData value={totIssues} />
                                                             <TableData value={data.damagedQty} />
-                                                            <TableData value={"Rs." + formatter.format(data.unitPrice)} />
+                                                            <TableData value={formatter.format(price)} />
                                                             <TableData value={data.reorderLevel} />
                                                             <td className={`${dcolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`} >{data.sufficientStock} </td>
 
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                                            <Link to={`/StockInformation/${data._id}`}>
+                                                                    <button
+                                                                        type="button"
+                                                                        className="bg-neutral-500 font-bold py-1 px-4 rounded-full mx-3 text-white"
+                                                                    >
+                                                                        <i className="fas fa-info-circle" />
+                                                                    </button>
+                                                                </Link>
+                                                                
                                                                 <Link to={`/StockBreakdownUpdate/${data._id}`}>
                                                                     <button
                                                                         type="button"

@@ -19,6 +19,9 @@ function StockUtilisationDateRange() {
     const [stockUtil, setStockUtilisation] = useState([]); //stock is the state variable and setStock is the function to update the state variable
     const [searchTerm, setSearchTerm] = useState("");
 
+    var totalAdditions = 0;
+    var totalIssues = 0;
+    
     const toDateRange = () => {
         navigate('/StockUtilisation');
     }
@@ -159,7 +162,6 @@ function StockUtilisationDateRange() {
                                                     <TableHeader value="unitPrice" />
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Total value" />
-                                                    <TableHeader value="Supplier" />
                                                     <TableHeader value="Manage" />
                                                 </tr>
                                             </thead>
@@ -182,6 +184,12 @@ function StockUtilisationDateRange() {
                                                         datacolor = "text-red-600 font-bold";
                                                     }
 
+                                                    if(data.type === "Additions"){
+                                                        totalAdditions += parseInt(data.quantity)
+                                                    }else if (data.type === "Issues"){
+                                                        totalIssues += parseInt(data.quantity) 
+                                                    }
+
                                                     return (
                                                         <tr className="text-sm h-10 border dark:border-slate-600">
                                                             <TableData value={data.stockCode} />
@@ -192,7 +200,6 @@ function StockUtilisationDateRange() {
                                                             <TableData value={"Rs." + formatter.format(data.unitPrice)} />
                                                             <TableData value={data.quantity} />
                                                             <TableData value={"Rs." + formatter.format(data.totalValue)} />
-                                                            <TableData value={data.supplier} />
 
 
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
@@ -220,6 +227,16 @@ function StockUtilisationDateRange() {
                                                 })}
                                             </tbody>
                                         </table>
+                                        <br></br><br></br>
+                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+                                            Total Additions Quantity: {(totalAdditions)}
+
+                                        </span><br></br>
+
+                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+
+                                            Total Issues Quantity : {(totalIssues)}
+                                        </span>
                                     </div>
                                 </div>
 

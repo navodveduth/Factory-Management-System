@@ -178,6 +178,8 @@ const TransportNew = () => {
                           className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           pattern="[A-Z]{1}[0-9]{3,7}"
                           id="transportID"
+                          defaultValue="T"
+                          maxLength={20}
                           required
                           onChange={(e) => {
                             setTransportID(e.target.value);
@@ -207,7 +209,7 @@ const TransportNew = () => {
                           <select
                             id="trInfo"
                             name="trInfo"
-                            className="mt-1 ml-8 w-640 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                            className="mt-1 ml-8 w-570 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                             required
                             onChange={(e) => {
                               setTypeInfo(e.target.value);
@@ -232,7 +234,7 @@ const TransportNew = () => {
                           >
                             <option selected>Select...</option>
                             {goods.map((item, index) =>
-                              item.status === 'Finished' ? ( // CHECKING IF THE GOODS ARE FINISHED
+                              item.status === 'Completed' ? ( // CHECKING IF THE GOODS ARE FINISHED
                                 <option
                                   value={`${item.invoiceNo} - ${item.itemName} x ${item.quantity}`}
                                   key={index}
