@@ -126,7 +126,9 @@ const StocksDashboard = () => {
                       {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
                       <DashTopBox icon={<FaCoins />} label="Total Stocks Value" data={total} />
                       <DashTopBox icon={<AiOutlineStock />} label="Total Items" data={itemCount} />
+                      <Link to="/ViewAllRawMaterials">
                       <DashTopBox icon={<GiRolledCloth />} label="Total Raw Materials" data={countRawMaterials} />
+                      </Link>
                       <DashTopBox icon={<GiSewingNeedle />} label="Total Work In Progress" data={countWorkInProgress} />
                     </div>
                   </div>
