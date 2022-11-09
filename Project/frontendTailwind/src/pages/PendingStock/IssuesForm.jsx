@@ -11,7 +11,7 @@ import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 
-function StockAddExisting() {
+function IssuesForm() {
 
     //useNavigate is a hook that is used to navigate to another page
     const navigate = useNavigate();
@@ -29,6 +29,7 @@ function StockAddExisting() {
     var [unitPrice, setUnitPrice] = useState('');
     var [supplier, setSupplier] = useState('');
     var [totalValue, setTotalValue] = useState('');
+    // const [itemName, setItemName] = useState
 
     //gets the current date
     var currentDate = new Date().toISOString().split('T')[0];
@@ -36,16 +37,7 @@ function StockAddExisting() {
 
     const { id } = useParams();
 
-    const getStock = () => {
-        axios.get("http://localhost:8070/stock/" + id).then((res) => {
-            setStockCode(res.data.stockCode);
-            setStockName(res.data.stockName);
-            setStockCategory(res.data.stockCategory);
-            setFirstPurchaseDate(res.data.firstPurchaseDate);
-        }).catch((err) => {
-            alert(err);
-        })
-    }
+    
 
     // const getStockUtil = async () => {  //getStock is the function to get the data from the backend
     //     axios.get("http://localhost:8070/stockUtilisation")
@@ -58,9 +50,49 @@ function StockAddExisting() {
     //         })
     // }
 
+    console.log("id", id)
+    //stock request
+    const getCompleteOrder = () => {
+        axios.get(`http://localhost:8070/stock/request/${id}`).then((res) => {
+            setStockCode(res.data.invoiceNo);
+            setStockName(res.data.product);
+            setUnitPrice(res.data.materialCost);
+            setQuantity(res.data.unitQty);
+            // setRequestDate(res.data.requestDate);
+            // setCostedDate(res.data.costedDate);
+            // setSupervisor(res.data.supervisor);
+            // setTeamLead(res.data.teamLead);
+            // setMember1(res.data.member1);
+            // setMember2(res.data.member2);
+            // setBudgetedMatCost(res.data.budgetedMatCost);
+            // setBudgetOH(res.data.budgetedoverHeadCost);
+            // setBudgetedLabCost(res.data.budgetedLabCost);
+            // setBudgetedTotalCost(res.data.budgetedtotalCost);
+        }).catch((err) => {
+            alert(err.message);
+        })
+    }
+    const {name} = stockName;
+    console.log(name)
+
+    const getStock = () => {
+        axios.get("http://localhost:8070/stock/ViewStock/" + name).then((res) => {
+            console.log(res.data)
+            // setStockCode(res.data.stockCode);
+            // setStockName(res.data.stockName);
+            setStockCategory(res.data.stockCategory);
+            setFirstPurchaseDate(res.data.firstPurchaseDate);
+        }).catch((err) => {
+            alert(err);
+        })
+    }
 
     useEffect(() => { //useEffect is used to call the function getStock
         getStock();
+    }, [name])
+
+    useEffect(() => { //useEffect is used to call the function getStock
+        getCompleteOrder();
         //getStockUtil();
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
@@ -69,15 +101,13 @@ function StockAddExisting() {
             setCurrentMode(currentThemeMode);
         }
     }, [])
-
-    var minDate = firstPurchaseDate.split('T')[0]
-
     // var view = true;
     // if (type === "Additions") {
     //     view = false;
     // } else if (type === "Issues") {
     //     view = true;
     // }
+    var minDate = firstPurchaseDate.split('T')[0]
 
     return (
 
@@ -155,9 +185,9 @@ function StockAddExisting() {
 
                                             //     })
                                             // }
-                                           
+
                                             { totalValue = quantity * unitPrice }
-                                            {type = "Additions"}
+                                            { type = "Issues" }
 
                                             const newStockUtil = {
                                                 stockCode,
@@ -226,6 +256,12 @@ function StockAddExisting() {
                                                     value={stockCode} readOnly />
                                             </div>
 
+                                            <div className="mb-3">
+                                                <label for="product" className="form-label">Product: </label>
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="addition"
+                                                    value={stockName} readOnly />
+                                            </div>
+
                                             {/* max uses the above date variable and sets the max date to select from*/}
                                             <div className="mb-3">
                                                 <label for="date" className="form-label">Date: </label>
@@ -249,8 +285,8 @@ function StockAddExisting() {
 
                                             <div className="mb-3">
                                                 <label for="additions" className="form-label">Type: </label>
-                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="addition" 
-                                                    value={"Additions"} readOnly />
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="addition"
+                                                    value={"Issues"} readOnly />
                                             </div>
 
                                             <div className="mb-3">
@@ -291,4 +327,4 @@ function StockAddExisting() {
     );
 };
 
-export default StockAddExisting;
+export default IssuesForm;

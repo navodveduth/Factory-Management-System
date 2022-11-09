@@ -13,10 +13,10 @@ import {  MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceVi
 import {MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory} from './pages//Machinery';
 import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice, SalesDateRange } from './pages/Sales';
 
-import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders,CompletedOrders, FinalCostOrder} from './pages/Production/Index';
+import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders,CompletedOrders, FinalCostOrder,CompletedOrdersDateRange} from './pages/Production/Index';
 
 import { StocksDashboard, StockView, StockInformation, StockViewDateRange, StockBreakdownDateRange , StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, ViewAllRawMaterials, RawMaterialsReport, ViewAllWorkInProgress, WorkInProgressReport } from './pages/Stock';
-import { PendingStockView, PendingStockAdd, PendingStockUpdate, PendingStockPDf, PendingRequest, PendingRequestPDF, ProcessingRequest, ProcessingRequestPDF, ResolvedRequest, ResolvedRequestPDF } from './pages/PendingStock';
+import { PendingStockRequisitions,IssuesForm, PendingStockAdd, PendingStockUpdate, PendingStockPDf, PendingRequest, PendingRequestPDF, ProcessingRequest, ProcessingRequestPDF, ResolvedRequest, ResolvedRequestPDF } from './pages/PendingStock';
 import { StockUtilisationDashboard, StockUtilPDF,StockUtilisationDateRange ,StockUtilisation, StockAddExisting, StockUtilAddOption, StockUtilUpdate, ViewAllAdditions, AdditionsReport, ViewAllIssues, IssuesReport } from './pages/StockUtilisation';
 
 import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview, PurchaseOrderAdd, PurchaseOrderUpdate, PurchaseOrderPreview, PurchaseOrderView } from './pages/Suppliers';
@@ -131,7 +131,7 @@ const App = () => {
           <Route path="/pendingOrders" element ={<PendingOrders/>}/>
           <Route path="/completedOrders" element ={<CompletedOrders/>}/>
           <Route path="/costingOrder/:id" element ={<FinalCostOrder/>}/>
-          
+          <Route path="/CompletedOrdersDateRange" element={<CompletedOrdersDateRange/>}/>
 
           {/* stock management  */}
           <Route path="/StockDashboard" element={<StocksDashboard />} />
@@ -151,7 +151,7 @@ const App = () => {
           <Route path="/generateSBPDF" element={<StockBreakdownPDF/>} />
           <Route path="/StockBreakdownDateRange/" element={<StockBreakdownDateRange/>} />
           
-          <Route path="/PendingStockView" element={<PendingStockView />} />
+          <Route path="/PendingStockRequisitions" element={<PendingStockRequisitions />} />
           <Route path="PendingStockAdd" element={<PendingStockAdd />} />
           <Route path="PendingStockUpdate/:id" element={<PendingStockUpdate />} />
           <Route path="/generatePSPDF" element={<PendingStockPDf />}/>
@@ -161,6 +161,7 @@ const App = () => {
           <Route path="/generateProcessingRPDF" element={<ProcessingRequestPDF />}/>
           <Route path="/ResolvedRequest" element={<ResolvedRequest />}/>
           <Route path="/generateResolvedRPDF" element={<ResolvedRequestPDF />}/>
+          <Route path="/IssuesForm/:invoiceNo" element={<IssuesForm />} />
 
           <Route path="/StockUtilisationDashboard" element={<StockUtilisationDashboard/>} />
           <Route path="/StockUtilisation" element={<StockUtilisation />} />
