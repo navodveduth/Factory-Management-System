@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Navbar, Footer, Sidebar, ThemeSettings, Header } from '../../components';
+import { Navbar, Footer, Sidebar, ThemeSettings, Header,MaintainChart } from '../../components';
 import {GrHostMaintenance } from 'react-icons/gr';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
@@ -243,6 +243,7 @@ const MachMaintenanceHistory = () => {
 
 
                                                             </tr>
+                                                            
                                                         )
                                                     })}
                                                 </tbody>
@@ -250,16 +251,41 @@ const MachMaintenanceHistory = () => {
                                         </div>
                                     </div>
 
-
-
-
-
-
-
-
-
+                                   
 
                                 </div>
+                            </div>
+
+                            
+                            {/* <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '>
+                              
+                                    
+
+
+                                        <div className="block w-full overflow-x-auto rounded-lg">
+                                            
+                                                    {maintainenceMachine.map((data, key) => {
+                                                        
+                                                        return (
+                                                            
+                                                            <MaintainChart machineID={data.machineID} />
+                                                    
+                                                        )
+                                                    })}
+                                           
+                                        </div> */}
+                                   
+
+                                   
+
+
+
+
+
+
+
+
+                                {/* </div> */}
                             </div>
                             <Footer />
                         </div>
@@ -270,7 +296,7 @@ const MachMaintenanceHistory = () => {
 
                 </div>
             </div>
-        </div>
+      
 
     );
 };
