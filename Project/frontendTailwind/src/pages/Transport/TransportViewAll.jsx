@@ -136,7 +136,14 @@ const TransportViewAll = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         deleteTransport(id);
-        Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+        Swal.fire({
+          icon: 'success',
+          title: 'Data Successfully Deleted',
+          color: '#f8f9fa',
+          background: '#6c757d',
+          showConfirmButton: false,
+          timer: 2000,
+        });
       } else {
         navigate('/TransportViewAll');
       }
