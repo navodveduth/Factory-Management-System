@@ -18,6 +18,9 @@ function ViewAllRawMaterials() {
     const [stockUtil, setStockUtil] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
 
+    var totRM = 0;
+    var price = 0;
+
 
     // const getStock = async () => {  //getStock is the function to get the data from the backend
     //     axios.get("http://localhost:8070/stock")
@@ -89,6 +92,13 @@ function ViewAllRawMaterials() {
         }
 
     }
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+    })
 
     return (
 
@@ -162,7 +172,6 @@ function ViewAllRawMaterials() {
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
-                                                    <th className='px-4 py-3 text-md whitespace-nowrap font-semibold text-center text-black-300'>Description</th>
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Unit price" />
                                                     <TableHeader value="Total value" />
@@ -189,17 +198,20 @@ function ViewAllRawMaterials() {
                                                         stockUtil.filter((stockUtil) => stockUtil.type == "Additions" &&
                                                             stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totAdds += stockUtil.quantity
+                                                                totRM += parseFloat((stockUtil.quantity * stockUtil.unitPrice));
+                                                                price = stockUtil.unitPrice
                                                             })
                                                     }
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
                                                             stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totIssues += stockUtil.quantity
+                                                                totRM -= parseFloat((stockUtil.quantity * stockUtil.unitPrice));
                                                             })
                                                     }
 
                                                     { quantity = totAdds - totIssues - data.damagedQty }
-                                                    { totalValue = data.unitPrice * quantity }
+                                                    { totalValue = price * quantity }
 
                                                     if (quantity < 0) {
                                                         { quantity = "No usable stocks left" }
@@ -216,11 +228,9 @@ function ViewAllRawMaterials() {
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
                                                             <TableData value={data.stockCategory} />
-                                                            {/* change the column width */}
-                                                            <td className={"max-w-200 text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3"}>{data.description}</td>
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
-                                                            <TableData value={data.unitPrice} />
-                                                            <TableData value={"Rs." + totalValue} />
+                                                            <TableData value={formatter.format(price)} />
+                                                            <TableData value={formatter.format(totalValue)} />
 
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                                                                 <Link to={`/StockInformation/${data._id}`}>
@@ -256,6 +266,11 @@ function ViewAllRawMaterials() {
                                                 })}
                                             </tbody>
                                         </table>
+                                        <br></br><br></br>
+                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+                                            Total Raw materials : {formatter.format(totRM)}
+
+                                        </span>
                                     </div>
                                 </div >
                             </div>

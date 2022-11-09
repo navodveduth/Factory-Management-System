@@ -251,7 +251,7 @@ function StockBreakdown() {
                                                             <TableData value={totAdds} />
                                                             <TableData value={totIssues} />
                                                             <TableData value={data.damagedQty} />
-                                                            <TableData value={"Rs." + formatter.format(price)} />
+                                                            <TableData value={formatter.format(price)} />
                                                             <TableData value={data.reorderLevel} />
                                                             <td className={`${dcolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`} >{data.sufficientStock} </td>
 
