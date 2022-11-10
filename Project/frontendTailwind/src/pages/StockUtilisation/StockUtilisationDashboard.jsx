@@ -12,7 +12,7 @@ import DamagedStockPieChart from '../../components/StockUtilPieChart';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import StockUtilPieChart from '../../components/StockUtilPieChart';
+//import StockUtilPieChart from '../../components/StockUtilPieChart';
 import StockUtilLineChart from '../../components/StockUtilLineChart';
 import { CgBox } from 'react-icons/cg';
 
