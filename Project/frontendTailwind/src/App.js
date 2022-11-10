@@ -36,8 +36,8 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           {/* Common Routes */}
-          <Route path="/" element={<EmployeeDashboard />} /> 
-          
+          <Route path="/" element={<EmployeeDashboard />} />
+          <Route path="/Register" element={<UserRegistration />} />
 
           {/* employee management  */}
           <Route path="/EmployeeDashboard" element={<EmployeeDashboard />} />
