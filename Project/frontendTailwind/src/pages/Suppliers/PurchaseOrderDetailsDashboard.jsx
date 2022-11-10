@@ -9,6 +9,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 import { FiSettings, FiClipboard} from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import { TbReportSearch } from "react-icons/tb";
 
 
 const PurchaseOrderDetailsDashboard = () => {
@@ -99,6 +100,9 @@ useEffect(() => {
           </Link>
           <Link to="/PurchaseOrderAdd">
             <DashTopButton value="Place a new order" icon={<BsClipboardPlus />} />
+          </Link>
+          <Link to="/RequestedStock">
+            <DashTopButton value="View stock requests" icon={<TbReportSearch />} />
           </Link>
 
         </div>

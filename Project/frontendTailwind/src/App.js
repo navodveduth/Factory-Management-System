@@ -19,7 +19,7 @@ import { StocksDashboard, StockView, StockInformation, StockViewDateRange, Stock
 import { AddStockForRequisition,IssuesForm, PendingStockAdd, PendingStockUpdate, StockRequisitionPDF, ProcessingRequest, ProcessingRequestPDF, ResolvedRequest, ResolvedRequestPDF, PendingStockRequisition } from './pages/PendingStock';
 import { StockUtilisationDashboard, StockUtilPDF,StockUtilisationDateRange ,StockUtilisation, StockAddExisting, StockUtilAddOption, StockUtilUpdate, ViewAllAdditions, AdditionsReport, ViewAllIssues, IssuesReport } from './pages/StockUtilisation';
 
-import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview, PurchaseOrderAdd, PurchaseOrderUpdate, PurchaseOrderPreview, PurchaseOrderView } from './pages/Suppliers';
+import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview, PurchaseOrderAdd, PurchaseOrderUpdate, PurchaseOrderPreview, PurchaseOrderView, RequestedOrdersUpdate, RequestedStock } from './pages/Suppliers';
 
 import { DriverDashboard, DriverViewAll, DriverNew, DriverUpdate, DriverReport } from './pages/Driver';
 import { TransportDashboard, TransportViewAll, TransportDateRange, TransportNew, TransportUpdate, TransportRecord, TransportReport } from './pages/Transport';
@@ -189,6 +189,9 @@ const App = () => {
         <Route path="/PurchaseOrderUpdate/:id" element={<PurchaseOrderUpdate />} />
         <Route path="/PurchaseOrderView" element={<PurchaseOrderView />} />
         <Route path="/PurchaseOrderPreview" element={<PurchaseOrderPreview />} />
+        <Route path="/RequestedStock" element={<RequestedStock />} />
+        <Route path="/RequestedOrdersUpdate/:id" element={<RequestedOrdersUpdate />} />
+        
 
           {/* Transport management  */}
           <Route path="/TransportDashboard" element={<TransportDashboard />} />
