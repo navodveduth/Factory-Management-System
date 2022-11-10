@@ -18,7 +18,7 @@ export default function DepreciationChart() {
                            titleStyle: { 
                             color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
                             fontSize: '16px'},
-                           interval: 10,
+                           interval: 2,
                          };
                          
     const primaryXAxis = { valueType: 'Category', 

@@ -107,75 +107,75 @@ export default function StockUtilLineChart() {
         switch (new Date(stockUtil[index].date).getMonth()) {
             case (0):
                 if (stockUtil[index].type === "Additions")
-                    janTotal = janTotal + stockUtil[index].totalValue;
+                    {janTotal = janTotal + stockUtil[index].totalValue;}
                 else
-                    janTotal = janTotal - stockUtil[index].totalValue;
+                    {janTotal = janTotal - stockUtil[index].totalValue;}
                 break;
             case (1):
                 if (stockUtil[index].type === "Additions")
-                    febTotal = febTotal + stockUtil[index].totalValue;
+                    {febTotal = febTotal + stockUtil[index].totalValue;}
                 else
-                    febTotal = febTotal - stockUtil[index].totalValue;
+                    {febTotal = febTotal - stockUtil[index].totalValue;}
                 break;
             case (2):
                 if (stockUtil[index].type === "Additions")
-                    marTotal = marTotal + stockUtil[index].totalValue;
+                    {marTotal = marTotal + stockUtil[index].totalValue;}
                 else
-                    marTotal = marTotal - stockUtil[index].totalValue;
+                    {marTotal = marTotal - stockUtil[index].totalValue;}
                 break;
             case (3):
                 if (stockUtil[index].type === "Additions")
-                    aprTotal = aprTotal + stockUtil[index].totalValue;
+                    {aprTotal = aprTotal + stockUtil[index].totalValue;}
                 else
-                    aprTotal = aprTotal - stockUtil[index].totalValue;
+                    {aprTotal = aprTotal - stockUtil[index].totalValue;}
                 break;
             case (4):
                 if (stockUtil[index].type === "Additions")
-                    mayTotal = mayTotal + stockUtil[index].totalValue;
+                    {mayTotal = mayTotal + stockUtil[index].totalValue;}
                 else
-                    mayTotal = mayTotal - stockUtil[index].totalValue;
+                    {mayTotal = mayTotal - stockUtil[index].totalValue;}
                 break;
             case (5):
                 if (stockUtil[index].type === "Additions")
-                    junTotal = junTotal + stockUtil[index].totalValue;
+                    {junTotal = junTotal + stockUtil[index].totalValue;}
                 else
-                    junTotal = junTotal - stockUtil[index].totalValue;
+                    {junTotal = junTotal - stockUtil[index].totalValue;}
                 break;
             case (6):
                 if (stockUtil[index].type === "Additions")
-                    julTotal = julTotal + stockUtil[index].totalValue;
+                    {julTotal = julTotal + stockUtil[index].totalValue;}
                 else
-                    julTotal = julTotal - stockUtil[index].totalValue;
+                    {julTotal = julTotal - stockUtil[index].totalValue;}
                 break;
             case (7):
                 if (stockUtil[index].type === "Additions")
-                    augTotal = augTotal + stockUtil[index].totalValue;
+                    {augTotal = augTotal + stockUtil[index].totalValue;}
                 else
-                    augTotal = augTotal - stockUtil[index].totalValue;
+                    {augTotal = augTotal - stockUtil[index].totalValue;}
                 break;
             case (8):
                 if (stockUtil[index].type === "Additions")
-                    sepTotal = sepTotal + stockUtil[index].totalValue;
+                    {sepTotal = sepTotal + stockUtil[index].totalValue;}
                 else
-                    sepTotal = sepTotal - stockUtil[index].totalValue;
+                    {sepTotal = sepTotal - stockUtil[index].totalValue;}
                 break;
             case (9):
                 if (stockUtil[index].type === "Additions")
-                    octTotal = octTotal + stockUtil[index].totalValue;
+                    {octTotal = octTotal + stockUtil[index].totalValue;}
                 else
-                    octTotal = octTotal - stockUtil[index].totalValue;
+                    {octTotal = octTotal - stockUtil[index].totalValue;}
                 break;
             case (10):
                 if (stockUtil[index].type === "Additions")
-                    novTotal = (parseInt(novTotal) + stockUtil[index].totalValue);
+                    {novTotal = (parseInt(novTotal) + stockUtil[index].totalValue);}
                 else
-                    novTotal = (parseInt(novTotal) - stockUtil[index].totalValue);
+                    {novTotal = (parseInt(novTotal) - stockUtil[index].totalValue);}
                 break;
             case (11):
                 if (stockUtil[index].type === "Additions")
-                    decTotal = decTotal + stockUtil[index].totalValue;
+                    {decTotal = decTotal + stockUtil[index].totalValue;}
                 else
-                    decTotal = decTotal - stockUtil[index].totalValue;
+                    {decTotal = decTotal - stockUtil[index].totalValue;}
                 break;
             default:
                 break;
