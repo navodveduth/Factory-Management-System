@@ -2,20 +2,19 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Header } from '../../components';
-import { useStateContext } from '../../contexts/ContextProvider';
+import { jsPDF } from "jspdf";
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
-import { FiUser } from 'react-icons/fi';
-import { DashTopBox, DashTopButton,  } from '../../components';
-
+import { useStateContext } from '../../contexts/ContextProvider';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import logo from '../../data/logo.png';
 
-const IncomeStatement = () => {
+
+const IncomeStatementPreview = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
-  
   const [transactions, setTransactions] = useState([]);
    const [DS, setDateStart] = useState("");
   const [DE, setDateEnd] = useState("");
@@ -31,6 +30,7 @@ const IncomeStatement = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+
   function subtractYears(date, years) {
     date.setFullYear(date.getFullYear() - years);
     return date;
@@ -38,22 +38,43 @@ const IncomeStatement = () => {
 
   var curDate = new Date(location.state.DS);   
   var curDate_minus1 = new Date(location.state.DE);
+  curDate_minus1 = subtractYears(curDate_minus1, 1);
   var dateStart = curDate.toLocaleDateString()
   var dateEnd = curDate_minus1.toLocaleDateString()
 
-  const toDateRange=()=>{
-    navigate('/IncomeStatementDateRange',{state:{DS:DS,DE:DE}});
-  }
+  var newDate = new Date();
+  var DS1 = newDate.toISOString().split('T')[0];
+  var DE1 = curDate_minus1.toISOString().split('T')[0];
 
+
+  
   let dateRangeRef = (dateRange) => {
     dateRangeRef = dateRange; // dateRangeRef is a reference to the DateRangePickerComponent
   };
 
 
+  const filterDate = () => {
+    if (dateRangeRef.value && dateRangeRef.value.length > 0) {
+
+        const start = (dateRangeRef.value[0]);
+        const end = (dateRangeRef.value[1]);
+
+        setDateStart(start);
+        setDateEnd(end);
+        navigate('/IncomeStatementDateRange',{state:{DS:start,DE:end}});
+
+    } else {
+      alert("Please select a date range")
+      setDateStart('');
+      setDateEnd('');
+    }
+
+};
+
   //finance get function
   const getFinanceDate = async () => {
     axios
-    .get('http://localhost:8070/finance/date/'+location.state.DS+'/'+location.state.DE)
+    .get('http://localhost:8070/finance/date/'+curDate_minus1+'/'+curDate)
     .then((res) => {
       setTransactions(res.data);
     })
@@ -64,7 +85,7 @@ const IncomeStatement = () => {
   //sales get function
   const getSale = async () => {
     axios
-      .get('http://localhost:8070/sales/date/'+location.state.DS+'/'+location.state.DE)
+      .get('http://localhost:8070/sales/date/'+curDate_minus1+'/'+curDate)
       .then((res) => {
         setSales(res.data);
       })
@@ -72,6 +93,18 @@ const IncomeStatement = () => {
         alert(err.message);
       })
   }
+  //purchaseOrder get function
+
+  const getPurchaseOrder = async () => {
+    axios.get('http://localhost:8070/purchaseOrder/date/'+curDate_minus1+'/'+curDate)
+        .then((res) => {
+            setPurchaseOrder(res.data);
+        })
+        .catch((err) => {
+            alert(err.message);
+        })
+}
+
   //salary get function
 
   const getSalary = async () => {
@@ -85,23 +118,10 @@ const IncomeStatement = () => {
       });
   };
 
-  
-  //purchaseOrder get function
-
-  const getPurchaseOrder = async () => {
-    axios.get('http://localhost:8070/purchaseOrder/date/'+location.state.DS+'/'+location.state.DE)
-        .then((res) => {
-            setPurchaseOrder(res.data);
-        })
-        .catch((err) => {
-            alert(err.message);
-        })
-}
-
   //machinery maintainance get function
 
   const getMMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainenceMachine/date/"+location.state.DS+'/'+location.state.DE)
+    axios.get("http://localhost:8070/maintainenceMachine/date/"+curDate_minus1+'/'+curDate)
       .then((res) => {
         setMaintainenceMachine(res.data); //setMaintainence  is used to update the state variable
 
@@ -114,7 +134,7 @@ const IncomeStatement = () => {
   //noraml maintinance get function
 
   const getMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainence/date/"+location.state.DS+'/'+location.state.DE)
+    axios.get("http://localhost:8070/maintainence/date/"+curDate_minus1+'/'+curDate)
       .then((res) => {
         setMaintainence(res.data); //setMaintainence  is used to update the state variable
 
@@ -122,12 +142,12 @@ const IncomeStatement = () => {
       .catch((err) => {
         alert(err.message);
       })
-  }
+    }
 
   //vehicle maintainance get function
 
   const getVMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainenceVehicle/date/"+location.state.DS+'/'+location.state.DE)
+    axios.get("http://localhost:8070/maintainenceVehicle/date/"+curDate_minus1+'/'+curDate)
       .then((res) => {
         setMaintainenceVehi(res.data); //setMaintainence  is used to update the state variable
 
@@ -140,7 +160,7 @@ const IncomeStatement = () => {
   //machinery get function
 
   const getMachinery = async () => {  //getMachinery is the function to get the data from the backend
-    axios.get("http://localhost:8070/machinery/date/"+location.state.DS+'/'+location.state.DE)
+    axios.get("http://localhost:8070/machinery/date/"+curDate_minus1+'/'+curDate)
       .then((res) => {
         setMachinery(res.data); //setMachinery is used to update the state variable
 
@@ -156,7 +176,7 @@ const IncomeStatement = () => {
   const getTransport = async () => {
     axios
       .get(
-        "http://localhost:8070/transport/date/"+location.state.DS+'/'+location.state.DE)
+        "http://localhost:8070/transport/date/"+curDate_minus1+'/'+curDate)
       .then((res) => {
         setTransport(res.data);
       })
@@ -164,18 +184,19 @@ const IncomeStatement = () => {
         alert(err.message);
       });
   };
-//production cost function
 
-const getProduction = async () => {
-  axios
-    .get('http://localhost:8070/production/order/date/'+location.state.DS+'/'+location.state.DE)
-    .then((res) => {
-      setOrder(res.data);
-    })
-    .catch((err) => {
-      alert(err.message);
-    });
-};
+  //production cost function
+
+  const getProduction = async () => {
+    axios
+      .get('http://localhost:8070/production/order/date/'+curDate_minus1+'/'+curDate)
+      .then((res) => {
+        setOrder(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
 
 
 
@@ -199,7 +220,15 @@ const getProduction = async () => {
     }
   }, []);
 
-  
+  const createPDF = () => {
+    const date = new Date(Date.now()).toISOString().split('T')[0];
+    const pdf = new jsPDF("landscape", "px", "a1", false);
+    const data = document.querySelector("#tableContainer");
+    pdf.html(data).then(() => {
+        pdf.save("IncomeStatement-(" + DS1 + ").pdf");
+    });
+};
+
   var saleTotal , revenueTotal, expenseTotal , MMaintTotal , VehiMaintTotal , maintTotal , transportTotal, machineryTotal, salaryTotal, productionTotal, purchasesTotal;
   saleTotal = expenseTotal = revenueTotal = expenseTotal  = MMaintTotal = VehiMaintTotal = maintTotal = transportTotal = machineryTotal = salaryTotal = productionTotal = machineryTotal =purchasesTotal = 0;
 
@@ -240,17 +269,26 @@ const getProduction = async () => {
   for (var i = 0; i < purchaseOrder.length; i++) {
     purchasesTotal += purchaseOrder[i].cost;
   }
- const formatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'LKR',
-      minimumFractionDigits: 2,
-      currencyDisplay: 'symbol'
-    })
 
-    var totalCost = productionTotal+transportTotal+machineryTotal+salaryTotal+maintTotal+MMaintTotal+VehiMaintTotal+purchasesTotal;
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'LKR',
+    minimumFractionDigits: 2,
+    currencyDisplay: 'symbol'
+  })
+
+  var totalCost = productionTotal+transportTotal+machineryTotal+salaryTotal+maintTotal+MMaintTotal+VehiMaintTotal+purchasesTotal;
   var totalRevenue = revenueTotal+saleTotal
   var grossProfit = formatter.format(saleTotal-productionTotal-purchasesTotal);
-  var nettProfit = formatter.format(totalRevenue - totalCost);
+  var nettProfit = totalRevenue - totalCost;
+
+  if(nettProfit < 0){
+    nettProfit = nettProfit * (-1); 
+    nettProfit = "("+formatter.format(nettProfit)+")";
+  }else{
+    nettProfit = formatter.format(totalRevenue-totalCost);
+  }
+
 
   saleTotal = formatter.format(saleTotal);
   revenueTotal = formatter.format(revenueTotal);
@@ -261,6 +299,9 @@ const getProduction = async () => {
   productionTotal = formatter.format(productionTotal);
   purchasesTotal = formatter.format(purchasesTotal);
   var maintainanceTotal = formatter.format(maintTotal+MMaintTotal+VehiMaintTotal);
+  
+  
+
 
   
   return (
@@ -314,77 +355,83 @@ const getProduction = async () => {
                         {themeSettings && <ThemeSettings />}
                         <div>
                           {/* start */}
-                          <div>
                           <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-
-                            <Header category="Table" title={`Income Statement from `+dateStart+` to ` + dateEnd}/>
-                              
                             <div className=" flex items-center mb-5 ">
-                              <div className="ml-0 ">
-                                <Link to={"/financePreview"}> {/* change this link your preview page */}
-                                  <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
-                                </Link>
-                              </div>
-                              <div className="mx-3">
-                                <Link to={"/IncomeStatement"}> {/* change this link your previous page */}
-                                  <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Reset Date</button>
-                                </Link>
-                              </div>
-
+                                <div className="mr-0 ml-auto">
+                                    <button onClick={createPDF} type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
+                                </div>
                             </div>
-                              <div className="block w-full overflow-x-auto rounded-lg">
+
+                            <div className="block w-full overflow-x-auto rounded-lg">
+                              <div id="tableContainer">
+                                <div className="block w-full overflow-x-auto rounded-lg" >
+                                    <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                                    <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
+                                    </div>
+                                    <div className="text-center mb-10">
+                                
+                                    <p className="text-xl mt-2">Lanka MountCastle (Pvt) Ltd,</p>
+                                    <p className="text-xl">No.124, Hendala, Wattala</p>
+                                    <p>011 2942 672</p>
+                                    </div>
+                                   <Header title={`Income Statement from `+dateStart+` to ` + dateEnd} />
+
+                                    <p className="text-right text-xl mt-2 mb-3">Generated On : {DS1}</p>
+                                        
                               <table className="w-full rounded-lg">
                                 <thead>
                                   <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800 dark:text-white">
-                                    <TableHeader value="Description" />
-                                    <TableHeader value="Amount" />
+                                    <td className="px-4 py-3 text-md whitespace-nowrap font-semibold text-left text-black-300">Description</td>
+                                    <td className="px-4 py-3 text-md whitespace-nowrap font-semibold text-right text-black-300">Amount</td>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Sales Income</td>
-                                    <td>{(saleTotal)}</td>
+                                    <td className="text-left px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">Sales Income</td>
+                                    <td className=" text-right px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">{(saleTotal)}</td>
                                   </tr>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Purchase Expense</td>
-                                    <td>{"("+(purchasesTotal)+")"}</td>
+                                    <td className="text-left px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">Purchase Expense</td>
+                                    <td className=" text-right px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">{"("+(purchasesTotal)+")"}</td>
                                   </tr>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Production Expense</td>
-                                    <td>{"("+(productionTotal)+")"}</td>
+                                    <td className="text-left px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">Production Expense</td>
+                                    <td className=" text-right px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">{"("+(productionTotal)+")"}</td>
                                   </tr>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Other Income</td> 
-                                    <td>{(revenueTotal)}</td>
+                                    <td className="text-left px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">Other Income</td> 
+                                    <td className=" text-right px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">{(revenueTotal)}</td>
                                   </tr>
                                   <tr className=" h-10 border dark:border-slate-600 dark:text-white text-xl" >
-                                    <td>Gross Profit</td>
-                                    <td>{(grossProfit)}</td>
+                                    <td className="text-left px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">Gross Profit</td>
+                                    <td className=" text-right px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">{(grossProfit)}</td>
                                   </tr>
                                   <br></br>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Transport Expenses</td>
-                                    <td>{"("+(transportTotal)+")"}</td>
+                                    <td className="text-left px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">Transport Expenses</td>
+                                    <td className=" text-right px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">{"("+(transportTotal)+")"}</td>
                                   </tr>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Maintance Expenses</td>
-                                    <td>{"("+(maintainanceTotal)+")"}</td>
+                                    <td className="text-left px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">Maintance Expenses</td>
+                                    <td className=" text-right px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3"> {"("+(maintainanceTotal)+")"}</td>
                                   </tr>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Salary Expenses</td>
-                                    <td>{"("+(salaryTotal)+")"}</td>
+                                    <td className="text-left px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">Salary Expenses</td>
+                                    <td className=" text-right px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">{"("+(salaryTotal)+")"}</td>
                                   </tr>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Other Expenses</td>
-                                    <td>{"("+(expenseTotal)+")"}</td>
+                                    <td className="text-left px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">Other Expenses</td>
+                                    <td className=" text-right px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">{"("+(expenseTotal)+")"}</td>
                                   </tr>
                                   <br></br>
                                   <tr className="text-xl h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Net Profit or Loss</td>
-                                    <td>{(nettProfit)}</td>
+                                    <td className="text-left px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">Net Profit or Loss</td>
+                                    <td className=" text-right px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">{(nettProfit)}</td>
                                   </tr>
                                 </tbody>
                               </table>
+                              </div>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -395,9 +442,8 @@ const getProduction = async () => {
                 </div>
             </div>
         </div>
-        </div>
                                 
   );
 };
 
-export default IncomeStatement;
+export default IncomeStatementPreview;
