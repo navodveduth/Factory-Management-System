@@ -35,25 +35,6 @@ export default function PendingStockRequisition(){
             }
         },[]);
 
-        async function deletesOrder(id){
-            await axios.delete(`http://localhost:8070/production/order/delete/${id}`).then((res)=>{
-                alert("Production cost data deleted Successfully");
-               getOrders();
-            }).catch((err)=>{
-                alert(err.message);
-            })
-        }
-
-        const confirmFunc = (id)=>{
-
-            if (confirm("Do you want to delete?") == true) {
-                deletesOrder(id);
-            } else {
-                navigate('/vieworders');
-            }
-    
-        }
-
         const createPDF = async () => {
             const date = new Date().toISOString().split('T')[0];
             const pdf = new jsPDF("landscape", "px", "a1", false);
@@ -114,7 +95,7 @@ export default function PendingStockRequisition(){
                         {themeSettings && <ThemeSettings />}
                         <div>
                              <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                                    <Header category="Table" title="Stock Requisitions" />
+                                    <Header category="Table" title="Stock Requisitions Report Preview" />
                                     
                                
                                     <div className=" flex items-center mb-5 ">

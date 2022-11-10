@@ -123,7 +123,7 @@ const StocksDashboard = () => {
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                       {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
 
-                      <Link to ="StockView">
+                      <Link to ="/StockView">
                       <DashTopBox icon={<FaChartLine />} label="Total Items" data={itemCount} />
                       </Link>
 
