@@ -359,8 +359,9 @@ const IncomeStatementPreview = () => {
                                 </thead>
                                 <tbody>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Sales Income</td>
-                                    <td>{(saleTotal)}</td>
+                                    <TableData value="Sales Income"/>
+                                    <td value={saleTotal}/>
+
                                   </tr>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
                                     <td>Purchase Expense</td>
