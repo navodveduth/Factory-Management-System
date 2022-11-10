@@ -52,15 +52,15 @@ export default function PendingStockRequisition(){
             })
         }
 
-        const confirmFunc = (id)=>{
+        // const confirmFunc = (id)=>{
 
-            if (confirm("Do you want to delete?") == true) {
-                deletesOrder(id);
-            } else {
-                navigate('/vieworders');
-            }
+        //     if (confirm("Do you want to delete?") == true) {
+        //         deletesOrder(id);
+        //     } else {
+        //         navigate('/vieworders');
+        //     }
     
-        }
+        // }
 
 
         return(
@@ -167,17 +167,9 @@ export default function PendingStockRequisition(){
                                                                     <button 
                                                                         type="button" 
                                                                         className="font-bold py-1 px-4 rounded-full mx-3 text-white" 
-                                                                        style={{ background: currentColor }}><i className="fas fa-edit"/>
+                                                                        style={{ background: currentColor }}><i className="fas fa-edit"/>   Issue Stock
                                                                     </button>
                                                                 </Link>
-                                                            
-                                                                <button onClick={()=>{
-                                                                confirmFunc(data._id);
-                                                                }}
-                                                                type="button" 
-                                                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full">
-                                                                <i className="fas fa-trash" />
-                                                                </button>
                                                         </td>
                                                      </tr>
                                                     )

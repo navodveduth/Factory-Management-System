@@ -115,15 +115,15 @@ export default function PendingStockRequisition(){
                         <div>
                              <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
                                     <Header category="Table" title="Stock Requisitions" />
-                                    <div className=" flex items-center mb-5 ">
+                                    
                                
-                                <div className=" flex items-center mb-5 ">
+                                    <div className=" flex items-center mb-5 ">
                                         <div className="mr-0 ml-auto">
                                             <button onClick={createPDF} type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
                                         </div>
                                     </div>
 
-                                </div>
+                               
                                     <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
                                     <table className="w-full rounded-lg">
                                         <thead>

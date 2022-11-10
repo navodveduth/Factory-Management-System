@@ -24,4 +24,5 @@ export { default as SalesMonthlyChart } from './SalesMonthlyChart'
 export { default as SalesBarChart } from './SalesBarChart'
 export { default as SalaryBarChart } from './SalaryBarChart'
 export { default as PurchaseOrderStatusPieChart } from './PurchaseOrderStatusPieChart'
-
+export { default as AttendanceBarChart } from './AttendanceBarChart'
+export { default as AttendanceInMonth } from './AttendanceInMonth'

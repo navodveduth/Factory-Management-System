@@ -195,13 +195,6 @@ function StockAdd() {
                                                     <option value='Caps'>Caps</option>
                                                 </select>
                                             </div>
-                                            <div className="mb-3">
-                                                <label for="stockName" className="form-label">Stock Name: </label>
-                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" placeholder="Enter stock name..."
-                                                    title="The name can contain only alphabets" required onChange={(e) => {
-                                                        setStockName(e.target.value);
-                                                    }} />
-                                            </div>
 
                                             <div className="mb-3">
                                                 <label for="category" className="form-label">Category: </label>

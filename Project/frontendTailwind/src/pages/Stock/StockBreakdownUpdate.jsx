@@ -187,7 +187,7 @@ function StockBreakdownUpdate() {
                                                 .catch((err) => {
                                                     console.log(err);
                                                     alert("ERROR: Could not update stock");
-                                                    navigate('/StockBreakdownUpdate');
+                                                    navigate('/StockBreakdownUpdate' + id);
                                                 })
 
                                             //     await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
