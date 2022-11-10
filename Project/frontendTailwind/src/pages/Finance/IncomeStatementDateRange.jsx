@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 import { FiUser } from 'react-icons/fi';
 import { DashTopBox, DashTopButton,  } from '../../components';
-import {SalesMonthlyChart} from '../../components';
+
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -16,33 +16,31 @@ const IncomeStatement = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
   const [transactions, setTransactions] = useState([]);
-   const [DS, setDateStart] = useState("");
+  const [DS, setDateStart] = useState("");
   const [DE, setDateEnd] = useState("");
   const [sales, setSales] = useState([]);
-  const [purchases, setPurchaseOrder] = useState([]);
+  const [expenses, setExpenses] = useState([]);
   const [transport, setTransport] = useState([]);
   const [salary, setSalary] = useState([]);
+  const [prodCost, setProdCost] = useState([]);
   const [maintainance, setMaintainence] = useState([]);
   const [mach_maintainance, setMaintainenceMachine] = useState([]);
   const [vehi_maintainance, setMaintainenceVehi] = useState([]);
   const [machinery, setMachinery] = useState([]);
-  const [Order,setOrder] = useState([]);
 
   
   const navigate = useNavigate();
   
   const toDateRange=()=>{
-    if(DS==="" || DE===""){
-      alert("Please select a date range")
-    } else{
-      navigate('/IncomeStatementDateRange',{state:{DS:DS,DE:DE}});
-    }
+    navigate('/IncomeStatementDateRange',{state:{DS:DS,DE:DE}});
   }
+
+  const location = useLocation();
 
   //finance get function
   const getFinanceDate = async () => {
     axios
-    .get('http://localhost:8070/finance/date/'+(curDate.getFullYear() - 1)+'/'+curDate)
+    .get('http://localhost:8070/finance/date/'+location.state.DS+'/'+location.state.DE)
     .then((res) => {
       setTransactions(res.data);
     })
@@ -53,7 +51,7 @@ const IncomeStatement = () => {
   //sales get function
   const getSale = async () => {
     axios
-      .get('http://localhost:8070/sales/date/'+(curDate.getFullYear() - 1)+'/'+curDate)
+      .get('http://localhost:8070/sales/date/'+location.state.DS+'/'+location.state.DE)
       .then((res) => {
         setSales(res.data);
       })
@@ -63,33 +61,10 @@ const IncomeStatement = () => {
   }
   //purchases get function
 
-  const getPurchaseOrder = async () => {
-    axios.get('http://localhost:8070/purchaseOrder/date/'+(curDate.getFullYear() - 1)+'/'+curDate)
-        .then((res) => {
-            setPurchaseOrder(res.data);
-        })
-        .catch((err) => {
-            alert(err.message);
-        })
-}
-
-  //salary get function
-
-  const getSalary = async () => {
-    axios
-      .get('http://localhost:8070/salary/SalaryView')
-      .then((res) => {
-        setSalary(res.data);
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-  };
-
   //machinery maintainance get function
 
   const getMMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainenceMachine/date/"+(curDate.getFullYear() - 1)+'/'+curDate)
+    axios.get("http://localhost:8070/maintainenceMachine/date/"+location.state.DS+'/'+location.state.DE)
       .then((res) => {
         setMaintainenceMachine(res.data); //setMaintainence  is used to update the state variable
 
@@ -102,7 +77,7 @@ const IncomeStatement = () => {
   //noraml maintinance get function
 
   const getMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainence/date/"+(curDate.getFullYear() - 1)+'/'+curDate)
+    axios.get("http://localhost:8070/maintainence/date/"+location.state.DS+'/'+location.state.DE)
       .then((res) => {
         setMaintainence(res.data); //setMaintainence  is used to update the state variable
 
@@ -110,12 +85,12 @@ const IncomeStatement = () => {
       .catch((err) => {
         alert(err.message);
       })
-    }
+  }
 
   //vehicle maintainance get function
 
   const getVMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
-    axios.get("http://localhost:8070/maintainenceVehicle/date/"+(curDate.getFullYear() - 1)+'/'+curDate)
+    axios.get("http://localhost:8070/maintainenceVehicle/date/"+location.state.DS+'/'+location.state.DE)
       .then((res) => {
         setMaintainenceVehi(res.data); //setMaintainence  is used to update the state variable
 
@@ -128,7 +103,7 @@ const IncomeStatement = () => {
   //machinery get function
 
   const getMachinery = async () => {  //getMachinery is the function to get the data from the backend
-    axios.get("http://localhost:8070/machinery/date/"+(curDate.getFullYear() - 1)+'/'+curDate)
+    axios.get("http://localhost:8070/machinery/date/"+location.state.DS+'/'+location.state.DE)
       .then((res) => {
         setMachinery(res.data); //setMachinery is used to update the state variable
 
@@ -144,22 +119,9 @@ const IncomeStatement = () => {
   const getTransport = async () => {
     axios
       .get(
-        "http://localhost:8070/transport/date/"+(curDate.getFullYear() - 1)+'/'+curDate)
+        "http://localhost:8070/transport/date/"+location.state.DS+'/'+location.state.DE)
       .then((res) => {
         setTransport(res.data);
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-  };
-
-  //production cost function
-
-  const getProduction = async () => {
-    axios
-      .get('http://localhost:8070/production/order/date/'+(curDate.getFullYear() - 1)+'/'+curDate)
-      .then((res) => {
-        setOrder(res.data);
       })
       .catch((err) => {
         alert(err.message);
@@ -171,10 +133,7 @@ const IncomeStatement = () => {
   
   useEffect(() => {
     getFinanceDate();
-    getProduction();
     getSale();
-    getSalary();
-    getPurchaseOrder();
     getMMaintainence();
     getVMaintainence();
     getMaintainence();
@@ -188,12 +147,13 @@ const IncomeStatement = () => {
     }
   }, []);
 
-  var saleTotal , revenueTotal, expenseTotal , MMaintTotal , VehiMaintTotal , maintTotal , transportTotal, machineryTotal, salaryTotal, productionTotal, purchasesTotal;
-  saleTotal = expenseTotal = revenueTotal = expenseTotal  = MMaintTotal = VehiMaintTotal = maintTotal = transportTotal = machineryTotal = salaryTotal =productionTotal = machineryTotal = purchasesTotal = 0;
+  var saleTotal , revenueTotal, expenseTotal , MMaintTotal , VehiMaintTotal , maintTotal , transportTotal, machineryTotal;
+  saleTotal = expenseTotal = revenueTotal = expenseTotal  = MMaintTotal = VehiMaintTotal = maintTotal = transportTotal = machineryTotal = 0;
 
   for (var i = 0; i < sales.length; i++) {
     saleTotal += sales[i].totalAmount;
   }
+
   for(var i = 0; i < transactions.length; i++){
     if(transactions[i].trnType == "Revenue"){
       revenueTotal += transactions[i].trnAmount;
@@ -216,18 +176,6 @@ const IncomeStatement = () => {
   for(var i = 0; i < machinery.length; i++){
     machineryTotal += machinery[i].machineryCost;
   }
-  for(var i = 0; i < salary.length; i++){
-    salaryTotal += (salary[i].employeeIncentive + salary[i].employeeAllowance + salary[i].employeeBasicSalary);
-  }
-  for(var i = 0; i < Order.length; i++){
-    if(Order[i].status == "Costed"){
-      productionTotal += Order[i].totalCost;
-    }
-  }
-  for(var i = 0; i < purchases.length; i++){
-    purchasesTotal += purchases[i].cost;
-  }
-
 
  const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -242,6 +190,8 @@ const IncomeStatement = () => {
   var dateEnd = new Date(curDate);
   dateEnd.setFullYear(dateEnd.getFullYear() - 1);
   dateEnd = dateEnd.toLocaleDateString();
+
+
   
   return (
 
@@ -297,7 +247,7 @@ const IncomeStatement = () => {
                           <div>
                           <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
 
-                            <Header category="Table" title={`Income Statement from `+dateStart+` to ` + dateEnd + SalesMonthlyChart.novTotal} />
+                            <Header category="Table" title={`Income Statement from `+location.state.DS+` to ` + location.state.DE}/>
                             <div>
                               <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date" 
                                 onChange={(e) => {
@@ -311,7 +261,6 @@ const IncomeStatement = () => {
                                   setDateEnd(e.target.value);
                                 }} />
                               </div>
-
                               <div className=" mx-1">
                                   <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}  >filter</button>
                               </div>
@@ -337,14 +286,10 @@ const IncomeStatement = () => {
                                   </tr>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
                                     <td>Purchase Expense</td>
-                                    <td>{formatter.format(purchasesTotal)}</td>
+                                    <td>{}</td>
                                   </tr>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Production Expense</td>
-                                    <td>{formatter.format(productionTotal)}</td>
-                                  </tr>
-                                  <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Other Income</td> 
+                                    <td>Other Income</td>
                                     <td>{formatter.format(revenueTotal)}</td>
                                   </tr>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
@@ -358,19 +303,6 @@ const IncomeStatement = () => {
                                   </tr>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
                                     <td>Maintance Expenses</td>
-                                    <td>{formatter.format(MMaintTotal+VehiMaintTotal+maintTotal)}</td>
-                                  </tr>
-                                  <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Salary Expenses</td>
-                                    <td>{formatter.format(salaryTotal)}</td>
-                                  </tr>
-                                  <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Other Expenses</td>
-                                    <td>{formatter.format(expenseTotal)}</td>
-                                  </tr>
-                                  <br></br>
-                                  <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Net Profit or Loss</td>
                                     <td>{formatter.format(MMaintTotal+VehiMaintTotal+maintTotal)}</td>
                                   </tr>
                                   {/* {transactions.filter((data) => {

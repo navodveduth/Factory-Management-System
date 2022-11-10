@@ -7,7 +7,7 @@ import { EmployeeDashboard, EmployeeViewAll, EmployeeNew, EmployeeUpdate, Employ
 import { AttendanceAndLeaveDashboard, AttendanceViewAll, AttendanceNew, AttendanceUpdate, AttendanceReport, AttendanceNewRecord, LeaveViewAll, LeaveNew, LeaveUpdate, LeaveReport } from './pages/AttendanceAndLeaves';
 import { WelfareDashboard, WelfareNew, WelfareReport, WelfareUpdate, WelfareViewAll } from './pages/Welfare';
 
-import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll, PreviewSalary, FinanceDateRange, IncomeStatement } from './pages/Finance';
+import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, FinancePreviewDateRange, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll, PreviewSalary, FinanceDateRange, IncomeStatement, IncomeStatementDateRange } from './pages/Finance';
 
 import {  MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport,MaintainenceDateRange, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachManitenanceDateRange,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport,VehiMaintenanceDateRange} from './pages/Maintenance';
 import {MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory} from './pages//Machinery';
@@ -19,7 +19,7 @@ import { StocksDashboard, StockView, StockInformation, StockViewDateRange, Stock
 import { AddStockForRequisition,IssuesForm, PendingStockAdd, PendingStockUpdate, StockRequisitionPDF, ProcessingRequest, ProcessingRequestPDF, ResolvedRequest, ResolvedRequestPDF, PendingStockRequisition } from './pages/PendingStock';
 import { StockUtilisationDashboard, StockUtilPDF,StockUtilisationDateRange ,StockUtilisation, StockAddExisting, StockUtilAddOption, StockUtilUpdate, ViewAllAdditions, AdditionsReport, ViewAllIssues, IssuesReport } from './pages/StockUtilisation';
 
-import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview, PurchaseOrderAdd, PurchaseOrderUpdate, PurchaseOrderPreview, PurchaseOrderView } from './pages/Suppliers';
+import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview, PurchaseOrderAdd, PurchaseOrderUpdate, PurchaseOrderPreview, PurchaseOrderView, RequestedOrdersUpdate, RequestedStock, PurchaseOrderDateRange } from './pages/Suppliers';
 
 import { DriverDashboard, DriverViewAll, DriverNew, DriverUpdate, DriverReport } from './pages/Driver';
 import { TransportDashboard, TransportViewAll, TransportDateRange, TransportNew, TransportUpdate, TransportRecord, TransportReport } from './pages/Transport';
@@ -36,8 +36,8 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           {/* Common Routes */}
-          <Route path="/" element={<EmployeeDashboard />} /> 
-          
+          <Route path="/" element={<EmployeeDashboard />} />
+          <Route path="/Register" element={<UserRegistration />} />
 
           {/* employee management  */}
           <Route path="/EmployeeDashboard" element={<EmployeeDashboard />} />
@@ -74,8 +74,11 @@ const App = () => {
           <Route path="/FinanceViewAll" element={<FinanceViewAll />} />
           <Route path="/FinanceUpdate/:id" element={<FinanceUpdate />} />
           <Route path="/FinancePreview/" element={<FinancePreview />} />
+          <Route path="/FinancePreviewDateRange" element={<FinancePreviewDateRange />} />
           <Route path="/FinanceDateRange/" element={<FinanceDateRange />} />
           <Route path="/IncomeStatement" element={<IncomeStatement />} />
+          <Route path="/IncomeStatementDateRange" element={<IncomeStatementDateRange />} />
+
 
           {/* salary management  */}
           <Route path="/SalaryDashboard" element={<SalaryDashboard />} />
@@ -191,6 +194,10 @@ const App = () => {
         <Route path="/PurchaseOrderUpdate/:id" element={<PurchaseOrderUpdate />} />
         <Route path="/PurchaseOrderView" element={<PurchaseOrderView />} />
         <Route path="/PurchaseOrderPreview" element={<PurchaseOrderPreview />} />
+        <Route path="/RequestedStock" element={<RequestedStock />} />
+        <Route path="/RequestedOrdersUpdate/:id" element={<RequestedOrdersUpdate />} />
+        <Route path="/PurchaseOrderDateRange/" element={<PurchaseOrderDateRange />} />
+        
 
           {/* Transport management  */}
           <Route path="/TransportDashboard" element={<TransportDashboard />} />
