@@ -9,8 +9,9 @@ import { WelfareDashboard, WelfareNew, WelfareReport, WelfareUpdate, WelfareView
 
 import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, FinancePreviewDateRange, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll, PreviewSalary, FinanceDateRange, IncomeStatement, IncomeStatementDateRange } from './pages/Finance';
 
-import {  MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport,MaintainenceDateRange, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachManitenanceDateRange,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport,VehiMaintenanceDateRange} from './pages/Maintenance';
-import {MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory} from './pages/Machinery';
+import {  MaintenanceDashboard,MachMaintenancePreDateRange, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport,MaintainenceDateRange, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachManitenanceDateRange,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport,VehiMaintenanceDateRange} from './pages/Maintenance';
+import {MachineryDashboard, MachineryPreviewDateRange,MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory} from './pages//Machinery';
+
 import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice, SalesDateRange } from './pages/Sales';
 
 import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders,CompletedOrders, FinalCostOrder,CompletedOrdersDateRange, CostedOrders, InsightDashboard, UpdateStockRequest} from './pages/Production/Index';
@@ -96,6 +97,7 @@ const App = () => {
           <Route path="/MachineryReport/" element={<MachineryReport />} />
           <Route path="/MachineryDateRange/" element={<MachineryDateRange />} />
           <Route path="/MachMaintenanceHistory/:id" element={<MachMaintenanceHistory />} />
+          <Route path="/MachineryPreviewDateRange" element={<MachineryPreviewDateRange />} />
 
           {/* maintenance management  */}
           <Route path="/MaintenanceDashboard" element={<MaintenanceDashboard />} />
@@ -115,6 +117,7 @@ const App = () => {
           <Route path="/VehiMaintenanceUpdate/:id" element={<VehiMaintenanceUpdate />} />
           <Route path="/VehiMaintenanceReport" element={<VehiMaintenanceReport />} />
           <Route path="/VehiMaintenanceDateRange/" element={<VehiMaintenanceDateRange />} />
+          <Route path="/MachMaintenancePreDateRange" element={<MachMaintenancePreDateRange />} />
                 
           {/* sales management  */}
           <Route path="/SalesDashboard" element={<SalesDashboard />} />
