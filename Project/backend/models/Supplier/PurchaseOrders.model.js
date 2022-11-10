@@ -29,7 +29,7 @@ const purchaseOrderSchema = new Schema({
         required:true
     },
     deliveryDate:{
-        type: String,
+        type: Date,
         required:true
     },
     cost:{
