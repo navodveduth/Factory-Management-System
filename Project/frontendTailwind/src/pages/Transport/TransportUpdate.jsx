@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import Swal from 'sweetalert2';
 import {
   Header,
   Navbar,
@@ -179,7 +180,14 @@ const TransportUpdate = () => {
                             newTransport
                           )
                           .then((res) => {
-                            alert('Transport Details Updated');
+                            Swal.fire({
+                              icon: 'success',
+                              title: 'Transport Details Updated',
+                              color: '#f8f9fa',
+                              background: '#6c757d',
+                              showConfirmButton: false,
+                              timer: 2000,
+                            });
                             navigate('/TransportViewAll');
                           })
                           .catch((err) => {
@@ -198,6 +206,7 @@ const TransportUpdate = () => {
                           pattern="[A-Z]{1}[0-9]{3,7}"
                           id="transportID"
                           required
+                          title="The Transport Number requires a letter and 3 digits"
                           value={transportID}
                           onChange={(e) => {
                             setTransportID(e.target.value);

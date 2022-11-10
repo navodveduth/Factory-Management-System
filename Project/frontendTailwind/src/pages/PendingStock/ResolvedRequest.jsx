@@ -5,7 +5,7 @@ import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
-
+import Swal from 'sweetalert2';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -54,11 +54,29 @@ function ResolvedRequest() {
 
     const confirmFunc = (id) => {
 
-        if (confirm("Do you want to delete?") == true) {
-            deletePendingStock(id);
-        } else {
-            navigate('/PendingStockView');
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                deletePendingStock(id);
+              Swal.fire({  
+                icon: 'success',
+                title: 'Data Successfully Deleted',
+                color: '#f8f9fa',
+                background: '#6c757d',
+                showConfirmButton: false,
+                timer: 2000
+              })
+            }else {
+                navigate('/ResolvedRequest');
+            }
+          })
 
     }
 
@@ -175,7 +193,7 @@ function ResolvedRequest() {
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
 
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                                                <Link to={`/PendingStockUpdate/${data._id}`}>
+                                                                {/* <Link to={`/PendingStockUpdate/${data._id}`}>
                                                                     <button
                                                                         type="button"
                                                                         className="font-bold py-1 px-4 rounded-full mx-3 text-white"
@@ -183,7 +201,7 @@ function ResolvedRequest() {
                                                                     >
                                                                         <i className="fas fa-edit" />
                                                                     </button>
-                                                                </Link>
+                                                                </Link> */}
                                                                 <button
                                                                     type="button"
                                                                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
