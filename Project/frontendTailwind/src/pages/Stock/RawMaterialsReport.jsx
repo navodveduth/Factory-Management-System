@@ -5,11 +5,12 @@ import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 import { jsPDF } from "jspdf";
+import logo from '../../data/logo.png';
 
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import { DashTopBox, DashTopButton,  } from '../../components';
+import { DashTopBox, DashTopButton, } from '../../components';
 
 function RawMaterialsReport() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
@@ -69,6 +70,11 @@ function RawMaterialsReport() {
         currencyDisplay: 'symbol'
     })
 
+     //getDAte
+     const current = new Date();
+     const currentdate = `${current.getFullYear()}-${current.getMonth() + 1}-${current.getDate()}`;
+ 
+
     return (
 
         <div>
@@ -117,7 +123,7 @@ function RawMaterialsReport() {
                             {themeSettings && <ThemeSettings />}
                             <div>
                                 <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                                    <Header category="Table" title="Preview" />
+                                    <Header category="Table" title="Raw Materials Report Preview" />
 
                                     <div className=" flex items-center mb-5 ">
                                         <div className="mr-0 ml-auto">
@@ -125,87 +131,100 @@ function RawMaterialsReport() {
                                         </div>
                                     </div>
 
-                                    <div id="tblPDF" className="block w-full overflow-x-auto rounded-lg">
-                                        <table className="w-full rounded-lg">
-                                            <thead>
-                                                <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                                    <TableHeader value="Code" />
-                                                    <TableHeader value="Bundle Name" />
-                                                    <TableHeader value="Category" />
-                                                    <TableHeader value="Initial purchase" />
-                                                    <TableHeader value="Units" />
-                                                    <TableHeader value="Unit price" />
-                                                    <TableHeader value="Total value" />
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {
-                                                    stock.filter((data) => data.stockCategory === "Raw materials").map((data) => {//map is used to iterate the array
-                                                        const date = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
+                                    <div id="tblPDF">
+                                        <div className="block w-full overflow-x-auto rounded-lg">
+                                            <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                                                <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
+                                            </div>
 
-                                                        var totAdds = 0;
-                                                        var totIssues = 0;
-                                                        var quantity = 0;
-                                                        var totalValue = 0;
+                                            <div className="text-center mb-10">
 
-                                                        {
-                                                            stockUtil.filter((stockUtil) => stockUtil.type == "Additions" &&
-                                                                stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
-                                                                    totAdds += stockUtil.quantity
-                                                                    totRM += parseFloat((stockUtil.quantity * stockUtil.unitPrice));
-                                                                    price = stockUtil.unitPrice
-                                                                })
-                                                        }
-                                                        {
-                                                            stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
-                                                                stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
-                                                                    totIssues += stockUtil.quantity
-                                                                    totRM -= parseFloat((stockUtil.quantity * stockUtil.unitPrice));
-                                                                })
-                                                        }
+                                                <p className="text-xl mt-2">Lanka MountCastle (Pvt) Ltd,</p>
+                                                <p className="text-xl">No.124, Hendala, Wattala</p>
+                                                <p>011 2942 672</p>
+                                            </div>
+                                            <p className="text-right text-xl mt-2 mb-3">Generated On : {currentdate}</p>
+                                            <table className="w-full rounded-lg">
+                                                <thead>
+                                                    <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                                                        <TableHeader value="Code" />
+                                                        <TableHeader value="Bundle Name" />
+                                                        <TableHeader value="Category" />
+                                                        <TableHeader value="Initial purchase" />
+                                                        <TableHeader value="Units" />
+                                                        <TableHeader value="Unit price" />
+                                                        <TableHeader value="Total value" />
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        stock.filter((data) => data.stockCategory === "Raw materials").map((data) => {//map is used to iterate the array
+                                                            const date = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
 
-                                                        { quantity = totAdds - totIssues - data.damagedQty }
-                                                        { totalValue = price * quantity }
+                                                            var totAdds = 0;
+                                                            var totIssues = 0;
+                                                            var quantity = 0;
+                                                            var totalValue = 0;
 
-                                                        if (quantity < 0) {
-                                                            { quantity = "No usable stocks left" }
-                                                            { totalValue = 0 }
-                                                        }
+                                                            {
+                                                                stockUtil.filter((stockUtil) => stockUtil.type == "Additions" &&
+                                                                    stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
+                                                                        totAdds += stockUtil.quantity
+                                                                        totRM += parseFloat((stockUtil.quantity * stockUtil.unitPrice));
+                                                                        price = stockUtil.unitPrice
+                                                                    })
+                                                            }
+                                                            {
+                                                                stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
+                                                                    stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
+                                                                        totIssues += stockUtil.quantity
+                                                                        totRM -= parseFloat((stockUtil.quantity * stockUtil.unitPrice));
+                                                                    })
+                                                            }
 
-                                                        var datacolor = "text-black";
-                                                        if (quantity === "No usable stocks left") {
-                                                            datacolor = "text-red-600 font-bold";
-                                                        }
+                                                            { quantity = totAdds - totIssues - data.damagedQty }
+                                                            { totalValue = price * quantity }
 
-                                                        return (
-                                                            < tr className="text-sm h-10 border dark:border-slate-600" >
-                                                                <TableData value={data.stockCode} />
-                                                                <TableData value={data.stockName} />
-                                                                <TableData value={data.stockCategory} />
-                                                                <TableData value={date} />
-                                                                <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
-                                                                <TableData value={formatter.format(price)} />
-                                                                <TableData value={formatter.format(totalValue)} />
-                                                            </tr>
-                                                        )
-                                                    })}
-                                            </tbody>
-                                        </table>
-                                        <br></br><br></br>
-                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-                                            Total Raw materials : {formatter.format(totRM)}
+                                                            if (quantity < 0) {
+                                                                { quantity = "No usable stocks left" }
+                                                                { totalValue = 0 }
+                                                            }
 
-                                        </span>
+                                                            var datacolor = null;
+                                                            if (quantity === "No usable stocks left") {
+                                                                datacolor = "text-red-600 font-bold";
+                                                            }
+
+                                                            return (
+                                                                < tr className="text-sm h-10 border dark:border-slate-600" >
+                                                                    <TableData value={data.stockCode} />
+                                                                    <TableData value={data.stockName} />
+                                                                    <TableData value={data.stockCategory} />
+                                                                    <TableData value={date} />
+                                                                    <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
+                                                                    <TableData value={formatter.format(price)} />
+                                                                    <TableData value={formatter.format(totalValue)} />
+                                                                </tr>
+                                                            )
+                                                        })}
+                                                </tbody>
+                                            </table>
+                                            <br></br><br></br>
+                                            <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+                                                Total Raw materials : {formatter.format(totRM)}
+
+                                            </span>
+                                        </div>
+                                    </div >
                                     </div>
-                                </div >
+                                </div>
+                                <Footer />
                             </div>
-                            <Footer />
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    );
+            );
 };
 
-export default RawMaterialsReport
+            export default RawMaterialsReport

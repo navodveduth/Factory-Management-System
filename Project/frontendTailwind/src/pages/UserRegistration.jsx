@@ -9,7 +9,7 @@ function UserRegistration() {
   const [role, setRole] = useState('');
 
   return (
-    <body className="h-screen overflow-hidden flex items-center justify-center">
+    <body className="h-screen overflow-hidden flex items-center justify-center bg-main-dark-bg">
       <script
         src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"
         defer
@@ -21,7 +21,7 @@ function UserRegistration() {
         url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css')
       </style>
 
-      <div className="min-w-screen min-h-screen  flex items-center justify-center px-5 py-5">
+      <div className="min-w-screen min-h-screen  flex items-center justify-center px-5 py-5  bg-main-dark-bg">
         <div className=" text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden">
           <div className="md:flex w-full">
             <div className="hidden md:block w-1/2 bg-cyan-500 py-10 px-10">
@@ -229,7 +229,7 @@ function UserRegistration() {
                 />
               </svg>
             </div>
-            <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
+            <div className="w-full md:w-1/2 py-10 px-5 md:px-10 bg-gray-100">
               <div className="text-center mb-10">
                 <h1 className="font-bold text-3xl text-gray-900">
                   USER REGISTRATION

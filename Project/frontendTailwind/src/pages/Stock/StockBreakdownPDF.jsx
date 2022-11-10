@@ -8,6 +8,7 @@ import { DashTopBox, DashTopButton, } from '../../components';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import logo from '../../data/logo.png';
 
 import { jsPDF } from "jspdf";
 
@@ -16,7 +17,7 @@ function StockBreakdownPDF() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
     const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
-    const [stockUtil,setStockUtil] = useState([]);
+    const [stockUtil, setStockUtil] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     var price = 0;
 
@@ -69,6 +70,10 @@ function StockBreakdownPDF() {
         currencyDisplay: 'symbol'
     })
 
+    //getDAte
+    const current = new Date();
+    const currentdate = `${current.getFullYear()}-${current.getMonth() + 1}-${current.getDate()}`;
+
     return (
         <div>
             <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -117,7 +122,7 @@ function StockBreakdownPDF() {
                             <div>
 
                                 <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                                    <Header category="Table" title="Preview" />
+                                    <Header category="Table" title="Stock Breakdown Report Preview" />
 
                                     <div className=" flex items-center mb-5 ">
                                         <div className="mr-0 ml-auto">
@@ -125,84 +130,99 @@ function StockBreakdownPDF() {
                                         </div>
                                     </div>
 
-                                    <div id="tblPDF" className="block w-full overflow-x-auto rounded-lg">
-                                        <table className="w-full rounded-lg">
-                                            <thead>
-                                                <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                                    <TableHeader value="Code" />
-                                                    <TableHeader value="Bundle Name" />
-                                                    <TableHeader value="Units" />
-                                                    <TableHeader value="Additions" />
-                                                    <TableHeader value="Issues" />
-                                                    <TableHeader value="Damaged Units" />
-                                                    <TableHeader value="Unit price" />
-                                                    <TableHeader value="Reorder Level" />
-                                                    <TableHeader value="Buffer stock" />
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {stock.map((data, key) => {//map is used to iterate the array
-                                                    //const date = new Date(data.lastUpdated).toISOString().split('T')[0];
+                                    <div id="tblPDF">
+                                        <div className="block w-full overflow-x-auto rounded-lg">
+                                            <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                                                <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
+                                            </div>
 
-                                                    {
-                                                        var totAdds = 0;
-                                                        var totIssues = 0;
-                                                        var quantity = 0
-                                                    }
+                                            <div className="text-center mb-10">
 
-                                                    {
-                                                        stockUtil.filter((stockUtil) => stockUtil.type === "Additions" &&
-                                                            stockUtil.stockCode === data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
-                                                                totAdds += stockUtil.quantity
-                                                                price = stockUtil.unitPrice
-                                                            })
-                                                    }
-                                                    {
-                                                        stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
-                                                            stockUtil.stockCode === data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
-                                                                totIssues += stockUtil.quantity
-                                                            })
-                                                    }
+                                                <p className="text-xl mt-2">Lanka MountCastle (Pvt) Ltd,</p>
+                                                <p className="text-xl">No.124, Hendala, Wattala</p>
+                                                <p>011 2942 672</p>
+                                            </div>
+                                            <p className="text-right text-xl mt-2 mb-3">Generated On : {currentdate}</p>
 
-                                                    { quantity = totAdds - totIssues - data.damagedQty }
-                                                    if (quantity < 0) {
-                                                        { quantity = "No usable stocks left" }
-                                                    }
+                                            <table className="w-full rounded-lg">
+                                                <thead>
+                                                    <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                                                        <TableHeader value="Code" />
+                                                        <TableHeader value="Bundle Name" />
+                                                        <TableHeader value="Units" />
+                                                        <TableHeader value="Additions" />
+                                                        <TableHeader value="Issues" />
+                                                        <TableHeader value="Damaged Units" />
+                                                        <TableHeader value="Unit price" />
+                                                        <TableHeader value="Reorder Level" />
+                                                        <TableHeader value="Buffer stock" />
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {stock.map((data, key) => {//map is used to iterate the array
+                                                        //const date = new Date(data.lastUpdated).toISOString().split('T')[0];
 
-                                                    var dcolor = "text-black";
+                                                        {
+                                                            var totAdds = 0;
+                                                            var totIssues = 0;
+                                                            var quantity = 0
+                                                        }
+
+                                                        {
+                                                            stockUtil.filter((stockUtil) => stockUtil.type === "Additions" &&
+                                                                stockUtil.stockCode === data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
+                                                                    totAdds += stockUtil.quantity
+                                                                    price = stockUtil.unitPrice
+                                                                })
+                                                        }
+                                                        {
+                                                            stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
+                                                                stockUtil.stockCode === data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
+                                                                    totIssues += stockUtil.quantity
+                                                                })
+                                                        }
+
+                                                        { quantity = totAdds - totIssues - data.damagedQty }
+                                                        if (quantity < 0) {
+                                                            { quantity = "No usable stocks left" }
+                                                        }
+
+                                                        var dcolor = null;
                                                     if (data.sufficientStock === "Available") {
                                                         dcolor = "text-green-500 font-bold";
-                                                    } else {
+                                                    }else if (data.sufficientStock === "-") {
+                                                        dcolor = null;
+                                                    }else {
                                                         dcolor = "text-red-600 font-bold";
                                                     }
 
-                                                    var datacolor = "text-black";
-                                                    if (quantity === "No usable stocks left") {
-                                                        datacolor = "text-red-600 font-bold";
-                                                    }
+                                                        var datacolor = null;
+                                                        if (quantity === "No usable stocks left") {
+                                                            datacolor = "text-red-600 font-bold";
+                                                        }
 
-                                                    console.log(data.damagedQty)
+                                                        console.log(data.damagedQty)
 
-                                                    return (
-                                                        <tr className="text-sm h-10 border dark:border-slate-600">
-                                                            <TableData value={data.stockCode} />
-                                                            <TableData value={data.stockName} />
-                                                            <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
-                                                            <TableData value={totAdds} />
-                                                            <TableData value={totIssues} />
-                                                            <TableData value={data.damagedQty} />
-                                                            <TableData value={formatter.format(price)} />
-                                                            <TableData value={data.reorderLevel} />
-                                                            <td className={`${dcolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`} >{data.sufficientStock} </td>
+                                                        return (
+                                                            <tr className="text-sm h-10 border dark:border-slate-600">
+                                                                <TableData value={data.stockCode} />
+                                                                <TableData value={data.stockName} />
+                                                                <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
+                                                                <TableData value={totAdds} />
+                                                                <TableData value={totIssues} />
+                                                                <TableData value={data.damagedQty} />
+                                                                <TableData value={formatter.format(price)} />
+                                                                <TableData value={data.reorderLevel} />
+                                                                <td className={`${dcolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`} >{data.sufficientStock} </td>
 
-                                                        </tr>
-                                                    )
-                                                })}
-                                            </tbody>
-                                        </table>
+                                                            </tr>
+                                                        )
+                                                    })}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
                             <Footer />
                         </div>

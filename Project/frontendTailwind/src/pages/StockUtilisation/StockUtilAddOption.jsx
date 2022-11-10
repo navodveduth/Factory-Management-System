@@ -93,7 +93,7 @@ function StockAddExisting() {
                             <div>
 
                                 <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-                                    <Header category="Form" title=" Create New Stock" />
+                                    <Header category="Form" title=" Add New Stock" />
                                     <Header title="Choose an option" />
                                     <div className=" flex items-center justify-center ">
 
@@ -102,7 +102,6 @@ function StockAddExisting() {
                                                 <tbody>
                                                 < tr className="text-sm h-10 border dark:border-slate-900" >
                                                         <TableData value="Add new entry for new stock" />
-                                                        <TableData value="" />
                                                         <td>
                                                             <Link to={`/StockAdd/`}>
                                                                 <button
@@ -120,8 +119,8 @@ function StockAddExisting() {
                                                         
                                                         return (
                                                             < tr className="text-sm h-10 border dark:border-slate-900" >
-                                                                <TableData value={stock.stockCode}/>
-                                                                <TableData value={stock.stockName} />
+                                                                <TableData value ={<span>{stock.stockCode}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{stock.stockName}</span>} />
                                                                 <td>
                                                                     <Link to={`/StockAddExisting/${stock._id}`}>
                                                                         <button
