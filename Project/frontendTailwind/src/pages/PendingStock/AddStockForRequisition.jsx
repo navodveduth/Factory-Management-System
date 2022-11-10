@@ -36,8 +36,8 @@ function AddStockForRequisition() {
  
     console.log("id", id)
     //stock request
-    const getStock = () => {
-        axios.get(`http://localhost:8070/stock/ViewStock/${id}`).then((res) => {
+    const getStock =async  () => {
+        await axios.get(`http://localhost:8070/stock/ViewStock/${id}`).then((res) => {
             console.log("data", res.data)
             setStock(res.data);
         }).catch(()=>{
@@ -48,13 +48,20 @@ function AddStockForRequisition() {
     const name = stockName;
     console.log(name)
 
+    async function consfirmNull(){
+        alert('Stock is unavailable. Please make a purchase order request');
+        navigate('/PendingStockAdd')
+    }
+
     useEffect(() => { //useEffect is used to call the function getStock
+        if (id === "null"){
+        consfirmNull();
+        }
         getStock();
     }, [id])
 
     useEffect(() => { //useEffect is used to call the function getStock
-        // getCompleteOrder();
-        // getStockUtil();
+
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
         if (currentThemeColor && currentThemeMode) {
@@ -71,10 +78,6 @@ function AddStockForRequisition() {
         description = data.description;
     })
 
-    // if(id === "null"){
-    //     alert('Stock does not exist. Please make a purchase order request.')
-    //     navigate('/StockView')
-    // }
     return (
 
         <div>
