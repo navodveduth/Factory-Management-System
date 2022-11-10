@@ -117,7 +117,7 @@ function StockViewDateRange() {
       })
 
       const toGenerateReport = () => {
-        navigate('/FinancePreviewDateRange', { state: { DS: location.state.DS, DE: location.state.DE } });
+        navigate('/StockViewDateRangePDF', { state: { DS: location.state.DS, DE: location.state.DE } });
     }
 
     return (

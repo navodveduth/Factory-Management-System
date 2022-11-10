@@ -56,16 +56,14 @@ function StockViewDateRangePDF() {
 
     const id = useParams();
 
-    const deleteStock = async (id) => {
-        await axios.delete('http://localhost:8070/stock/delete/' + id)
-            .then(() => {
-                alert("Data deleted successfully");
-                getStock();
-            })
-            .catch((err) => {
-                alert(err.message);
-            })
-    }
+    const createPDF = async () => {
+        const date = new Date().toISOString().split('T')[0];
+        const pdf = new jsPDF("landscape", "px", "a1", false);
+        const data = await document.querySelector("#tblPDF");
+        pdf.html(data).then(() => {
+            pdf.save("stocksUtil_" + date + ".pdf");
+        });
+    };
 
     useEffect(() => { //useEffect is used to call the function getStock
         getStock();
@@ -82,32 +80,7 @@ function StockViewDateRangePDF() {
     }, [])
 
 
-    const confirmFunc = (id) => {
-
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
-            if (result.isConfirmed) {
-                deleteStock(id);
-              Swal.fire({  
-                icon: 'success',
-                title: 'Data Successfully Deleted',
-                color: '#f8f9fa',
-                background: '#6c757d',
-                showConfirmButton: false,
-                timer: 2000
-              })
-            }else {
-                navigate('/StockView');
-            }
-          })
-    }
+   
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',

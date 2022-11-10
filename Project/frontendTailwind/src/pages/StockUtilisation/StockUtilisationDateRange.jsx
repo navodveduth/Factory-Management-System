@@ -95,7 +95,7 @@ function StockUtilisationDateRange() {
     })
 
     const toGenerateReport = () => {
-        navigate('/FinancePreviewDateRange', { state: { DS: location.state.DS, DE: location.state.DE } });
+        navigate('/StockUtilDateRangePDF', { state: { DS: location.state.DS, DE: location.state.DE } });
     }
 
     return (

@@ -113,7 +113,7 @@ function StockBreakdownDateRange() {
     })
 
     const toGenerateReport = () => {
-        navigate('/FinancePreviewDateRange', { state: { DS: location.state.DS, DE: location.state.DE } });
+        navigate('/StockBreakdownDateRangePDF', { state: { DS: location.state.DS, DE: location.state.DE } });
     }
 
     return (
