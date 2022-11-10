@@ -167,7 +167,7 @@ export default function PendingStockRequisition(){
                                                                     <button 
                                                                         type="button" 
                                                                         className="font-bold py-1 px-4 rounded-full mx-3 text-white" 
-                                                                        style={{ background: currentColor }}><i className="fas fa-edit"/>Issue Stock
+                                                                        style={{ background: currentColor }}><i className="fas fa-edit"/>   Issue Stock
                                                                     </button>
                                                                 </Link>
                                                         </td>
