@@ -154,7 +154,7 @@ const DriverViewViewAll = () => {
               <div>
                 <div>
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                    <Header category="Table" title="Drivers" />
+                    <Header title="Drivers" />
 
                     <div className="flex items-center mb-5 ">
                       <div>

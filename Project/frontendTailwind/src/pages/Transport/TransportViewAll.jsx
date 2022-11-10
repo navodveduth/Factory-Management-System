@@ -278,6 +278,10 @@ const TransportViewAll = () => {
                                 return data;
                               }
                               if (
+                                data.transportID
+                                  .toString()
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase()) ||
                                 data.type
                                   .toString()
                                   .toLowerCase()
