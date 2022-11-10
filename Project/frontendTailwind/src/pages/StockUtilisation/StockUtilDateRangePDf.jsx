@@ -57,6 +57,11 @@ function StockUtilDateRangePDF() {
         currencyDisplay: 'symbol'
     })
 
+    //getDAte
+    const current = new Date();
+    const currentdate = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}`;
+
+
     return (
         <div>
             <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -115,6 +120,16 @@ function StockUtilDateRangePDF() {
                                     </div>
 
                                     <div id="tblPDF" className="block w-full overflow-x-auto rounded-lg">
+                                    <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                                            <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
+                                        </div>
+
+                                        <div className="text-center mb-10">
+
+                                            <p className="text-xl mt-2">Lanka MountCastle (Pvt) Ltd,</p>
+                                            <p className="text-xl">No.124, Hendala, Wattala</p>
+                                            <p>011 2942 672</p>
+                                        </div>
                                         <table className="w-full rounded-lg">
                                             <thead>
                                                 <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
