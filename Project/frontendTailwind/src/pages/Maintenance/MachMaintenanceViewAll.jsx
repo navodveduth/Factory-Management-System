@@ -6,12 +6,11 @@ import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider.js';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
-
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import MachManitenanceDateRange from './MachManitenanceDateRange';
-
+import {DateRangePickerComponent} from '@syncfusion/ej2-react-calendars' // this code needed for the datesort function
 
 
 
@@ -106,6 +105,27 @@ const MachMaintenanceViewAll = () => {
 
   }
 
+  let dateRangeRef = (dateRange) => {
+    dateRangeRef = dateRange; // dateRangeRef is a reference to the DateRangePickerComponent
+  };
+
+  const filterDate = () => {
+    if (dateRangeRef.value && dateRangeRef.value.length > 0) {
+
+        const start = (dateRangeRef.value[0]);
+        const end = (dateRangeRef.value[1]);
+
+        setDateStart(start);
+        setDateEnd(end);
+        navigate('/MachManitenanceDateRange',{state:{DS:start,DE:end}});
+
+    } else {
+      alert("Please select a date range")
+      setDateStart('');
+      setDateEnd('');
+    }
+
+};
   
 
   return (
@@ -172,25 +192,6 @@ const MachMaintenanceViewAll = () => {
                           }} />
                       </div>
 
-
-                      <div>
-                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date" 
-                                onChange={(e) => {
-                                  setDateStart(e.target.value);
-                                }} />
-                              </div>
-
-                              <div>
-                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date" 
-                                onChange={(e) => {
-                                  setDateEnd(e.target.value);
-                                }} />
-                              </div>
-
-                              <div className=" mx-1">
-                                  <button type="button" className = "py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}>Filter by Date</button>
-                              </div>
-                              
                       <div className="mr-0 ml-auto">
                         <Link to={"/MachMaintenanceReport"}> {/* change this link your preview page */}
                           <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
@@ -198,6 +199,18 @@ const MachMaintenanceViewAll = () => {
                       </div>
 
                     </div>
+
+                      <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
+                                  <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
+                                      <DateRangePickerComponent ref={dateRangeRef}  placeholder="Select a date range"/>
+                                  </div>
+                                  <div className="ml-5">
+                                      <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => filterDate()}>Filter</button>
+                                  </div>
+                              </div>
+                     
+                              
+                     
 
 
 
