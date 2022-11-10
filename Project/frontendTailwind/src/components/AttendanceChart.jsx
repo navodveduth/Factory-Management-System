@@ -123,7 +123,7 @@ const AttendanceChart = ({employeeNumber}) => {
 
   return (
     <div>
-      <ChartsHeader category="Chart" title="Attendance vs Leaves" />
+      <ChartsHeader category="Chart" title="Attendance vs Leaves - 2022" />
       <ChartComponent primaryXAxis={primaryXAxis} primaryYAxis={primaryYAxis} tooltip={tooltip} 
         background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'} palettes={colors} legendSettings={{background: "white"}}>
         <Inject services={[ColumnSeries, Legend, Category, Tooltip, DataLabel]} />

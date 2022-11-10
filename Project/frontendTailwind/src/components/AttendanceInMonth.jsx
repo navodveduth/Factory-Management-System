@@ -8,6 +8,8 @@ import { DatePickerComponent } from '@syncfusion/ej2-react-calendars'
 const AttendanceInMonth = ({employeeNumber}) => {
   const { currentMode } = useStateContext();
   const [ attendance, setAttendance ] = useState([]);
+  const [ month, setMonth ] = useState('');
+  const [ year, setYear ] = useState('');
 
   const tooltip = { enable: true, shared: false };
 
@@ -46,12 +48,46 @@ const AttendanceInMonth = ({employeeNumber}) => {
   useEffect(() => {
     getAttendance ();
   }, []);
-
-  const year = new Date().getFullYear();
-  const month = new Date().getMonth();
+  
+  const handleDateChange = (e) => {
+    if(e.value) {
+        const date = e.target.value;
+        const months = date.getMonth();
+        const years = date.getFullYear();
+        setMonth(months);
+        setYear(years);
+    }
+    else {
+        setMonth('');
+        setYear('');
+    }
+  }
 
   const employeeAttendaceByMonth = attendance.filter((item) => {
     return new Date(item.employeeInTime).getFullYear() == year && new Date(item.employeeInTime).getMonth() == (month);
+  });
+
+  const arrayOfDatesforMonth = month => {
+    const date = new Date(year, month, 1);
+    const dates = []; 
+    while (date.getMonth() === month) { 
+      dates.push(new Date(date).getDate());
+      date.setDate(date.getDate() + 1);
+    }
+    return dates;
+  };
+
+  //assign working hours to each date
+  const workingHoursWithDate = arrayOfDatesforMonth(month).map((date) => {
+    const dateInTime = new Date(year, month, date).getTime();
+    const dateOutTime = new Date(year, month, date + 1).getTime();
+    const employeeAttendanceByDate = employeeAttendaceByMonth.filter((item) => {
+      return new Date(item.employeeInTime).getDate() == date;
+    });
+    const workingHours = employeeAttendanceByDate.reduce((acc, item) => {
+      return acc + item.employeeTotalHours;
+    }, 0);
+    return { date, workingHours };
   });
 
   const employeeAttendaceByMonthMap = employeeAttendaceByMonth.map((item) => {
@@ -61,7 +97,7 @@ const AttendanceInMonth = ({employeeNumber}) => {
     };
   });
 
-  const sort = employeeAttendaceByMonthMap.sort((a, b) => {
+  const sort = workingHoursWithDate.sort((a, b) => {
     return a.date - b.date; 
   });
 
@@ -72,16 +108,21 @@ const AttendanceInMonth = ({employeeNumber}) => {
       <ChartsHeader category="Chart" title="Attendance vs Leaves" />
       <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
         <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
-            <DatePickerComponent placeholder="Select a month" start="Year" depth="Year" format="MMM yyyy" />
+          <DatePickerComponent  placeholder="Select a month " start="Year" depth="Year" format="MMM yyyy" onChange={handleDateChange} />
+        </div>
+        <div className="ml-5">
+            <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={handleDateChange}>Filter</button>
         </div>
       </div>
-      <ChartComponent primaryXAxis={primaryXAxis} primaryYAxis={primaryYAxis} tooltip={tooltip} 
+      <div id='chart'>
+        <ChartComponent primaryXAxis={primaryXAxis} primaryYAxis={primaryYAxis} tooltip={tooltip} 
         background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'} palettes={colors} legendSettings={{background: "white"}}>
         <Inject services={[ColumnSeries, Category, Tooltip, DataLabel]} />
         <SeriesCollectionDirective>
-          <SeriesDirective dataSource={sort} xName="date" yName="totalWorkingHours" name="Working Hours" type="Column" marker={{ dataLabel: { visible: false, position: 'Middle', font: { fontWeight: '600', color: '#ffffff' } } }} />
+          <SeriesDirective dataSource={sort} xName="date" yName="workingHours" name="Working Hours" type="Column" marker={{ dataLabel: { visible: false, position: 'Middle', font: { fontWeight: '600', color: '#ffffff' } } }} />
         </SeriesCollectionDirective>
       </ChartComponent>
+      </div>
     </div>
   )
 }
