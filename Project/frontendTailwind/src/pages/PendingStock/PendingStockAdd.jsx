@@ -23,7 +23,7 @@ function PendingStockAdd() {
     const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState('');
     const [date, setDate] = useState('');
-    const [status, setStatus] = useState('');
+    var status = null;
 
     //gets the current date
     var currentDate = new Date().toISOString().split('T')[0];
@@ -96,6 +96,8 @@ function PendingStockAdd() {
                                         <form onSubmit={async (e) => {
                                             e.preventDefault();
 
+                                            {status = "Processing"}
+
                                             const newStock = {
                                                 stockCode,
                                                 stockName,
@@ -127,11 +129,22 @@ function PendingStockAdd() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <label for="stockName" className="form-label">Stock Name: </label>
-                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" placeholder="Enter stock name..."
-                                                    title="The name can contain only alphabets" required onChange={(e) => {
+                                                <label for="bundlename" className="form-label">Stock Name</label>
+                                                <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                                                    id="bundlename" placeholder="Enter Stock Bundle Name..." required
+                                                    onChange={(e) => {
                                                         setStockName(e.target.value);
-                                                    }} />
+                                                    }}>
+                                                    <option value=''>Select Item..</option>
+                                                    <option value='Shirts'>Shirts</option>
+                                                    <option value='T-Shirts'>T-Shirts</option>
+                                                    <option value='Blouse'>Blouse</option>
+                                                    <option value='Jeans'>Jeans</option>
+                                                    <option value='Pants'>Pants</option>
+                                                    <option value='Shorts'>Shorts</option>
+                                                    <option value='Skirts'>Skirts</option>
+                                                    <option value='Caps'>Caps</option>
+                                                </select>
                                             </div>
 
                                             <div className="mb-3">
@@ -165,15 +178,8 @@ function PendingStockAdd() {
 
                                             <div className="mb-3">
                                                 <label for="status" className="form-label">Status: </label>
-                                                < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="status" title="Please choose one of the options" required onChange={(e) => {
-                                                    setStatus(e.target.value);
-                                                    //myFunction();
-                                                }}>
-                                                    <option selected  >Select option...</option>
-                                                    <option value="Pending">Pending</option>
-                                                    <option value="Processing">Processing</option>
-                                                    <option value="Resolved">Resolved</option>
-                                                </select>
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="stat" 
+                                                   value={"Processing"} readOnly />
                                             </div>
 
                                             <div className="mb-3">
