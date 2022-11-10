@@ -135,7 +135,7 @@ const MaintainBarChart = () => {
             },
           ];
         
-        
+          const colors = ['#1363DF', '#F87474', '#47B5FF', '#FF8C00', '#4B0082'];
           return (
             <div className="m-0 md:m-10 mt-0 p-0 max-h-21 bg-white dark:bg-secondary-dark-bg rounded-3xl">
               <ChartsHeader category="Chart" title= "Maintenance In Progress" />
@@ -148,6 +148,7 @@ const MaintainBarChart = () => {
                   chartArea={{ border: { width: 2 } }}
                   tooltip={{ enable: true }}
                   background={currentMode === 'Dark' ? '#33373E' : '#f3f4f6'}
+                  palettes={colors}
                   legendSettings={{ background: '#f3f4f6' }}
                 >
                   <Inject services={[ColumnSeries, Legend, Tooltip, Category, DataLabel]} />
