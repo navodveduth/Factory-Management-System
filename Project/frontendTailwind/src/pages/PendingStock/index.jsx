@@ -1,9 +1,7 @@
-export { default as PendingStockRequisitions } from './PendingStockRequisition';
 export { default as PendingStockAdd } from './PendingStockAdd';
 export { default as PendingStockUpdate } from './PendingStockUpdate';
-export {default as PendingStockPDf } from './PendingStockPDF';
 export { default as PendingStockRequisition } from './PendingStockRequisition';
-export { default as PendingRequestPDF } from './StockRequisitionPDF';
+export { default as StockRequisitionPDF } from './StockRequisitionPDF';
 export { default as ProcessingRequest } from './ProcessingRequest';
 export {default as ProcessingRequestPDF } from './ProcessingRequestPDF';
 export {default as ResolvedRequest } from './ResolvedRequest';

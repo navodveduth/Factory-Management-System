@@ -45,6 +45,13 @@ function IssuesReport() {
         });
     };
 
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+    })
+
     return (
         <div>
             <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -108,17 +115,18 @@ function IssuesReport() {
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
+                                                    <TableHeader value="Initial Purchase" />
                                                     <TableHeader value="Date" />
                                                     <TableHeader value="Type" />
                                                     <TableHeader value="unitPrice" />
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Total value" />
-                                                    <TableHeader value="Supplier" />
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {stockUtil.filter((data) => data.type === "Issues").map((data) => {//map is used to iterate the array
-                                                    //const date = new Date(data.lastUpdated).toISOString().split('T')[0];
+                                                    const dbDate = new Date(data.date).toISOString().split('T')[0];
+                                                    const date = new Date(data.firstPurchaseDate).toISOString().split('T')[0]
 
                                                     var datacolor = "text-black";
                                                     if (data.type === "Additions") {
@@ -132,12 +140,12 @@ function IssuesReport() {
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
                                                             <TableData value={data.stockCategory} />
-                                                            <TableData value={data.date} />
+                                                            <TableData value={date} />
+                                                            <TableData value={dbDate} />
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}><TableData value={data.type} /></td>
-                                                            <TableData value={"Rs." + data.unitPrice} />
+                                                            <TableData value={formatter.format(data.unitPrice)} />
                                                             <TableData value={data.quantity} />
-                                                            <TableData value={"Rs." + data.totalValue} />
-                                                            <TableData value={data.supplier} />
+                                                            <TableData value={formatter.format(data.totalValue)} />
                                                         </tr>
                                                     )
                                                 })}
