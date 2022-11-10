@@ -170,6 +170,7 @@ function StockUtilisation() {
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
+                                                    <TableHeader value="Initial Purchase" />
                                                     <TableHeader value="Date" />
                                                     <TableHeader value="Type" />
                                                     <TableHeader value="unitPrice" />
@@ -189,7 +190,7 @@ function StockUtilisation() {
                                                     }
                                                 }).map((data, key) => {//map is used to iterate the array
                                                     const dbDate = new Date(data.date).toISOString().split('T')[0];
-
+                                                    const pfDate = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
                                                     var datacolor = "text-black";
                                                     if (data.type === "Additions") {
                                                         datacolor = "text-green-500 font-bold";
@@ -209,11 +210,12 @@ function StockUtilisation() {
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
                                                             <TableData value={data.stockCategory} />
+                                                            <TableData value={pfDate} />
                                                             <TableData value={dbDate} />
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.type}</td>
-                                                            <TableData value={"Rs." + formatter.format(data.unitPrice)} />
+                                                            <TableData value={formatter.format(data.unitPrice)} />
                                                             <TableData value={data.quantity} />
-                                                            <TableData value={"Rs." + formatter.format(data.totalValue)} />
+                                                            <TableData value={formatter.format(data.totalValue)} />
 
 
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
