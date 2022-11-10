@@ -84,6 +84,8 @@ const DriverViewViewAll = () => {
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
+      color: '#f8f9fa',
+      background: '#6c757d',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -152,7 +154,7 @@ const DriverViewViewAll = () => {
               <div>
                 <div>
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                    <Header category="Table" title="Drivers" />
+                    <Header title="Drivers" />
 
                     <div className="flex items-center mb-5 ">
                       <div>
