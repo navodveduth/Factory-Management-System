@@ -8,7 +8,9 @@ import { jsPDF } from "jspdf";
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import { DashTopBox, DashTopButton,  } from '../../components';
+import { DashTopBox, DashTopButton, } from '../../components';
+import logo from '../../data/logo.png';
+
 
 function IssuesReport() {
 
@@ -51,6 +53,11 @@ function IssuesReport() {
         minimumFractionDigits: 2,
         currencyDisplay: 'symbol'
     })
+
+    //getDAte
+    const current = new Date();
+    const currentdate = `${current.getFullYear()}-${current.getMonth() + 1}-${current.getDate()}`;
+
 
     return (
         <div>
@@ -107,53 +114,65 @@ function IssuesReport() {
                                             <button onClick={createPDF} type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
                                         </div>
                                     </div>
+                                    <div id="tblPDF">
+                                        <div className="block w-full overflow-x-auto rounded-lg">
+                                            <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                                                <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
+                                            </div>
 
-                                    <div id="tblPDF" className="block w-full overflow-x-auto rounded-lg">
-                                        <table className="w-full rounded-lg">
-                                            <thead>
-                                                <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                                    <TableHeader value="Code" />
-                                                    <TableHeader value="Bundle Name" />
-                                                    <TableHeader value="Category" />
-                                                    <TableHeader value="Initial Purchase" />
-                                                    <TableHeader value="Date" />
-                                                    <TableHeader value="Type" />
-                                                    <TableHeader value="unitPrice" />
-                                                    <TableHeader value="Units" />
-                                                    <TableHeader value="Total value" />
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {stockUtil.filter((data) => data.type === "Issues").map((data) => {//map is used to iterate the array
-                                                    const dbDate = new Date(data.date).toISOString().split('T')[0];
-                                                    const date = new Date(data.firstPurchaseDate).toISOString().split('T')[0]
+                                            <div className="text-center mb-10">
 
-                                                    var datacolor = "text-black";
-                                                    if (data.type === "Additions") {
-                                                        datacolor = "text-green-500 font-bold";
-                                                    } else {
-                                                        datacolor = "text-red-600 font-bold";
-                                                    }
+                                                <p className="text-xl mt-2">Lanka MountCastle (Pvt) Ltd,</p>
+                                                <p className="text-xl">No.124, Hendala, Wattala</p>
+                                                <p>011 2942 672</p>
+                                            </div>
+                                            <p className="text-right text-xl mt-2 mb-3">Generated On : {currentdate}</p>
 
-                                                    return (
-                                                        <tr className="text-sm h-10 border dark:border-slate-600">
-                                                            <TableData value={data.stockCode} />
-                                                            <TableData value={data.stockName} />
-                                                            <TableData value={data.stockCategory} />
-                                                            <TableData value={date} />
-                                                            <TableData value={dbDate} />
-                                                            <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}><TableData value={data.type} /></td>
-                                                            <TableData value={formatter.format(data.unitPrice)} />
-                                                            <TableData value={data.quantity} />
-                                                            <TableData value={formatter.format(data.totalValue)} />
-                                                        </tr>
-                                                    )
-                                                })}
-                                            </tbody>
-                                        </table>
+                                            <table className="w-full rounded-lg">
+                                                <thead>
+                                                    <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                                                        <TableHeader value="Code" />
+                                                        <TableHeader value="Bundle Name" />
+                                                        <TableHeader value="Category" />
+                                                        <TableHeader value="Initial Purchase" />
+                                                        <TableHeader value="Date" />
+                                                        <TableHeader value="Type" />
+                                                        <TableHeader value="unitPrice" />
+                                                        <TableHeader value="Units" />
+                                                        <TableHeader value="Total value" />
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {stockUtil.filter((data) => data.type === "Issues").map((data) => {//map is used to iterate the array
+                                                        const dbDate = new Date(data.date).toISOString().split('T')[0];
+                                                        const date = new Date(data.firstPurchaseDate).toISOString().split('T')[0]
+
+                                                        var datacolor = "text-black";
+                                                        if (data.type === "Additions") {
+                                                            datacolor = "text-green-500 font-bold";
+                                                        } else {
+                                                            datacolor = "text-red-600 font-bold";
+                                                        }
+
+                                                        return (
+                                                            <tr className="text-sm h-10 border dark:border-slate-600">
+                                                                <TableData value={data.stockCode} />
+                                                                <TableData value={data.stockName} />
+                                                                <TableData value={data.stockCategory} />
+                                                                <TableData value={date} />
+                                                                <TableData value={dbDate} />
+                                                                <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}><TableData value={data.type} /></td>
+                                                                <TableData value={formatter.format(data.unitPrice)} />
+                                                                <TableData value={data.quantity} />
+                                                                <TableData value={formatter.format(data.totalValue)} />
+                                                            </tr>
+                                                        )
+                                                    })}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
                             <Footer />
                         </div>
