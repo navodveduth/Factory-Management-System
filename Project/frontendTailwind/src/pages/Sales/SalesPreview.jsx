@@ -53,7 +53,7 @@ const formatter = new Intl.NumberFormat('en-US', {
   currencyDisplay: 'symbol'
 })
 
-//getDAte
+//getDate
       const current = new Date();
       const currentdate = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}`;
 
@@ -106,7 +106,7 @@ return (
                       
                       
                     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                      <Header category="Table" title="Sales Invoices" />
+                      <Header title="Sales Invoices Report" />
                       
                       <button onClick={createPDF} type="button"  className="font-bold py-1 px-4 rounded-full m-3 text-white absolute top-40 right-20 hover:bg-slate-700 bg-slate-500" >Download Report</button>
 
@@ -125,6 +125,7 @@ return (
                           <p className="text-xl">No.124, Hendala, Wattala</p>
                           <p>011 2942 672</p>
                         </div>
+
                         <p className="text-right text-xl mt-2 mb-3">Generated On : {currentdate}</p>
                           <table className="w-full rounded-lg">
                             <thead>
