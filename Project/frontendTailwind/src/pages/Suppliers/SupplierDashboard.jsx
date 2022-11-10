@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { FiUsers } from "react-icons/fi";
+import { FiUsers, FiUserPlus } from "react-icons/fi";
 import { TbBuilding } from "react-icons/tb";
 import { DashTopBox, DashTopButton } from "../../components";
 
@@ -99,10 +99,10 @@ const SupplierDashboard = () => {
                       {/* top buttons in the dashboard */}{" "}
                       {/* use for navigation buttons*/}
                       <Link to="/SupplierViewAll">
-                        <DashTopButton value="View All suppliers" />
+                        <DashTopButton value="View All suppliers" icon={<FiUsers />} />
                       </Link>
                       <Link to="/SupplierCreate">
-                        <DashTopButton value="Create New suppliers" />
+                        <DashTopButton value="Create New suppliers" icon={<FiUserPlus />} />
                       </Link>
                     </div>
                   </div>

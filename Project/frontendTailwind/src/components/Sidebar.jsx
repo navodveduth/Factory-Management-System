@@ -8,6 +8,7 @@ import { IoBagHandleOutline } from 'react-icons/io5';
 import { TbBuildingWarehouse, TbTruckDelivery, TbReportMoney, TbBuildingFactory2 } from 'react-icons/tb';
 import { FaHouseDamage, FaRegMoneyBillAlt, FaChartLine } from 'react-icons/fa';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import logo from '../data/logo.png';
 
 import { useStateContext } from '../contexts/ContextProvider';
 
@@ -29,7 +30,7 @@ const Sidebar = () => {
         <>
           <div className="flex justify-between items-center">
             <Link to="/" onClick={handleCloseSideBar} className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900">
-              <span>Factory Management System</span> {/*  system name  */}
+              <img src={logo} alt="logo" />
             </Link>
 
             <TooltipComponent content="Menu" position="BottomCenter">
@@ -176,22 +177,22 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <TbBuildingFactory2 /> {/*  icon  */}
-              <span className="capitalize ">Production Cost</span>{' '}
+              <span className="capitalize ">Production Workflow</span>{' '}
               {/*  link name  */}
             </NavLink>
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/Attendace and leaves"
+              to="/insightDashboard"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <FiPackage /> {/*  icon  */}
-              <span className="capitalize ">Order Distribution</span>{' '}
+              <FaChartLine /> {/*  icon  */}
+              <span className="capitalize ">Insights</span>{' '}
               {/*  link name  */}
             </NavLink>
             {/*  done ---------------------------------------------------------------------------------- done  */}

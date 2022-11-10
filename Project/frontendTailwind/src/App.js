@@ -13,10 +13,10 @@ import {  MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceVi
 import {MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory} from './pages//Machinery';
 import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice, SalesDateRange } from './pages/Sales';
 
-import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders,CompletedOrders, FinalCostOrder,CompletedOrdersDateRange} from './pages/Production/Index';
+import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders,CompletedOrders, FinalCostOrder,CompletedOrdersDateRange, CostedOrders, InsightDashboard, UpdateStockRequest} from './pages/Production/Index';
 
 import { StocksDashboard, StockView, StockInformation, StockViewDateRange, StockBreakdownDateRange , StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, ViewAllRawMaterials, RawMaterialsReport, ViewAllWorkInProgress, WorkInProgressReport } from './pages/Stock';
-import { PendingStockRequisitions,AddStockForRequisition,IssuesForm, PendingStockAdd, PendingStockUpdate, PendingStockPDf, PendingRequest, PendingRequestPDF, ProcessingRequest, ProcessingRequestPDF, ResolvedRequest, ResolvedRequestPDF } from './pages/PendingStock';
+import { AddStockForRequisition,IssuesForm, PendingStockAdd, PendingStockUpdate, StockRequisitionPDF, ProcessingRequest, ProcessingRequestPDF, ResolvedRequest, ResolvedRequestPDF, PendingStockRequisition } from './pages/PendingStock';
 import { StockUtilisationDashboard, StockUtilPDF,StockUtilisationDateRange ,StockUtilisation, StockAddExisting, StockUtilAddOption, StockUtilUpdate, ViewAllAdditions, AdditionsReport, ViewAllIssues, IssuesReport } from './pages/StockUtilisation';
 
 import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview, PurchaseOrderAdd, PurchaseOrderUpdate, PurchaseOrderPreview, PurchaseOrderView } from './pages/Suppliers';
@@ -125,6 +125,7 @@ const App = () => {
           {/* production management  */}
           <Route path="/viewRequested" element={<RequestedStocks />} />
           <Route path="/production" element={<ProductionDashBoard />} />
+          <Route path="/insightDashboard" element={<InsightDashboard />} />
           <Route path="/newOrder" element={<AddOrder />} />
           <Route path="/requestStock/:id" element={<UpdateOrder />} />
           <Route path="/costpreview" element={<PreviewOrder />} />
@@ -132,6 +133,8 @@ const App = () => {
           <Route path="/completedOrders" element ={<CompletedOrders/>}/>
           <Route path="/costingOrder/:id" element ={<FinalCostOrder/>}/>
           <Route path="/CompletedOrdersDateRange" element={<CompletedOrdersDateRange/>}/>
+          <Route path="/costedOrders" element={<CostedOrders />} />
+          <Route path="/updateStockRequest/:id" element={<UpdateStockRequest/>}/>
 
           {/* stock management  */}
           <Route path="/StockDashboard" element={<StocksDashboard />} />
@@ -151,13 +154,11 @@ const App = () => {
           <Route path="/generateSBPDF" element={<StockBreakdownPDF/>} />
           <Route path="/StockBreakdownDateRange/" element={<StockBreakdownDateRange/>} />
           
-          <Route path="/PendingStockRequisitions" element={<PendingStockRequisitions />} />
-          <Route path="PendingStockAdd" element={<PendingStockAdd />} />
-          <Route path="PendingStockAdd/:id" element={<AddStockForRequisition />} />
+          <Route path="/PendingStockRequisitions" element={<PendingStockRequisition />} />
+          <Route path="/PendingStockAdd" element={<PendingStockAdd />} />
+          <Route path="PendingStockAddReq/:id" element={<AddStockForRequisition />} />
           <Route path="PendingStockUpdate/:id" element={<PendingStockUpdate />} />
-          <Route path="/generatePSPDF" element={<PendingStockPDf />}/>
-          <Route path="/PendingRequest" element={<PendingRequest />}/>
-          <Route path="/generatePendingRPDF" element={<PendingRequestPDF />}/>
+          <Route path="/StockRequisitionPDF" element={<StockRequisitionPDF />}/>
           <Route path="/ProcessingRequest" element={<ProcessingRequest />}/>
           <Route path="/generateProcessingRPDF" element={<ProcessingRequestPDF />}/>
           <Route path="/ResolvedRequest" element={<ResolvedRequest />}/>

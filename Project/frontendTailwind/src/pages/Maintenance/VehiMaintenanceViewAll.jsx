@@ -175,7 +175,7 @@ const VehiMaintenanceViewAll = () => {
                               </div>
 
                               <div className=" mx-1">
-                                  <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}  >filter</button>
+                                  <button type="button" className = "py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}>Filter by Date</button>
                               </div>
 
 

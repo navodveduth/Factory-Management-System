@@ -20,7 +20,7 @@ export default function MaintenanceCost() {
                            titleStyle: { 
                             color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
                             fontSize: '16px'},
-                           interval: 100000,
+                           interval: 10000,
                          };
                          
     const primaryXAxis = { valueType: 'Category', 
