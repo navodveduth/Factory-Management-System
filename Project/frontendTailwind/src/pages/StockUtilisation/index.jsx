@@ -9,3 +9,4 @@ export { default as AdditionsReport } from './AdditionsReport';
 export { default as ViewAllIssues } from './ViewAllIssues';
 export { default as IssuesReport } from './IssuesReport';
 export { default as StockUtilisationDateRange } from './StockUtilisationDateRange';
+export { default as StockUtilDateRangePDF } from './StockUtilDateRangePDF';
