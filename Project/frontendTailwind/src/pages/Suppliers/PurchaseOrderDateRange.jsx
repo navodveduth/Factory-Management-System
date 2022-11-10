@@ -201,7 +201,7 @@ function PurchaseOrderDateRange() {
 
 											<td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
 												
-												<Link to={`/PurchaseOrderDetailsUpdate/${data._id}`}> 
+												<Link to={`/PurchaseOrderUpdate/${data._id}`}> 
 													<button
 														type="button"
 														className="font-bold py-1 px-4 rounded-full mx-3 text-white"
