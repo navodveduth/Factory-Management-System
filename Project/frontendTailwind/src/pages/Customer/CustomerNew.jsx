@@ -5,6 +5,7 @@ import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { FiSettings } from 'react-icons/fi';
 import { useStateContext } from '../../contexts/ContextProvider';
+import Swal from "sweetalert2";
 
 
 function NewCustomerForm() {
@@ -92,8 +93,14 @@ function NewCustomerForm() {
 
                 await axios.post("http://localhost:8070/customer/create", newCustomer)
                 .then((res)=>{
-                    alert("Customer Registered successfully");
-                       //navigate to the sales view page
+                    Swal.fire({  
+                      icon: 'success',
+                      title: 'Customer Registered successfully',
+                      color: '#f8f9fa',
+                      background: '#6c757d',
+                      showConfirmButton: false,
+                      timer: 2000
+                    })
                 navigate('/CustomerViewAll');
                 })
                 .catch((err)=>{
