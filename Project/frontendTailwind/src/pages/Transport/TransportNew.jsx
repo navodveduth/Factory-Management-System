@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import Swal from 'sweetalert2';
 import {
   Header,
   Navbar,
@@ -160,7 +161,14 @@ const TransportNew = () => {
                             newTransport
                           )
                           .then((res) => {
-                            alert('Transport Details Added');
+                            Swal.fire({
+                              icon: 'success',
+                              title: 'Transport Details Saved Successfully',
+                              color: '#f8f9fa',
+                              background: '#6c757d',
+                              showConfirmButton: false,
+                              timer: 2000,
+                            });
                             navigate('/TransportViewAll');
                           })
                           .catch((err) => {
@@ -295,7 +303,7 @@ const TransportNew = () => {
                       <div className="mb-3">
                         <label className="form-label">Distance (Km)</label>
                         <input
-                          type="number"
+                          type="text"
                           className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           id="distance"
                           placeholder="Enter the distance..."
