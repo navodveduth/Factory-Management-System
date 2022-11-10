@@ -3,6 +3,7 @@ import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, Leg
 import axios from 'axios';
 import ChartsHeader from './ChartsHeader'
 import { useStateContext } from '../contexts/ContextProvider';
+import { DatePickerComponent } from '@syncfusion/ej2-react-calendars'
 
 const AttendanceInMonth = ({employeeNumber}) => {
   const { currentMode } = useStateContext();
@@ -69,6 +70,11 @@ const AttendanceInMonth = ({employeeNumber}) => {
   return (
     <div>
       <ChartsHeader category="Chart" title="Attendance vs Leaves" />
+      <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
+        <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
+            <DatePickerComponent placeholder="Select a month" start="Year" depth="Year" format="MMM yyyy" />
+        </div>
+      </div>
       <ChartComponent primaryXAxis={primaryXAxis} primaryYAxis={primaryYAxis} tooltip={tooltip} 
         background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'} palettes={colors} legendSettings={{background: "white"}}>
         <Inject services={[ColumnSeries, Category, Tooltip, DataLabel]} />
