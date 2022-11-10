@@ -21,13 +21,13 @@ function StockUtilisationDateRange() {
 
     var totalAdditions = 0;
     var totalIssues = 0;
-    
+
     const toDateRange = () => {
         navigate('/StockUtilisation');
     }
 
     const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stockUtilisation/date/" + location.state.DS+"/"+location.state.DE)
+        axios.get("http://localhost:8070/stockUtilisation/date/" + location.state.DS + "/" + location.state.DE)
             .then((res) => {
                 setStockUtilisation(res.data); //setStock is used to update the state variable
                 console.log(res.data);
@@ -70,21 +70,21 @@ function StockUtilisationDateRange() {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 deleteStockUtil(id);
-              Swal.fire({  
-                icon: 'success',
-                title: 'Data Successfully Deleted',
-                color: '#f8f9fa',
-                background: '#6c757d',
-                showConfirmButton: false,
-                timer: 2000
-              })
-            }else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Data Successfully Deleted',
+                    color: '#f8f9fa',
+                    background: '#6c757d',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            } else {
                 navigate('/StockUtilisation');
             }
-          })
+        })
     }
 
     const formatter = new Intl.NumberFormat('en-US', {
@@ -94,6 +94,9 @@ function StockUtilisationDateRange() {
         currencyDisplay: 'symbol'
     })
 
+    const toGenerateReport = () => {
+        navigate('/FinancePreviewDateRange', { state: { DS: location.state.DS, DE: location.state.DE } });
+    }
 
     return (
 
@@ -148,21 +151,14 @@ function StockUtilisationDateRange() {
                                     <Header category="Table" title="Stocks Utilisation" />
 
                                     <div className=" flex items-center mb-5 ">
-                                        <div>
-                                            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here"
-                                                onChange={(e) => {
-                                                    setSearchTerm(e.target.value);
-                                                }} />
-                                        </div>
-                                        <div className="mx-10 ml-auto">
+                                        
+                                        <div className="mx-3">
                                             <Link to={"/StockUtilisation"}> {/* change this link your previous page */}
                                                 <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Reset Date</button>
                                             </Link>
                                         </div>
                                         <div className="mr-0 ml-auto">
-                                            <Link to={"/generateSUPDF"}> {/* change this link your preview page */}
-                                                <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
-                                            </Link>
+                                            <button type="button" onClick={() => toGenerateReport()} className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
                                         </div>
 
                                     </div>
@@ -180,33 +176,24 @@ function StockUtilisationDateRange() {
                                                     <TableHeader value="unitPrice" />
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Total value" />
-                                                    <TableHeader value="Manage" />
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {stockUtil.filter((data) => {
-                                                    if (searchTerm == "") {
-                                                        return data;
-                                                    } else if ((data.stockCode.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                                        (data.type.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                                        (data.firstPurchaseDate.toLowerCase().includes(searchTerm.toLowerCase()))) {
-                                                        return data;
-                                                    }
-                                                }).map((data, key) => {//map is used to iterate the array
+                                                {stockUtil.map((data, key) => {//map is used to iterate the array
                                                     const dbDate = new Date(data.date).toISOString().split('T')[0];
                                                     const pfDate = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
 
-                                                    var datacolor = "text-black";
+                                                    var datacolor = null;
                                                     if (data.type === "Additions") {
                                                         datacolor = "text-green-500 font-bold";
                                                     } else {
                                                         datacolor = "text-red-600 font-bold";
                                                     }
 
-                                                    if(data.type === "Additions"){
+                                                    if (data.type === "Additions") {
                                                         totalAdditions += parseInt(data.quantity)
-                                                    }else if (data.type === "Issues"){
-                                                        totalIssues += parseInt(data.quantity) 
+                                                    } else if (data.type === "Issues") {
+                                                        totalIssues += parseInt(data.quantity)
                                                     }
 
                                                     return (
@@ -222,26 +209,7 @@ function StockUtilisationDateRange() {
                                                             <TableData value={formatter.format(data.totalValue)} />
 
 
-                                                            <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                                                <Link to={`/StockUtilUpdate/${data._id}`}>
-                                                                    <button
-                                                                        type="button"
-                                                                        className="font-bold py-1 px-4 rounded-full mx-3 text-white"
-                                                                        style={{ background: currentColor }}
-                                                                    >
-                                                                        <i className="fas fa-edit" />
-                                                                    </button>
-                                                                </Link>
-                                                                <button
-                                                                    type="button"
-                                                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
-                                                                    onClick={() => {
-                                                                        confirmFunc(data._id);
-                                                                    }}
-                                                                >
-                                                                    <i className="fas fa-trash" />
-                                                                </button>
-                                                            </td>
+                                                            
                                                         </tr>
                                                     )
                                                 })}

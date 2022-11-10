@@ -1,50 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
+import { jsPDF } from "jspdf";
+import { DashTopBox, DashTopButton, } from '../../components';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import { DashTopBox, DashTopButton, } from '../../components';
-import Swal from 'sweetalert2';
-import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
+import {useLocation, useNavigate } from 'react-router-dom';
 
-function StockUtilisation() {
+function StockUtilDateRangePDF() {
+
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
-    const navigate = useNavigate();
+    const location = useLocation();
 
     const [stockUtil, setStockUtilisation] = useState([]); //stock is the state variable and setStock is the function to update the state variable
-    const [searchTerm, setSearchTerm] = useState("");
-    const [dateStart, setDateStart] = useState('');
-    const [dateEnd, setDateEnd] = useState('');
-    var totalAdditions = 0;
-    var totalIssues = 0;
-
-    const toDateRange = () => {
-        navigate('/StockUtilisationDateRange', { state: { DS: dateStart, DE: dateEnd } });
-    }
-
+        var totalAdditions = 0;
+        var totalIssues = 0;
+    
     const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stockUtilisation")
+        axios.get('http://localhost:8070/stockUtilisation/date/'+location.state.DS+'/'+location.state.DE)
             .then((res) => {
                 setStockUtilisation(res.data); //setStock is used to update the state variable
                 console.log(res.data);
-            })
-            .catch((err) => {
-                alert(err.message);
-            })
-    }
-
-    const id = useParams();
-
-    const deleteStockUtil = async (id) => {
-        await axios.delete('http://localhost:8070/stockUtilisation/delete/' + id)
-            .then(() => {
-                alert("Data deleted successfully");
-                getStockUtil();
             })
             .catch((err) => {
                 alert(err.message);
@@ -61,31 +41,14 @@ function StockUtilisation() {
         }
     }, [])
 
-    const confirmFunc = (id) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                deleteStockUtil(id);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Data Successfully Deleted',
-                    color: '#f8f9fa',
-                    background: '#6c757d',
-                    showConfirmButton: false,
-                    timer: 2000
-                })
-            } else {
-                navigate('/StockUtilisation');
-            }
-        })
-    }
+    const createPDF = async () => {
+        const date = new Date().toISOString().split('T')[0];
+        const pdf = new jsPDF("landscape", "px", "a1", false);
+        const data = await document.querySelector("#tblPDF");
+        pdf.html(data).then(() => {
+            pdf.save("stocksUtil_" + date + ".pdf");
+        });
+    };
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -94,33 +57,8 @@ function StockUtilisation() {
         currencyDisplay: 'symbol'
     })
 
-    let dateRangeRef = (dateRange) => {
-        dateRangeRef = dateRange; // dateRangeRef is a reference to the DateRangePickerComponent
-      };
-    
-      const filterDate = () => {
-        if (dateRangeRef.value && dateRangeRef.value.length > 0) {
-    
-            const start = (dateRangeRef.value[0]);
-            const end = (dateRangeRef.value[1]);
-    
-            setDateStart(start);
-            setDateEnd(end);
-            navigate('/StockUtilisationDateRange',{state:{DS:start,DE:end}});
-    
-        } else {
-          alert("Please select a date range")
-          setDateStart('');
-          setDateEnd('');
-        }
-    
-    };
-
-
     return (
-
         <div>
-
             <div className={currentMode === 'Dark' ? 'dark' : ''}>
 
                 <div className="flex relative dark:bg-main-dark-bg">
@@ -167,42 +105,20 @@ function StockUtilisation() {
                             <div>
 
                                 <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                                    <Header category="Table" title="Stocks Utilisation" />
+                                    <Header category="Table" title="Stock Utilisation Report Preview" />
 
                                     <div className=" flex items-center mb-5 ">
-                                        <div>
-                                            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here"
-                                                onChange={(e) => {
-                                                    setSearchTerm(e.target.value);
-                                                }} />
-                                        </div>
-
-                                        <div className=" mx-1">
-                                            <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => { toDateRange() }}  >filter</button>
-                                        </div>
-
+                                    
                                         <div className="mr-0 ml-auto">
-                                            <Link to={"/generateSUPDF"}> {/* change this link your preview page */}
-                                                <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
-                                            </Link>
+                                            <button onClick={createPDF} type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
                                         </div>
-
                                     </div>
 
-                                    <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
-                                            <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
-                                                <DateRangePickerComponent ref={dateRangeRef} placeholder="Select a date range" />
-                                            </div>
-                                            <div className="ml-5">
-                                                <button type="button" className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => filterDate()}>Filter</button>
-                                            </div>
-                                        </div>
-
-                                    <div className="block w-full overflow-x-auto rounded-lg">
+                                    <div id="tblPDF" className="block w-full overflow-x-auto rounded-lg">
                                         <table className="w-full rounded-lg">
                                             <thead>
                                                 <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                                    <TableHeader value="Code" />
+                                                <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
                                                     <TableHeader value="Initial Purchase" />
@@ -211,36 +127,27 @@ function StockUtilisation() {
                                                     <TableHeader value="unitPrice" />
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Total value" />
-                                                    <TableHeader value="Manage" />
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {stockUtil.filter((data) => {
-                                                    if (searchTerm == "") {
-                                                        return data;
-                                                    } else if ((data.stockCode.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                                        (data.type.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                                        (data.firstPurchaseDate.toLowerCase().includes(searchTerm.toLowerCase()))) {
-                                                        return data;
-                                                    }
-                                                }).map((data, key) => {//map is used to iterate the array
+                                                {stockUtil.map((data) => {//map is used to iterate the array
                                                     const dbDate = new Date(data.date).toISOString().split('T')[0];
                                                     const pfDate = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
-                                                    var datacolor = null;
+
+                                                    var datacolor = "text-black";
                                                     if (data.type === "Additions") {
                                                         datacolor = "text-green-500 font-bold";
                                                     } else {
                                                         datacolor = "text-red-600 font-bold";
                                                     }
 
-                                                    if (data.type === "Additions") {
+                                                    if(data.type === "Additions"){
                                                         totalAdditions += parseInt(data.quantity)
-                                                    } else if (data.type === "Issues") {
-                                                        totalIssues += parseInt(data.quantity)
+                                                    }else if (data.type === "Issues"){
+                                                        totalIssues += parseInt(data.quantity) 
                                                     }
 
                                                     return (
-
                                                         <tr className="text-sm h-10 border dark:border-slate-600">
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
@@ -252,27 +159,6 @@ function StockUtilisation() {
                                                             <TableData value={data.quantity} />
                                                             <TableData value={formatter.format(data.totalValue)} />
 
-
-                                                            <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                                                <Link to={`/StockUtilUpdate/${data._id}`}>
-                                                                    <button
-                                                                        type="button"
-                                                                        className="font-bold py-1 px-4 rounded-full mx-3 text-white"
-                                                                        style={{ background: currentColor }}
-                                                                    >
-                                                                        <i className="fas fa-edit" />
-                                                                    </button>
-                                                                </Link>
-                                                                <button
-                                                                    type="button"
-                                                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
-                                                                    onClick={() => {
-                                                                        confirmFunc(data._id);
-                                                                    }}
-                                                                >
-                                                                    <i className="fas fa-trash" />
-                                                                </button>
-                                                            </td>
                                                         </tr>
                                                     )
                                                 })}
@@ -301,4 +187,4 @@ function StockUtilisation() {
     );
 };
 
-export default StockUtilisation
+export default StockUtilDateRangePDF

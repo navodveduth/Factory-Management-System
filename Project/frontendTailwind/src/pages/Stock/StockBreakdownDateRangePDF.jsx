@@ -1,36 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate,useLocation } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
+import { DashTopBox, DashTopButton, } from '../../components';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import { DashTopBox, DashTopButton, } from '../../components';
 import Swal from 'sweetalert2';
-import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
 
-function StockUtilisation() {
+function StockBreakdownDateRangePDF() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
-    const navigate = useNavigate();
 
-    const [stockUtil, setStockUtilisation] = useState([]); //stock is the state variable and setStock is the function to update the state variable
+    const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
+    const [stockUtil, setStockUtil] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [dateStart, setDateStart] = useState('');
-    const [dateEnd, setDateEnd] = useState('');
-    var totalAdditions = 0;
-    var totalIssues = 0;
+
+    const [dateStart, setDateStart] = useState("");
+    const [dateEnd, setDateEnd] = useState("");
+    var price = 0;
+
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const toDateRange = () => {
-        navigate('/StockUtilisationDateRange', { state: { DS: dateStart, DE: dateEnd } });
+        navigate('/StockBreakdown');
+    }
+
+    const getStock = async () => {  //getStock is the function to get the data from the backend
+        axios.get("http://localhost:8070/stock/date/" + location.state.DS+"/"+location.state.DE)
+            .then((res) => {
+                setStock(res.data); //setStock is used to update the state variable
+                console.log(res.data);
+            })
+            .catch((err) => {
+                alert(err.message);
+            })
     }
 
     const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stockUtilisation")
+        axios.get("http://localhost:8070/stockUtilisation/date/" + location.state.DS+"/"+location.state.DE)
             .then((res) => {
-                setStockUtilisation(res.data); //setStock is used to update the state variable
+                setStockUtil(res.data); //setStock is used to update the state variable
                 console.log(res.data);
             })
             .catch((err) => {
@@ -40,11 +53,11 @@ function StockUtilisation() {
 
     const id = useParams();
 
-    const deleteStockUtil = async (id) => {
-        await axios.delete('http://localhost:8070/stockUtilisation/delete/' + id)
+    const deleteStock = async (id) => {
+        await axios.delete('http://localhost:8070/stock/delete/' + id)
             .then(() => {
                 alert("Data deleted successfully");
-                getStockUtil();
+                getStock();
             })
             .catch((err) => {
                 alert(err.message);
@@ -52,7 +65,7 @@ function StockUtilisation() {
     }
 
     useEffect(() => { //useEffect is used to call the function getStock
-        getStockUtil();
+        getStock();
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
         if (currentThemeColor && currentThemeMode) {
@@ -61,7 +74,12 @@ function StockUtilisation() {
         }
     }, [])
 
+    useEffect(() => { //useEffect is used to call the function getStock
+        getStockUtil();
+    }, [])
+
     const confirmFunc = (id) => {
+
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -70,21 +88,22 @@ function StockUtilisation() {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
+          }).then((result) => {
             if (result.isConfirmed) {
-                deleteStockUtil(id);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Data Successfully Deleted',
-                    color: '#f8f9fa',
-                    background: '#6c757d',
-                    showConfirmButton: false,
-                    timer: 2000
-                })
-            } else {
-                navigate('/StockUtilisation');
+                deleteStock(id);
+              Swal.fire({  
+                icon: 'success',
+                title: 'Data Successfully Deleted',
+                color: '#f8f9fa',
+                background: '#6c757d',
+                showConfirmButton: false,
+                timer: 2000
+              })
+            }else {
+                navigate('/StockBreakdown');
             }
-        })
+          })
+
     }
 
     const formatter = new Intl.NumberFormat('en-US', {
@@ -94,33 +113,9 @@ function StockUtilisation() {
         currencyDisplay: 'symbol'
     })
 
-    let dateRangeRef = (dateRange) => {
-        dateRangeRef = dateRange; // dateRangeRef is a reference to the DateRangePickerComponent
-      };
-    
-      const filterDate = () => {
-        if (dateRangeRef.value && dateRangeRef.value.length > 0) {
-    
-            const start = (dateRangeRef.value[0]);
-            const end = (dateRangeRef.value[1]);
-    
-            setDateStart(start);
-            setDateEnd(end);
-            navigate('/StockUtilisationDateRange',{state:{DS:start,DE:end}});
-    
-        } else {
-          alert("Please select a date range")
-          setDateStart('');
-          setDateEnd('');
-        }
-    
-    };
-
-
     return (
 
         <div>
-
             <div className={currentMode === 'Dark' ? 'dark' : ''}>
 
                 <div className="flex relative dark:bg-main-dark-bg">
@@ -167,36 +162,16 @@ function StockUtilisation() {
                             <div>
 
                                 <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                                    <Header category="Table" title="Stocks Utilisation" />
+                                    <Header category="Table" title="Stocks Breakdown" />
 
                                     <div className=" flex items-center mb-5 ">
-                                        <div>
-                                            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here"
-                                                onChange={(e) => {
-                                                    setSearchTerm(e.target.value);
-                                                }} />
-                                        </div>
-
-                                        <div className=" mx-1">
-                                            <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => { toDateRange() }}  >filter</button>
-                                        </div>
-
+                                        
+                                        
                                         <div className="mr-0 ml-auto">
-                                            <Link to={"/generateSUPDF"}> {/* change this link your preview page */}
-                                                <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
-                                            </Link>
+                                            <button onClick={createPDF} type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
                                         </div>
 
                                     </div>
-
-                                    <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
-                                            <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
-                                                <DateRangePickerComponent ref={dateRangeRef} placeholder="Select a date range" />
-                                            </div>
-                                            <div className="ml-5">
-                                                <button type="button" className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => filterDate()}>Filter</button>
-                                            </div>
-                                        </div>
 
                                     <div className="block w-full overflow-x-auto rounded-lg">
                                         <table className="w-full rounded-lg">
@@ -204,57 +179,91 @@ function StockUtilisation() {
                                                 <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
-                                                    <TableHeader value="Category" />
-                                                    <TableHeader value="Initial Purchase" />
-                                                    <TableHeader value="Date" />
-                                                    <TableHeader value="Type" />
-                                                    <TableHeader value="unitPrice" />
                                                     <TableHeader value="Units" />
-                                                    <TableHeader value="Total value" />
+                                                    <TableHeader value="Additions" />
+                                                    <TableHeader value="Issues" />
+                                                    <TableHeader value="Damaged Units" />
+                                                    <TableHeader value="Unit price" />
+                                                    <TableHeader value="Reorder Level" />
+                                                    <TableHeader value="Buffer stock" />
                                                     <TableHeader value="Manage" />
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {stockUtil.filter((data) => {
+                                                {stock.filter((data) => {
                                                     if (searchTerm == "") {
                                                         return data;
                                                     } else if ((data.stockCode.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                                        (data.type.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                                        (data.firstPurchaseDate.toLowerCase().includes(searchTerm.toLowerCase()))) {
+                                                        (data.stockName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                                        (data.stockCategory.toLowerCase().includes(searchTerm.toLowerCase()))) {
                                                         return data;
                                                     }
                                                 }).map((data, key) => {//map is used to iterate the array
-                                                    const dbDate = new Date(data.date).toISOString().split('T')[0];
-                                                    const pfDate = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
+                                                    //const date = new Date(data.lastUpdated).toISOString().split('T')[0];
+                                                    {
+                                                        var totAdds = 0;
+                                                        var totIssues = 0;
+                                                        var quantity = 0
+                                                    }
+
+                                                    {
+                                                        stockUtil.filter((stockUtil) => stockUtil.type === "Additions" &&
+                                                            stockUtil.stockCode === data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
+                                                                totAdds += stockUtil.quantity
+                                                                price = stockUtil.unitPrice
+                                                            })
+                                                    }
+                                                    {
+                                                        stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
+                                                            stockUtil.stockCode === data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
+                                                                totIssues += stockUtil.quantity
+                                                            })
+                                                    }
+
+                                                    { quantity = totAdds - totIssues - data.damagedQty }
+                                                    if (quantity < 0) {
+                                                        { quantity = "No usable stocks left" }
+                                                    }
+
+                                                    var dcolor = null;
+                                                    if (data.sufficientStock === "Available") {
+                                                        dcolor = "text-green-500 font-bold";
+                                                    }else if (data.sufficientStock === "-") {
+                                                        dcolor = null;
+                                                    }else {
+                                                        dcolor = "text-red-600 font-bold";
+                                                    }
+
                                                     var datacolor = null;
-                                                    if (data.type === "Additions") {
-                                                        datacolor = "text-green-500 font-bold";
-                                                    } else {
+                                                    if (quantity === "No usable stocks left") {
                                                         datacolor = "text-red-600 font-bold";
                                                     }
 
-                                                    if (data.type === "Additions") {
-                                                        totalAdditions += parseInt(data.quantity)
-                                                    } else if (data.type === "Issues") {
-                                                        totalIssues += parseInt(data.quantity)
-                                                    }
+                                                    console.log(data.damagedQty)
 
                                                     return (
-
                                                         <tr className="text-sm h-10 border dark:border-slate-600">
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
-                                                            <TableData value={data.stockCategory} />
-                                                            <TableData value={pfDate} />
-                                                            <TableData value={dbDate} />
-                                                            <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.type}</td>
-                                                            <TableData value={formatter.format(data.unitPrice)} />
-                                                            <TableData value={data.quantity} />
-                                                            <TableData value={formatter.format(data.totalValue)} />
-
+                                                            <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
+                                                            <TableData value={totAdds} />
+                                                            <TableData value={totIssues} />
+                                                            <TableData value={data.damagedQty} />
+                                                            <TableData value={formatter.format(price)} />
+                                                            <TableData value={data.reorderLevel} />
+                                                            <td className={`${dcolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`} >{data.sufficientStock} </td>
 
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                                                <Link to={`/StockUtilUpdate/${data._id}`}>
+                                                            <Link to={`/StockInformation/${data._id}`}>
+                                                                    <button
+                                                                        type="button"
+                                                                        className="bg-neutral-500 font-bold py-1 px-4 rounded-full mx-3 text-white"
+                                                                    >
+                                                                        <i className="fas fa-info-circle" />
+                                                                    </button>
+                                                                </Link>
+                                                                
+                                                                <Link to={`/StockBreakdownUpdate/${data._id}`}>
                                                                     <button
                                                                         type="button"
                                                                         className="font-bold py-1 px-4 rounded-full mx-3 text-white"
@@ -278,16 +287,6 @@ function StockUtilisation() {
                                                 })}
                                             </tbody>
                                         </table>
-                                        <br></br><br></br>
-                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-                                            Total Additions Quantity: {(totalAdditions)}
-
-                                        </span><br></br>
-
-                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-
-                                            Total Issues Quantity : {(totalIssues)}
-                                        </span>
                                     </div>
                                 </div>
 
@@ -301,4 +300,4 @@ function StockUtilisation() {
     );
 };
 
-export default StockUtilisation
+export default StockBreakdownDateRangePDF
