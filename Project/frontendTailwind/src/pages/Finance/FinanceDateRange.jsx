@@ -8,6 +8,7 @@ import TableHeader from '../../components/Table/TableHeader';
 import { FiUser } from 'react-icons/fi';
 import { DashTopBox, DashTopButton,  } from '../../components';
 
+import Swal from 'sweetalert2';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -57,7 +58,6 @@ const FinanceDateRange = () => {
     await axios
       .delete(`http://localhost:8070/finance/deleteTransaction/${id}`)
       .then((res) => {
-        alert('Transaction Deleted Sucessfully');
         getFinance();
       })
       .catch((err) => {
@@ -66,14 +66,32 @@ const FinanceDateRange = () => {
   };
 
   const confirmFunc = (id)=>{
-
-		if (confirm("Do you want to delete?") == true) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      color: '#f8f9fa',
+      background: '#6c757d',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
         deleteFinance(id);
-		} else {
-			navigate('/FinanceViewAll');
-		}
-
-    }
+        Swal.fire({  
+          icon: 'success',
+          title: 'Data Successfully Deleted',
+          color: '#f8f9fa',
+          background: '#6c757d',
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }else {
+        navigate('/FinanceDateRange');
+      }
+    })
+  };
 
 
   return (
@@ -139,9 +157,8 @@ const FinanceDateRange = () => {
                                   setSearchTerm(e.target.value);
                                 }} />
                               </div>
-
-                              <div className="mx-10 ml-auto">
-                                <Link to={"/financeViewAll"}> {/* change this link your previous page */}
+                              <div className="mx-3">
+                                <Link to={"/FinanceViewAll"}> {/* change this link your previous page */}
                                   <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Reset Date</button>
                                 </Link>
                               </div>
