@@ -177,22 +177,22 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <TbBuildingFactory2 /> {/*  icon  */}
-              <span className="capitalize ">Production Cost</span>{' '}
+              <span className="capitalize ">Production Workflow</span>{' '}
               {/*  link name  */}
             </NavLink>
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/Attendace and leaves"
+              to="/insightDashboard"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <FiPackage /> {/*  icon  */}
-              <span className="capitalize ">Order Distribution</span>{' '}
+              <FaChartLine /> {/*  icon  */}
+              <span className="capitalize ">Insights</span>{' '}
               {/*  link name  */}
             </NavLink>
             {/*  done ---------------------------------------------------------------------------------- done  */}
