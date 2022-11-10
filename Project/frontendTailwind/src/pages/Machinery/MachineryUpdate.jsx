@@ -202,6 +202,7 @@ function MachineryUpdate() { // <== THIS IS THE COMPONENT NAME, CHANGE IT TO YOU
                                                     onChange={(e) => {
                                                         setOthers(e.target.value);
                                                     }}>
+                                                    <option selected>Choose...</option>
                                                     <option value="Available">Available</option>
                                                     <option value="Unavailable">Unavailable</option>
                                                 </select>

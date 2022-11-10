@@ -195,24 +195,22 @@ const MaintenanceDashboard = () => { // <== THIS IS THE COMPONENT NAME, CHANGE I
 
 
                       <Link to="/MaintenanceViewAll">
-                        <DashTopButton value="All Property" icon={<BiBuildingHouse />} />
+                        <DashTopButton value="Property Maintenance" icon={<BiBuildingHouse />} />
+                      </Link>
+                      <Link to="/MaintenanceCreate">
+                        <DashTopButton value="+ Property" icon={<MdAddBusiness />} />
                       </Link>
                       <Link to="/MachMaintenanceViewAll">
-                        <DashTopButton value="All Machines" icon={<GiSewingMachine />} />
-                      </Link>
-                      <Link to="/VehiMaintenanceViewAll">
-                        <DashTopButton value="All Vehicles" icon={<MdOutlineDirectionsBusFilled />} />
-                      </Link>
-
-
-                      <Link to="/MaintenanceCreate">
-                        <DashTopButton value="New Property" icon={<MdAddBusiness />} />
+                        <DashTopButton value="Machinery Maintenance" icon={<GiSewingMachine />} />
                       </Link>
                       <Link to="/MachMaintenanceNew">
-                        <DashTopButton value="New Machinery" icon={<BiAddToQueue />} />
+                        <DashTopButton value="+ Machinery" icon={<BiAddToQueue />} />
+                      </Link>
+                      <Link to="/VehiMaintenanceViewAll">
+                        <DashTopButton value="Vehicles Maintenance" icon={<MdOutlineDirectionsBusFilled />} />
                       </Link>
                       <Link to="/VehiMaintenanceNew">
-                        <DashTopButton value="New Vehicle" icon={<MdOutlineBusAlert />} />
+                        <DashTopButton value="+ Vehicle" icon={<MdOutlineBusAlert />} />
                       </Link>
                       {/* <Link to="/MaintainenceTask">
             <DashTopButton value="Tasks For today" />

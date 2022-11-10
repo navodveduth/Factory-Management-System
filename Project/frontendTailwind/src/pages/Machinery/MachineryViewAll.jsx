@@ -229,6 +229,7 @@ const MachineryViewAll = () => {
                             }
                           }).map((data, key) => {
 
+                          
                             var datacolor = "text-black";
                             if (data.others === "Unavailable") {
                               datacolor = "text-red-600 font-bold";
@@ -250,8 +251,8 @@ const MachineryViewAll = () => {
                                 <TableData value={data.machineID} />
                                 <TableData value={data.name} />
                                 <TableData value={data.dateOfPurchased.toString().split('T')[0]} />
-                                <TableData value={"Rs." + data.machineryCost} />
-                                <TableData value={"Rs." + parseFloat((data.machineryCost - data.salvage) / data.numberOfYrs).toFixed(2)} />
+                                <TableData value={formatter.format(data.machineryCost)} />
+                                <TableData value={formatter.format(parseFloat((data.machineryCost - data.salvage) / data.numberOfYrs).toFixed(2))} />
                                 <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.others} </td>
                                 {/* <TableData value={data.machineDetails.map((data2) => {
 
