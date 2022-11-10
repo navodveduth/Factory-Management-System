@@ -146,7 +146,7 @@ const StockUtilisationDashboard = () => {
                       </Link>
 
                       <Link to="/StockUtilAddOption">
-                        <DashTopButton icon={<FaLayerGroup />} value="Add New Entry for exisitng stock" />
+                        <DashTopButton icon={<FaLayerGroup />} value="Add New Entry for existing stock" />
                       </Link>
 
                       <Link to="/PendingStockAdd">
