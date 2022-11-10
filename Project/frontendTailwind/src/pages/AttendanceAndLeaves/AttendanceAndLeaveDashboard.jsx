@@ -4,7 +4,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { FaUsers, FaUserCheck, FaUserTimes, FaCalendarTimes } from 'react-icons/fa';
 import { BiCalendar, BiCalendarPlus, BiCalendarCheck, BiCalendarEvent } from 'react-icons/bi';
-import { DashTopBox, DashTopButton, Navbar, Footer, Sidebar, ThemeSettings, Header, AttendancePieChart } from '../../components';
+import { DashTopBox, DashTopButton, Navbar, Footer, Sidebar, ThemeSettings, Header, AttendancePieChart, AttendanceBarChart } from '../../components';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 
@@ -233,7 +233,7 @@ const AttendanceAndLeaveDashboard = () => {
                           </div>
 
                           <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-                            <AttendancePieChart />
+                            <AttendanceBarChart />
                           </div>
 
                           <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
@@ -261,6 +261,13 @@ const AttendanceAndLeaveDashboard = () => {
                                           return data;
                                     }
                                     }).map((data, key) => {
+                                      var datacolor = "text-black";
+                                        if (data.employeeTotalHours >= 8) {
+                                            datacolor = "text-teal-600 font-semibold";
+                                        }
+                                        else {
+                                            datacolor = "text-red-400 font-bold";
+                                        }
                                       return (
                                         <tr key={key} className="text-sm h-10 border dark:border-slate-600">
                                           <TableData value={data.employeeNumber} />
