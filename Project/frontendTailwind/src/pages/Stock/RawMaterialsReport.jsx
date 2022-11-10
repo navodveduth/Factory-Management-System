@@ -58,7 +58,7 @@ function RawMaterialsReport() {
         const pdf = new jsPDF("landscape", "px", "a2", false);
         const data = await document.querySelector("#tblPDF");
         pdf.html(data).then(() => {
-            pdf.save("Damagedstocks_" + date + ".pdf");
+            pdf.save("RawMaterials_" + date + ".pdf");
         });
     };
 
