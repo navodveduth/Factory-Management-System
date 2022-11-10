@@ -227,7 +227,7 @@ const TransportUpdate = () => {
                           <select
                             id="trInfo"
                             name="trInfo"
-                            className="mt-1 ml-8 w-640 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                            className="mt-1 ml-8 w-570 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                             required
                             onChange={(e) => {
                               setTypeInfo(e.target.value);

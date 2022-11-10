@@ -93,12 +93,14 @@ const MachineryViewAll = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         deleteMachinery(id);
-        Swal.fire(
-          
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
+        Swal.fire({  
+          icon: 'success',
+          title: 'Data Successfully Deleted',
+          color: '#f8f9fa',
+          background: '#6c757d',
+          showConfirmButton: false,
+          timer: 2000
+        })
       }else {
         navigate('/MachineryViewAll');
       }
@@ -185,7 +187,7 @@ const MachineryViewAll = () => {
                               </div>
 
                               <div className=" mx-1">
-                                  <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}  >filter</button>
+                                  <button type="button" className = "py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}>Filter by Date</button>
                               </div>
 
                       <div className="mr-0 ml-auto">

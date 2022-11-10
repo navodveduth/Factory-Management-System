@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
+import { Link } from 'react-router-dom';
+import { Header } from '../../../components';
 import {jsPDF} from "jspdf";
-import { useStateContext } from '../../contexts/ContextProvider';
-import TableData from '../../components/Table/TableData';
-import TableHeader from '../../components/Table/TableHeader';
-import { FiSettings } from 'react-icons/fi';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import Swal from "sweetalert2";
+import { useStateContext } from '../../../contexts/ContextProvider';
+import TableData from '../../../components/Table/TableData';
+import TableHeader from '../../../components/Table/TableHeader';
 
-const SalesViewAll = () => {
+import { FiUser } from 'react-icons/fi';
+import { DashTopBox, DashTopButton,  } from '../../../components';
+import { FiSettings } from 'react-icons/fi';
+import { Navbar, Footer, Sidebar, ThemeSettings } from '../../../components';
+import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+
+const PendingOrders = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
   const [sales, setSale] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [dateStart, setDateStart] = useState("");
-  const [dateEnd, setDateEnd] = useState("");
-  const navigate = useNavigate();
 
   const getSale = async () => {
     axios
@@ -32,68 +32,33 @@ const SalesViewAll = () => {
 
   useEffect(() => {
     getSale();
-    const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
-    const currentThemeMode = localStorage.getItem('themeMode');
-    if (currentThemeColor && currentThemeMode) {
-      setCurrentColor(currentThemeColor);
-      setCurrentMode(currentThemeMode);
-    }
   }, []);
 
   const deleteSale = async (id) => {
     await axios
       .delete(`http://localhost:8070/sales/delete/${id}`)
       .then((res) => {
+        alert('Deleted Successfully');
         getSale();
       })
       .catch((err) => {
         alert(err.message);
-      })
-  }
+      });
+  };
 
-  const toDateRange = () => {
-    navigate('/SalesDateRange',{state:{DS:dateStart,DE:dateEnd}});
-  }
+  const confirmFunc = (id)=>{
 
-    const confirmFunc = (id) => {
+		if (confirm("Do you want to delete?") == true) {
+        deleteSale(id);
+		} else {
+			  navigate('/SalesViewAll');
+		}
 
-        Swal.fire({
-          title: 'Confirm Delete?',
-          text: "You won't be able to revert this!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          //background: '#393E46',
-          confirmButtonText: 'Yes, Delete it!'})
-          .then((result) => {
-            if (result.isConfirmed) {
-                deleteSale(id);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Data Successfully Deleted!',
-                    color: '#f8f9fa',
-                    background: '#6c757d',
-                    showConfirmButton: false,
-                    timer: 2000
-                }   
-                )
-            } else {
-                navigate('/SalesViewAll');
-            }
-        })
-      }
+    }
 
-    const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'LKR',
-        minimumFractionDigits: 2,
-        currencyDisplay: 'symbol'
-      })
-    
   return (
-    
     <div>
+
     {/* DON'T CHANGE ANYTHING HERE */}
 
       <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -140,9 +105,10 @@ const SalesViewAll = () => {
                   <div>
                       {themeSettings && <ThemeSettings />}
                       <div>
-                      
+                         {/* Paste your content Here */}
+                  <div>
                           <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                              <Header category="Table" title="Sales Invoices" />
+                              <Header category="Table" title="Pending Sale Orders" />
                               
                               <div className=" flex items-center mb-5 ">
                               <div>
@@ -151,25 +117,6 @@ const SalesViewAll = () => {
                                   setSearchTerm(e.target.value);
                                   }} />
                               </div>
-
-                              <div>
-                                <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date" 
-                                    onChange={(e) => {
-                                    setDateStart(e.target.value);
-                                    }} />
-                              </div>
-
-                              <div>
-                                <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date" 
-                                    onChange={(e) => {
-                                    setDateEnd(e.target.value);
-                                    }} />
-                              </div>
-
-                              <div className=" mx-1">
-                                  <button type="button" className = "py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}>Filter by Date</button>
-                              </div>
-
                               <div className="mr-0 ml-auto">
                                   {/* change this link your preview page */}
                                   <Link to={"/SalesPreview"}>
@@ -195,78 +142,67 @@ const SalesViewAll = () => {
                                   </tr>
                                   </thead>
                                   <tbody>
-
-                                  {sales.filter((data) => {
+                                          {sales.filter((data) => {
                                           if(searchTerm == ""){
                                               return data;
-                                          }else if(
-                                          (data.invoiceNo.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                          (data.orderDate.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                          (data.itemName.toLowerCase().includes(searchTerm.toLowerCase())))
+                                          }else if((data.invoiceNo.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                              (data.orderDate.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                              (data.itemName.toLowerCase().includes(searchTerm.toLowerCase())))
                                           {     
-                                          return data;
+                                              return data;
                                           }
                                       }).map((data, key) => {
-                                        let formattedAmount = formatter.format(data.totalAmount)
-
-                                          return( 
-                                              <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
-
+                                          if(data.status == "Pending"){
+                                              return( 
+                                                  <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
+                      
                                                   <TableData value={data.invoiceNo} />
                                                   <TableData value={new Date(data.orderDate).toISOString().split('T')[0]} />
                                                   <TableData value={data.customerDetailss.map((data3) => {
                                                       return (
-                                                      <div>
-                                                          {data3.customerName}
-                                                      </div>
+                                                          <div>
+                                                          <TableData value = {data3.customerName} /> 
+                                                          </div>
                                                       )
-                                                  
+                                                      
                                                   })} />
+                                  
                                                   <TableData value={data.itemName} />
                                                   <TableData value={data.quantity} />
-                                                  <TableData value={formattedAmount} />
+                                                  <TableData value={"Rs."+data.totalAmount} />
                                                   <TableData value={data.status} />
-
-                                      <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                          <Link to={`/SalesUpdate/${data._id}`}>
+                      
+                                          <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                          <Link to={"/requestStock/" +data.invoiceNo }>
+                                              <button
+                                              type="button"
+                                              className=" bg-green-500 hover:bg-green-700 font-bold py-1 px-4 rounded-full mx-3  text-white"
+                                              
+                                              >
+                                              Process Order
+                                              </button>
+                                          </Link>
+                      
                                           <button
                                               type="button"
-                                              className="font-bold py-1 px-4 rounded-full mx-3  text-white"
-                                              style={{ background: currentColor }}
-                                          >
-                                              <i className="fas fa-edit" />
-                                          </button>
-                                          </Link>
-
-                                          <Link to={`/SalesInvoice/${data._id}`}>
-                                          <button
-                                              type="button"
-                                              className="font-bold py-1 px-4 rounded-full mx-3  text-white"
-                                              style={{ background: currentColor }}
-                                          >
-                                              <i className="fa-regular fa-file-lines" />
-                                          </button>
-                                          </Link>
-
-                                          <button
-                                          type="button"
-                                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
-                                          onClick={() => {
+                                              className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
+                                              onClick={() => {
                                               confirmFunc(data._id);
-                                          }}
+                                              }}
                                           >
-                                          <i className="fas fa-trash" />
+                                              <p>Revert Order</p>
                                           </button>
-                                      </td>
+                                          </td>
                                       </tr>
-                                  )})}
+                                      )
+                                          }
+                                      })}
                                   </tbody>
                               </table>
                               </div>
                           </div>
                           </div>
-                          
-                      
+                      </div>
                       <Footer />
                   </div>  
               </div>
@@ -276,4 +212,4 @@ const SalesViewAll = () => {
   );
 };
 
-export default SalesViewAll;
+export default PendingOrders;
