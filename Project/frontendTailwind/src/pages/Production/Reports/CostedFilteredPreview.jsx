@@ -14,7 +14,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import logo from '../../../data/logo.png';
 
-export default function CostedPreview(){
+export default function CostedFilteredPreview(){
     const navigate = useNavigate();
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings,  } = useStateContext();
     const [Order,setOrder] = useState([])
@@ -25,7 +25,7 @@ export default function CostedPreview(){
 
 
         async function getOrders(){
-            await axios.get("http://localhost:8070/production/order/allOrders").then((res)=>{
+            await axios.get("http://localhost:8070/production/order/date/" + location.state.DS+'/'+location.state.DE).then((res)=>{
                 setOrder(res.data);
             }).catch((err)=>{
                 alert(err.message);

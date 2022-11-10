@@ -29,7 +29,7 @@ export default function CostedDateRange(){
     //   }
 
       const toGenerateReport=()=>{
-        navigate('/costedPreview', {state: {DS: location.state.DS, DE: location.state.DE}});
+        navigate('/CostedFilteredPreview', {state: {DS: location.state.DS, DE: location.state.DE}});
       }
 
         async function getOrders(){
