@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { jsPDF } from "jspdf";
 import TableHeader from "../../components/Table/TableHeader";
 import TableData from '../../components/Table/TableData';
@@ -10,22 +10,20 @@ import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import logo from '../../data/logo.png';
 
-export default function MachineryReport() {
+export default function MachMaintenancePreDateRange() {
+    const [maintainenceMachine, setMaintainenceMachine] = useState([]);
+    const location = useLocation();
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
-    const [machinery, setMachinery] = useState([]);
-
-    var TotalDepreciation = 0;
     var TotalCost = 0;
     var total = 0;
-    var totalDep = 0;
 
 
-    const getMachinery = async () => {  //getMachinery is the function to get the data from the backend
-        axios.get("http://localhost:8070/machinery/")
+
+    const getMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
+        axios.get("http://localhost:8070/maintainenceMachine/date/"+location.state.DS+"/"+location.state.DE)
             .then((res) => {
-                setMachinery(res.data); //setMachinery is used to update the state variable
-
+                setMaintainenceMachine(res.data); //setMaintainence  is used to update the state variable
 
             })
             .catch((err) => {
@@ -34,7 +32,7 @@ export default function MachineryReport() {
     }
 
     useEffect(() => {
-        getMachinery(); // <== CHANGE ACCORDING TO YOUR OWN FUNCTIONS, YOU CAN REMOVE THIS LINE IF YOU DON'T NEED IT
+        getMaintainence(); // <== CHANGE ACCORDING TO YOUR OWN FUNCTIONS, YOU CAN REMOVE THIS LINE IF YOU DON'T NEED IT
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
         if (currentThemeColor && currentThemeMode) {
@@ -43,14 +41,16 @@ export default function MachineryReport() {
         }
     }, []);
 
+
     const createPDF = () => {
         const date = new Date(Date.now()).toISOString().split('T')[0];
         const pdf = new jsPDF("landscape", "px", "a1", false);
         const data = document.querySelector("#tableContainer");
         pdf.html(data).then(() => {
-            pdf.save("MachineryReport-" + date + ".pdf");
+            pdf.save("Machinery-Maintenance-Report-" + date + ".pdf");
         });
     };
+
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -112,7 +112,7 @@ export default function MachineryReport() {
 
 
                             <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                                <Header category="Report" title="Machinery" />
+                                <Header category="Report" title="Machinery Maintenance" />
 
                                 <button onClick={createPDF} type="button" className="font-bold py-1 px-4 rounded-full m-3 text-white absolute top-40 right-20 hover:bg-slate-700 bg-slate-500" >Download Report</button>
 
@@ -134,61 +134,57 @@ export default function MachineryReport() {
                                         <p className="text-right text-xl mt-2 mb-3">Generated On : {currentdate}</p>
                                         <table className="w-full rounded-lg">
                                             <thead>
-
                                                 <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                                                     <TableHeader value="Code" />
-                                                    <TableHeader value="Name" />
-                                                    <TableHeader value="Purchased date" />
-                                                    <TableHeader value="Purchased Cost" />
-                                                    <TableHeader value="Salvage value" />
-                                                    <TableHeader value="Useful life" />
-                                                    <TableHeader value="Depreciation" />
-                                                    <TableHeader value="Availibility" />
+                                                    <TableHeader value="Repairs" />
+                                                    <TableHeader value="Repair started" />
+                                                    <TableHeader value="Repaired by" />
+                                                    <TableHeader value="Contacts" />
+                                                    <TableHeader value="Cost" />
+                                                    <TableHeader value="Status" />
+
+
 
                                                 </tr>
                                             </thead>
-                                            <tbody>
 
-                                                {machinery.map((data, key) => {
+                                            <tbody>
+                                                {maintainenceMachine.map((data, key) => {
 
                                                     var datacolor = "text-black";
-                                                    if (data.others === "Unavailable") {
+                                                    if (data.status === "In progress") {
                                                         datacolor = "text-red-600 font-bold";
 
                                                     } else {
                                                         datacolor = "text-green-500 font-bold";
                                                     }
-
                                                     return (
-
-                                                        TotalDepreciation = TotalDepreciation + parseFloat(parseFloat((data.machineryCost - data.salvage) / data.numberOfYrs).toFixed(2)),
-                                                        TotalCost = TotalCost + parseFloat(data.machineryCost),
+                                                        TotalCost = TotalCost + data.others,
                                                         total = formatter.format(TotalCost),
-                                                        totalDep = formatter.format(TotalDepreciation),
+
+                                                        <tr className="text-sm h-10 border dark:border-slate-600" >
+                                                            <TableData value={data.mid} />
+
+                                                            
+                                                            <TableData value={data.Description} />
+                                                            <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
+                                                            <TableData value={data.Location} />
+                                                            <TableData value={data.contactNo} />
+                                                            <TableData value={"Rs." + data.others} />
 
 
-                                                        <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
-                                                            <TableData value={data.machineID} />
-                                                            <TableData value={data.name} />
-                                                            <TableData value={data.dateOfPurchased.toString().split('T')[0]} />
-                                                            <TableData value={formatter.format(data.machineryCost)} />
-                                                            <TableData value={formatter.format(data.salvage)} />
-                                                            <TableData value={data.numberOfYrs + "yrs"} />
-                                                            <TableData value={formatter.format(parseFloat((data.machineryCost - data.salvage) / data.numberOfYrs).toFixed(2))} />
-                                                            <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.others} </td>
+
+                                                            <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
+
+
                                                         </tr>
                                                     )
                                                 })}
                                             </tbody>
-                                        </table><br></br>
+                                        </table><br></br><br></br>
                                         <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-                                            Total Depreciation : {totalDep}
+                                            Total Cost of Machinery Maintenance : {total}
 
-                                        </span><br></br>
-
-                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-
-                                            Total Purchase Cost : {total}
                                         </span>
                                     </div>
 
@@ -205,4 +201,3 @@ export default function MachineryReport() {
         </div>
     );
 }
-

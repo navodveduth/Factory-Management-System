@@ -69,6 +69,11 @@ const MachineryDateRange = () => {
     }
   }, []);
 
+  const generateReport = () => {
+    navigate('/MachineryPreviewDateRange', {state: {DS: location.state.DS, DE: location.state.DE}});
+  }
+
+
   const deleteMachinery = async (id) => {
     await axios.delete(`http://localhost:8070/machinery/delete/${id}`)
       .then((res) => {
@@ -92,7 +97,7 @@ const MachineryDateRange = () => {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteMaintainence(id);
+        deleteMachinery(id);
         Swal.fire({  
           icon: 'success',
           title: 'Data Successfully Deleted',
@@ -179,9 +184,9 @@ const MachineryDateRange = () => {
                               </div>
                               
                       <div className="mr-0 ml-auto">
-                        <Link to={"/MachineryReport"}> {/* change this link your preview page */}
-                          <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
-                        </Link>
+                        
+                          <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick= {()=>generateReport()}>Generate Report</button>
+                  
                       </div>
 
                     </div>
@@ -234,12 +239,12 @@ const MachineryDateRange = () => {
                               totalDep = formatter.format(TotalDepreciation),
 
 
-                              <tr className="text-sm h-10 border dark:border-slate-600">
+                              <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                                 <TableData value={data.machineID} />
                                 <TableData value={data.name} />
                                 <TableData value={data.dateOfPurchased.toString().split('T')[0]} />
-                                <TableData value={"Rs." + data.machineryCost} />
-                                <TableData value={"Rs." + parseFloat((data.machineryCost - data.salvage) / data.numberOfYrs).toFixed(2)} />
+                                <TableData value={formatter.format(data.machineryCost)} />
+                                <TableData value={formatter.format(parseFloat((data.machineryCost - data.salvage) / data.numberOfYrs).toFixed(2))} />
                                 <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.others} </td>
                                 {/* <TableData value={data.machineDetails.map((data2) => {
 

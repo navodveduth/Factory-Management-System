@@ -72,7 +72,7 @@ export default function CompletedOrders(){
             }
 
                async function confirmFunc(id,invoiceNo,stat){
-                if(stat == "Costed"){
+                if(stat == "Yeehaw"){
                     const { value: password } =  await Swal.fire({
                         title: 'Enter the Master Password',
                         input: 'password',
