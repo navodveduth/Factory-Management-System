@@ -84,9 +84,11 @@ const TransportViewAll = () => {
       date2 = date2.substring(1, 11);
       setEndDate(date2);
 
+      navigate('/TransportDateRange', { state: { DS: date1, DE: date2 } });
       // console.log(startDate);
       // console.log(endDate);
     } else {
+      alert('Please select a date range');
       setStartDate('');
       setEndDate('');
     }
@@ -206,13 +208,13 @@ const TransportViewAll = () => {
               <div>
                 <div>
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                    <Header category="Table" title="Transport" />
+                    <Header title="Transport" />
 
-                    <div className=" flex items-center mb-5 ">
+                    <div className="flex items-center mb-5 ">
                       <div>
                         <input
                           type="text"
-                          className="block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                          className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           placeholder="Search Here"
                           onChange={(e) => {
                             setSearchTerm(e.target.value);
@@ -220,27 +222,8 @@ const TransportViewAll = () => {
                         />
                       </div>
 
-                      <div className="ml-5">
-                        <div className="bg-slate-100 pt-1 rounded-lg px-5 w-55">
-                          <DateRangePickerComponent
-                            ref={dateRangeRef}
-                            placeholder="Select a date range"
-                          />
-                        </div>
-                      </div>
-                      <div className="ml-5">
-                        <button
-                          type="button"
-                          className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500"
-                          onClick={filterDate}
-                        >
-                          Filter
-                        </button>
-                      </div>
-
                       <div className="mr-0 ml-auto">
                         <Link to="/TransportReport">
-                          {/* change this link your preview page */}
                           <button
                             type="button"
                             className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500"
@@ -248,6 +231,24 @@ const TransportViewAll = () => {
                             Generate Report
                           </button>
                         </Link>
+                      </div>
+                    </div>
+
+                    <div className=" flex items-center mb-5 ">
+                      <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
+                        <DateRangePickerComponent
+                          ref={dateRangeRef}
+                          placeholder="Select a date range"
+                        />
+                      </div>
+                      <div className="ml-5">
+                        <button
+                          type="button"
+                          className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500"
+                          onClick={() => filterDate()}
+                        >
+                          Filter
+                        </button>
                       </div>
                     </div>
 
