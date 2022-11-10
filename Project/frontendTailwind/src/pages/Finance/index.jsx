@@ -6,6 +6,7 @@ export { default as FinancePreview} from "./FinancePreview";
 export { default as FinanceDateRange} from "./FinanceDateRange";
 export { default as IncomeStatement} from "./IncomeStatement";
 export {default as IncomeStatementDateRange} from "./IncomeStatementDateRange"
+export {default as FinancePreviewDateRange} from "./FinancePreviewDateRange";
 
 
 export { default as SalaryDashboard } from './SalaryDashboard';

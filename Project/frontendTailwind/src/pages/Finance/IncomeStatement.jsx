@@ -19,14 +19,14 @@ const IncomeStatement = () => {
    const [DS, setDateStart] = useState("");
   const [DE, setDateEnd] = useState("");
   const [sales, setSales] = useState([]);
-  const [expenses, setExpenses] = useState([]);
+  const [purchases, setPurchaseOrder] = useState([]);
   const [transport, setTransport] = useState([]);
   const [salary, setSalary] = useState([]);
-  const [prodCost, setProdCost] = useState([]);
   const [maintainance, setMaintainence] = useState([]);
   const [mach_maintainance, setMaintainenceMachine] = useState([]);
   const [vehi_maintainance, setMaintainenceVehi] = useState([]);
   const [machinery, setMachinery] = useState([]);
+  const [Order,setOrder] = useState([]);
 
   
   const navigate = useNavigate();
@@ -63,6 +63,29 @@ const IncomeStatement = () => {
   }
   //purchases get function
 
+  const getPurchaseOrder = async () => {
+    axios.get('http://localhost:8070/purchaseOrder/date/'+(curDate.getFullYear() - 1)+'/'+curDate)
+        .then((res) => {
+            setPurchaseOrder(res.data);
+        })
+        .catch((err) => {
+            alert(err.message);
+        })
+}
+
+  //salary get function
+
+  const getSalary = async () => {
+    axios
+      .get('http://localhost:8070/salary/SalaryView')
+      .then((res) => {
+        setSalary(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
   //machinery maintainance get function
 
   const getMMaintainence = async () => {  //getMaintainence is the function to get the data from the backend
@@ -87,7 +110,7 @@ const IncomeStatement = () => {
       .catch((err) => {
         alert(err.message);
       })
-  }
+    }
 
   //vehicle maintainance get function
 
@@ -130,12 +153,28 @@ const IncomeStatement = () => {
       });
   };
 
+  //production cost function
+
+  const getProduction = async () => {
+    axios
+      .get('http://localhost:8070/production/order/date/'+(curDate.getFullYear() - 1)+'/'+curDate)
+      .then((res) => {
+        setOrder(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
 
 
   
   useEffect(() => {
     getFinanceDate();
+    getProduction();
     getSale();
+    getSalary();
+    getPurchaseOrder();
     getMMaintainence();
     getVMaintainence();
     getMaintainence();
@@ -149,13 +188,12 @@ const IncomeStatement = () => {
     }
   }, []);
 
-  var saleTotal , revenueTotal, expenseTotal , MMaintTotal , VehiMaintTotal , maintTotal , transportTotal, machineryTotal;
-  saleTotal = expenseTotal = revenueTotal = expenseTotal  = MMaintTotal = VehiMaintTotal = maintTotal = transportTotal = machineryTotal = 0;
+  var saleTotal , revenueTotal, expenseTotal , MMaintTotal , VehiMaintTotal , maintTotal , transportTotal, machineryTotal, salaryTotal, productionTotal, purchasesTotal;
+  saleTotal = expenseTotal = revenueTotal = expenseTotal  = MMaintTotal = VehiMaintTotal = maintTotal = transportTotal = machineryTotal = salaryTotal =productionTotal = machineryTotal = purchasesTotal = 0;
 
   for (var i = 0; i < sales.length; i++) {
     saleTotal += sales[i].totalAmount;
   }
-
   for(var i = 0; i < transactions.length; i++){
     if(transactions[i].trnType == "Revenue"){
       revenueTotal += transactions[i].trnAmount;
@@ -178,6 +216,18 @@ const IncomeStatement = () => {
   for(var i = 0; i < machinery.length; i++){
     machineryTotal += machinery[i].machineryCost;
   }
+  for(var i = 0; i < salary.length; i++){
+    salaryTotal += (salary[i].employeeIncentive + salary[i].employeeAllowance + salary[i].employeeBasicSalary);
+  }
+  for(var i = 0; i < Order.length; i++){
+    if(Order[i].status == "Costed"){
+      productionTotal += Order[i].totalCost;
+    }
+  }
+  for(var i = 0; i < purchases.length; i++){
+    purchasesTotal += purchases[i].cost;
+  }
+
 
  const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -287,10 +337,14 @@ const IncomeStatement = () => {
                                   </tr>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
                                     <td>Purchase Expense</td>
-                                    <td>{}</td>
+                                    <td>{formatter.format(purchasesTotal)}</td>
                                   </tr>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
-                                    <td>Other Income</td>
+                                    <td>Production Expense</td>
+                                    <td>{formatter.format(productionTotal)}</td>
+                                  </tr>
+                                  <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
+                                    <td>Other Income</td> 
                                     <td>{formatter.format(revenueTotal)}</td>
                                   </tr>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
@@ -304,6 +358,19 @@ const IncomeStatement = () => {
                                   </tr>
                                   <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
                                     <td>Maintance Expenses</td>
+                                    <td>{formatter.format(MMaintTotal+VehiMaintTotal+maintTotal)}</td>
+                                  </tr>
+                                  <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
+                                    <td>Salary Expenses</td>
+                                    <td>{formatter.format(salaryTotal)}</td>
+                                  </tr>
+                                  <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
+                                    <td>Other Expenses</td>
+                                    <td>{formatter.format(expenseTotal)}</td>
+                                  </tr>
+                                  <br></br>
+                                  <tr className="text-sm h-10 border dark:border-slate-600 dark:text-white">
+                                    <td>Net Profit or Loss</td>
                                     <td>{formatter.format(MMaintTotal+VehiMaintTotal+maintTotal)}</td>
                                   </tr>
                                   {/* {transactions.filter((data) => {

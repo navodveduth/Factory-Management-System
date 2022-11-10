@@ -137,11 +137,11 @@ function FinanceCreateForm() {
                                 <div className="mb-3">
                                   <label for="trnType" className="form-label">Type : </label>
                                   <select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                  id="trnType" aria-label="Default select example" required
+                                  id="trnType" aria-label="Default select example" required = "required"
                                   onChange={(e) =>{
                                     setTransactionType(e.target.value);
                                   }}>
-                                      <option selected>Select Transaction Type</option>
+                                      <option value = "">Select Transaction Type</option>
                                       <option value="Expense">Expense</option>
                                       <option value="Revenue">Revenue</option>
                                   </select>
