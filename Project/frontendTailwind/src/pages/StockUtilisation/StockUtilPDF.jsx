@@ -15,6 +15,9 @@ function StockUtilPDF() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
     const [stockUtil, setStockUtilisation] = useState([]); //stock is the state variable and setStock is the function to update the state variable
+        var totalAdditions = 0;
+        var totalIssues = 0;
+    
     const getStockUtil = async () => {  //getStock is the function to get the data from the backend
         axios.get("http://localhost:8070/stockUtilisation")
             .then((res) => {
@@ -44,6 +47,13 @@ function StockUtilPDF() {
             pdf.save("stocksUtil_" + date + ".pdf");
         });
     };
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+    })
 
     return (
         <div>

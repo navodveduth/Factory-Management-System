@@ -44,7 +44,7 @@ function ProcessingRequestPDF() {
         const pdf = new jsPDF("landscape", "px", "a1", false);
         const data = await document.querySelector("#tblPDF");
         pdf.html(data).then(() => {
-            pdf.save("stocks_" + date + ".pdf");
+            pdf.save("ProcessingStockOrder" + date + ".pdf");
         });
     };
 
@@ -112,6 +112,7 @@ function ProcessingRequestPDF() {
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
                                                     <TableHeader value="Description" />
+                                                    <TableHeader value="Date" />
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Status" />
                                                 </tr>
@@ -121,12 +122,12 @@ function ProcessingRequestPDF() {
 
 
                                                     var datacolor = "text-black";
-                                                    if (data.status === "Resolved") {
+                                                    if (data.status === "Pending") {
                                                         datacolor = "text-red-600 font-bold";
                                                     } else if (data.status === "Resolved") {
                                                         datacolor = "text-green-500 font-bold";
                                                     } else {
-                                                        datacolor = "#facc15";
+                                                        datacolor = "text-yellow-500 font-bold";
                                                     }
                                                     return (
                                                         < tr className="text-sm h-10 border dark:border-slate-600" >
