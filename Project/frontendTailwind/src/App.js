@@ -12,7 +12,7 @@ import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePre
 import {  MaintenanceDashboard,MachMaintenancePreDateRange, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport,MaintainenceDateRange, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachManitenanceDateRange,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport,VehiMaintenanceDateRange} from './pages/Maintenance';
 import {MachineryDashboard, MachineryPreviewDateRange,MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory} from './pages//Machinery';
 
-import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice, SalesDateRange } from './pages/Sales';
+import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice, SalesDateRange, SalesPreviewByDate } from './pages/Sales';
 
 import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders,CompletedOrders, FinalCostOrder,CompletedOrdersDateRange, CostedOrders, InsightDashboard, UpdateStockRequest} from './pages/Production/Index';
 
@@ -127,6 +127,7 @@ const App = () => {
           <Route path="/SalesInvoice/:id" element={<SalesInvoice />} />
           <Route path="/SalesPreview" element={<SalesPreview />} />
           <Route path="/SalesDateRange" element={<SalesDateRange />} />
+          <Route path="/SalesPreviewByDate" element={<SalesPreviewByDate />} />
 
           {/* production management  */}
           <Route path="/viewRequested" element={<RequestedStocks />} />
