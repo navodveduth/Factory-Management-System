@@ -15,9 +15,9 @@ function StockUtilPDF() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
     const [stockUtil, setStockUtilisation] = useState([]); //stock is the state variable and setStock is the function to update the state variable
-        var totalAdditions = 0;
-        var totalIssues = 0;
-    
+    var totalAdditions = 0;
+    var totalIssues = 0;
+
     const getStockUtil = async () => {  //getStock is the function to get the data from the backend
         axios.get("http://localhost:8070/stockUtilisation")
             .then((res) => {
@@ -54,6 +54,11 @@ function StockUtilPDF() {
         minimumFractionDigits: 2,
         currencyDisplay: 'symbol'
     })
+
+    //getDAte
+    const current = new Date();
+    const currentdate = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}`;
+
 
     return (
         <div>
@@ -103,7 +108,7 @@ function StockUtilPDF() {
                             <div>
 
                                 <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                                    <Header category="Table" title="Preview" />
+                                    <Header category="Table" title="Stock Utilisation Report Preview" />
 
                                     <div className=" flex items-center mb-5 ">
                                         <div className="mr-0 ml-auto">
@@ -112,10 +117,21 @@ function StockUtilPDF() {
                                     </div>
 
                                     <div id="tblPDF" className="block w-full overflow-x-auto rounded-lg">
+                                        <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                                            <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
+                                        </div>
+
+                                        <div className="text-center mb-10">
+
+                                            <p className="text-xl mt-2">Lanka MountCastle (Pvt) Ltd,</p>
+                                            <p className="text-xl">No.124, Hendala, Wattala</p>
+                                            <p>011 2942 672</p>
+                                        </div>
+                                        <p className="text-right text-xl mt-2 mb-3">Generated On : {currentdate}</p>
                                         <table className="w-full rounded-lg">
                                             <thead>
                                                 <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                                <TableHeader value="Code" />
+                                                    <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
                                                     <TableHeader value="Initial Purchase" />
@@ -138,10 +154,10 @@ function StockUtilPDF() {
                                                         datacolor = "text-red-600 font-bold";
                                                     }
 
-                                                    if(data.type === "Additions"){
+                                                    if (data.type === "Additions") {
                                                         totalAdditions += parseInt(data.quantity)
-                                                    }else if (data.type === "Issues"){
-                                                        totalIssues += parseInt(data.quantity) 
+                                                    } else if (data.type === "Issues") {
+                                                        totalIssues += parseInt(data.quantity)
                                                     }
 
                                                     return (
