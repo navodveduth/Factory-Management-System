@@ -237,7 +237,7 @@ function ViewAllRawMaterials() {
                                                         { totalValue = 0 }
                                                     }
 
-                                                    var datacolor = "text-black";
+                                                    var datacolor = null;
                                                     if (quantity === "No usable stocks left") {
                                                         datacolor = "text-red-600 font-bold";
                                                     }
