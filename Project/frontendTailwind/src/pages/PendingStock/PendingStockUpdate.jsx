@@ -130,7 +130,7 @@ function PendingStockUpdate() {
                                                 .catch((err) => {
                                                     console.log(err);
                                                     alert("ERROR: Could not update stock");
-                                                    navigate('/PendingStockUpdate');
+                                                    navigate('/PendingStockUpdate'+ id);
                                                 })
                                         }}>
 

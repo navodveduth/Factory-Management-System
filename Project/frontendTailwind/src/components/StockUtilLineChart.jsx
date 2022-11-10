@@ -100,99 +100,21 @@ export default function StockUtilLineChart() {
 
     //total addition and issue
 
-    var janTotal, febTotal, marTotal, aprTotal, mayTotal, junTotal, julTotal, augTotal, sepTotal, octTotal, novTotal, decTotal;
-    janTotal = febTotal = marTotal = aprTotal = mayTotal = junTotal = julTotal = augTotal = sepTotal = octTotal = novTotal = decTotal = 0;
-    for (let index = 0; index < utilCnt; index++) {
-        console.log(new Date(stockUtil[index].date).getMonth());
-        switch (new Date(stockUtil[index].date).getMonth()) {
-            case (0):
-                if (stockUtil[index].type === "Additions")
-                    {janTotal = janTotal + stockUtil[index].totalValue;}
-                else
-                    {janTotal = janTotal - stockUtil[index].totalValue;}
-                break;
-            case (1):
-                if (stockUtil[index].type === "Additions")
-                    {febTotal = febTotal + stockUtil[index].totalValue;}
-                else
-                    {febTotal = febTotal - stockUtil[index].totalValue;}
-                break;
-            case (2):
-                if (stockUtil[index].type === "Additions")
-                    {marTotal = marTotal + stockUtil[index].totalValue;}
-                else
-                    {marTotal = marTotal - stockUtil[index].totalValue;}
-                break;
-            case (3):
-                if (stockUtil[index].type === "Additions")
-                    {aprTotal = aprTotal + stockUtil[index].totalValue;}
-                else
-                    {aprTotal = aprTotal - stockUtil[index].totalValue;}
-                break;
-            case (4):
-                if (stockUtil[index].type === "Additions")
-                    {mayTotal = mayTotal + stockUtil[index].totalValue;}
-                else
-                    {mayTotal = mayTotal - stockUtil[index].totalValue;}
-                break;
-            case (5):
-                if (stockUtil[index].type === "Additions")
-                    {junTotal = junTotal + stockUtil[index].totalValue;}
-                else
-                    {junTotal = junTotal - stockUtil[index].totalValue;}
-                break;
-            case (6):
-                if (stockUtil[index].type === "Additions")
-                    {julTotal = julTotal + stockUtil[index].totalValue;}
-                else
-                    {julTotal = julTotal - stockUtil[index].totalValue;}
-                break;
-            case (7):
-                if (stockUtil[index].type === "Additions")
-                    {augTotal = augTotal + stockUtil[index].totalValue;}
-                else
-                    {augTotal = augTotal - stockUtil[index].totalValue;}
-                break;
-            case (8):
-                if (stockUtil[index].type === "Additions")
-                    {sepTotal = sepTotal + stockUtil[index].totalValue;}
-                else
-                    {sepTotal = sepTotal - stockUtil[index].totalValue;}
-                break;
-            case (9):
-                if (stockUtil[index].type === "Additions")
-                    {octTotal = octTotal + stockUtil[index].totalValue;}
-                else
-                    {octTotal = octTotal - stockUtil[index].totalValue;}
-                break;
-            case (10):
-                if (stockUtil[index].type === "Additions")
-                    {novTotal = (parseInt(novTotal) + stockUtil[index].totalValue);}
-                else
-                    {novTotal = (parseInt(novTotal) - stockUtil[index].totalValue);}
-                break;
-            case (11):
-                if (stockUtil[index].type === "Additions")
-                    {decTotal = decTotal + stockUtil[index].totalValue;}
-                else
-                    {decTotal = decTotal - stockUtil[index].totalValue;}
-                break;
-            default:
-                break;
-        }
-    }
+    var janUtil = 0;
+    var febUtil =0;
+    var marUtil =0;
+    var aprUtil =0;
+    var mayUtil = 0;
+    var junUtil =0;
+    var julUtil = 0;
+    var augUtil =0;
+    var sepUtil = 0;
+    var octUtil =0 ;
+    var novUtil=0;
+    var decUtil = 0;
 
-    console.log(novTotal);
-
-    let data = [
-        { month: 'Jan', stockUtil: janTotal }, { month: 'Feb', stockUtil: febTotal },
-        { month: 'Mar', stockUtil: marTotal }, { month: 'Apr', stockUtil: aprTotal },
-        { month: 'May', stockUtil: mayTotal }, { month: 'Jun', stockUtil: junTotal },
-        { month: 'Jul', stockUtil: julTotal }, { month: 'Aug', stockUtil: augTotal },
-        { month: 'Sep', stockUtil: sepTotal }, { month: 'Oct', stockUtil: octTotal },
-        { month: 'Nov', stockUtil: parseInt(novTotal) }, { month: 'Dec', stockUtil: decTotal }
-    ];
-
+    console.log(novUtil);
+   
     //additions
 
     var janTotal1, febTotal1, marTotal1, aprTotal1, mayTotal1, junTotal1, julTotal1, augTotal1, sepTotal1, octTotal1, novTotal1, decTotal1;
@@ -202,39 +124,51 @@ export default function StockUtilLineChart() {
         switch (new Date(additions[index].date).getMonth()) {
             case (0):
                 janTotal1 = janTotal1 + additions[index].totalValue;
+                janUtil += janTotal1
                 break;
             case (1):
                 febTotal1 = febTotal1 + additions[index].totalValue;
+                febUtil += febTotal1
                 break;
             case (2):
                 marTotal1 = marTotal1 + additions[index].totalValue;
+                marUtil += marTotal1
                 break;
             case (3):
                 aprTotal1 = aprTotal1 + additions[index].totalValue;
+                aprUtil += aprUtil
                 break;
             case (4):
                 mayTotal1 = mayTotal1 + additions[index].totalValue;
+                mayUtil += mayTotal1
                 break;
             case (5):
                 junTotal1 = junTotal1 + additions[index].totalValue;
+                junUtil += junTotal1
                 break;
             case (6):
                 julTotal1 = julTotal1 + additions[index].totalValue;
+                julUtil += julTotal1
                 break;
             case (7):
                 augTotal1 = augTotal1 + additions[index].totalValue;
+                augUtil += augTotal1
                 break;
             case (8):
                 sepTotal1 = sepTotal1 + additions[index].totalValue;
+                sepUtil += sepTotal1
                 break;
             case (9):
                 octTotal1 = octTotal1 + additions[index].totalValue;
+                octUtil += octTotal1
                 break;
             case (10):
                 novTotal1 = (parseInt(novTotal1) + additions[index].totalValue);
+                novUtil += novTotal1
                 break;
             case (11):
                 decTotal1 = decTotal1 + additions[index].totalValue;
+                decUtil += decTotal1
                 break;
             default:
                 break;
@@ -261,39 +195,51 @@ export default function StockUtilLineChart() {
         switch (new Date(issues[index].date).getMonth()) {
             case (0):
                 janTotal2 = janTotal2 + issues[index].totalValue;
+                janUtil -= janTotal2
                 break;
             case (1):
                 febTotal2 = febTotal2 + issues[index].totalValue;
+                febUtil -= febTotal2
                 break;
             case (2):
                 marTotal2 = marTotal2 + issues[index].totalValue;
+                marUtil -= marTotal2
                 break;
             case (3):
                 aprTotal2 = aprTotal2 + issues[index].totalValue;
+                aprUtil -= aprTotal2
                 break;
             case (4):
                 mayTotal2 = mayTotal2 + issues[index].totalValue;
+                mayUtil -= marTotal2
                 break;
             case (5):
                 junTotal2 = junTotal2 + issues[index].totalValue;
+                junUtil -= junTotal2
                 break;
             case (6):
                 julTotal2 = julTotal2 + issues[index].totalValue;
+                julUtil -= julTotal2
                 break;
             case (7):
                 augTotal2 = augTotal2 + issues[index].totalValue;
+                augUtil -= augTotal2
                 break;
             case (8):
                 sepTotal2 = sepTotal2 + issues[index].totalValue;
+                sepUtil -= sepTotal2
                 break;
             case (9):
                 octTotal2 = octTotal2 + issues[index].totalValue;
+                octUtil -= octTotal2
                 break;
             case (10):
                 novTotal2 = (parseInt(novTotal2) + issues[index].totalValue);
+                novUtil -= novTotal2
                 break;
             case (11):
                 decTotal2 = decTotal2 + issues[index].totalValue;
+                decUtil -= decTotal2
                 break;
             default:
                 break;
@@ -311,6 +257,16 @@ export default function StockUtilLineChart() {
         { month: 'Nov', issues: parseInt(novTotal2) }, { month: 'Dec', issues: decTotal2 }
     ];
 
+    
+
+    let data = [
+        { month: 'Jan', stockUtil: janUtil }, { month: 'Feb', stockUtil: febUtil },
+        { month: 'Mar', stockUtil: marUtil }, { month: 'Apr', stockUtil: aprUtil },
+        { month: 'May', stockUtil: mayUtil }, { month: 'Jun', stockUtil: junUtil },
+        { month: 'Jul', stockUtil: julUtil }, { month: 'Aug', stockUtil: augUtil },
+        { month: 'Sep', stockUtil: sepUtil }, { month: 'Oct', stockUtil: octUtil },
+        { month: 'Nov', stockUtil: parseInt(novUtil) }, { month: 'Dec', stockUtil: decUtil }
+    ];
     console.log(data)
     return (
         <>
