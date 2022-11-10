@@ -7,7 +7,7 @@ import { EmployeeDashboard, EmployeeViewAll, EmployeeNew, EmployeeUpdate, Employ
 import { AttendanceAndLeaveDashboard, AttendanceViewAll, AttendanceNew, AttendanceUpdate, AttendanceReport, AttendanceNewRecord, LeaveViewAll, LeaveNew, LeaveUpdate, LeaveReport } from './pages/AttendanceAndLeaves';
 import { WelfareDashboard, WelfareNew, WelfareReport, WelfareUpdate, WelfareViewAll } from './pages/Welfare';
 
-import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, FinancePreviewDateRange, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll, PreviewSalary, FinanceDateRange, IncomeStatement, IncomeStatementDateRange } from './pages/Finance';
+import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, FinancePreviewDateRange, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll, PreviewSalary, FinanceDateRange, IncomeStatement, IncomeStatementDateRange, IncomeStatementDateRangePreview, IncomeStatementPreview } from './pages/Finance';
 
 import {  MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport,MaintainenceDateRange, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachManitenanceDateRange,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport,VehiMaintenanceDateRange} from './pages/Maintenance';
 import {MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory} from './pages//Machinery';
@@ -36,7 +36,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           {/* Common Routes */}
-          <Route path="/" element={<EmployeeDashboard />} />
+          <Route path="/" element={<UserLogin />} />
           <Route path="/Register" element={<UserRegistration />} />
 
           {/* employee management  */}
@@ -77,7 +77,9 @@ const App = () => {
           <Route path="/FinancePreviewDateRange" element={<FinancePreviewDateRange />} />
           <Route path="/FinanceDateRange/" element={<FinanceDateRange />} />
           <Route path="/IncomeStatement" element={<IncomeStatement />} />
+          <Route path="/IncomeStatementPreview" element={<IncomeStatementPreview />} />
           <Route path="/IncomeStatementDateRange" element={<IncomeStatementDateRange />} />
+          <Route path="/IncomeStatementDateRangePreview" element={<IncomeStatementDateRangePreview />} />
 
 
           {/* salary management  */}
