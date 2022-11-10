@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { GiRolledCloth, GiSewingNeedle, GiClothes } from 'react-icons/gi';
-import { FaCoins, FaChartBar, FaInbox, FaLayerGroup, FaHourglassHalf, FaGetPocket } from 'react-icons/fa';
+import { FaCoins, FaChartBar, FaInbox, FaLayerGroup, FaHourglassHalf, FaGetPocket, FaFileAlt } from 'react-icons/fa';
 import { AiOutlineStock } from 'react-icons/ai';
 import { DashTopBox, DashTopButton } from '../../components';
 import { BiAddToQueue, BiCheckCircle } from 'react-icons/bi';
@@ -159,8 +159,10 @@ const StockUtilisationDashboard = () => {
                   <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                       {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-                      <DashTopBox icon={<FaCoins />} label="Total Items " data={itemCount} />
                       
+                      <Link to ="/StockUtilisation">
+                      <DashTopBox icon={<FaFileAlt />} label="Total Records " data={itemCount} />                        </Link>
+
                       <Link to ="/PendingStockRequisitions">
                         <DashTopBox icon={<FaGetPocket />} label="Stock Requisitions" data={requested} />
                         </Link>
