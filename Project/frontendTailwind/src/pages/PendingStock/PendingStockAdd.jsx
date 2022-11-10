@@ -111,7 +111,7 @@ function PendingStockAdd() {
                                             console.log(newStock)
                                             await axios.post("http://localhost:8070/pendingStock/create", newStock).then(() => {
                                                 alert("Data saved successfully");
-                                                navigate('/PendingStockView');
+                                                navigate('/ProcessingRequest');
 
                                             }).catch((err) => {
                                                 console.log(err);

@@ -25,7 +25,7 @@ const PurchaseOrderStatusPieChart = () => {
 
     const purOrder = purchaseOrder.length;
     const placedOrders = purchaseOrder.filter((order) => order.orderStatus === 'Order Placed').length;
-    const completedOrders = purchaseOrder.filter((order) => order.orderStatus === 'Order Placed').length;
+    const completedOrders = purchaseOrder.filter((order) => order.orderStatus === 'Order Completed').length;
 
     return (
         <div>

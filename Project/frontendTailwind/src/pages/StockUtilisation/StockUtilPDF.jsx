@@ -9,6 +9,7 @@ import { DashTopBox, DashTopButton, } from '../../components';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import logo from '../../data/logo.png';
 
 function StockUtilPDF() {
 
@@ -115,8 +116,8 @@ function StockUtilPDF() {
                                             <button onClick={createPDF} type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
                                         </div>
                                     </div>
-
-                                    <div id="tblPDF" className="block w-full overflow-x-auto rounded-lg">
+<div id="tblPDF" >
+                                    <div className="block w-full overflow-x-auto rounded-lg">
                                         <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
                                             <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
                                         </div>
@@ -189,7 +190,7 @@ function StockUtilPDF() {
                                         </span>
                                     </div>
                                 </div>
-
+                                </div>
                             </div>
                             <Footer />
                         </div>

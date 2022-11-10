@@ -5,6 +5,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 import { jsPDF } from "jspdf";
+import logo from '../../data/logo.png';
 
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
@@ -69,6 +70,11 @@ function WorkInProgressReport() {
         currencyDisplay: 'symbol'
     })
 
+    //getDAte
+    const current = new Date();
+    const currentdate = `${current.getFullYear()}-${current.getMonth() + 1}-${current.getDate()}`;
+
+
     return (
 
         <div>
@@ -125,8 +131,21 @@ function WorkInProgressReport() {
                                         </div>
                                     </div>
 
-                                    <div id="tblPDF" className="block w-full overflow-x-auto rounded-lg">
-                                        <table className="w-full rounded-lg">
+                                    <div id="tblPDF">
+                                        <div className="block w-full overflow-x-auto rounded-lg">
+                                            <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                                                <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
+                                            </div>
+
+                                            <div className="text-center mb-10">
+
+                                                <p className="text-xl mt-2">Lanka MountCastle (Pvt) Ltd,</p>
+                                                <p className="text-xl">No.124, Hendala, Wattala</p>
+                                                <p>011 2942 672</p>
+                                                </div>
+                                                <p className="text-right text-xl mt-2 mb-3">Generated On : {currentdate}</p>
+
+                                             <table className="w-full rounded-lg">
                                             <thead>
                                                 <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                                                     <TableHeader value="Code" />
@@ -172,7 +191,7 @@ function WorkInProgressReport() {
                                                             { totalValue = 0 }
                                                         }
 
-                                                        var datacolor = "text-black";
+                                                        var datacolor = null;
                                                         if (quantity === "No usable stocks left") {
                                                             datacolor = "text-red-600 font-bold";
                                                         }
@@ -200,6 +219,8 @@ function WorkInProgressReport() {
                                         </span>
                                     </div>
                                 </div >
+                               
+                               </div>
                             </div>
                             <Footer />
                         </div>
