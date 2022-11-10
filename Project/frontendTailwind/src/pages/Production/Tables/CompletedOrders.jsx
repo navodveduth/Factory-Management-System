@@ -6,6 +6,7 @@ import TableHeader from "../../../components/Table/TableHeader";
 import TableData from '../../../components/Table/TableData';
 import Header from "../../../components/Header";
 import { useStateContext } from '../../../contexts/ContextProvider';
+import Swal from 'sweetalert2';
 
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../../components';
@@ -52,22 +53,124 @@ export default function CompletedOrders(){
 
         async function deletesOrder(id){
             await axios.delete(`http://localhost:8070/production/order/delete/${id}`).then((res)=>{
-                alert("Production cost data deleted Successfully");
+                //alert("Production cost data deleted Successfully");
                getOrders();
             }).catch((err)=>{
                 alert(err.message);
             })
         }
 
-        const confirmFunc = (id)=>{
-
-            if (confirm("Do you want to delete?") == true) {
-                deletesOrder(id);
-            } else {
-                navigate('/completedOrders');
+        async function updateSales(id){
+            const salesStatus = "Pending"
+            //  const statusPass = {salesStatus}
+              await axios.put('http://localhost:8070/Production/order/updateStatus/'+id,{"status":salesStatus}).then((res)=>{
+                 // alert("Sale Status Changed");
+              }).catch((error)=>{
+                  console.log(error)
+                  //alert("Sale Status Change Unsuccessful");
+              })
             }
-    
-        }
+
+               async function confirmFunc(id,invoiceNo,stat){
+                if(stat == "Costed"){
+                    const { value: password } =  await Swal.fire({
+                        title: 'Enter the Master Password',
+                        input: 'password',
+                        inputLabel: 'Password',
+                        inputPlaceholder: 'Enter your password',
+                        inputAttributes: {
+                          maxlength: 10,
+                          autocapitalize: 'off',
+                          autocorrect: 'off'
+                        }
+                      })
+                      if (password != "12345") {
+                        Swal.fire(`Invalid Password`)
+                        navigate('/completedOrders');
+                      }else{
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "You won't be able to revert this!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Proceed'
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              deletesOrder(id);
+                              updateSales(invoiceNo);
+                              Swal.fire({  
+                                icon: 'success',
+                                title: 'Invoice Status Changed and Data Successfully Deleted',
+                                color: '#f8f9fa',
+                                background: '#6c757d',
+                                showConfirmButton: false,
+                                timer: 2000
+                              })
+                            }else {
+                              navigate('/completedOrders');
+                            }
+                          })
+                      }
+                }else{
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          deletesOrder(id);
+                          updateSales(invoiceNo);
+                          Swal.fire({  
+                            icon: 'success',
+                            title: 'Data Successfully Deleted',
+                            color: '#f8f9fa',
+                            background: '#6c757d',
+                            showConfirmButton: false,
+                            timer: 2000
+                          })
+                        }else {
+                          navigate('/completedOrders');
+                        }
+                    })
+                }
+              };
+
+        // const confirmFunc = (id,invoiceNo,stat)=>{
+
+        //     if(stat == "Costed"){
+        //         const password = prompt("Please enter the master password assigned by the admin:");
+        //         if(password == "12345"){
+        //             if (confirm("Do you want to delete?") == true) {
+        //                 updateSales(invoiceNo);
+        //                 deletesOrder(id);
+        //             } else {
+        //                 navigate('/completedOrders');
+        //             }
+        //         }else{
+        //             alert("Password Incorrect");
+        //         }
+        //     }else{
+        //         if (confirm("Do you want to delete?") == true) {
+        //             updateSales(invoiceNo);
+        //             deletesOrder(id);
+        //         } else {
+        //             navigate('/completedOrders');
+        //         }
+        //     }
+        // }
+
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'LKR',
+            minimumFractionDigits: 2,
+            currencyDisplay: 'symbol'
+          })
 
 
         return(
@@ -142,7 +245,7 @@ export default function CompletedOrders(){
                                 }} />
                               </div>
                               <div className=" mx-1">
-                                  <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}  >filter</button>
+                                  <button type="button" className=" font-bold py-1 px-4 rounded-full mx-3 text-white" onClick={()=>{toDateRange()}} > filter</button>
                               </div>
                                 <div className="mr-0 ml-auto">
                                     <Link to={"/costpreview"}> {/* change this link your preview page */}
@@ -159,8 +262,10 @@ export default function CompletedOrders(){
                                             <TableHeader value ="Product"></TableHeader>
                                             <TableHeader value ="Quantity"></TableHeader>
                                             <TableHeader value ="Requested Date"></TableHeader>
-                                            <TableHeader value ="Supervisor"></TableHeader>
-                                            <TableHeader value ="Team Lead"></TableHeader>
+                                            <TableHeader value ="B. Material Cost"></TableHeader>
+                                            <TableHeader value ="B. Labour Cost"></TableHeader>
+                                            <TableHeader value ="B. Overhead Cost"></TableHeader>
+                                            <TableHeader value ="B. Total Cost"></TableHeader>
                                             <TableHeader value ="Status"></TableHeader>
                                             <TableHeader value="Manage"/>
                                             </tr>
@@ -182,11 +287,13 @@ export default function CompletedOrders(){
                                                             <TableData value={data.product}/>
                                                             <TableData value={data.unitQty}/>
                                                             <TableData value={new Date(data.requestDate).toISOString().split('T')[0]}/>
-                                                            <TableData value={data.supervisor}/>
-                                                            <TableData value={data.teamLead}/>
+                                                            <TableData value={formatter.format(data.budgetedMatCost)}/>
+                                                            <TableData value={formatter.format(data.budgetedLabCost)}/>
+                                                            <TableData value={formatter.format(data.budgetedoverHeadCost)}/>
+                                                            <TableData value={formatter.format(data.budgetedtotalCost)}/>
                                                             <TableData value={data.status}/>
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                                                <Link to={"/costingOrder/" +data.invoiceNo }>
+                                                                <Link to={"/costingOrder/" +data._id }>
                                                                     <button 
                                                                         type="button" 
                                                                         className="font-bold py-1 px-4 rounded-full mx-3 text-white" 
@@ -195,7 +302,7 @@ export default function CompletedOrders(){
                                                                 </Link>
                                                             
                                                                 <button onClick={()=>{
-                                                                confirmFunc(data._id);
+                                                                confirmFunc(data._id,data.invoiceNo,data.status);
                                                                 }}
                                                                 type="button" 
                                                                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full">

@@ -28,6 +28,27 @@ const EmployeeDashboard = () => {
       });
   };
 
+  // const token = localStorage.getItem('userInfo');
+
+  // useEffect(() => {
+  //   if (token) {
+  //     axios
+  //       .get('http://localhost:8070/employee/viewEmployee', {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       })
+  //       .then((res) => {
+  //         setEmployee(res.data);
+  //       })
+  //       .catch((err) => {
+  //         alert(err.message.data);
+  //       });
+  //   } else {
+  //     window.location.href = 'http://localhost:3000';
+  //   }
+  // }, [token]);
+
   useEffect(() => {
     getEmployee();
     const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES

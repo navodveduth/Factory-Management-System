@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Header } from '../../components';
 import { FiUser } from 'react-icons/fi';
@@ -11,76 +11,52 @@ import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 
-function AddStockForRequisition() {
-
+function RequestedOrdersUpdate() {
     //useNavigate is a hook that is used to navigate to another page
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
-    var stockCode = null;
-    var stockName = null;
-    var stockCategory = null;
-    var description = null;
-
+    const [stockCode, setStockCode] = useState('');
+    const [stockName, setStockName] = useState('');
+    const [stockCategory, setStockCategory] = useState('');
+    const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState('');
     const [date, setDate] = useState('');
-    var [status, setStatus] = useState('');
-    const [ stock, setStock] = useState([]);
-    //gets the current date
-    var currentDate = new Date().toISOString().split('T')[0];
-    console.log(currentDate)
+    var status = null;
 
     const { id } = useParams();
 
-    var minDate = null;
- 
-    console.log("id", id)
-    //stock request
-    const getStock =async  () => {
-        await axios.get(`http://localhost:8070/stock/ViewStock/${id}`).then((res) => {
-            console.log("data", res.data)
-            setStock(res.data);
-        }).catch(()=>{
-//
+    const getPendingStock = () => {
+        axios.get("http://localhost:8070/pendingStock/" + id).then((res) => {
+            setStockCode(res.data.stockCode);
+            setStockName(res.data.stockName);
+            setStockCategory(res.data.stockCategory);
+            setDescription(res.data.description);
+            setQuantity(res.data.quantity);
+            setDate(res.data.date);
+           // setStatus(res.data.status);
+        }).catch((err) => {
+            alert(err);
         })
-        
-    }
-    const name = stockName;
-    console.log(name)
-
-    async function consfirmNull(){
-        alert('Stock is unavailable. Please make a purchase order request');
-        navigate('/PendingStockAdd')
     }
 
-    useEffect(() => { //useEffect is used to call the function getStock
-        if (id === "null"){
-        consfirmNull();
-        }
-        getStock();
-    }, [id])
-
-    useEffect(() => { //useEffect is used to call the function getStock
-
+    useEffect(() => {
+        getPendingStock()
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
         if (currentThemeColor && currentThemeMode) {
             setCurrentColor(currentThemeColor);
             setCurrentMode(currentThemeMode);
         }
-    }, [])
+    }, []);
 
-    stock.map((data) => {
-        minDate = data.firstPurchaseDate.split('T')[0];
-        stockCode = data.stockCode;
-        stockName = data.stockName;
-        stockCategory = data.stockCategory;
-        description = data.description;
-    })
+    var currentDate = new Date().toISOString().split('T')[0];
 
     return (
 
         <div>
+
+            {/* DON'T CHANGE ANYTHING HERE */}
 
             <div className={currentMode === 'Dark' ? 'dark' : ''}>
 
@@ -127,14 +103,16 @@ function AddStockForRequisition() {
                             {themeSettings && <ThemeSettings />}
                             <div>
 
-                            <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-                                    <Header category="Form" title=" Create New Stock" />
-                                    <div className=" flex items-center justify-center ">
+                                <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '>
+                                    <Header category="Form" title="Update Stock" />
+                                    <div className=" flex items-center justify-center">
 
                                         <form onSubmit={async (e) => {
                                             e.preventDefault();
+                                            {
+                                                status = "Resolved"
+                                            }
 
-                                            {status = "Processing"}
                                             const newStock = {
                                                 stockCode,
                                                 stockName,
@@ -145,64 +123,61 @@ function AddStockForRequisition() {
                                                 status
                                             }
 
-                                            console.log(newStock)
-                                            await axios.post("http://localhost:8070/pendingStock/create", newStock).then(() => {
-                                                alert("Data saved successfully");
-                                                navigate('/ProcessingRequest');
-
-                                            }).catch((err) => {
-                                                console.log(err);
-                                                alert("ERROR: Could not add stock");
-                                                navigate('/PendingStockRequisitions' );
-                                            })
+                                            await axios.put("http://localhost:8070/pendingStock/update/" + id, newStock)
+                                                .then((res) => {
+                                                    alert("Data updated successfully");
+                                                    console.log(newStock);
+                                                    //navigate to the stock view page
+                                                    navigate('/RequestedStock');
+                                                })
+                                                .catch((err) => {
+                                                    console.log(err);
+                                                    alert("ERROR: Could not update stock");
+                                                    navigate(`/RequestedOrdersUpdate/${id}`);
+                                                })
                                         }}>
 
                                             <div className="mb-3">
-                                                <label for="stockCode" className="form-label">Stock Code: </label>
-                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="code" 
-                                                    value={stockCode} readOnly />
+                                                <label htmlFor="stockCode" className="text-md">Stock Code: </label>
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                                                    value={stockCode} id="stockCode" readOnly />
                                             </div>
 
                                             <div className="mb-3">
-                                                <label for="stockName" className="form-label">Stock Name: </label>
-                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" 
-                                                   value={stockName} readOnly />
+                                                <label htmlFor="stockName" className="form-label">Name: </label>
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" value={stockName} id="stockName" readOnly />
                                             </div>
 
                                             <div className="mb-3">
-                                                <label for="stockCategory" className="form-label">Category: </label>
-                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="cat" 
-                                                   value={stockCategory} readOnly />
+                                                <label htmlFor="category" className="form-label">Category: </label>
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" value={stockCategory} id="category" readOnly />
                                             </div>
 
-                                            {/* max uses the above date variable and sets the max date to select from*/}
                                             <div className="mb-3">
-                                                <label for="date" className="form-label">Date: </label>
-                                                <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date"
-                                                    min={minDate} max={currentDate} required onChange={(e) => {
-                                                        setDate(e.target.value);
+                                                <label for="description" className="form-label">Description: </label>
+                                                <textarea className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" placeholder="Enter stock description..."
+                                                    value={description} title="The name can contain only alphabets" required onChange={(e) => {
+                                                        setDescription(e.target.value);
                                                     }} />
                                             </div>
 
                                             <div className="mb-3">
-                                                <label for="quantity" className="form-label">Quantity Required: </label>
-                                                <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" placeholder="Enter quantity..." min="0"
-                                                    title="Please input valid quantity" required onChange={(e) => {
+                                                <label for="qty" className="form-label">Quantity: </label>
+                                                <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice" placeholder='Enter quantity...'
+                                                    min="0" value={quantity} title="If the unit price is not avilable please enter 0" onChange={(e) => {
                                                         setQuantity(e.target.value);
                                                     }} />
                                             </div>
 
                                             <div className="mb-3">
                                                 <label for="status" className="form-label">Status: </label>
-                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="stat" 
-                                                   value={"Processing"} readOnly />
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="stat"
+                                                    value={"Resolved"} readOnly />
                                             </div>
 
-                                            <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Add stock request</button>
-
+                                            <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Submit</button>
                                         </form>
                                     </div>
-
                                 </div>
 
                             </div>
@@ -215,4 +190,4 @@ function AddStockForRequisition() {
     );
 };
 
-export default AddStockForRequisition;
+export default RequestedOrdersUpdate
