@@ -158,6 +158,7 @@ function ViewAllWorkInProgress() {
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
+                                                    <TableHeader value="Initial Purchase" />
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Unit price" />
                                                     <TableHeader value="Total value" />
@@ -173,7 +174,7 @@ function ViewAllWorkInProgress() {
                                                         return data;
                                                     }
                                                 }).map((data, key) => {//map is used to iterate the array
-                                                    //const date = new Date(data.lastUpdated).toISOString().split('T')[0];
+                                                    const date = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
 
                                                     var totAdds = 0;
                                                     var totIssues = 0;
@@ -197,7 +198,7 @@ function ViewAllWorkInProgress() {
                                                     }
 
                                                     { quantity = totAdds - totIssues - data.damagedQty }
-                                                    { totalValue = data.unitPrice * quantity }
+                                                    { totalValue = price* quantity }
 
                                                     if (quantity < 0) {
                                                         { quantity = "No usable stocks left" }
@@ -214,11 +215,10 @@ function ViewAllWorkInProgress() {
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
                                                             <TableData value={data.stockCategory} />
-                                                            {/* change the column width */}
-                                                            <td className={"max-w-200 text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3"}>{data.description}</td>
+                                                            <TableData value={date} />
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
-                                                            <TableData value={data.unitPrice} />
-                                                            <TableData value={"Rs." + totalValue} />
+                                                            <TableData value={formatter.format(price)} />
+                                                            <TableData value={formatter.format(totalValue)} />
 
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                                                                 <Link to={`/StockInformation/${data._id}`}>
