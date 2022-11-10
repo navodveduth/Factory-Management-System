@@ -175,7 +175,7 @@ function ResolvedRequest() {
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
 
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                                                <Link to={`/PendingStockUpdate/${data._id}`}>
+                                                                {/* <Link to={`/PendingStockUpdate/${data._id}`}>
                                                                     <button
                                                                         type="button"
                                                                         className="font-bold py-1 px-4 rounded-full mx-3 text-white"
@@ -183,7 +183,7 @@ function ResolvedRequest() {
                                                                     >
                                                                         <i className="fas fa-edit" />
                                                                     </button>
-                                                                </Link>
+                                                                </Link> */}
                                                                 <button
                                                                     type="button"
                                                                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"

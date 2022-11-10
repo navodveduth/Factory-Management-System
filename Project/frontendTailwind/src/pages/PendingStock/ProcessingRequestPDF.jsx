@@ -114,7 +114,6 @@ function ProcessingRequestPDF() {
                                                     <TableHeader value="Description" />
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Status" />
-                                                    <TableHeader value="Manage" />
                                                 </tr>
                                             </thead>
                                             <tbody>

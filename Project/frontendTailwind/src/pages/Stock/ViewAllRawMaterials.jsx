@@ -172,6 +172,7 @@ function ViewAllRawMaterials() {
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
+                                                    <TableHeader value="Initial Purchase" />
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Unit price" />
                                                     <TableHeader value="Total value" />
@@ -187,7 +188,7 @@ function ViewAllRawMaterials() {
                                                         return data;
                                                     }
                                                 }).map((data, key) => {//map is used to iterate the array
-                                                    //const date = new Date(data.lastUpdated).toISOString().split('T')[0];
+                                                    const date = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
 
                                                     var totAdds = 0;
                                                     var totIssues = 0;
@@ -228,6 +229,7 @@ function ViewAllRawMaterials() {
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
                                                             <TableData value={data.stockCategory} />
+                                                            <TableData value={date} />
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
                                                             <TableData value={formatter.format(price)} />
                                                             <TableData value={formatter.format(totalValue)} />
