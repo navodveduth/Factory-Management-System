@@ -41,7 +41,8 @@ const LeaveViewAll = () => {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
-      background: currentMode === 'dark' ? '#1e1e1e' : '#fff',
+      color: '#f8f9fa',
+      background: '#6c757d',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
