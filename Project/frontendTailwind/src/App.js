@@ -10,7 +10,7 @@ import { WelfareDashboard, WelfareNew, WelfareReport, WelfareUpdate, WelfareView
 import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePreview, FinancePreviewDateRange, SalaryDashboard, SalaryNew, SalaryUpdate, SalaryViewAll, PreviewSalary, FinanceDateRange, IncomeStatement, IncomeStatementDateRange } from './pages/Finance';
 
 import {  MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport,MaintainenceDateRange, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachManitenanceDateRange,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport,VehiMaintenanceDateRange} from './pages/Maintenance';
-import {MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory} from './pages//Machinery';
+import {MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory} from './pages/Machinery';
 import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice, SalesDateRange } from './pages/Sales';
 
 import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders,CompletedOrders, FinalCostOrder,CompletedOrdersDateRange, CostedOrders, InsightDashboard, UpdateStockRequest} from './pages/Production/Index';
@@ -22,7 +22,7 @@ import { StockUtilisationDashboard, StockUtilPDF,StockUtilisationDateRange ,Stoc
 import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview, PurchaseOrderAdd, PurchaseOrderUpdate, PurchaseOrderPreview, PurchaseOrderView, RequestedOrdersUpdate, RequestedStock, PurchaseOrderDateRange } from './pages/Suppliers';
 
 import { DriverDashboard, DriverViewAll, DriverNew, DriverUpdate, DriverReport } from './pages/Driver';
-import { TransportDashboard, TransportViewAll, TransportDateRange, TransportNew, TransportUpdate, TransportRecord, TransportReport } from './pages/Transport';
+import { TransportDashboard, TransportViewAll, TransportDateRange, TransportReportDateRange, TransportNew, TransportUpdate, TransportRecord, TransportReport } from './pages/Transport';
 
 import UserLogin from './pages/UserLogin';
 import UserRegistration from './pages/UserRegistration'
@@ -36,7 +36,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           {/* Common Routes */}
-          <Route path="/" element={<EmployeeDashboard />} />
+          <Route path="/" element={<UserLogin />} />
           <Route path="/Register" element={<UserRegistration />} />
 
           {/* employee management  */}
@@ -205,11 +205,13 @@ const App = () => {
           {/* Transport management  */}
           <Route path="/TransportDashboard" element={<TransportDashboard />} />
           <Route path="/TransportViewAll" element={<TransportViewAll />} />
-          <Route path="/TransportDateRange/" element={<TransportDateRange />} />\
+          <Route path="/TransportDateRange/" element={<TransportDateRange />} />
           <Route path="/TransportCreate" element={<TransportNew />} />
           <Route path="/TransportUpdate/:id" element={<TransportUpdate />} />
           <Route path="/TransportRecord/:id" element={<TransportRecord />} />
           <Route path="/TransportReport" element={<TransportReport />} />
+          <Route path="/TransportReportDateRange" element={<TransportReportDateRange />}
+        />
 
           <Route path="/DriverDashboard" element={<DriverDashboard />} />
           <Route path="/DriverViewAll" element={<DriverViewAll />} />
