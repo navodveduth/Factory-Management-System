@@ -43,6 +43,8 @@ const AttendanceViewAll = () => {
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
+      color: '#f8f9fa',
+      background: '#6c757d',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'

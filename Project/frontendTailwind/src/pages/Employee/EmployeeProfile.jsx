@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Navbar, Footer, Sidebar, ThemeSettings, Header, AttendanceChart, AttendanceInMonth } from '../../components';
+import { Navbar, Footer, Sidebar, ThemeSettings, Header, AttendanceChart } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
-import {DateRangePickerComponent} from '@syncfusion/ej2-react-calendars' // this code needed for the datesort function
+import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars' // this code needed for the datesort function
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
@@ -45,7 +45,9 @@ const EmployeeProfile = () => {
     }, []);
 
     let dateRangeRef = (dateRange) => {
-        dateRangeRef = dateRange; // dateRangeRef is a reference to the DateRangePickerComponent
+        dateRangeRef = dateRange;
+        console.log(dateRange);
+        console.log("Date  : ", dateRangeRef) // dateRangeRef is a reference to the DateRangePickerComponent
     };
 
     /*const convertDate = (format) => {
@@ -226,9 +228,6 @@ const EmployeeProfile = () => {
                                         </div>
                                         <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
                                                 <AttendanceChart employeeNumber={data.employeeNumber} />
-                                        </div>
-                                        <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-                                                <AttendanceInMonth employeeNumber={data.employeeNumber} />
                                         </div>
                                     </div>
                                 )

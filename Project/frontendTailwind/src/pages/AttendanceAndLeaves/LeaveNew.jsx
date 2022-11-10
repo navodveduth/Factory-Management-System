@@ -11,8 +11,18 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 function LeaveNew() {
   const navigate = useNavigate(); //useNavigate hook to redirect to another page after form submission is successful
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
+  const [ employee, setEmployee ] = useState([]);
+
+  const getEmployeeNumbers = async () => {
+    axios.get('http://localhost:8070/employee/viewEmployeeNumbers').then((res) => {
+      setEmployee(res.data);
+    }).catch((err) => {
+      alert(err.message);
+    });
+  };
 
   useEffect(() => {
+    getEmployeeNumbers();
     const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
     const currentThemeMode = localStorage.getItem('themeMode');
     if (currentThemeColor && currentThemeMode) {
@@ -117,12 +127,27 @@ function LeaveNew() {
                             }}>
 
                               <div className="mb-3">
-                                <label htmlFor="employeeNumber" className="form-label">Employee Number</label>
-                                <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="employeeNumber" placeholder="Enter Employee Number" value={employeeNumber} onChange={(e)=>{
+                                <label className="form-label">Employee Number : </label>
+                                <select
+                                  id="employeeNumber"
+                                  name="employeeNumber"
+                                  className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                                  required = "required"
+                                  onChange={(e) => {
                                     setEmployeeNumber(e.target.value);
-                                }}
-                                pattern="[0-9]{4}" title="The Employee Number should contain 4 digits" required/>
+                                  }}
+                                >
+                                  <option value = "">Select...</option>
+                                  {employee.map((empNo, key) => {
+                                    return (
+                                      <option key={key} value={empNo.employeeNumber}>
+                                        {empNo.employeeNumber}
+                                      </option>
+                                    );
+                                  })}
+                                </select>
                               </div>
+                              
                               <div className="mb-3">
                                 <label htmlFor="leaveStartDate" className="form-label">Leave Start Date</label>
                                 <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="leaveStartDate" placeholder="Enter Leave Start Date" value={leaveStartDate} onChange={(e)=>{
