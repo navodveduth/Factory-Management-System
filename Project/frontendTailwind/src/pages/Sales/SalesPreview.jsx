@@ -8,6 +8,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 import { FiSettings } from 'react-icons/fi';
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import logo from '../../data/logo.png';
 
 export default function SalesPreview(){
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
@@ -52,6 +53,10 @@ const formatter = new Intl.NumberFormat('en-US', {
   currencyDisplay: 'symbol'
 })
 
+//getDAte
+      const current = new Date();
+      const currentdate = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}`;
+
 return (
   <div>
 
@@ -85,77 +90,90 @@ return (
                 </div>
             )}
 
-            <div
-                className={ // MAIN BACKGROUND IMPLEMENTATION
+            <div className={ // MAIN BACKGROUND IMPLEMENTATION
                 activeMenu
                     ? 'dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-72 w-full  '
                     : 'bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 '
-                }
-            >
-                
+                }>
+            
                 {/* NAVBAR IMPLEMENTATION */}
                 <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
                     <Navbar />
                 </div>
 
-                <div>
-                    {themeSettings && <ThemeSettings />}
-                    <div>
-                    <div>
-  <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-    <Header category="Table" title="Sales Invoices" />
-    
-    <button onClick={createPDF} type="button"  className="font-bold py-1 px-4 rounded-full m-3 text-white absolute top-40 right-20 hover:bg-slate-700 bg-slate-500" >Download Report</button>
+                  <div>
+                      {themeSettings && <ThemeSettings />}
+                      
+                      
+                    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
+                      <Header category="Table" title="Sales Invoices" />
+                      
+                      <button onClick={createPDF} type="button"  className="font-bold py-1 px-4 rounded-full m-3 text-white absolute top-40 right-20 hover:bg-slate-700 bg-slate-500" >Download Report</button>
 
 
-    
-    <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
-      <table className="w-full rounded-lg">
-        <thead>
+                      <div id="tableContainer">
 
-          <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-            <TableHeader value="Invoice No." />
-            <TableHeader value="Date of Order" />
-            <TableHeader value="Customer Name" />
-            <TableHeader value="Item Name" />
-            <TableHeader value="Quantity" />
-            <TableHeader value="Total Amount" />
-            <TableHeader value="Status" />
-          </tr>
-        </thead>
-        <tbody>
+                        <div className="block w-full overflow-x-auto rounded-lg" >
 
-       {sales.map((data) => {
-             let formattedAmount = formatter.format(data.totalAmount)
+                        <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                          <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
+                        </div>
 
-                return(
-
-            <tr className="text-sm h-10 border dark:border-slate-600" >
-
-              <TableData value={data.invoiceNo} />
-              <TableData value={new Date(data.orderDate).toISOString().split('T')[0]} />
-              <TableData value={data.customerDetailss.map((data3) => {
-                            return (
-                              <div>
-                                {data3.customerName}
-                              </div>
-                            )
+                        <div className="text-center mb-10">
                           
-                        })} />
-              <TableData value={data.itemName} />
-              <TableData value={data.quantity} />
-              <TableData value={formattedAmount} />
-              <TableData value={data.status} />
-              
-            </tr>
-          )})}
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-                        
+                          <p className="text-xl mt-2">Lanka MountCastle (Pvt) Ltd,</p>
+                          <p className="text-xl">No.124, Hendala, Wattala</p>
+                          <p>011 2942 672</p>
+                        </div>
+                        <p className="text-right text-xl mt-2 mb-3">Generated On : {currentdate}</p>
+                          <table className="w-full rounded-lg">
+                            <thead>
+
+                              <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                                <TableHeader value="Invoice No." />
+                                <TableHeader value="Date of Order" />
+                                <TableHeader value="Customer Name" />
+                                <TableHeader value="Item Name" />
+                                <TableHeader value="Quantity" />
+                                <TableHeader value="Total Amount" />
+                                <TableHeader value="Status" />
+                              </tr>
+                            </thead>
+                            <tbody>
+
+                          {sales.map((data) => {
+                                let formattedAmount = formatter.format(data.totalAmount)
+
+                                    return(
+
+                                <tr className="text-sm h-10 border dark:border-slate-600" >
+
+                                  <TableData value={data.invoiceNo} />
+                                  <TableData value={new Date(data.orderDate).toISOString().split('T')[0]} />
+                                  <TableData value={data.customerDetailss.map((data3) => {
+                                                return (
+                                                  <div>
+                                                    {data3.customerName}
+                                                  </div>
+                                                )
+                                              
+                                            })} />
+                                  <TableData value={data.itemName} />
+                                  <TableData value={data.quantity} />
+                                  <TableData value={formattedAmount} />
+                                  <TableData value={data.status} />
+                                  
+                                </tr>
+                              )})}
+                            </tbody>
+                          </table>
                     </div>
+
+                  </div>
+                </div>
+
+                        
+                    
                     <Footer />
                 </div>  
             </div>
