@@ -12,6 +12,7 @@ import {
 } from '../../components';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
+import logo from '../../data/logo.png';
 
 import { useStateContext } from '../../contexts/ContextProvider';
 
@@ -57,6 +58,11 @@ const TransportReport = () => {
       pdf.save(`Transportation Report-${date}.pdf`);
     });
   };
+
+  const current = new Date();
+  const currentdate = `${current.getFullYear()}-${
+    current.getMonth() + 1
+  }-${current.getDate()}`;
 
   return (
     <div>
@@ -107,58 +113,72 @@ const TransportReport = () => {
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
                     <Header category="Report" title="Transport" />
 
-                    <div className=" flex items-center mb-5 ">
-                      <div className="mr-0 ml-auto">
-                        <button
-                          onClick={createPDF}
-                          type="button"
-                          className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500"
-                        >
-                          Download Report
-                        </button>
-                      </div>
-                    </div>
-
-                    <div
-                      className="block w-full overflow-x-auto rounded-lg"
-                      id="tableContainer"
+                    <button
+                      onClick={createPDF}
+                      type="button"
+                      className="font-bold py-1 px-4 rounded-full m-3 text-white absolute top-40 right-20 hover:bg-slate-700 bg-slate-500"
                     >
-                      <table className="w-full rounded-lg">
-                        <thead>
-                          <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                            <TableHeader value="Type" />
-                            <TableHeader value="Destination Address" />
-                            <TableHeader value="Date" />
-                            <TableHeader value="Time" />
-                            <TableHeader value="Distance" />
-                            <TableHeader value="Transport Cost" />
-                            <TableHeader value="Driver" />
-                            <TableHeader value="Description" />
-                            <TableHeader value="Status" />
-                          </tr>
-                        </thead>
+                      Download Report
+                    </button>
 
-                        <tbody>
-                          {transport.map((data, key) => (
-                            <tr
-                              className="text-sm h-10 border dark:border-slate-600"
-                              key={key}
-                            >
-                              <TableData value={data.type} />
-                              <TableData value={data.destinationAddress} />
-                              <TableData value={data.date.substring(0, 10)} />
-                              <TableData value={data.timeOfDispatch} />
-                              <TableData value={`${data.distance} km`} />
-                              <TableData
-                                value={`Rs. ${data.transportCost.toFixed(2)}`}
-                              />
-                              <TableData value={data.driver} />
-                              <TableData value={data.description} />
-                              <TableData value={data.status} />
+                    <div id="tableContainer">
+                      <div className="block w-full overflow-x-auto rounded-lg">
+                        <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                          <img
+                            className="h-200 w-400 mb-5"
+                            src={logo}
+                            alt="logo"
+                          />
+                        </div>
+
+                        <div className="text-center mb-10">
+                          <p className="text-xl mt-2">
+                            Lanka MountCastle (Pvt) Ltd,
+                          </p>
+                          <p className="text-xl">No.124, Hendala, Wattala</p>
+                          <p>011 2942 672</p>
+                        </div>
+                        <p className="text-right text-xl mt-2 mb-3">
+                          Generated On : {currentdate}
+                        </p>
+
+                        <table className="w-full rounded-lg">
+                          <thead>
+                            <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                              <TableHeader value="Type" />
+                              <TableHeader value="Destination Address" />
+                              <TableHeader value="Date" />
+                              <TableHeader value="Time" />
+                              <TableHeader value="Distance" />
+                              <TableHeader value="Transport Cost" />
+                              <TableHeader value="Driver" />
+                              <TableHeader value="Description" />
+                              <TableHeader value="Status" />
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                          </thead>
+
+                          <tbody>
+                            {transport.map((data, key) => (
+                              <tr
+                                className="text-sm h-10 border dark:border-slate-600"
+                                key={key}
+                              >
+                                <TableData value={data.type} />
+                                <TableData value={data.destinationAddress} />
+                                <TableData value={data.date.substring(0, 10)} />
+                                <TableData value={data.timeOfDispatch} />
+                                <TableData value={`${data.distance} km`} />
+                                <TableData
+                                  value={`Rs. ${data.transportCost.toFixed(2)}`}
+                                />
+                                <TableData value={data.driver} />
+                                <TableData value={data.description} />
+                                <TableData value={data.status} />
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>
