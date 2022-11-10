@@ -70,6 +70,11 @@ function AddStockForRequisition() {
         stockCategory = data.stockCategory;
         description = data.description;
     })
+
+    // if(id === "null"){
+    //     alert('Stock does not exist. Please make a purchase order request.')
+    //     navigate('/StockView')
+    // }
     return (
 
         <div>

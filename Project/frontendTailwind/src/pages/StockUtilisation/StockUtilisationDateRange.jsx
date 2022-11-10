@@ -172,7 +172,7 @@ function StockUtilisationDateRange() {
                                                         return data;
                                                     } else if ((data.stockCode.toLowerCase().includes(searchTerm.toLowerCase())) ||
                                                         (data.type.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                                        (data.supplier.toLowerCase().includes(searchTerm.toLowerCase()))) {
+                                                        (data.firstPurchaseDate.toLowerCase().includes(searchTerm.toLowerCase()))) {
                                                         return data;
                                                     }
                                                 }).map((data, key) => {//map is used to iterate the array
