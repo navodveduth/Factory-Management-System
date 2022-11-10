@@ -9,7 +9,7 @@ import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { DashTopBox, DashTopButton, } from '../../components';
-
+import Swal from 'sweetalert2';
 
 function StockUtilisationDateRange() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
@@ -62,12 +62,29 @@ function StockUtilisationDateRange() {
 
     const confirmFunc = (id) => {
 
-        if (confirm("Do you want to delete?") == true) {
-            deleteStockUtil(id);
-        } else {
-            navigate('/StockUtilisation');
-        }
-
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                deleteStockUtil(id);
+              Swal.fire({  
+                icon: 'success',
+                title: 'Data Successfully Deleted',
+                color: '#f8f9fa',
+                background: '#6c757d',
+                showConfirmButton: false,
+                timer: 2000
+              })
+            }else {
+                navigate('/StockUtilisation');
+            }
+          })
     }
 
     const formatter = new Intl.NumberFormat('en-US', {
@@ -157,6 +174,7 @@ function StockUtilisationDateRange() {
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
+                                                    <TableHeader value={"Initial Purchase"} />
                                                     <TableHeader value="Date" />
                                                     <TableHeader value="Type" />
                                                     <TableHeader value="unitPrice" />
@@ -171,11 +189,12 @@ function StockUtilisationDateRange() {
                                                         return data;
                                                     } else if ((data.stockCode.toLowerCase().includes(searchTerm.toLowerCase())) ||
                                                         (data.type.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                                        (data.supplier.toLowerCase().includes(searchTerm.toLowerCase()))) {
+                                                        (data.firstPurchaseDate.toLowerCase().includes(searchTerm.toLowerCase()))) {
                                                         return data;
                                                     }
                                                 }).map((data, key) => {//map is used to iterate the array
                                                     const dbDate = new Date(data.date).toISOString().split('T')[0];
+                                                    const pfDate = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
 
                                                     var datacolor = "text-black";
                                                     if (data.type === "Additions") {
@@ -195,11 +214,12 @@ function StockUtilisationDateRange() {
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
                                                             <TableData value={data.stockCategory} />
+                                                            <TableData value={pfDate} />
                                                             <TableData value={dbDate} />
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.type}</td>
-                                                            <TableData value={"Rs." + formatter.format(data.unitPrice)} />
+                                                            <TableData value={formatter.format(data.unitPrice)} />
                                                             <TableData value={data.quantity} />
-                                                            <TableData value={"Rs." + formatter.format(data.totalValue)} />
+                                                            <TableData value={formatter.format(data.totalValue)} />
 
 
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">

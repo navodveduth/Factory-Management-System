@@ -120,10 +120,10 @@ function PurchaseOrderPreview() {
 					  <tr className="text-sm h-10 border dark:border-slate-600" >
                                             <TableData value={data.orderID} />
                                             <TableData value={data.supplierID} />
-                                            <TableData value={data.quantity} />
+                                            <TableData value={data.qty} />
                                             <TableData value={data.productDetails} />
                                             <TableData value={data.deliveryDate} />
-                                            <TableData value={data.totalPrice} />
+                                            <TableData value={data.cost} />
                                             <TableData value={data.orderStatus} />
 
                                             </tr>

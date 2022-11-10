@@ -15,6 +15,7 @@ import {
   ThemeSettings,
 } from '../../components';
 import TransportPieChart from '../../components/TransportPieChart';
+import TransportMonthlyChart from '../../components/TransportMonthlyChart';
 
 import { useStateContext } from '../../contexts/ContextProvider';
 
@@ -168,7 +169,9 @@ const TransportDashboard = () => {
                       />
                     </div>
                   </div>
-
+                  <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+                    <TransportMonthlyChart />
+                  </div>
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
                     <TransportPieChart />
                   </div>

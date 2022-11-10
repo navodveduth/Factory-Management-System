@@ -16,6 +16,8 @@ function WorkInProgressReport() {
 
     const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
     const [stockUtil, setStockUtil] = useState([]);
+    var totWIP = 0;
+    var price = 0;
 
     const getStock = async () => {  //getStock is the function to get the data from the backend
         axios.get("http://localhost:8070/stock")
@@ -56,9 +58,16 @@ function WorkInProgressReport() {
         const pdf = new jsPDF("landscape", "px", "a2", false);
         const data = await document.querySelector("#tblPDF");
         pdf.html(data).then(() => {
-            pdf.save("Damagedstocks_" + date + ".pdf");
+            pdf.save("WorkInProgress_" + date + ".pdf");
         });
     };
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+    })
 
     return (
 
@@ -123,7 +132,7 @@ function WorkInProgressReport() {
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
-                                                    <th className='px-4 py-3 text-md whitespace-nowrap font-semibold text-center text-black-300'>Description</th>
+                                                    <TableHeader value="Initial Purchase" />
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Unit price" />
                                                     <TableHeader value="Total value" />
@@ -132,7 +141,7 @@ function WorkInProgressReport() {
                                             <tbody>
                                                 {
                                                     stock.filter((data) => data.stockCategory === "Work in progress").map((data) => {//map is used to iterate the array
-                                                        //const date = new Date(data.lastUpdated).toISOString().split('T')[0];
+                                                        const date = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
 
                                                         var totAdds = 0;
                                                         var totIssues = 0;
@@ -143,17 +152,20 @@ function WorkInProgressReport() {
                                                             stockUtil.filter((stockUtil) => stockUtil.type == "Additions" &&
                                                                 stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                     totAdds += stockUtil.quantity
+                                                                    totWIP += parseFloat((stockUtil.quantity * stockUtil.unitPrice));
+                                                                    price = stockUtil.unitPrice
                                                                 })
                                                         }
                                                         {
                                                             stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
                                                                 stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                     totIssues += stockUtil.quantity
+                                                                    totWIP -= parseFloat((stockUtil.quantity * stockUtil.unitPrice));
                                                                 })
                                                         }
 
                                                         { quantity = totAdds - totIssues - data.damagedQty }
-                                                        { totalValue = data.unitPrice * quantity }
+                                                        { totalValue = price * quantity }
 
                                                         if (quantity < 0) {
                                                             { quantity = "No usable stocks left" }
@@ -170,11 +182,10 @@ function WorkInProgressReport() {
                                                                 <TableData value={data.stockCode} />
                                                                 <TableData value={data.stockName} />
                                                                 <TableData value={data.stockCategory} />
-                                                                {/* change the column width */}
-                                                                <td className={"max-w-200 text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3"}>{data.description}</td>
+                                                                <TableData value={date} />
                                                                 <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
-                                                                <TableData value={data.unitPrice} />
-                                                                <TableData value={"Rs." + totalValue} />
+                                                                <TableData value={formatter.format(price)} />
+                                                                <TableData value={formatter.format(totalValue)} />
 
 
                                                             </tr>
@@ -182,6 +193,11 @@ function WorkInProgressReport() {
                                                     })}
                                             </tbody>
                                         </table>
+                                        <br></br><br></br>
+                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+                                            Total Work in progress : {formatter.format(totWIP)}
+
+                                        </span>
                                     </div>
                                 </div >
                             </div>

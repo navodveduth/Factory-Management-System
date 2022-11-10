@@ -17,69 +17,51 @@ function AddStockForRequisition() {
     const navigate = useNavigate();
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
-    const [stockCode, setStockCode] = useState('');
-    const [stockName, setStockName] = useState('');
-    const [stockCategory, setStockCategory] = useState('');
-    const [description, setDescription] = useState('');
+    var stockCode = null;
+    var stockName = null;
+    var stockCategory = null;
+    var description = null;
+
     const [quantity, setQuantity] = useState('');
     const [date, setDate] = useState('');
-    const [status, setStatus] = useState('');
+    var [status, setStatus] = useState('');
     const [ stock, setStock] = useState([]);
     //gets the current date
     var currentDate = new Date().toISOString().split('T')[0];
     console.log(currentDate)
 
     const { id } = useParams();
+
     var minDate = null;
  
     console.log("id", id)
     //stock request
-    const getStock = () => {
-        axios.get(`http://localhost:8070/stock/ViewStock/${id}`).then((res) => {
+    const getStock =async  () => {
+        await axios.get(`http://localhost:8070/stock/ViewStock/${id}`).then((res) => {
             console.log("data", res.data)
-            setStock(re.data);
-            setStockCode(res.data.stockCode);
-            setStockName(res.data.stockName);
-            setStockCategory(res.data.stockCategory);
-            setDescription(res.data.description)
-        }).catch((err) => {
-            alert(err.message);
+            setStock(res.data);
+        }).catch(()=>{
+//
         })
+        
     }
     const name = stockName;
     console.log(name)
 
-    // const getStock = async () => {
-    //     axios.get(`http://localhost:8070/stock/ViewStockname/${name}`).then((res) => {
-    //         console.log("Stock", res.data)
-    //         setStock(res.data);
-    //         // setStockCode(res.data.stockCode);
-    //         // setStockCategory(res.data.stockCategory);
-    //         // setFirstPurchaseDate(res.data.firstPurchaseDate);
-    //         // console.log(res.data.firstPurchaseDate)
-    //     }).catch((err) => {
-    //         //alert(err);
-    //     })
-    // }
-
-    // const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-    //     axios.get("http://localhost:8070/stockUtilisation")
-    //         .then((res) => {
-    //             setStockUtil(res.data); //setStock is used to update the state variable
-    //             console.log(res.data);
-    //         })
-    //         .catch((err) => {
-    //             alert(err.message);
-    //         })
-    // }
+    async function consfirmNull(){
+        alert('Stock is unavailable. Please make a purchase order request');
+        navigate('/PendingStockAdd')
+    }
 
     useEffect(() => { //useEffect is used to call the function getStock
+        if (id === "null"){
+        consfirmNull();
+        }
         getStock();
     }, [id])
 
     useEffect(() => { //useEffect is used to call the function getStock
-        // getCompleteOrder();
-        // getStockUtil();
+
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
         if (currentThemeColor && currentThemeMode) {
@@ -90,23 +72,11 @@ function AddStockForRequisition() {
 
     stock.map((data) => {
         minDate = data.firstPurchaseDate.split('T')[0];
+        stockCode = data.stockCode;
+        stockName = data.stockName;
+        stockCategory = data.stockCategory;
+        description = data.description;
     })
-
-    // stockUtil.map((data) => {
-    //     if(data.stockCode === stockCode && data.type === "Additions" && 
-    //     data.firstPurchaseDate.split('T')[0] === minDate){
-    //         totAdds += data.quantity;
-    //     }
-    // })
-
-    // stockUtil.map((data) => {
-    //     if(data.stockCode === stockCode && data.type === "Issues" && 
-    //     data.firstPurchaseDate.split('T')[0] === minDate){
-    //         totIssues += data.quantity;
-    //     }
-    // })
-
-    //    {remaining = totAdds - totIssues - damaged} 
 
     return (
 
@@ -164,6 +134,7 @@ function AddStockForRequisition() {
                                         <form onSubmit={async (e) => {
                                             e.preventDefault();
 
+                                            {status = "Processing"}
                                             const newStock = {
                                                 stockCode,
                                                 stockName,
@@ -177,7 +148,7 @@ function AddStockForRequisition() {
                                             console.log(newStock)
                                             await axios.post("http://localhost:8070/pendingStock/create", newStock).then(() => {
                                                 alert("Data saved successfully");
-                                                navigate('/PendingStockView');
+                                                navigate('/ProcessingRequest');
 
                                             }).catch((err) => {
                                                 console.log(err);
@@ -214,23 +185,17 @@ function AddStockForRequisition() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <label for="status" className="form-label">Status: </label>
-                                                < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="status" title="Please choose one of the options" required onChange={(e) => {
-                                                    setStatus(e.target.value);
-                                                    //myFunction();
-                                                }}>
-                                                    <option selected  >Select option...</option>
-                                                    <option value="Processing">Processing</option>
-                                                    <option value="Resolved">Resolved</option>
-                                                </select>
-                                            </div>
-
-                                            <div className="mb-3">
                                                 <label for="quantity" className="form-label">Quantity Required: </label>
                                                 <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" placeholder="Enter quantity..." min="0"
                                                     title="Please input valid quantity" required onChange={(e) => {
                                                         setQuantity(e.target.value);
                                                     }} />
+                                            </div>
+
+                                            <div className="mb-3">
+                                                <label for="status" className="form-label">Status: </label>
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="stat" 
+                                                   value={"Processing"} readOnly />
                                             </div>
 
                                             <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Add stock request</button>
