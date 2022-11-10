@@ -26,11 +26,16 @@ export default function UpdateOrder(){
     const [member2,setMember2] = useState('');
     const [budgetedoverHeadCost,setBudgetOH] = useState('');
     const [status,setStatus] = useState('');    
+    const [saleDate, setSaleDate] = useState('');
    // const [totalCost, setTotalCost] =useState('');
+
+   console.log(saleDate);
     
     //Determinant values 
 
-    let maxDate = new Date();
+    var currentDate = new Date().toISOString().split('T')[0];
+    var minDate = saleDate.split('T')[0];
+    
     //auxiliary content to pass the value
     const [Days, setDays] = useState('');
     const [rate,setRate] = useState('');
@@ -62,6 +67,7 @@ export default function UpdateOrder(){
             setInvoice(res.data.invoiceNo);
             setItemName(res.data.itemName);
             setQuantity(res.data.quantity);
+            setSaleDate(res.data.orderDate);
             })
             .catch((err) => {
                 alert(err.message);
@@ -233,12 +239,13 @@ export default function UpdateOrder(){
                                             <label for="name" className="text-md">Request Date</label>
                                             <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" placeholder={materialCost} onChange={(e)=>{
                                                 setOrderDate(e.target.value);
-                                            }} maximum={maxDate}/>
+                                            }} max={currentDate}
+                                                min = {minDate}/>
                                         </div>
 
                                         <div className="mb-3">
                                                 <label for="category" className="form-label">Select The Supervisor </label>
-                                                    < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"  id="category" required onChange={(e) => {
+                                                    < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"  id="category" onChange={(e) => {
                                                         setSupervisor(e.target.value);
                                                 }}
                                                 placeholder={"Select The Supervisor"}>
