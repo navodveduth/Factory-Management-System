@@ -12,3 +12,5 @@ export { default as PurchaseOrderView } from './PurchaseOrderView';
 export { default as PurchaseOrderPreview } from './PurchaseOrderPreview';
 export { default as RequestedOrdersUpdate } from './RequestedOrdersUpdate';
 export { default as RequestedStock } from './RequestedStock';
+export { default as PurchaseOrderDateRange } from './PurchaseOrderDateRange';
+
