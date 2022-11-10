@@ -192,6 +192,13 @@ const MachMaintenanceViewAll = () => {
                           }} />
                       </div>
 
+                      <div className="mr-0 ml-auto">
+                        <Link to={"/MachMaintenanceReport"}> {/* change this link your preview page */}
+                          <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+                        </Link>
+                      </div>
+
+                    </div>
 
                       <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
                                   <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
@@ -203,13 +210,7 @@ const MachMaintenanceViewAll = () => {
                               </div>
                      
                               
-                      <div className="mr-0 ml-auto">
-                        <Link to={"/MachMaintenanceReport"}> {/* change this link your preview page */}
-                          <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
-                        </Link>
-                      </div>
-
-                    </div>
+                     
 
 
 
