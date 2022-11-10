@@ -116,6 +116,10 @@ function StockViewDateRange() {
         currencyDisplay: 'symbol'
       })
 
+      const toGenerateReport = () => {
+        navigate('/StockViewDateRangePDF', { state: { DS: location.state.DS, DE: location.state.DE } });
+    }
+
     return (
 
         <div>
@@ -173,15 +177,13 @@ function StockViewDateRange() {
                                                     setSearchTerm(e.target.value);
                                                 }} />
                                         </div>
-                                        <div className="mx-10 ml-auto">
+                                        <div className="mx-3">
                                             <Link to={"/StockView"}> {/* change this link your previous page */}
-                                                <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Reset Date</button>
+                                            <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Reset Date</button>
                                             </Link>
                                         </div>
                                         <div className="mr-0 ml-auto">
-                                            <Link to={"/generateSPDF"}> {/* change this link your preview page */}
-                                                <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
-                                            </Link>
+                                            <button type="button" onClick={() => toGenerateReport()} className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
                                         </div>
 
                                     </div>
@@ -247,7 +249,7 @@ function StockViewDateRange() {
                                                         { totalValue = 0 }
                                                     }
 
-                                                    var datacolor = "text-black";
+                                                    var datacolor = null;
                                                     if (quantity === "No usable stocks left") {
                                                         datacolor = "text-red-600 font-bold";
                                                     }
