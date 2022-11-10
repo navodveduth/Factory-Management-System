@@ -6,6 +6,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import Swal from 'sweetalert2';
 
 
 
@@ -96,8 +97,14 @@ function MachineryCreateForm() {// <== THIS IS THE COMPONENT NAME, CHANGE IT TO 
 
                                             axios.post("http://localhost:8070/machinery/create", newMachine)
                                                 .then(() => {
-                                                    alert("Data saved successfully");
-                                                    //navigate to the machinery view page
+                                                    Swal.fire({  
+                                                        icon: 'success',
+                                                        title: 'Data Successfully Saved',
+                                                        color: '#f8f9fa',
+                                                        background: '#6c757d',
+                                                        showConfirmButton: false,
+                                                        timer: 2000
+                                                      })
                                                     navigate('/MachineryViewAll');
                                                 })
                                                 .catch((err) => {

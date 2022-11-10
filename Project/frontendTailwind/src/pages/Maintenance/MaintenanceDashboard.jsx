@@ -195,24 +195,22 @@ const MaintenanceDashboard = () => { // <== THIS IS THE COMPONENT NAME, CHANGE I
 
 
                       <Link to="/MaintenanceViewAll">
-                        <DashTopButton value="All Property" icon={<BiBuildingHouse />} />
+                        <DashTopButton value="Property Maintenance" icon={<BiBuildingHouse />} />
+                      </Link>
+                      <Link to="/MaintenanceCreate">
+                        <DashTopButton value="+ Property" icon={<MdAddBusiness />} />
                       </Link>
                       <Link to="/MachMaintenanceViewAll">
-                        <DashTopButton value="All Machines" icon={<GiSewingMachine />} />
-                      </Link>
-                      <Link to="/VehiMaintenanceViewAll">
-                        <DashTopButton value="All Vehicles" icon={<MdOutlineDirectionsBusFilled />} />
-                      </Link>
-
-
-                      <Link to="/MaintenanceCreate">
-                        <DashTopButton value="New Property" icon={<MdAddBusiness />} />
+                        <DashTopButton value="Machinery Maintenance" icon={<GiSewingMachine />} />
                       </Link>
                       <Link to="/MachMaintenanceNew">
-                        <DashTopButton value="New Machinery" icon={<BiAddToQueue />} />
+                        <DashTopButton value="+ Machinery" icon={<BiAddToQueue />} />
+                      </Link>
+                      <Link to="/VehiMaintenanceViewAll">
+                        <DashTopButton value="Vehicles Maintenance" icon={<MdOutlineDirectionsBusFilled />} />
                       </Link>
                       <Link to="/VehiMaintenanceNew">
-                        <DashTopButton value="New Vehicle" icon={<MdOutlineBusAlert />} />
+                        <DashTopButton value="+ Vehicle" icon={<MdOutlineBusAlert />} />
                       </Link>
                       {/* <Link to="/MaintainenceTask">
             <DashTopButton value="Tasks For today" />
@@ -255,6 +253,9 @@ const MaintenanceDashboard = () => { // <== THIS IS THE COMPONENT NAME, CHANGE I
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
                     < MaintenanceCost />
                   </div>
+                  {/* <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+                    < MaintainChart />
+                  </div> */}
 
 
 

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Navbar, Footer, Sidebar, ThemeSettings, Header,MaintainChart } from '../../components';
 import {GrHostMaintenance } from 'react-icons/gr';
+import {BiAddToQueue} from 'react-icons/bi';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
@@ -10,6 +11,7 @@ import {DateRangePickerComponent} from '@syncfusion/ej2-react-calendars' // this
 
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import MaintenanceDashboard from './../Maintenance/MaintenanceDashboard';
 
 
 const MachMaintenanceHistory = () => {
@@ -192,16 +194,22 @@ const MachMaintenanceHistory = () => {
 
 
                             <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '>
-                                <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
+                               
                                     <h1 className="text-2xl font-bold">Maintenance History</h1>
 
                                     <div className="text-md ml-12 pt-5">
                                     <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
-                                    <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
+                                    {/* <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
                                         <DateRangePickerComponent ref={dateRangeRef}  placeholder="Select a date range"/>
                                     </div>
                                     <div className="ml-5">
                                         <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={filterDate}>Filter</button>
+                                    </div> */}
+
+                                    <div className="mr-0 ml-auto">
+                                    <Link to={"/MaintenanceDashboard"}> 
+                                        <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500"  icon={<BiAddToQueue />}>+ Maintenance</button>
+                                    </Link>
                                     </div>
                                 </div>
 
@@ -253,7 +261,7 @@ const MachMaintenanceHistory = () => {
 
                                    
 
-                                </div>
+                               
                             </div>
 
                             

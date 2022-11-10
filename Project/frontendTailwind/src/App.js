@@ -15,9 +15,9 @@ import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, Sale
 
 import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders,CompletedOrders, FinalCostOrder,CompletedOrdersDateRange, CostedOrders, InsightDashboard, UpdateStockRequest} from './pages/Production/Index';
 
-import { StocksDashboard, StockView, StockInformation, StockViewDateRange, StockBreakdownDateRange , StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, ViewAllRawMaterials, RawMaterialsReport, ViewAllWorkInProgress, WorkInProgressReport } from './pages/Stock';
+import { StocksDashboard, StockView, StockInformation, StockViewDateRange,StockViewDateRangePDF, StockBreakdownDateRange,StockBreakdownDateRangePDF , StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, ViewAllRawMaterials, RawMaterialsReport, ViewAllWorkInProgress, WorkInProgressReport } from './pages/Stock';
 import { AddStockForRequisition,IssuesForm, PendingStockAdd, PendingStockUpdate, StockRequisitionPDF, ProcessingRequest, ProcessingRequestPDF, ResolvedRequest, ResolvedRequestPDF, PendingStockRequisition } from './pages/PendingStock';
-import { StockUtilisationDashboard, StockUtilPDF,StockUtilisationDateRange ,StockUtilisation, StockAddExisting, StockUtilAddOption, StockUtilUpdate, ViewAllAdditions, AdditionsReport, ViewAllIssues, IssuesReport } from './pages/StockUtilisation';
+import { StockUtilisationDashboard, StockUtilPDF,StockUtilisationDateRange ,StockUtilDateRangePDF,StockUtilisation, StockAddExisting, StockUtilAddOption, StockUtilUpdate, ViewAllAdditions, AdditionsReport, ViewAllIssues, IssuesReport } from './pages/StockUtilisation';
 
 import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview, PurchaseOrderAdd, PurchaseOrderUpdate, PurchaseOrderPreview, PurchaseOrderView, RequestedOrdersUpdate, RequestedStock, PurchaseOrderDateRange } from './pages/Suppliers';
 
@@ -151,12 +151,14 @@ const App = () => {
           <Route path="/ViewAllWorkInProgress" element={<ViewAllWorkInProgress />} />
           <Route path="/generateWIPPDF" element={<WorkInProgressReport />} />
           <Route path="/StockViewDateRange/" element={<StockViewDateRange />} />
+          <Route path="/StockViewDateRangePDF/" element={<StockViewDateRangePDF />} />
 
           <Route path="/StockBreakdown" element={<StockBreakdown/>} />
           <Route path="/StockBreakdownUpdate/:id" element={<StockBreakdownUpdate/>} />
           <Route path="/generateSBPDF" element={<StockBreakdownPDF/>} />
           <Route path="/StockBreakdownDateRange/" element={<StockBreakdownDateRange/>} />
-          
+          <Route path="/StockBreakdownDateRangePDF/" element={<StockBreakdownDateRangePDF/>} />
+
           <Route path="/PendingStockRequisitions" element={<PendingStockRequisition />} />
           <Route path="/PendingStockAdd" element={<PendingStockAdd />} />
           <Route path="PendingStockAddReq/:id" element={<AddStockForRequisition />} />
@@ -179,6 +181,7 @@ const App = () => {
           <Route path="/ViewAllIssues" element={<ViewAllIssues />} />
           <Route path="/generateIPDF" element={<IssuesReport />} />
           <Route path="/StockUtilisationDateRange/" element={<StockUtilisationDateRange/>} />
+          <Route path="/StockUtilDateRangePDF/" element={<StockUtilDateRangePDF/>} />
 
           {/* Supplier management  */}
           <Route path="/SupplierDashboard" element={<SupplierDashboard />} />
