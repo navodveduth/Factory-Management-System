@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import Swal from 'sweetalert2';
 import {
   Header,
   Navbar,
@@ -39,8 +40,7 @@ const DriverView = () => {
   const [drivingLicenseNo, setDrivingLicenseNo] = useState('');
   const [vehicleNo, setVehicleNo] = useState('');
   const [vehicleModel, setVehicleModel] = useState('');
-
-  const [employees, setEmployees] = useState([]);
+  const [employees, setEmployees] = useState([]); // This is a state that will hold the list of employees
 
   const getEmployees = async () => {
     axios
@@ -122,7 +122,14 @@ const DriverView = () => {
                             newDriver
                           )
                           .then((res) => {
-                            alert('Driver Details Added');
+                            Swal.fire({
+                              icon: 'success',
+                              title: 'Driver Details Saved Successfully',
+                              color: '#f8f9fa',
+                              background: '#6c757d',
+                              showConfirmButton: false,
+                              timer: 2000,
+                            });
                             navigate('/DriverViewAll');
                           })
                           .catch((err) => {

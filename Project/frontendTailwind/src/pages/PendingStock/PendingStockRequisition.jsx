@@ -11,18 +11,11 @@ import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-export default function CompletedOrders(){
+export default function PendingStockRequisition(){
     const navigate = useNavigate();
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings,  } = useStateContext();
     const [Order,setOrder] = useState([])
     const [searchTerm, setSearchTerm] = useState(""); 
-
-    const [dateStart, setDateStart] = useState("");
-    const [dateEnd, setDateEnd] = useState("");
-
-    const toDateRange=()=>{
-        navigate('/CompletedOrdersDateRange',{state:{DS:dateStart,DE:dateEnd}});
-      }
 
         async function getOrders(){
             await axios.get("http://localhost:8070/production/order/allOrders").then((res)=>{
@@ -59,15 +52,15 @@ export default function CompletedOrders(){
             })
         }
 
-        const confirmFunc = (id)=>{
+        // const confirmFunc = (id)=>{
 
-            if (confirm("Do you want to delete?") == true) {
-                deletesOrder(id);
-            } else {
-                navigate('/completedOrders');
-            }
+        //     if (confirm("Do you want to delete?") == true) {
+        //         deletesOrder(id);
+        //     } else {
+        //         navigate('/vieworders');
+        //     }
     
-        }
+        // }
 
 
         return(
@@ -120,7 +113,7 @@ export default function CompletedOrders(){
                         {themeSettings && <ThemeSettings />}
                         <div>
                              <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                                    <Header category="Table" title="Stock Granted Orders" />
+                                    <Header category="Table" title="Stock Requisitions" />
                                     <div className=" flex items-center mb-5 ">
                                 <div>
                                     <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
@@ -128,24 +121,8 @@ export default function CompletedOrders(){
                                     setSearchTerm(e.target.value);
                                     }} />
                                 </div>
-                                <div>
-                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date" 
-                                onChange={(e) => {
-                                  setDateStart(e.target.value);
-                                }} />
-                              </div>
-
-                              <div>
-                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date" 
-                                onChange={(e) => {
-                                  setDateEnd(e.target.value);
-                                }} />
-                              </div>
-                              <div className=" mx-1">
-                                  <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}  >filter</button>
-                              </div>
                                 <div className="mr-0 ml-auto">
-                                    <Link to={"/costpreview"}> {/* change this link your preview page */}
+                                    <Link to={"/StockRequisitionPDF"}> {/* change this link your preview page */}
                                     <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
                                     </Link>
                                 </div>
@@ -175,7 +152,7 @@ export default function CompletedOrders(){
                                                     return data;
                                                 }
                                             }).map((data,key)=>{
-                                                if(data.status == "Completed" || "Costed"){
+                                                if(data.status == "Stock Requested"){
                                                     return ( 
                                                         <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                                                             <TableData value={data.invoiceNo}/>
@@ -186,21 +163,13 @@ export default function CompletedOrders(){
                                                             <TableData value={data.teamLead}/>
                                                             <TableData value={data.status}/>
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                                                <Link to={"/costingOrder/" +data.invoiceNo }>
+                                                                <Link to={"/IssuesForm/" +data.invoiceNo }>
                                                                     <button 
                                                                         type="button" 
                                                                         className="font-bold py-1 px-4 rounded-full mx-3 text-white" 
-                                                                        style={{ background: currentColor }}><i className="fas fa-edit"/>
+                                                                        style={{ background: currentColor }}><i className="fas fa-edit"/>   Issue Stock
                                                                     </button>
                                                                 </Link>
-                                                            
-                                                                <button onClick={()=>{
-                                                                confirmFunc(data._id);
-                                                                }}
-                                                                type="button" 
-                                                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full">
-                                                                <i className="fas fa-trash" />
-                                                                </button>
                                                         </td>
                                                      </tr>
                                                     )

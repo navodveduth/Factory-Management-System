@@ -26,6 +26,24 @@ function PurchaseOrderUpdate() {
 
     const { id } = useParams();
 
+    const getPurchaseOrder = async () => {
+    axios.get(`http://localhost:8070/purchaseOrder/${id}`)
+        .then((res) => {
+            setOrderID(res.data.orderID);
+            setSupplierID(res.data.supplierID);
+            setQty(res.data.qty);
+            setProductDetails(res.data.productDetails);
+            setDeliveryDate(res.data.deliveryDate);
+            setCost(res.data.cost);
+            setStatus(res.data.orderStatus);
+        })
+        .catch((err) => {
+            alert(err.message);
+        })
+    }
+
+    
+
     useEffect(() => {
         getPurchaseOrder()
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
@@ -102,10 +120,10 @@ function PurchaseOrderUpdate() {
                         orderStatus
                     }
 
-                    await axios.put(`http://localhost:5000/purchaseOrder/update/${id}`, updatedPurchaseOrdr)
+                    await axios.put(`http://localhost:8070/purchaseOrder/update/${id}`, updatedPurchaseOrdr)
                     .then((res) => {
                         alert("Purchase Order Updated Successfully")
-                        navigate('/suppliers/purchaseOrder')
+                        navigate('/PurchaseOrderView')
                     }).catch((err) => {
                         alert(err)
                     }

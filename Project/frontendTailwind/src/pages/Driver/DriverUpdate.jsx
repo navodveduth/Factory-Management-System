@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import Swal from 'sweetalert2';
 import {
   Header,
   Navbar,
@@ -130,7 +131,14 @@ const DriverUpdate = () => {
                             newDriver
                           )
                           .then((res) => {
-                            alert('Driver Details Updated');
+                            Swal.fire({
+                              icon: 'success',
+                              title: 'Data Successfully Updated',
+                              color: '#f8f9fa',
+                              background: '#6c757d',
+                              showConfirmButton: false,
+                              timer: 2000,
+                            });
                             navigate('/DriverViewAll');
                           })
                           .catch((err) => {

@@ -5,7 +5,7 @@ import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
-
+import Swal from 'sweetalert2';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -17,6 +17,8 @@ function ViewAllWorkInProgress() {
     const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
     const [stockUtil, setStockUtil] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    var totWIP = 0;
+    var price = 0;
 
 
     const getStock = async () => {  //getStock is the function to get the data from the backend
@@ -69,13 +71,37 @@ function ViewAllWorkInProgress() {
 
     const confirmFunc = (id) => {
 
-        if (confirm("Do you want to delete?") == true) {
-            deleteStock(id);
-        } else {
-            navigate('/StockView');
-        }
-
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                deleteStock(id);
+              Swal.fire({  
+                icon: 'success',
+                title: 'Data Successfully Deleted',
+                color: '#f8f9fa',
+                background: '#6c757d',
+                showConfirmButton: false,
+                timer: 2000
+              })
+            }else {
+                navigate('/ViewAllWorkInProgress');
+            }
+          })
     }
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+    })
 
     return (
 
@@ -149,7 +175,7 @@ function ViewAllWorkInProgress() {
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
-                                                    <th className='px-4 py-3 text-md whitespace-nowrap font-semibold text-center text-black-300'>Description</th>
+                                                    <TableHeader value="Initial Purchase" />
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Unit price" />
                                                     <TableHeader value="Total value" />
@@ -165,7 +191,7 @@ function ViewAllWorkInProgress() {
                                                         return data;
                                                     }
                                                 }).map((data, key) => {//map is used to iterate the array
-                                                    //const date = new Date(data.lastUpdated).toISOString().split('T')[0];
+                                                    const date = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
 
                                                     var totAdds = 0;
                                                     var totIssues = 0;
@@ -176,17 +202,20 @@ function ViewAllWorkInProgress() {
                                                         stockUtil.filter((stockUtil) => stockUtil.type == "Additions" &&
                                                             stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totAdds += stockUtil.quantity
+                                                                totWIP += parseFloat((stockUtil.quantity * stockUtil.unitPrice));
+                                                                price = stockUtil.unitPrice
                                                             })
                                                     }
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
                                                             stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totIssues += stockUtil.quantity
+                                                                totWIP -= parseFloat((stockUtil.quantity * stockUtil.unitPrice));
                                                             })
                                                     }
 
                                                     { quantity = totAdds - totIssues - data.damagedQty }
-                                                    { totalValue = data.unitPrice * quantity }
+                                                    { totalValue = price* quantity }
 
                                                     if (quantity < 0) {
                                                         { quantity = "No usable stocks left" }
@@ -203,11 +232,10 @@ function ViewAllWorkInProgress() {
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
                                                             <TableData value={data.stockCategory} />
-                                                            {/* change the column width */}
-                                                            <td className={"max-w-200 text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3"}>{data.description}</td>
+                                                            <TableData value={date} />
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
-                                                            <TableData value={data.unitPrice} />
-                                                            <TableData value={"Rs." + totalValue} />
+                                                            <TableData value={formatter.format(price)} />
+                                                            <TableData value={formatter.format(totalValue)} />
 
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                                                                 <Link to={`/StockInformation/${data._id}`}>
@@ -243,6 +271,11 @@ function ViewAllWorkInProgress() {
                                                 })}
                                             </tbody>
                                         </table>
+                                        <br></br><br></br>
+                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+                                            Total Work in progress : {formatter.format(totWIP)}
+
+                                        </span>
                                     </div>
                                 </div >
                             </div>

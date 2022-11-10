@@ -15,6 +15,9 @@ function StockUtilPDF() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
     const [stockUtil, setStockUtilisation] = useState([]); //stock is the state variable and setStock is the function to update the state variable
+        var totalAdditions = 0;
+        var totalIssues = 0;
+    
     const getStockUtil = async () => {  //getStock is the function to get the data from the backend
         axios.get("http://localhost:8070/stockUtilisation")
             .then((res) => {
@@ -44,6 +47,13 @@ function StockUtilPDF() {
             pdf.save("stocksUtil_" + date + ".pdf");
         });
     };
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+    })
 
     return (
         <div>
@@ -105,9 +115,10 @@ function StockUtilPDF() {
                                         <table className="w-full rounded-lg">
                                             <thead>
                                                 <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                                    <TableHeader value="Code" />
+                                                <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
+                                                    <TableHeader value="Initial Purchase" />
                                                     <TableHeader value="Date" />
                                                     <TableHeader value="Type" />
                                                     <TableHeader value="unitPrice" />
@@ -118,6 +129,7 @@ function StockUtilPDF() {
                                             <tbody>
                                                 {stockUtil.map((data) => {//map is used to iterate the array
                                                     const dbDate = new Date(data.date).toISOString().split('T')[0];
+                                                    const pfDate = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
 
                                                     var datacolor = "text-black";
                                                     if (data.type === "Additions") {
@@ -126,21 +138,39 @@ function StockUtilPDF() {
                                                         datacolor = "text-red-600 font-bold";
                                                     }
 
+                                                    if(data.type === "Additions"){
+                                                        totalAdditions += parseInt(data.quantity)
+                                                    }else if (data.type === "Issues"){
+                                                        totalIssues += parseInt(data.quantity) 
+                                                    }
+
                                                     return (
                                                         <tr className="text-sm h-10 border dark:border-slate-600">
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
                                                             <TableData value={data.stockCategory} />
+                                                            <TableData value={pfDate} />
                                                             <TableData value={dbDate} />
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.type}</td>
-                                                            <TableData value={"Rs." + data.unitPrice} />
+                                                            <TableData value={formatter.format(data.unitPrice)} />
                                                             <TableData value={data.quantity} />
-                                                            <TableData value={"Rs." + data.totalValue} />
+                                                            <TableData value={formatter.format(data.totalValue)} />
+
                                                         </tr>
                                                     )
                                                 })}
                                             </tbody>
                                         </table>
+                                        <br></br><br></br>
+                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+                                            Total Additions Quantity: {(totalAdditions)}
+
+                                        </span><br></br>
+
+                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+
+                                            Total Issues Quantity : {(totalIssues)}
+                                        </span>
                                     </div>
                                 </div>
 

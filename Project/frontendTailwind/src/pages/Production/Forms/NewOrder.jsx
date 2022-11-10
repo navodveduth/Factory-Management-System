@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Header } from '../../components';
+import { Header } from '../../../components';
 
 
 export default function AddOrder(){

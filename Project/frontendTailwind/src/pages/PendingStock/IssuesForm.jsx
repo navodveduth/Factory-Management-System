@@ -19,81 +19,82 @@ function IssuesForm() {
 
     //const [stock, setStock] = useState([]);
     //const [stockUtil,setStockUtil] = useState([]);
-    const [stockCode, setStockCode] = useState('');
+    const [invoiceNo, setInvoiceNo] = useState('');
+    // const [stockCode, setStockCode] = useState('');
     var [stockName, setStockName] = useState('');
-    var [stockCategory, setStockCategory] = useState('');
+    const [stock, setStock] = useState([]);
+    // var [stockCategory, setStockCategory] = useState("");
     const [quantity, setQuantity] = useState('');
     const [date, setDate] = useState('');
-    const [firstPurchaseDate, setFirstPurchaseDate] = useState('');
+    // const [firstPurchaseDate, setFirstPurchaseDate] = useState("");
     var [type, setType] = useState('');
     var [unitPrice, setUnitPrice] = useState('');
     var [supplier, setSupplier] = useState('');
     var [totalValue, setTotalValue] = useState('');
-    // const [itemName, setItemName] = useState
+    const [stockUtil, setStockUtil] = useState([]);
 
     //gets the current date
     var currentDate = new Date().toISOString().split('T')[0];
-
+    var minDate = null;
+    var stockCode = null;
+    var stockCategory = null;
+    var firstPurchaseDate = null;
+    var totAdds = 0;
+    var totIssues = 0;
+    var remaining = 0;
+    var damaged = 0;
 
     const { id } = useParams();
 
-    
-
-    // const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-    //     axios.get("http://localhost:8070/stockUtilisation")
-    //         .then((res) => {
-    //             setStockUtil(res.data); //setStock is used to update the state variable
-    //             console.log(res.data);
-    //         })
-    //         .catch((err) => {
-    //             alert(err.message);
-    //         })
-    // }
+    var compareDate = null;
 
     console.log("id", id)
     //stock request
     const getCompleteOrder = () => {
         axios.get(`http://localhost:8070/stock/request/${id}`).then((res) => {
-            setStockCode(res.data.invoiceNo);
+            console.log("date", res.data)
+            setInvoiceNo(res.data.invoiceNo);
             setStockName(res.data.product);
             setUnitPrice(res.data.materialCost);
             setQuantity(res.data.unitQty);
-            // setRequestDate(res.data.requestDate);
-            // setCostedDate(res.data.costedDate);
-            // setSupervisor(res.data.supervisor);
-            // setTeamLead(res.data.teamLead);
-            // setMember1(res.data.member1);
-            // setMember2(res.data.member2);
-            // setBudgetedMatCost(res.data.budgetedMatCost);
-            // setBudgetOH(res.data.budgetedoverHeadCost);
-            // setBudgetedLabCost(res.data.budgetedLabCost);
-            // setBudgetedTotalCost(res.data.budgetedtotalCost);
         }).catch((err) => {
             alert(err.message);
         })
     }
-    const {name} = stockName;
+    const name = stockName;
     console.log(name)
 
-    const getStock = () => {
-        axios.get("http://localhost:8070/stock/ViewStock/" + name).then((res) => {
-            console.log(res.data)
-            // setStockCode(res.data.stockCode);
-            // setStockName(res.data.stockName);
-            setStockCategory(res.data.stockCategory);
-            setFirstPurchaseDate(res.data.firstPurchaseDate);
+
+    const getStock = async () => {
+        axios.get(`http://localhost:8070/stock/ViewStockname/${name}`).then((res) => {
+            console.log("Stock", res.data)
+            setStock(res.data);
+            
         }).catch((err) => {
-            alert(err);
+            //alert("Stock unavailable! Please make a purchase order request");
+            // navigate('/StockView');
         })
+    }
+
+    const getStockUtil = async () => {  //getStock is the function to get the data from the backend
+        axios.get("http://localhost:8070/stockUtilisation")
+            .then((res) => {
+                setStockUtil(res.data); //setStock is used to update the state variable
+                console.log("stock util", res.data);
+            })
+            .catch((err) => {
+                alert(err.message);
+            })
     }
 
     useEffect(() => { //useEffect is used to call the function getStock
         getStock();
     }, [name])
+    
 
     useEffect(() => { //useEffect is used to call the function getStock
         getCompleteOrder();
-        //getStockUtil();
+        getStockUtil();
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
         if (currentThemeColor && currentThemeMode) {
@@ -101,17 +102,30 @@ function IssuesForm() {
             setCurrentMode(currentThemeMode);
         }
     }, [])
-    // var view = true;
-    // if (type === "Additions") {
-    //     view = false;
-    // } else if (type === "Issues") {
-    //     view = true;
-    // }
-    var minDate = firstPurchaseDate.split('T')[0]
+
+    stock.map((data) => {
+        minDate = data.firstPurchaseDate.split('T')[0];
+        stockCode = data.stockCode;
+        stockCategory = data.stockCategory;
+        damaged = data.damagedQty
+        compareDate = data.firstPurchaseDate
+    })
+
+    stockUtil.map((data) => {
+        if (data.stockCode === stockCode && data.firstPurchaseDate === compareDate) {
+            if (data.type === "Additions")
+                totAdds += data.quantity;
+            if (data.type === "Issues")
+                totIssues += data.quantity;
+        }
+    })
+
+    { remaining = totAdds - totIssues - damaged }
 
     return (
 
         <div>
+
             <div className={currentMode === 'Dark' ? 'dark' : ''}>
 
                 <div className="flex relative dark:bg-main-dark-bg">
@@ -164,30 +178,11 @@ function IssuesForm() {
                                         <form onSubmit={async (e) => {
                                             e.preventDefault();
 
-                                            // var checkExists = "";
-                                            // var checkAddition = 0;
-                                            // var checkIssues = 0;
 
-                                            // {
-                                            //     stock.filter((stock) => stock.stockCode === stockCode).map((stock) => {
-                                            //         checkExists = stock.stockCode,
-                                            //             stockName = stock.stockName,
-                                            //             stockCategory = stock.stockCategory,
-                                            //             firstPurchaseDate = stock.firstPurchaseDate
-
-                                            //         {
-                                            //             if (stock.type === "Additions") {
-                                            //                 { checkAddition = 1 }
-                                            //             } else if (stock.type === "Issues") {
-                                            //                 { checkIssues = 1 }
-                                            //             }
-                                            //         }
-
-                                            //     })
-                                            // }
 
                                             { totalValue = quantity * unitPrice }
                                             { type = "Issues" }
+                                            { firstPurchaseDate = minDate }
 
                                             const newStockUtil = {
                                                 stockCode,
@@ -201,58 +196,41 @@ function IssuesForm() {
                                                 totalValue
                                             }
 
-                                            // console.log(newStock)
-                                            // await axios.post("http://localhost:8070/stock/create", newStock).then(() => {
-                                            //     alert("Data saved successfully");
-                                            //     navigate('/StockDashboard');
+                                            if (remaining >= quantity) {
+                                                await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
+                                                    alert("Data saved successfully");
+                                                    navigate('/StockUtilisation');
 
-                                            // }).catch((err) => {
-                                            //     console.log(err);
-                                            //     alert("ERROR: Could not add stock");
-                                            //     navigate('/StockAdd');
-                                            // })
+                                                }).catch((err) => {
+                                                    console.log(err);
+                                                    alert("ERROR: Could not add stock");
+                                                    navigate('/IssuesForm/' + id);
+                                                })
 
-                                            // {
-                                            //     if (checkExists === "") {
-                                            //         alert('Entry does not exist in stock information.For non existing stocks addition, please add from stock information page');
-                                            //         navigate('/StockDashboard')
-                                            //     } else {
-                                            //         // if (checkExists === stockCode && date === currentDate && checkAddition === 1 && checkIssues ===1) {
-
-                                            //         //     alert("An entry with " + stockCode + " and additions and issues already exists for today's date");
-                                            //         //     navigate('/StockUtilisation')
-
-                                            //         // } 
-                                            //         // else if (checkExists === stockCode && date === currentDate && checkAddition === 1) {
-
-                                            //         //     alert("An entry with " + stockCode + " and " + type + " already exists for today's date");
-                                            //         //     navigate('/StockUtilisation')
-
-                                            //         // }
-                                            //         // else if (checkExists === stockCode && date === currentDate && checkIssues === 1) {
-
-                                            //         //     alert("An entry with " + stockCode + " and " + type + " already exists for today's date");
-                                            //         //     navigate('/StockUtilisation')
-
-                                            //         // }else {
-                                            await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
-                                                alert("Data saved successfully");
-                                                navigate('/StockUtilisation');
-
-                                            }).catch((err) => {
-                                                console.log(err);
-                                                alert("ERROR: Could not add stock");
-                                                navigate('/StockAddExisting/' + id);
-                                            })
-                                            //     }
-                                            // }
+                                                const salesStatus = "Completed"
+                                                const statusPass = { salesStatus }
+                                                await axios.put('http://localhost:8070/stock/updateStatus/' + id, { "status": salesStatus }).then((res) => {
+                                                    alert("Production Status Changed");
+                                                }).catch((error) => {
+                                                    console.log(error)
+                                                    alert("Production Status Change Unsuccessful");
+                                                })
+                                            } else {
+                                                alert("Not enough remaining quantity. Place a Purchase request");
+                                                navigate('/PendingStockAddReq/' + stockCode);
+                                            }
 
 
                                         }}>
 
                                             <div className="mb-3">
+                                                <label for="invoiceNo" className="form-label">Invoice No: </label>
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="invoiceNo"
+                                                    value={invoiceNo} readOnly />
+                                            </div>
+                                            <div className="mb-3">
                                                 <label for="stockCode" className="form-label">Stock Code: </label>
-                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="code" placeholder="Enter stock code..." pattern="[A-Z]{1}[0-9]{3,7}"
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="code"
                                                     value={stockCode} readOnly />
                                             </div>
 
@@ -266,22 +244,13 @@ function IssuesForm() {
                                             <div className="mb-3">
                                                 <label for="date" className="form-label">Date: </label>
                                                 <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date"
-                                                    min={minDate} max={currentDate} required onChange={(e) => {
+                                                    min={minDate}
+                                                    max={currentDate} required onChange={(e) => {
                                                         setDate(e.target.value);
                                                     }} />
                                             </div>
 
-                                            {/* <div className="mb-3">
-                                                <label for="type" className="form-label">Type: </label>
-                                                < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="stockCategory" title="Please choose one of the options" required onChange={(e) => {
-                                                    setType(e.target.value);
-                                                    //myFunction();
-                                                }}>
-                                                    <option selected  >Select option...</option>
-                                                    <option value="Additions">Additions</option>
-                                                    <option value="Issues">Issues</option>
-                                                </select>
-                                            </div> */}
+
 
                                             <div className="mb-3">
                                                 <label for="additions" className="form-label">Type: </label>
@@ -290,24 +259,32 @@ function IssuesForm() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <label for="quantity" className="form-label">Quantity: </label>
-                                                <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" placeholder="Enter quantity..." min="0"
-                                                    title="If there is no stock please input 0" required onChange={(e) => {
-                                                        setQuantity(e.target.value);
-                                                    }} />
+                                                <label for="quantity" className="form-label">Quantity Available: </label>
+                                                <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity"
+                                                    value={remaining} readOnly />
+                                            </div>
+
+                                            <div className="mb-3">
+                                                <label for="quantity" className="form-label">Quantity Required: </label>
+                                                <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity"
+                                                    value={quantity} readOnly />
                                             </div>
 
                                             <div className="mb-3">
                                                 <label for="unitPrice" className="form-label">Unit price: </label>
-                                                <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice" placeholder='Enter price per unit...'
-                                                    min="0" required title="If the unit price is not avilable please enter 0" step="0.01" onChange={(e) => {
-                                                        setUnitPrice(e.target.value);
-                                                    }} />
+                                                <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice"
+                                                    value={unitPrice} readOnly />
                                             </div>
 
                                             <div className="mb-3">
                                                 <label for="totalValue" className="form-label">Total Value: </label>
                                                 <input type="number" min="0" step="0.01" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="totalCost" value={quantity * unitPrice} readOnly />
+                                            </div>
+
+                                            <div className="mb-3">
+                                                <label for="stockCode" className="form-label">Status: </label>
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="code" placeholder="Enter stock code..." pattern="[A-Z]{1}[0-9]{3,7}"
+                                                    value={"Completed"} readOnly />
                                             </div>
 
                                             <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Add entry for existing stock</button>

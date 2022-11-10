@@ -2,20 +2,28 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { Link ,useNavigate} from "react-router-dom";
 import {jsPDF} from "jspdf";
-import TableHeader from "../../components/Table/TableHeader";
-import TableData from '../../components/Table/TableData';
-import Header from "../../components/Header";
-import { useStateContext } from '../../contexts/ContextProvider';
+import TableHeader from "../../../components/Table/TableHeader";
+import TableData from '../../../components/Table/TableData';
+import Header from "../../../components/Header";
+import { useStateContext } from '../../../contexts/ContextProvider';
 
 import { FiSettings } from 'react-icons/fi';
-import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
+import { Navbar, Footer, Sidebar, ThemeSettings } from '../../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import Swal from 'sweetalert2';
 
-export default function PendingStockRequisitions(){
+export default function CostedOrders(){
     const navigate = useNavigate();
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings,  } = useStateContext();
     const [Order,setOrder] = useState([])
     const [searchTerm, setSearchTerm] = useState(""); 
+
+    const [dateStart, setDateStart] = useState("");
+    const [dateEnd, setDateEnd] = useState("");
+
+    const toDateRange=()=>{
+        navigate('/CompletedOrdersDateRange',{state:{DS:dateStart,DE:dateEnd}});
+      }
 
         async function getOrders(){
             await axios.get("http://localhost:8070/production/order/allOrders").then((res)=>{
@@ -45,22 +53,100 @@ export default function PendingStockRequisitions(){
 
         async function deletesOrder(id){
             await axios.delete(`http://localhost:8070/production/order/delete/${id}`).then((res)=>{
-                alert("Production cost data deleted Successfully");
+                //alert("Production cost data deleted Successfully");
                getOrders();
             }).catch((err)=>{
-                alert(err.message);
+              //  alert(err.message);
             })
         }
 
-        const confirmFunc = (id)=>{
-
-            if (confirm("Do you want to delete?") == true) {
-                deletesOrder(id);
-            } else {
-                navigate('/vieworders');
+        async function updateSales(id){
+            const salesStatus = "Pending"
+            //  const statusPass = {salesStatus}
+              await axios.put('http://localhost:8070/Production/order/updateStatus/'+id,{"status":salesStatus}).then((res)=>{
+                 // alert("Sale Status Changed");
+              }).catch((error)=>{
+                  console.log(error)
+                  //alert("Sale Status Change Unsuccessful");
+              })
             }
-    
-        }
+
+        async function confirmFunc(id,invoiceNo,stat){
+            if(stat == "Costed"){
+                const { value: password } =  await Swal.fire({
+                    title: 'Enter the Master Password',
+                    input: 'password',
+                    inputLabel: 'Password',
+                    inputPlaceholder: 'Enter your password',
+                    inputAttributes: {
+                      maxlength: 10,
+                      autocapitalize: 'off',
+                      autocorrect: 'off'
+                    }
+                  })
+                  if (password != "12345") {
+                    Swal.fire(`Invalid Password`)
+                    navigate('/costedOrders');
+                  }else{
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Proceed'
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          deletesOrder(id);
+                          updateSales(invoiceNo);
+                          Swal.fire({  
+                            icon: 'success',
+                            title: 'Invoice Status Changed and Data Successfully Deleted',
+                            color: '#f8f9fa',
+                            background: '#6c757d',
+                            showConfirmButton: false,
+                            timer: 2000
+                          })
+                        }else {
+                          navigate('/costedOrders');
+                        }
+                      })
+                  }
+            }else{
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      deletesOrder(id);
+                      updateSales(invoiceNo);
+                      Swal.fire({  
+                        icon: 'success',
+                        title: 'Data Succesfully deleted',
+                        color: '#f8f9fa',
+                        background: '#6c757d',
+                        showConfirmButton: false,
+                        timer: 2000
+                      })
+                    }else {
+                      navigate('/costedOrders');
+                    }
+                })
+            }
+          };
+
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'LKR',
+            minimumFractionDigits: 2,
+            currencyDisplay: 'symbol'
+          })
 
 
         return(
@@ -113,7 +199,7 @@ export default function PendingStockRequisitions(){
                         {themeSettings && <ThemeSettings />}
                         <div>
                              <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                                    <Header category="Table" title="Stock Requisitions" />
+                                    <Header category="Table" title="Costed Orders" />
                                     <div className=" flex items-center mb-5 ">
                                 <div>
                                     <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
@@ -121,9 +207,25 @@ export default function PendingStockRequisitions(){
                                     setSearchTerm(e.target.value);
                                     }} />
                                 </div>
+                                <div>
+                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date" 
+                                onChange={(e) => {
+                                  setDateStart(e.target.value);
+                                }} />
+                              </div>
+
+                              <div>
+                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date" 
+                                onChange={(e) => {
+                                  setDateEnd(e.target.value);
+                                }} />
+                              </div>
+                              <div className=" mx-1">
+                                  <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}  >filter</button>
+                              </div>
                                 <div className="mr-0 ml-auto">
                                     <Link to={"/costpreview"}> {/* change this link your preview page */}
-                                    <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+                                    <button type="button" value = "Generate Report" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" > Generate Report</button>
                                     </Link>
                                 </div>
 
@@ -135,9 +237,10 @@ export default function PendingStockRequisitions(){
                                             <TableHeader value ="Invoice No"></TableHeader>
                                             <TableHeader value ="Product"></TableHeader>
                                             <TableHeader value ="Quantity"></TableHeader>
-                                            <TableHeader value ="Requested Date"></TableHeader>
-                                            <TableHeader value ="Supervisor"></TableHeader>
-                                            <TableHeader value ="Team Lead"></TableHeader>
+                                            <TableHeader value ="Costed Date"></TableHeader>
+                                            <TableHeader value ="Budgeted Total Cost"></TableHeader>
+                                            <TableHeader value ="Total Cost"></TableHeader>
+                                            <TableHeader value ="Variance"></TableHeader>
                                             <TableHeader value ="Status"></TableHeader>
                                             <TableHeader value="Manage"/>
                                             </tr>
@@ -152,18 +255,25 @@ export default function PendingStockRequisitions(){
                                                     return data;
                                                 }
                                             }).map((data,key)=>{
-                                                if(data.status == "Stock Requested"){
+                                                if(data.status == "Costed"){
+                                                    var datacolor = "text-black";
+                                                    if (data.budgetedtotalCost > data.totalCost) {
+                                                        datacolor = "text-green-500 font-bold";
+                                                    } else {
+                                                        datacolor = "text-red-600 font-bold";
+                                                    }
                                                     return ( 
                                                         <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                                                             <TableData value={data.invoiceNo}/>
                                                             <TableData value={data.product}/>
                                                             <TableData value={data.unitQty}/>
-                                                            <TableData value={new Date(data.requestDate).toISOString().split('T')[0]}/>
-                                                            <TableData value={data.supervisor}/>
-                                                            <TableData value={data.teamLead}/>
+                                                            <TableData value={new Date(data.costedDate).toISOString().split('T')[0]}/>
+                                                            <TableData value={formatter.format(data.budgetedtotalCost)}/>
+                                                            <TableData value={formatter.format(data.totalCost)}/>
+                                                            <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}><TableData value={formatter.format(data.budgetedtotalCost - data.totalCost)}/></td>
                                                             <TableData value={data.status}/>
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                                                <Link to={"/IssuesForm/" +data.invoiceNo }>
+                                                                <Link to={"/costingOrder/" +data.invoiceNo }>
                                                                     <button 
                                                                         type="button" 
                                                                         className="font-bold py-1 px-4 rounded-full mx-3 text-white" 
@@ -172,7 +282,7 @@ export default function PendingStockRequisitions(){
                                                                 </Link>
                                                             
                                                                 <button onClick={()=>{
-                                                                confirmFunc(data._id);
+                                                                confirmFunc(data._id,data.invoiceNo,data.status);
                                                                 }}
                                                                 type="button" 
                                                                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full">
