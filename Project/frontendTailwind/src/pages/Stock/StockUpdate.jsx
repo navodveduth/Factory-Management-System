@@ -145,7 +145,7 @@ function StockUpdate() {
                                                 .catch((err) => {
                                                     console.log(err);
                                                     alert("ERROR: Could not update stock");
-                                                    navigate('/StockUpdate');
+                                                    navigate('/StockUpdate' + id);
                                                 })
                                         }}>
 

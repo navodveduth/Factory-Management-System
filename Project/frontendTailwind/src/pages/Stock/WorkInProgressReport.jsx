@@ -58,7 +58,7 @@ function WorkInProgressReport() {
         const pdf = new jsPDF("landscape", "px", "a2", false);
         const data = await document.querySelector("#tblPDF");
         pdf.html(data).then(() => {
-            pdf.save("Damagedstocks_" + date + ".pdf");
+            pdf.save("WorkInProgress_" + date + ".pdf");
         });
     };
 
@@ -182,7 +182,7 @@ function WorkInProgressReport() {
                                                                 <TableData value={data.stockCode} />
                                                                 <TableData value={data.stockName} />
                                                                 <TableData value={data.stockCategory} />
-                                                                <TableData value={date}> /></TableData>
+                                                                <TableData value={date} />
                                                                 <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
                                                                 <TableData value={formatter.format(price)} />
                                                                 <TableData value={formatter.format(totalValue)} />

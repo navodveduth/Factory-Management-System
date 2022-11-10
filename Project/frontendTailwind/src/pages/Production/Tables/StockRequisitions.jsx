@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { Link ,useNavigate} from "react-router-dom";
 import {jsPDF} from "jspdf";
+import Swal from 'sweetalert2';
 import TableHeader from "../../../components/Table/TableHeader";
 import TableData from '../../../components/Table/TableData';
 import Header from "../../../components/Header";
@@ -24,6 +25,13 @@ export default function RequestedStocks(){
                 alert(err.message);
             })
         }
+
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'LKR',
+            minimumFractionDigits: 2,
+            currencyDisplay: 'symbol'
+          })
 
         useEffect(()=>{
             getOrders();
@@ -66,17 +74,75 @@ export default function RequestedStocks(){
 
         
 
-        const confirmFunc = (id,invoiceNo)=>{
-            if (confirm("Do you want to delete?") == true) {
-                updateSales(invoiceNo);
-                deletesOrder(id);
-            } else {
-                navigate('/vieworders');
-            }
-    
-        }
-
-
+            async function confirmFunc(id,invoiceNo,stat){
+                if(stat == "Costed"){
+                    const { value: password } =  await Swal.fire({
+                        title: 'Enter the Master Password',
+                        input: 'password',
+                        inputLabel: 'Password',
+                        inputPlaceholder: 'Enter your password',
+                        inputAttributes: {
+                          maxlength: 10,
+                          autocapitalize: 'off',
+                          autocorrect: 'off'
+                        }
+                      })
+                      if (password != "12345") {
+                        Swal.fire(`Invalid Password`)
+                        navigate('/viewRequested');
+                      }else{
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "You won't be able to revert this!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Proceed'
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              deletesOrder(id);
+                              updateSales(invoiceNo);
+                              Swal.fire({  
+                                icon: 'success',
+                                title: 'Invoice Status Changed and Data Successfully Deleted',
+                                color: '#f8f9fa',
+                                background: '#6c757d',
+                                showConfirmButton: false,
+                                timer: 2000
+                              })
+                            }else {
+                              navigate('/viewRequested');
+                            }
+                          })
+                      }
+                }else{
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          deletesOrder(id);
+                          updateSales(invoiceNo);
+                          Swal.fire({  
+                            icon: 'success',
+                            title: 'Data Successfully Deleted',
+                            color: '#f8f9fa',
+                            background: '#6c757d',
+                            showConfirmButton: false,
+                            timer: 2000
+                          })
+                        }else {
+                          navigate('/viewRequested');
+                        }
+                    })
+                }
+              };
         return(
             <div>
 
@@ -166,6 +232,7 @@ export default function RequestedStocks(){
                                                     return data;
                                                 }
                                             }).map((data,key)=>{
+                                                
                                                 if(data.status == "Stock Requested"){
                                                     return ( 
                                                         <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
@@ -177,18 +244,19 @@ export default function RequestedStocks(){
                                                             <TableData value={data.teamLead}/>
                                                             <TableData value={data.status}/>
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                                                <Link to={"/requestStock/" +data.invoiceNo }>
+                                                                
+                                                                <Link to={"/updateStockRequest/" +data._id }>
                                                                     <button 
                                                                         type="button" 
                                                                         className="font-bold py-1 px-4 rounded-full mx-3 text-white" 
                                                                         style={{ background: currentColor }}>
-                                                                            Update Request
+                                                                            Update Stock Request
                                                                         {/* <i className="fas fa-edit"/> */}
                                                                     </button>
                                                                 </Link>
                                                             
                                                                 <button value="Delete Request" onClick={()=>{
-                                                                confirmFunc(data._id,data.invoiceNo);
+                                                                confirmFunc(data._id,data.invoiceNo,data.status);
                                                                 
                                                                 }}
                                                                 type="button" 

@@ -9,7 +9,7 @@ import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { DashTopBox, DashTopButton, } from '../../components';
-
+import Swal from 'sweetalert2';
 
 function ViewAllIssues() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
@@ -54,11 +54,29 @@ function ViewAllIssues() {
 
     const confirmFunc = (id) => {
 
-        if (confirm("Do you want to delete?") == true) {
-            deleteStockUtil(id);
-        } else {
-            navigate('/StockUtilisation');
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                deleteStockUtil(id);
+              Swal.fire({  
+                icon: 'success',
+                title: 'Data Successfully Deleted',
+                color: '#f8f9fa',
+                background: '#6c757d',
+                showConfirmButton: false,
+                timer: 2000
+              })
+            }else {
+                navigate('/ViewAllIssues');
+            }
+          })
 
     }
 
@@ -164,7 +182,7 @@ function ViewAllIssues() {
                                                     }
                                                 }).map((data, key) => {//map is used to iterate the array
                                                     const dbDate = new Date(data.date).toISOString().split('T')[0];
-                                                    const pfDate = new Date(date.firstPurchaseDate).toISOString().split('T')[0];
+                                                    const pfDate = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
 
                                                     var datacolor = "text-black";
                                                     if (data.type === "Additions") {
