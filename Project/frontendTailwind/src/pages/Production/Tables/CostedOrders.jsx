@@ -72,7 +72,7 @@ export default function CostedOrders(){
             }
 
         async function confirmFunc(id,invoiceNo,stat){
-            if(stat == "Costed"){
+            if(stat == "Yeehaw"){
                 const { value: password } =  await Swal.fire({
                     title: 'Enter the Master Password',
                     input: 'password',
@@ -273,7 +273,7 @@ export default function CostedOrders(){
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}><TableData value={formatter.format(data.budgetedtotalCost - data.totalCost)}/></td>
                                                             <TableData value={data.status}/>
                                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                                                <Link to={"/costingOrder/" +data.invoiceNo }>
+                                                                <Link to={"/costingOrder/" +data._id }>
                                                                     <button 
                                                                         type="button" 
                                                                         className="font-bold py-1 px-4 rounded-full mx-3 text-white" 

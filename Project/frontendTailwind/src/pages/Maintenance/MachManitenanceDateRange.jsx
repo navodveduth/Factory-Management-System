@@ -52,6 +52,10 @@ const MachManitenanceDateRange = () => {
     navigate('/MachMaintenanceViewAll');
   }
 
+  const generateReport = () => {
+    navigate('/MachMaintenancePreDateRange', {state: {DS: location.state.DS, DE: location.state.DE}});
+  }
+
   useEffect(() => {
     getMMaintainence();
     const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
@@ -175,9 +179,9 @@ const MachManitenanceDateRange = () => {
                               </div>
 
                       <div className="mr-0 ml-auto">
-                        <Link to={"/MachMaintenanceReport"}> {/* change this link your preview page */}
-                          <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
-                        </Link>
+                        
+                          <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500"  onClick= {()=>generateReport()}>Generate Report</button>
+                        
                       </div>
 
                     </div>

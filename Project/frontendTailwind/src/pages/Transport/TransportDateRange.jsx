@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import {
@@ -57,6 +57,14 @@ const TransportDateRange = () => {
       .catch((err) => {
         alert(err.message);
       });
+  };
+
+  const navigate = useNavigate();
+
+  const toGenerateReport = () => {
+    navigate('/TransportReportDateRange', {
+      state: { DS: location.state.DS, DE: location.state.DE },
+    });
   };
 
   useEffect(() => {
@@ -151,7 +159,7 @@ const TransportDateRange = () => {
                         />
                       </div>
 
-                      <div className="mx-10 ml-auto">
+                      <div className="mx-3">
                         <Link to="/TransportViewAll">
                           {/* change this link your previous page */}
                           <button
@@ -164,15 +172,14 @@ const TransportDateRange = () => {
                       </div>
 
                       <div className="mr-0 ml-auto">
-                        <Link to="/TransportReport">
-                          {/* change this link your preview page */}
-                          <button
-                            type="button"
-                            className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500"
-                          >
-                            Generate Report
-                          </button>
-                        </Link>
+                        {/* change this link your preview page */}
+                        <button
+                          type="button"
+                          onClick={() => toGenerateReport()}
+                          className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500"
+                        >
+                          Generate Report
+                        </button>
                       </div>
                     </div>
 

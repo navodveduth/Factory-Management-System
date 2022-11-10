@@ -12,6 +12,7 @@ export {default as MachMaintenanceNew}  from './MachMaintenanceNew';
 export {default as MachMaintenanceUpdate}  from './MachMaintenanceUpdate';
 export {default as MachMaintenanceReport}  from './MachMaintenanceReport';
 export {default as MachManitenanceDateRange}  from './MachManitenanceDateRange';
+export {default as MachMaintenancePreDateRange}  from './MachMaintenancePreDateRange';
 
 export {default as VehiMaintenanceViewAll}  from './VehiMaintenanceViewAll';
 export {default as VehiMaintenanceNew}  from './VehiMaintenanceNew';

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { jsPDF } from "jspdf";
 import TableHeader from "../../components/Table/TableHeader";
 import TableData from '../../components/Table/TableData';
@@ -10,9 +10,9 @@ import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import logo from '../../data/logo.png';
 
-export default function MachineryReport() {
+export default function MachineryPreviewDateRange() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
-
+    const location = useLocation();
     const [machinery, setMachinery] = useState([]);
 
     var TotalDepreciation = 0;
@@ -22,16 +22,16 @@ export default function MachineryReport() {
 
 
     const getMachinery = async () => {  //getMachinery is the function to get the data from the backend
-        axios.get("http://localhost:8070/machinery/")
-            .then((res) => {
-                setMachinery(res.data); //setMachinery is used to update the state variable
-
-
-            })
-            .catch((err) => {
-                alert(err.message);
-            })
-    }
+        axios.get("http://localhost:8070/machinery/date/"+location.state.DS+"/"+location.state.DE)
+          .then((res) => {
+            setMachinery(res.data); //setMachinery is used to update the state variable
+    
+    
+          })
+          .catch((err) => {
+            alert(err.message);
+          })
+      }
 
     useEffect(() => {
         getMachinery(); // <== CHANGE ACCORDING TO YOUR OWN FUNCTIONS, YOU CAN REMOVE THIS LINE IF YOU DON'T NEED IT
