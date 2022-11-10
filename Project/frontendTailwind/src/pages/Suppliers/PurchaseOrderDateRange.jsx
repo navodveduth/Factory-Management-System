@@ -24,7 +24,7 @@ function PurchaseOrderDateRange() {
 
     const navigate = useNavigate();
 
-
+console.log(location.state.DS + " " + location.state.DE);
     const getPurchaseOrder = async () => {
         axios.get('http://localhost:8070/purchaseOrder/date/'+location.state.DS+'/'+location.state.DE)
             .then((res) => {
@@ -34,7 +34,6 @@ function PurchaseOrderDateRange() {
                 alert(err.message);
             })
     }
-
     const toDateRange=()=>{
         navigate('/PurchaseOrderView');
       }
@@ -73,7 +72,13 @@ function PurchaseOrderDateRange() {
         }
 
     }
+    var purchasesTotal = 0;
 
+    for(var i = 0; i < purchaseOrder.length; i++){
+        purchasesTotal += purchaseOrder[i].cost;
+      }
+
+      console.log(purchasesTotal);
     return (
         <div>
     
@@ -193,15 +198,15 @@ function PurchaseOrderDateRange() {
                                         <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                                             <TableData value={data.orderID} />
                                             <TableData value={data.supplierID} />
-                                            <TableData value={data.quantity} />
+                                            <TableData value={data.qty} />
                                             <TableData value={data.productDetails} />
                                             <TableData value={data.deliveryDate} />
-                                            <TableData value={data.totalPrice} />
+                                            <TableData value={data.cost} />
                                             <TableData value={data.orderStatus} />
 
 											<td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
 												
-												<Link to={`/PurchaseOrderDetailsUpdate/${data._id}`}> 
+												<Link to={`/PurchaseOrderUpdate/${data._id}`}> 
 													<button
 														type="button"
 														className="font-bold py-1 px-4 rounded-full mx-3 text-white"
