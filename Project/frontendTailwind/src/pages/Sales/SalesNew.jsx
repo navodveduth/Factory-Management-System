@@ -28,8 +28,12 @@ function SalesCreateForm() {
   const [quantity, setQuantity] =useState('');
   const [totalAmount, setTotalAmount] =useState('');
   const [status, setStatus] =useState('');
+  const [unitCost, setUnitCost] =useState('');
+
 
   var currentDate = new Date().toISOString().split('T')[0];
+
+
 
   
 
@@ -160,21 +164,29 @@ function SalesCreateForm() {
                 </div>
 
                 <div className="mb-3">
+                  <label for="unitCost" className="form-label">Unit Cost</label>
+                  <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
+                  id="unitCost" placeholder="Enter Total Amount"  required 
+                  onChange={(e) =>{
+                    setUnitCost(e.target.value);
+                  }}/>
+                </div>
+
+                <div className="mb-3">
                   <label for="quantity" className="form-label">Quantity</label>
                   <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                   id="quantity" placeholder="Enter Item Quantity" required 
                   onChange={(e)=>{
                     setQuantity(e.target.value);
+                    setTotalAmount(quantity * unitCost);
                   }}/>
                 </div>
 
                 <div className="mb-3">
                   <label for="totalAmount" className="form-label">Total Amount</label>
                   <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                  id="totalAmount" placeholder="Enter Total Amount"  required 
-                  onChange={(e) =>{
-                    setTotalAmount(e.target.value);
-                  }}/>
+                  id="totalAmount" value={unitCost * quantity}   
+                  />
                 </div>
 
 
