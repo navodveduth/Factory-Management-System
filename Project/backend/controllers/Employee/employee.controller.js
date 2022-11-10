@@ -125,3 +125,17 @@ export const getOneEmployeeDetailsWithSalaryDetails = async (req, res) => {
         res.status(404).json({ message: error });
     }
 }
+
+// get an array containing only the employee numbers from the employee collection
+export const getEmployeeNumbers = async (req, res) => {
+    try {
+        const employeeNumbers = await Employee.aggregate([
+            {
+                $project: { employeeNumber: 1 }
+            }
+        ]);
+        res.status(200).json(employeeNumbers);
+    } catch (error) {
+        res.status(404).json({ message: error });
+    }
+}
