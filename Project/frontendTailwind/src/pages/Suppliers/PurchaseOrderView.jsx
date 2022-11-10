@@ -195,13 +195,8 @@ function PurchaseOrderView() {
                                 {purchaseOrder.filter((data) => {
                                     if (searchTerm == "") {
                                         return data
-                                    } else if (data.orderID.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.supplierID.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.quantity.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.productDetails.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.deliveryDate.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.totalPrice.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.orderStatus.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                    } else if ((data.orderID.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                        (data.productDetails.toString().toLowerCase().includes(searchTerm.toLowerCase()))) {
                                         return data;
                                     }
                                 }).map((data, key) => {
