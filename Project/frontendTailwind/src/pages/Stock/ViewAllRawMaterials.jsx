@@ -5,7 +5,7 @@ import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
-
+import Swal from 'sweetalert2';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -85,11 +85,29 @@ function ViewAllRawMaterials() {
 
     const confirmFunc = (id) => {
 
-        if (confirm("Do you want to delete?") == true) {
-            deleteStock(id);
-        } else {
-            navigate('/StockView');
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                deleteStock(id);
+              Swal.fire({  
+                icon: 'success',
+                title: 'Data Successfully Deleted',
+                color: '#f8f9fa',
+                background: '#6c757d',
+                showConfirmButton: false,
+                timer: 2000
+              })
+            }else {
+                navigate('/ViewAllRawMaterials');
+            }
+          })
 
     }
 
@@ -172,6 +190,7 @@ function ViewAllRawMaterials() {
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
+                                                    <TableHeader value="Initial Purchase" />
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Unit price" />
                                                     <TableHeader value="Total value" />
@@ -187,7 +206,7 @@ function ViewAllRawMaterials() {
                                                         return data;
                                                     }
                                                 }).map((data, key) => {//map is used to iterate the array
-                                                    //const date = new Date(data.lastUpdated).toISOString().split('T')[0];
+                                                    const date = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
 
                                                     var totAdds = 0;
                                                     var totIssues = 0;
@@ -228,6 +247,7 @@ function ViewAllRawMaterials() {
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
                                                             <TableData value={data.stockCategory} />
+                                                            <TableData value={date} />
                                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
                                                             <TableData value={formatter.format(price)} />
                                                             <TableData value={formatter.format(totalValue)} />

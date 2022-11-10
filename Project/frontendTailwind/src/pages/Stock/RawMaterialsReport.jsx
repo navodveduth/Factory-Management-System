@@ -58,7 +58,7 @@ function RawMaterialsReport() {
         const pdf = new jsPDF("landscape", "px", "a2", false);
         const data = await document.querySelector("#tblPDF");
         pdf.html(data).then(() => {
-            pdf.save("Damagedstocks_" + date + ".pdf");
+            pdf.save("RawMaterials_" + date + ".pdf");
         });
     };
 
@@ -132,6 +132,7 @@ function RawMaterialsReport() {
                                                     <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
+                                                    <TableHeader value="Initial purchase" />
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Unit price" />
                                                     <TableHeader value="Total value" />
@@ -140,7 +141,7 @@ function RawMaterialsReport() {
                                             <tbody>
                                                 {
                                                     stock.filter((data) => data.stockCategory === "Raw materials").map((data) => {//map is used to iterate the array
-                                                        //const date = new Date(data.lastUpdated).toISOString().split('T')[0];
+                                                        const date = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
 
                                                         var totAdds = 0;
                                                         var totIssues = 0;
@@ -181,6 +182,7 @@ function RawMaterialsReport() {
                                                                 <TableData value={data.stockCode} />
                                                                 <TableData value={data.stockName} />
                                                                 <TableData value={data.stockCategory} />
+                                                                <TableData value={date} />
                                                                 <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
                                                                 <TableData value={formatter.format(price)} />
                                                                 <TableData value={formatter.format(totalValue)} />

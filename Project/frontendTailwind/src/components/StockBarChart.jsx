@@ -28,7 +28,6 @@ const StockBarChart = () => {
     const itemCount = stock.length;
     const countRM = stock.filter((stk) => stk.stockCategory === 'Raw materials').length;
     const countWIP = stock.filter((stk) => stk.stockCategory === 'Work in progress').length;
-    const countFG = stock.filter((stk) => stk.stockCategory === 'Finished goods').length;
 
   const barPrimaryXAxis = {
     valueType: 'Category',
@@ -51,10 +50,7 @@ const StockBarChart = () => {
     ],
     [
       { x: 'Work in Progress', y: countWIP },
-    ],
-    [
-      { x: 'Finished Goods', y: countFG },
-    ],    
+    ],  
   ]
 
   const barCustomSeries = [
@@ -100,20 +96,6 @@ const StockBarChart = () => {
         },
       },
     },
-    {
-        dataSource: barChartData[3],
-        xName: 'x',
-        yName: 'y',
-        name: 'Finished Goods',
-        type: 'Column',
-        marker: {
-          dataLabel: {
-            visible: false,
-            position: 'Top',
-            font: { fontWeight: '600', color: '#ffffff' },
-          },
-        },
-      },
   ];
 
 

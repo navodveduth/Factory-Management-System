@@ -115,16 +115,12 @@ const StockUtilisationDashboard = () => {
                         <DashTopButton icon={<FaInbox />} value="Add new stock request" />
                       </Link>
 
-                      <Link to="/PendingRequest">
+                      <Link to="/ProcessingRequest">
                         <DashTopButton icon={<FaInbox />} value="View all stock order placed" />
                       </Link>
 
-                      <Link to="/ProcessingRequest">
-                        <DashTopButton icon={<FaInbox />} value="View all processing" />
-                      </Link>
-
                       <Link to="/ResolvedRequest">
-                        <DashTopButton icon={<FaInbox />} value="View all resolved" />
+                        <DashTopButton icon={<FaInbox />} value="View all resolved stock order" />
                       </Link>
                     </div>
                   </div>
