@@ -12,14 +12,14 @@ const AttendanceChart = ({employeeNumber}) => {
   const tooltip = { enable: true, shared: false };
 
   const primaryYAxis = { labelFormat: '{value} Days', 
-                          title: "Attendance in days", 
+                          title: "Days", 
                           labelStyle: { 
                             color: currentMode === 'Dark' ? '#e9ecef' : '#343a40'}, 
                           titleStyle: { 
                           color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
                           fontSize: '16px',
                           fontWeight: 'bold'},
-                          interval: 2,
+                          interval: 5,
                         };
                         
   const primaryXAxis = { valueType: 'Category', 
@@ -123,13 +123,13 @@ const AttendanceChart = ({employeeNumber}) => {
 
   return (
     <div>
-      <ChartsHeader category="Chart" title="Attendance by month" />
+      <ChartsHeader category="Chart" title="Attendance vs Leaves" />
       <ChartComponent primaryXAxis={primaryXAxis} primaryYAxis={primaryYAxis} tooltip={tooltip} 
         background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'} palettes={colors} legendSettings={{background: "white"}}>
         <Inject services={[ColumnSeries, Legend, Category, Tooltip, DataLabel]} />
         <SeriesCollectionDirective>
-          <SeriesDirective dataSource={attendanceData} xName="month" yName="attendance" name="Attendance" type="Column" colors="red" marker={{ dataLabel: { visible: true, position: 'Top', font: { fontWeight: '600', color: '#ffffff' } } }} />
-          <SeriesDirective dataSource={leaveData} xName="month" yName="leave" name="Leaves" type="Column" marker={{ dataLabel: { visible: true, position: 'Top', font: { fontWeight: '600', color: '#ffffff' } } }} />
+          <SeriesDirective dataSource={attendanceData} xName="month" yName="attendance" name="Attendance" type="Column" marker={{ dataLabel: { visible: false, position: 'Middle', font: { fontWeight: '600', color: '#ffffff' } } }} />
+          <SeriesDirective dataSource={leaveData} xName="month" yName="leave" name="Leaves" type="Column" marker={{ dataLabel: { visible: false, position: 'Middle', font: { fontWeight: '600', color: '#ffffff' } } }} />
         </SeriesCollectionDirective>
       </ChartComponent>
     </div>
