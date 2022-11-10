@@ -19,7 +19,7 @@ export const getDateRangeProduction = async (req, res) => {
                 }
             }, */
             {
-                $match: { requestDate: { $gte: new Date(DS), $lte: new Date(DE) } }
+                $match: { costedDate: { $gte: new Date(DS), $lte: new Date(DE) } }
             }
         ]);
         res.status(200).json(productionData);
