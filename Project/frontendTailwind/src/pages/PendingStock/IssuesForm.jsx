@@ -216,7 +216,7 @@ function IssuesForm() {
                                                     alert("Production Status Change Unsuccessful");
                                                 })
                                             } else {
-                                                alert("Not enough remaining quantity. Place a Purchase request");
+                                                alert(`Not enough remaining quantity.Need ${quantity- remaining} ${name}. Place a Purchase request`);
                                                 navigate('/PendingStockAddReq/' + stockCode);
                                             }
 

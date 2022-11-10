@@ -48,14 +48,14 @@ function AddStockForRequisition() {
     const name = stockName;
     console.log(name)
 
-    async function consfirmNull(){
+    async function confirmNull(){
         alert('Stock is unavailable. Please make a purchase order request');
         navigate('/PendingStockAdd')
     }
 
     useEffect(() => { //useEffect is used to call the function getStock
         if (id === "null"){
-        consfirmNull();
+        confirmNull();
         }
         getStock();
     }, [id])
