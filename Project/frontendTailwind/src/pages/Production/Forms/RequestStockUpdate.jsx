@@ -31,9 +31,10 @@ export default function UpdateStockRequest(){
    // const [budgetedLabCost,setBudgetedLabCost] = useState('');
     const [placebudgetedtotalCost,setBudgetedTotalCost] = useState('');
    
-    
+    var currentDate = new Date().toISOString().split('T')[0];
+    var minDate = requestDate.split('T')[0];
     //Determinant values 
-    let maxDate = new Date();
+    
     //auxiliary content to pass the value
     const [Days, setDays] = useState('');
     const [rate,setRate] = useState('');
@@ -244,7 +245,8 @@ export default function UpdateStockRequest(){
                                             <label for="name" className="text-md">Request Date</label>
                                             <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" placeholder={materialCost} onChange={(e)=>{
                                                 setOrderDate(e.target.value);
-                                            }} maximum={maxDate}/>
+                                            }} max={currentDate}
+                                                />
                                         </div>
 
                                         <div className="mb-3">
