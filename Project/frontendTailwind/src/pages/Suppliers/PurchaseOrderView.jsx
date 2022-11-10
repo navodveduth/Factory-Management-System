@@ -90,6 +90,13 @@ function PurchaseOrderView() {
         })
       }
 
+      const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+      })
+
     return (
         <div>
     
@@ -206,6 +213,8 @@ function PurchaseOrderView() {
                                     }
                                 }).map((data, key) => {
 
+                                    let formattedAmount = formatter.format(data.cost)
+
 
                                     var datacolor = "text-black";
                                     if (data.orderStatus === "Order Placed") {
@@ -220,8 +229,8 @@ function PurchaseOrderView() {
                                             <TableData value={data.supplierID} />
                                             <TableData value={data.qty} />
                                             <TableData value={data.productDetails} />
-                                            <TableData value={data.deliveryDate} />
-                                            <TableData value={data.cost} />
+                                            <TableData value={new Date(data.deliveryDate).toISOString().split('T')[0]} />
+                                            <TableData value={formattedAmount} />
                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.orderStatus} </td>                                    
 											<td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
 												
