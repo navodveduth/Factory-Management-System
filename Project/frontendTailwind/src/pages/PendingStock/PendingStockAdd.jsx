@@ -90,7 +90,7 @@ function PendingStockAdd() {
                             <div>
 
                                 <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-                                    <Header category="Form" title=" Create New Stock" />
+                                    <Header category="Form" title="Stock Purchase Request" />
                                     <div className=" flex items-center justify-center ">
 
                                         <form onSubmit={async (e) => {

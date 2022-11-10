@@ -33,6 +33,8 @@ const StockPieChart = () => {
     const shorts= stock.filter((stk) => stk.stockName === 'Shorts').length;
     const skirts= stock.filter((stk) => stk.stockName === 'Skirts').length;
 
+    const colors = ['#258EA6', '#c40bde', '#0bdeb8', '#FF8C00', '#4B0082','#ded90b','#df9776', '#94e1ab'];
+
   return (
     <div>
       <ChartsHeader category="Chart" title="Stock Distribution by Bundles" />
@@ -59,6 +61,7 @@ const StockPieChart = () => {
                   startAngle={0}
                   endAngle={360}
                   radius="70%"
+                  palettes={colors}
                   explode
                   explodeOffset="10%"
                   explodeIndex={2}
