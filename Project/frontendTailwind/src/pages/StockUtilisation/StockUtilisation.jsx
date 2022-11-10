@@ -17,8 +17,8 @@ function StockUtilisation() {
 
     const [stockUtil, setStockUtilisation] = useState([]); //stock is the state variable and setStock is the function to update the state variable
     const [searchTerm, setSearchTerm] = useState("");
-    const [dateStart,setDateStart] = useState('');
-    const [dateEnd,setDateEnd] = useState('');
+    const [dateStart, setDateStart] = useState('');
+    const [dateEnd, setDateEnd] = useState('');
     var totalAdditions = 0;
     var totalIssues = 0;
 
@@ -69,21 +69,21 @@ function StockUtilisation() {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 deleteStockUtil(id);
-              Swal.fire({  
-                icon: 'success',
-                title: 'Data Successfully Deleted',
-                color: '#f8f9fa',
-                background: '#6c757d',
-                showConfirmButton: false,
-                timer: 2000
-              })
-            }else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Data Successfully Deleted',
+                    color: '#f8f9fa',
+                    background: '#6c757d',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            } else {
                 navigate('/StockUtilisation');
             }
-          })
+        })
     }
 
     const formatter = new Intl.NumberFormat('en-US', {
@@ -154,6 +154,7 @@ function StockUtilisation() {
                                                 }} />
                                         </div>
                                         <div>
+
                                             <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date"
                                                 onChange={(e) => {
                                                     setDateStart(e.target.value);
@@ -214,14 +215,14 @@ function StockUtilisation() {
                                                         datacolor = "text-red-600 font-bold";
                                                     }
 
-                                                    if(data.type === "Additions"){
+                                                    if (data.type === "Additions") {
                                                         totalAdditions += parseInt(data.quantity)
-                                                    }else if (data.type === "Issues"){
-                                                        totalIssues += parseInt(data.quantity) 
+                                                    } else if (data.type === "Issues") {
+                                                        totalIssues += parseInt(data.quantity)
                                                     }
 
                                                     return (
-                        
+
                                                         <tr className="text-sm h-10 border dark:border-slate-600">
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />
