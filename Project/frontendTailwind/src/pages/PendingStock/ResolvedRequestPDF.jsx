@@ -8,6 +8,7 @@ import { DashTopBox, DashTopButton, } from '../../components';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import logo from '../../data/logo.png';
 
 import { jsPDF } from "jspdf";
 
@@ -47,6 +48,11 @@ function ResolvedRequestPDF() {
             pdf.save("StocksResolved_" + date + ".pdf");
         });
     };
+
+    //getDAte
+    const current = new Date();
+    const currentdate = `${current.getFullYear()}-${current.getMonth() + 1}-${current.getDate()}`;
+
 
     return (
         <div>
@@ -104,48 +110,60 @@ function ResolvedRequestPDF() {
                                         </div>
                                     </div>
 
-                                    <div id="tblPDF" className="block w-full overflow-x-auto rounded-lg">
-                                        <table className="w-full rounded-lg">
-                                            <thead>
-                                                <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                                    <TableHeader value="Code" />
-                                                    <TableHeader value="Bundle Name" />
-                                                    <TableHeader value="Category" />
-                                                    <TableHeader value="Description" />
-                                                    <TableHeader value="Date" />
-                                                    <TableHeader value="Units" />
-                                                    <TableHeader value="Status" />
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {pendingStock.filter((data) => data.status === "Resolved").map((data) => {//map is used to iterate the array
+                                    <div id="tblPDF">
+                                        <div className="block w-full overflow-x-auto rounded-lg">
+                                            <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                                                <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
+                                            </div>
+
+                                            <div className="text-center mb-10">
+
+                                                <p className="text-xl mt-2">Lanka MountCastle (Pvt) Ltd,</p>
+                                                <p className="text-xl">No.124, Hendala, Wattala</p>
+                                                <p>011 2942 672</p>
+                                            </div>
+                                            <p className="text-right text-xl mt-2 mb-3">Generated On : {currentdate}</p>
+                                            <table className="w-full rounded-lg">
+                                                <thead>
+                                                    <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                                                        <TableHeader value="Code" />
+                                                        <TableHeader value="Bundle Name" />
+                                                        <TableHeader value="Category" />
+                                                        <TableHeader value="Description" />
+                                                        <TableHeader value="Date" />
+                                                        <TableHeader value="Units" />
+                                                        <TableHeader value="Status" />
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {pendingStock.filter((data) => data.status === "Resolved").map((data) => {//map is used to iterate the array
 
 
-                                                    var datacolor = "text-black";
-                                                    if (data.status === "Pending") {
-                                                        datacolor = "text-red-600 font-bold";
-                                                    } else if (data.status === "Resolved") {
-                                                        datacolor = "text-green-500 font-bold";
-                                                    } else {
-                                                        datacolor = "text-yellow-500 font-bold";
-                                                    }
-                                                    return (
-                                                        < tr className="text-sm h-10 border dark:border-slate-600" >
-                                                            <TableData value={data.stockCode} />
-                                                            <TableData value={data.stockName} />
-                                                            <TableData value={data.stockCategory} />
-                                                            <td className={"text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3"}>{data.description}</td>
-                                                            <TableData value={data.date.split('T')[0]} />
-                                                            <TableData value={data.quantity} />
-                                                            <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
-                                                        </tr>
-                                                    )
-                                                })}
-                                            </tbody>
-                                        </table>
+                                                        var datacolor = "text-black";
+                                                        if (data.status === "Pending") {
+                                                            datacolor = "text-red-600 font-bold";
+                                                        } else if (data.status === "Resolved") {
+                                                            datacolor = "text-green-500 font-bold";
+                                                        } else {
+                                                            datacolor = "text-yellow-500 font-bold";
+                                                        }
+                                                        return (
+                                                            < tr className="text-sm h-10 border dark:border-slate-600" >
+                                                                <TableData value={data.stockCode} />
+                                                                <TableData value={data.stockName} />
+                                                                <TableData value={data.stockCategory} />
+                                                                <td className={"text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3"}>{data.description}</td>
+                                                                <TableData value={data.date.split('T')[0]} />
+                                                                <TableData value={data.quantity} />
+                                                                <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
+                                                            </tr>
+                                                        )
+                                                    })}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
                             <Footer />
                         </div>
