@@ -197,6 +197,12 @@ export default function CompletedOrdersDateRange(){
                                                     return data;
                                                 }
                                             }).map((data,key)=>{
+                                                const formatter = new Intl.NumberFormat('en-US', {
+                                                    style: 'currency',
+                                                    currency: 'LKR',
+                                                    minimumFractionDigits: 2,
+                                                    currencyDisplay: 'symbol'
+                                                  })
                                                 if(data.status == "Completed" || "Costed"){
                                                     return ( 
                                                         <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
