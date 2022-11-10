@@ -198,6 +198,7 @@ const TransportUpdate = () => {
                           pattern="[A-Z]{1}[0-9]{3,7}"
                           id="transportID"
                           required
+                          title="The Transport Number requires a letter and 3 digits"
                           value={transportID}
                           onChange={(e) => {
                             setTransportID(e.target.value);

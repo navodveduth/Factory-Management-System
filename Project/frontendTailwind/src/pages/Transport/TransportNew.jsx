@@ -180,6 +180,7 @@ const TransportNew = () => {
                           id="transportID"
                           defaultValue="T"
                           maxLength={20}
+                          title="The Transport Number requires a letter and 3 digits"
                           required
                           onChange={(e) => {
                             setTransportID(e.target.value);
@@ -294,7 +295,7 @@ const TransportNew = () => {
                       <div className="mb-3">
                         <label className="form-label">Distance (Km)</label>
                         <input
-                          type="text"
+                          type="number"
                           className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                           id="distance"
                           placeholder="Enter the distance..."
