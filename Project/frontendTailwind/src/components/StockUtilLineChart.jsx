@@ -41,7 +41,7 @@ export default function StockUtilLineChart() {
 
 
     const getStockUtil = async () => {  //getMaintainence is the function to get the data from the backend
-        axios.get("http://localhost:8070/stockUtilisation")
+       await axios.get("http://localhost:8070/stockUtilisation")
             .then((res) => {
                 setStockUtil(res.data); //setMaintainence  is used to update the state variable
 
@@ -59,7 +59,7 @@ export default function StockUtilLineChart() {
 
 
     const getAdditions = async () => {  //getMaintainence is the function to get the data from the backend
-        axios.get("http://localhost:8070/stockUtilisation/type/" + "Additions")
+        await axios.get("http://localhost:8070/stockUtilisation/type/" + "Additions")
             .then((res) => {
                 setAdditions(res.data); //setMaintainence  is used to update the state variable
 
@@ -113,7 +113,103 @@ export default function StockUtilLineChart() {
     var novUtil=0;
     var decUtil = 0;
 
-    console.log(novUtil);
+    // console.log(novUtil);
+
+     //total addition and issue
+
+     var janTotal, febTotal, marTotal, aprTotal, mayTotal, junTotal, julTotal, augTotal, sepTotal, octTotal, novTotal, decTotal;
+     janTotal = febTotal = marTotal = aprTotal = mayTotal = junTotal = julTotal = augTotal = sepTotal = octTotal = novTotal = decTotal = 0;
+     for (let index = 0; index < utilCnt; index++) {
+         console.log(new Date(stockUtil[index].date).getMonth());
+         switch (new Date(stockUtil[index].date).getMonth()) {
+             case (0):
+                 if (stockUtil[index].type === "Additions")
+                     janTotal = janTotal + stockUtil[index].totalValue;
+                 else
+                     janTotal = janTotal - stockUtil[index].totalValue;
+                 break;
+             case (1):
+                 if (stockUtil[index].type === "Additions")
+                     febTotal = febTotal + stockUtil[index].totalValue;
+                 else
+                     febTotal = febTotal - stockUtil[index].totalValue;
+                 break;
+             case (2):
+                 if (stockUtil[index].type === "Additions")
+                     marTotal = marTotal + stockUtil[index].totalValue;
+                 else
+                     marTotal = marTotal - stockUtil[index].totalValue;
+                 break;
+             case (3):
+                 if (stockUtil[index].type === "Additions")
+                     aprTotal = aprTotal + stockUtil[index].totalValue;
+                 else
+                     aprTotal = aprTotal - stockUtil[index].totalValue;
+                 break;
+             case (4):
+                 if (stockUtil[index].type === "Additions")
+                     mayTotal = mayTotal + stockUtil[index].totalValue;
+                 else
+                     mayTotal = mayTotal - stockUtil[index].totalValue;
+                 break;
+             case (5):
+                 if (stockUtil[index].type === "Additions")
+                     junTotal = junTotal + stockUtil[index].totalValue;
+                 else
+                     junTotal = junTotal - stockUtil[index].totalValue;
+                 break;
+             case (6):
+                 if (stockUtil[index].type === "Additions")
+                     julTotal = julTotal + stockUtil[index].totalValue;
+                 else
+                     julTotal = julTotal - stockUtil[index].totalValue;
+                 break;
+             case (7):
+                 if (stockUtil[index].type === "Additions")
+                     augTotal = augTotal + stockUtil[index].totalValue;
+                 else
+                     augTotal = augTotal - stockUtil[index].totalValue;
+                 break;
+             case (8):
+                 if (stockUtil[index].type === "Additions")
+                     sepTotal = sepTotal + stockUtil[index].totalValue;
+                 else
+                     sepTotal = sepTotal - stockUtil[index].totalValue;
+                 break;
+             case (9):
+                 if (stockUtil[index].type === "Additions")
+                     octTotal = octTotal + stockUtil[index].totalValue;
+                 else
+                     octTotal = octTotal - stockUtil[index].totalValue;
+                 break;
+             case (10):
+                 if (stockUtil[index].type === "Additions")
+                     novTotal = (parseInt(novTotal) + stockUtil[index].totalValue);
+                 else
+                     novTotal = (parseInt(novTotal) - stockUtil[index].totalValue);
+                 break;
+             case (11):
+                 if (stockUtil[index].type === "Additions")
+                     decTotal = decTotal + stockUtil[index].totalValue;
+                 else
+                     decTotal = decTotal - stockUtil[index].totalValue;
+                 break;
+             default:
+                 break;
+         }
+     }
+ 
+     console.log(novTotal);
+ 
+     let data = [
+         { month: 'Jan', stockUtil: janTotal }, { month: 'Feb', stockUtil: febTotal },
+         { month: 'Mar', stockUtil: marTotal }, { month: 'Apr', stockUtil: aprTotal },
+         { month: 'May', stockUtil: mayTotal }, { month: 'Jun', stockUtil: junTotal },
+         { month: 'Jul', stockUtil: julTotal }, { month: 'Aug', stockUtil: augTotal },
+         { month: 'Sep', stockUtil: sepTotal }, { month: 'Oct', stockUtil: octTotal },
+         { month: 'Nov', stockUtil: parseInt(novTotal) }, { month: 'Dec', stockUtil: decTotal }
+     ];
+ 
    
     //additions
 
@@ -259,15 +355,15 @@ export default function StockUtilLineChart() {
 
     
 
-    let data = [
-        { month: 'Jan', stockUtil: janUtil }, { month: 'Feb', stockUtil: febUtil },
-        { month: 'Mar', stockUtil: marUtil }, { month: 'Apr', stockUtil: aprUtil },
-        { month: 'May', stockUtil: mayUtil }, { month: 'Jun', stockUtil: junUtil },
-        { month: 'Jul', stockUtil: julUtil }, { month: 'Aug', stockUtil: augUtil },
-        { month: 'Sep', stockUtil: sepUtil }, { month: 'Oct', stockUtil: octUtil },
-        { month: 'Nov', stockUtil: parseInt(novUtil) }, { month: 'Dec', stockUtil: decUtil }
-    ];
-    console.log(data)
+    // let data = [
+    //     { month: 'Jan', stockUtil: janUtil }, { month: 'Feb', stockUtil: febUtil },
+    //     { month: 'Mar', stockUtil: marUtil }, { month: 'Apr', stockUtil: aprUtil },
+    //     { month: 'May', stockUtil: mayUtil }, { month: 'Jun', stockUtil: junUtil },
+    //     { month: 'Jul', stockUtil: julUtil }, { month: 'Aug', stockUtil: augUtil },
+    //     { month: 'Sep', stockUtil: sepUtil }, { month: 'Oct', stockUtil: octUtil },
+    //     { month: 'Nov', stockUtil: parseInt(novUtil) }, { month: 'Dec', stockUtil: decUtil }
+    // ];
+     console.log("Data" ,data)
     return (
         <>
 

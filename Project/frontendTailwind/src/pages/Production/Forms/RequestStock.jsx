@@ -8,6 +8,7 @@ import { DashTopBox, DashTopButton,  } from '../../../components';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import Swal from 'sweetalert2';
 
 export default function UpdateOrder(){
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
@@ -24,7 +25,7 @@ export default function UpdateOrder(){
     const [member1,setMember1] = useState('');
     const [member2,setMember2] = useState('');
     const [budgetedoverHeadCost,setBudgetOH] = useState('');
-   // const [status,setStatus] = "Stock Requested";    
+    const [status,setStatus] = useState('');    
    // const [totalCost, setTotalCost] =useState('');
     
     //Determinant values 
@@ -33,10 +34,10 @@ export default function UpdateOrder(){
     //auxiliary content to pass the value
     const [Days, setDays] = useState('');
     const [rate,setRate] = useState('');
-    const status =  "Stock Requested"
+    //const status =  "Stock Requested"
     const costedDate = requestDate;
     const overHeadCost = 0;
-   
+    
     const intDates = parseInt(Days);
     const floatRate = parseFloat(rate);
        //Handling budgets
@@ -47,6 +48,7 @@ export default function UpdateOrder(){
     const totalLabCost = 0;
     
     const budgetedtotalCost = (budgetedLabCost + budgetedMatCost + parseFloat(budgetedoverHeadCost));
+ //   
     const totalCost = 0;
 
     const {id} = useParams(); //get the id from the url
@@ -140,6 +142,7 @@ export default function UpdateOrder(){
                                 <Header category="Form" title="Request Stocks" />
                                 <div className=" flex items-center justify-center">
                                     <form onSubmit={async(e)=>{
+                                        
                                                 e.preventDefault();
                                 
                                             const newOrder = {
@@ -163,22 +166,39 @@ export default function UpdateOrder(){
                                                 budgetedtotalCost,
                                                 status,
                                         }
+                                        console.log(newOrder)
                                         const salesStatus = "In Production"
                                       //  const statusPass = {salesStatus}
                                         await axios.put('http://localhost:8070/Production/order/updateStatus/'+id,{"status":salesStatus}).then((res)=>{
-                                            alert("Sale Status Changed");
+                                            console.log("Sale Status Changed");
                                         }).catch((error)=>{
                                             console.log(error)
-                                            alert("Sale Status Change Unsuccessful");
+                                            console.log("Sale Status Change Unsuccessful");
                                         })
                                         console.log(newOrder);
                                         await axios.post("http://localhost:8070/production/order/orderCreate",newOrder).then(()=>{
-                                            alert("Order Created");
+                                            //alert("Order Created");
+
+                                            Swal.fire({  
+                                                icon: 'success',
+                                                title: 'Data Saved Successfully',
+                                                color: '#f8f9fa',
+                                                background: '#6c757d',
+                                                showConfirmButton: false,
+                                                timer: 2000
+                                              })
                                             navigate('/viewRequested');
 
                                         }).catch((error)=>{
                                             console.log(error);
-                                            alert("This Production Voucher already exits.");
+                                            Swal.fire({  
+                                                icon: 'success',
+                                                title: 'This Production Voucher Already Exists',
+                                                color: '#f8f9fa',
+                                                background: '#6c757d',
+                                                showConfirmButton: false,
+                                                timer: 2000
+                                              })
                                         })
                                     }}>
                                         <div className="mb-3">
@@ -332,6 +352,14 @@ export default function UpdateOrder(){
                                             <input type="Number" placeholder={budgetedtotalCost} className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="address"   onChange={(e)=>{
                                                 //setTotalLabCost();
                                             }} readOnly/>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <label for="name" className="text-md">Set Status</label>
+                                            <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" placeholder="Enter the Status" onChange={(e)=>{
+                                                setStatus(e.target.value);
+                                            }}
+                                            />
                                         </div>
                                         
 

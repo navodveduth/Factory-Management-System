@@ -6,7 +6,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 import {jsPDF} from "jspdf";
-
+import Swal from "sweetalert2";
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -49,15 +49,34 @@ const SupplierViewAll = () => {
 				})
 		}
 
-		const confirmFunc = (id)=>{
+		const confirmFunc = (id) => {
 
-			if (confirm("Do you want to delete?") == true) {
-				deleteSupplier(id);
-			} else {
-				navigate('/SupplierViewAll');
-			}
-	
-		}
+			Swal.fire({
+			  title: 'Confirm Delete?',
+			  text: "You won't be able to revert this!",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  //background: '#393E46',
+			  confirmButtonText: 'Yes, Delete it!'})
+			  .then((result) => {
+				if (result.isConfirmed) {
+					deleteSupplier(id);
+					Swal.fire({
+						icon: 'success',
+						title: 'Data Successfully Deleted!',
+						color: '#f8f9fa',
+						background: '#6c757d',
+						showConfirmButton: false,
+						timer: 2000
+					}   
+					)
+				} else {
+					navigate('/SupplierViewAll');
+				}
+			})
+		  }
 
 		return (
 			<div>
