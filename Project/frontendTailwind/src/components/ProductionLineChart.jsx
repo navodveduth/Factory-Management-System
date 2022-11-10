@@ -146,7 +146,7 @@ export default function ProductionLineChart() {
                 name = "Monthly Total Cost" marker = {{dataLable: {visible: true}, visible: true}}>
               </SeriesDirective>
               <SeriesDirective type = "Line" dataSource={material} xName="month" yName="Material"
-                name = "Monthly Material Cost" marker = {{dataLable: {visible: true}, visible: true}}>
+                name = "Monthly Budgeted Total Cost" marker = {{dataLable: {visible: true}, visible: true}}>
               </SeriesDirective>
             </SeriesCollectionDirective>
       </ChartComponent>
