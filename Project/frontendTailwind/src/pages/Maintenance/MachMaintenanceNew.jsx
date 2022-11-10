@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
+import Swal from 'sweetalert2';
 
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
@@ -108,8 +109,14 @@ function MachMaintenanceCreateForm() {
 
                                             await axios.post("http://localhost:8070/maintainenceMachine/create", newMaintenance)
                                                 .then((res) => {
-                                                    alert("Data saved successfully");
-                                                    //navigate to the maintainence view page
+                                                    Swal.fire({  
+                                                        icon: 'success',
+                                                        title: 'Data Successfully Saved',
+                                                        color: '#f8f9fa',
+                                                        background: '#6c757d',
+                                                        showConfirmButton: false,
+                                                        timer: 2000
+                                                      })
                                                     navigate('/MachMaintenanceViewAll');
                                                 })
                                                 .catch((err) => {
