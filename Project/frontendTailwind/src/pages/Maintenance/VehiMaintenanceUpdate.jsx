@@ -225,6 +225,15 @@ function VehiMaintenanceUpdate() {
                                             </div>
 
                                             <div className="mb-3">
+                                                <label htmlFor="employeeFullName" className="form-label">Performed by: </label>
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
+                                                    id="employeeFullName"defaultValue={performedBy} required
+                                                    onChange={(e) => {
+                                                        setperformedBy(e.target.value);
+                                                    }} />
+                                            </div>
+
+                                            <div className="mb-3">
                                                 <label for="employeeType" className="form-label">Status : </label>
                                                 <select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                                                     id="employeeType" aria-label="Default select example" defaultValue={status} required
@@ -238,6 +247,8 @@ function VehiMaintenanceUpdate() {
 
                                                 </select>
                                             </div>
+
+                                            
 
 
                                             <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Submit</button>
