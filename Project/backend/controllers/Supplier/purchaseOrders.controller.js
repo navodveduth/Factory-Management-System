@@ -27,7 +27,7 @@ export const getDateRangePurchaseOrder = async (req, res) => {
     try {
         const DS = req.params.DS;
         const DE = req.params.DE;
-        const purchaseOrderdata = await FD.aggregate([
+        const purchaseOrderdata = await purchaseOrder.aggregate([
             {
                 $match: { deliveryDate: { $gte: new Date(DS), $lte: new Date(DE) } }
             }

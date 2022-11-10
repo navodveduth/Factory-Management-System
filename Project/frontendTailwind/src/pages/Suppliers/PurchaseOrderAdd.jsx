@@ -190,10 +190,11 @@ function PurchaseOrderAdd() {
                 <div className="mb-3">
                             <label htmlFor="orderStatus" className="form-label">Order Status</label>
                             < select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                            id="orderStatus" defaultValue="Enter the Order Status" required
+                            id="orderStatus" placeholder="Enter the Order Status" required = "required"
                             onChange={(e) => {
                             setStatus(e.target.value);
                         }}>
+                            <option value = "">Select Transaction Type</option>
                             <option value="Order Placed">Order Placed</option>
                             <option value="Order Completed">Order Completed</option>
                 
