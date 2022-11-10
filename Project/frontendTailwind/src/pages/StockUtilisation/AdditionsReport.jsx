@@ -41,7 +41,7 @@ function AdditionsReport() {
         const pdf = new jsPDF("landscape", "px", "a1", false);
         const data = await document.querySelector("#tblPDF");
         pdf.html(data).then(() => {
-            pdf.save("stocksUtil_" + date + ".pdf");
+            pdf.save("Additions_" + date + ".pdf");
         });
     };
 
