@@ -13,7 +13,7 @@ import {  MaintenanceDashboard, MaintenanceNew, MaintenanceUpdate, MaintenanceVi
 import {MachineryDashboard, MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory} from './pages//Machinery';
 import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice, SalesDateRange } from './pages/Sales';
 
-import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders,CompletedOrders, FinalCostOrder,CompletedOrdersDateRange, CostedOrders} from './pages/Production/Index';
+import { RequestedStocks, ProductionDashBoard, AddOrder, UpdateOrder, PreviewOrder, PendingOrders,CompletedOrders, FinalCostOrder,CompletedOrdersDateRange, CostedOrders, InsightDashboard, UpdateStockRequest} from './pages/Production/Index';
 
 import { StocksDashboard, StockView, StockInformation, StockViewDateRange, StockBreakdownDateRange , StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, ViewAllRawMaterials, RawMaterialsReport, ViewAllWorkInProgress, WorkInProgressReport } from './pages/Stock';
 import { AddStockForRequisition,IssuesForm, PendingStockAdd, PendingStockUpdate, StockRequisitionPDF, ProcessingRequest, ProcessingRequestPDF, ResolvedRequest, ResolvedRequestPDF, PendingStockRequisition } from './pages/PendingStock';
@@ -125,6 +125,7 @@ const App = () => {
           {/* production management  */}
           <Route path="/viewRequested" element={<RequestedStocks />} />
           <Route path="/production" element={<ProductionDashBoard />} />
+          <Route path="/insightDashboard" element={<InsightDashboard />} />
           <Route path="/newOrder" element={<AddOrder />} />
           <Route path="/requestStock/:id" element={<UpdateOrder />} />
           <Route path="/costpreview" element={<PreviewOrder />} />
@@ -133,6 +134,7 @@ const App = () => {
           <Route path="/costingOrder/:id" element ={<FinalCostOrder/>}/>
           <Route path="/CompletedOrdersDateRange" element={<CompletedOrdersDateRange/>}/>
           <Route path="/costedOrders" element={<CostedOrders />} />
+          <Route path="/updateStockRequest/:id" element={<UpdateStockRequest/>}/>
 
           {/* stock management  */}
           <Route path="/StockDashboard" element={<StocksDashboard />} />
