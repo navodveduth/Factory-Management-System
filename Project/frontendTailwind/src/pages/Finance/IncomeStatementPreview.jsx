@@ -2,17 +2,15 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { Header } from '../../components';
-import { useStateContext } from '../../contexts/ContextProvider';
+import { jsPDF } from "jspdf";
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
-import { FiUser } from 'react-icons/fi';
-import { DashTopBox, DashTopButton,  } from '../../components';
+import { useStateContext } from '../../contexts/ContextProvider';
 import { FiSettings } from 'react-icons/fi';
-import {DateRangePickerComponent} from '@syncfusion/ej2-react-calendars' // this code needed for the datesort function
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-const IncomeStatement = () => {
+const IncomeStatementPreview = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
   const [transactions, setTransactions] = useState([]);
@@ -215,6 +213,15 @@ const IncomeStatement = () => {
     }
   }, []);
 
+  const createPDF = () => {
+    const date = new Date(Date.now()).toISOString().split('T')[0];
+    const pdf = new jsPDF("landscape", "px", "a1", false);
+    const data = document.querySelector("#tableContainer");
+    pdf.html(data).then(() => {
+        pdf.save("IncomeStatement-(" + date + ").pdf");
+    });
+};
+
   var saleTotal , revenueTotal, expenseTotal , MMaintTotal , VehiMaintTotal , maintTotal , transportTotal, machineryTotal, salaryTotal, productionTotal, purchasesTotal;
   saleTotal = expenseTotal = revenueTotal = expenseTotal  = MMaintTotal = VehiMaintTotal = maintTotal = transportTotal = machineryTotal = salaryTotal = productionTotal = machineryTotal =purchasesTotal = 0;
 
@@ -279,7 +286,7 @@ const IncomeStatement = () => {
   var maintainanceTotal = formatter.format(maintTotal+MMaintTotal+VehiMaintTotal);
   
   
-  
+
 
   
   return (
@@ -333,27 +340,16 @@ const IncomeStatement = () => {
                         {themeSettings && <ThemeSettings />}
                         <div>
                           {/* start */}
-                          <div>
                           <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
 
                             <Header title={`Income Statement from `+dateEnd+` to ` + dateStart} />
                             <div className=" flex items-center mb-5 ">
-                              <div className="mr-0 ml-auto">
-                                <Link to={"/IncomeStatementPreview"}> {/* change this link your preview page */}
-                                  <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
-                                </Link>
-                              </div>
+                                <div className="ml-0 ml-auto">
+                                    <button onClick={createPDF} type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
+                                </div>
                             </div>
-                            <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
-                                  <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
-                                      <DateRangePickerComponent ref={dateRangeRef}  placeholder="Select a date range"/>
-                                  </div>
-                                  <div className="ml-5">
-                                      <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => filterDate()}>Filter</button>
-                                  </div>
-                              </div>
-                              
-                              <div className="block w-full overflow-x-auto rounded-lg">
+
+                              <div className="block w-full overflow-x-auto rounded-lg" id='tableContainer'>
                               <table className="w-full rounded-lg">
                                 <thead>
                                   <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800 dark:text-white">
@@ -416,9 +412,8 @@ const IncomeStatement = () => {
                 </div>
             </div>
         </div>
-        </div>
                                 
   );
 };
 
-export default IncomeStatement;
+export default IncomeStatementPreview;
