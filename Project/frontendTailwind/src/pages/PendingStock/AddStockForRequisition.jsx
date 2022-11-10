@@ -17,19 +17,21 @@ function AddStockForRequisition() {
     const navigate = useNavigate();
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
-    const [stockCode, setStockCode] = useState('');
-    const [stockName, setStockName] = useState('');
-    const [stockCategory, setStockCategory] = useState('');
-    const [description, setDescription] = useState('');
+    var stockCode = null;
+    var stockName = null;
+    var stockCategory = null;
+    var description = null;
+
     const [quantity, setQuantity] = useState('');
     const [date, setDate] = useState('');
-    const [status, setStatus] = useState('');
+    var [status, setStatus] = useState('');
     const [ stock, setStock] = useState([]);
     //gets the current date
     var currentDate = new Date().toISOString().split('T')[0];
     console.log(currentDate)
 
     const { id } = useParams();
+
     var minDate = null;
  
     console.log("id", id)
@@ -37,41 +39,14 @@ function AddStockForRequisition() {
     const getStock = () => {
         axios.get(`http://localhost:8070/stock/ViewStock/${id}`).then((res) => {
             console.log("data", res.data)
-            setStock(re.data);
-            setStockCode(res.data.stockCode);
-            setStockName(res.data.stockName);
-            setStockCategory(res.data.stockCategory);
-            setDescription(res.data.description)
-        }).catch((err) => {
-            alert(err.message);
+            setStock(res.data);
+        }).catch(()=>{
+//
         })
+        
     }
     const name = stockName;
     console.log(name)
-
-    // const getStock = async () => {
-    //     axios.get(`http://localhost:8070/stock/ViewStockname/${name}`).then((res) => {
-    //         console.log("Stock", res.data)
-    //         setStock(res.data);
-    //         // setStockCode(res.data.stockCode);
-    //         // setStockCategory(res.data.stockCategory);
-    //         // setFirstPurchaseDate(res.data.firstPurchaseDate);
-    //         // console.log(res.data.firstPurchaseDate)
-    //     }).catch((err) => {
-    //         //alert(err);
-    //     })
-    // }
-
-    // const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-    //     axios.get("http://localhost:8070/stockUtilisation")
-    //         .then((res) => {
-    //             setStockUtil(res.data); //setStock is used to update the state variable
-    //             console.log(res.data);
-    //         })
-    //         .catch((err) => {
-    //             alert(err.message);
-    //         })
-    // }
 
     useEffect(() => { //useEffect is used to call the function getStock
         getStock();
@@ -90,24 +65,11 @@ function AddStockForRequisition() {
 
     stock.map((data) => {
         minDate = data.firstPurchaseDate.split('T')[0];
+        stockCode = data.stockCode;
+        stockName = data.stockName;
+        stockCategory = data.stockCategory;
+        description = data.description;
     })
-
-    // stockUtil.map((data) => {
-    //     if(data.stockCode === stockCode && data.type === "Additions" && 
-    //     data.firstPurchaseDate.split('T')[0] === minDate){
-    //         totAdds += data.quantity;
-    //     }
-    // })
-
-    // stockUtil.map((data) => {
-    //     if(data.stockCode === stockCode && data.type === "Issues" && 
-    //     data.firstPurchaseDate.split('T')[0] === minDate){
-    //         totIssues += data.quantity;
-    //     }
-    // })
-
-    //    {remaining = totAdds - totIssues - damaged} 
-
     return (
 
         <div>
