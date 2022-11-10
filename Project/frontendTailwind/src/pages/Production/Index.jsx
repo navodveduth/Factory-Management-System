@@ -11,6 +11,8 @@ export {default as FinalCostOrder} from "./Forms/UpdateCost";
 export {default as CompletedOrdersDateRange} from "./CompletedOrdersDateRange"
 export {default as CostedOrders} from './Tables/CostedOrders'
 export {default as InsightDashboard} from "./InsightDashboard";
+export {default as CostedDateRange} from "./Reports/CostedDateRange";
+
 
 //update forms 
 export {default as UpdateStockRequest} from "./Forms/RequestStockUpdate"
