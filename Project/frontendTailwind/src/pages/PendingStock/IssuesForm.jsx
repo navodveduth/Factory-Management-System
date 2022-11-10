@@ -46,16 +46,7 @@ function IssuesForm() {
 
     const { id } = useParams();
 
-    // const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-    //     axios.get("http://localhost:8070/stockUtilisation")
-    //         .then((res) => {
-    //             setStockUtil(res.data); //setStock is used to update the state variable
-    //             console.log(res.data);
-    //         })
-    //         .catch((err) => {
-    //             alert(err.message);
-    //         })
-    // }
+    var compareDate = null;
 
     console.log("id", id)
     //stock request
@@ -73,17 +64,15 @@ function IssuesForm() {
     const name = stockName;
     console.log(name)
 
+
     const getStock = async () => {
         axios.get(`http://localhost:8070/stock/ViewStockname/${name}`).then((res) => {
             console.log("Stock", res.data)
             setStock(res.data);
-            // setStockCode(res.data.stockCode);
-            // setStockCategory(res.data.stockCategory);
-            // setFirstPurchaseDate(res.data.firstPurchaseDate);
-            // console.log(res.data.firstPurchaseDate)
+            
         }).catch((err) => {
-            alert("Stock unavailable! Please make a purchase order request");
-            navigate('/StockView');
+            //alert("Stock unavailable! Please make a purchase order request");
+            // navigate('/StockView');
         })
     }
 
@@ -91,7 +80,7 @@ function IssuesForm() {
         axios.get("http://localhost:8070/stockUtilisation")
             .then((res) => {
                 setStockUtil(res.data); //setStock is used to update the state variable
-                console.log(res.data);
+                console.log("stock util", res.data);
             })
             .catch((err) => {
                 alert(err.message);
@@ -101,6 +90,7 @@ function IssuesForm() {
     useEffect(() => { //useEffect is used to call the function getStock
         getStock();
     }, [name])
+    
 
     useEffect(() => { //useEffect is used to call the function getStock
         getCompleteOrder();
@@ -118,23 +108,19 @@ function IssuesForm() {
         stockCode = data.stockCode;
         stockCategory = data.stockCategory;
         damaged = data.damagedQty
+        compareDate = data.firstPurchaseDate
     })
 
     stockUtil.map((data) => {
-        if(data.stockCode === stockCode && data.type === "Additions" && 
-        data.firstPurchaseDate.split('T')[0] === minDate){
-            totAdds += data.quantity;
+        if (data.stockCode === stockCode && data.firstPurchaseDate === compareDate) {
+            if (data.type === "Additions")
+                totAdds += data.quantity;
+            if (data.type === "Issues")
+                totIssues += data.quantity;
         }
     })
 
-    stockUtil.map((data) => {
-        if(data.stockCode === stockCode && data.type === "Issues" && 
-        data.firstPurchaseDate.split('T')[0] === minDate){
-            totIssues += data.quantity;
-        }
-    })
-
-       {remaining = totAdds - totIssues - damaged} 
+    { remaining = totAdds - totIssues - damaged }
 
     return (
 
@@ -210,29 +196,29 @@ function IssuesForm() {
                                                 totalValue
                                             }
 
-                                            if(remaining >= quantity){
-                                            await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
-                                                alert("Data saved successfully");
-                                                navigate('/StockUtilisation');
+                                            if (remaining >= quantity) {
+                                                await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
+                                                    alert("Data saved successfully");
+                                                    navigate('/StockUtilisation');
 
-                                            }).catch((err) => {
-                                                console.log(err);
-                                                alert("ERROR: Could not add stock");
-                                                navigate('/IssuesForm/' + id);
-                                            })
+                                                }).catch((err) => {
+                                                    console.log(err);
+                                                    alert("ERROR: Could not add stock");
+                                                    navigate('/IssuesForm/' + id);
+                                                })
 
-                                            const salesStatus = "Completed"
-                                            const statusPass = { salesStatus }
-                                            await axios.put('http://localhost:8070/stock/updateStatus/' + id, { "status": salesStatus }).then((res) => {
-                                                alert("Production Status Changed");
-                                            }).catch((error) => {
-                                                console.log(error)
-                                                alert("Production Status Change Unsuccessful");
-                                            })
-                                        }else{
-                                            alert("Not enough remaining quantity. Place a Purchase request");
-                                            navigate('/PendingStockAdd/' + stockCode);
-                                        }
+                                                const salesStatus = "Completed"
+                                                const statusPass = { salesStatus }
+                                                await axios.put('http://localhost:8070/stock/updateStatus/' + id, { "status": salesStatus }).then((res) => {
+                                                    alert("Production Status Changed");
+                                                }).catch((error) => {
+                                                    console.log(error)
+                                                    alert("Production Status Change Unsuccessful");
+                                                })
+                                            } else {
+                                                alert("Not enough remaining quantity. Place a Purchase request");
+                                                navigate('/PendingStockAddReq/' + stockCode);
+                                            }
 
 
                                         }}>
@@ -275,19 +261,19 @@ function IssuesForm() {
                                             <div className="mb-3">
                                                 <label for="quantity" className="form-label">Quantity Available: </label>
                                                 <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity"
-                                                     value={remaining} readOnly />
+                                                    value={remaining} readOnly />
                                             </div>
 
                                             <div className="mb-3">
                                                 <label for="quantity" className="form-label">Quantity Required: </label>
-                                                <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity" 
-                                                     value={quantity} readOnly />
+                                                <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="quantity"
+                                                    value={quantity} readOnly />
                                             </div>
 
                                             <div className="mb-3">
                                                 <label for="unitPrice" className="form-label">Unit price: </label>
-                                                <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice" 
-                                                    value={unitPrice}  readOnly />
+                                                <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice"
+                                                    value={unitPrice} readOnly />
                                             </div>
 
                                             <div className="mb-3">
