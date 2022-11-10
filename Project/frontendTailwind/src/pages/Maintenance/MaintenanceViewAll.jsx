@@ -75,6 +75,8 @@ const MaintenanceViewAll = () => {
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
+      color: '#f8f9fa',
+      background: '#6c757d',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -238,7 +240,7 @@ const MaintenanceViewAll = () => {
                                 <TableData value={data.Description} />
                                 <TableData value={data.lastMaintainedDate.toString().split('T')[0]} />
                                 <TableData value={data.nextServiceDate.toString().split('T')[0]} />
-                                <TableData value={"Rs." + data.others} />
+                                <TableData value={formatter.format(data.others)} />
 
                                 <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status} </td>
 
