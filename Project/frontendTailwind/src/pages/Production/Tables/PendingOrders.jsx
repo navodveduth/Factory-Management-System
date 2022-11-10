@@ -56,6 +56,14 @@ const PendingOrders = () => {
 
     }
 
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+      })
+
+
   return (
     <div>
 
@@ -152,6 +160,8 @@ const PendingOrders = () => {
                                               return data;
                                           }
                                       }).map((data, key) => {
+
+                                        let formattedAmount = formatter.format(data.totalAmount);
                                           if(data.status == "Pending"){
                                               return( 
                                                   <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
@@ -169,7 +179,7 @@ const PendingOrders = () => {
                                   
                                                   <TableData value={data.itemName} />
                                                   <TableData value={data.quantity} />
-                                                  <TableData value={"Rs."+data.totalAmount} />
+                                                  <TableData value={formattedAmount} />
                                                   <TableData value={data.status} />
                       
                                           <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
