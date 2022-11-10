@@ -124,12 +124,8 @@ export default function PreviewSalary(){
                                                     return ( 
                                                         <tr className="text-sm h-10 border dark:border-slate-600">
                                                             <TableData value={data.employeeNumber} />
-                                                            <TableData value={data.employeeInfo.map(((data2)=>{
-                                                                return data2.employeeNameWithInitials;
-                                                            }))}/>
-                                                            <TableData value={data.employeeInfo.map(((data2)=>{
-                                                                return data2.employeeDesignation;
-                                                            }))}/>
+                                                            <TableData value={data.employeeInfo.employeeNameWithInitials}/>
+                                                            <TableData value={data.employeeInfo.employeeDesignation}/>
                                                             <TableData value={formatter.format(data.employeeBasicSalary)} />
                                                             <TableData value={formatter.format(data.employeeAllowance)} />
                                                             <TableData value={formatter.format(data.employeeIncentive)} />
