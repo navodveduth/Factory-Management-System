@@ -13,6 +13,7 @@ import {
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 import { useStateContext } from '../../contexts/ContextProvider';
+import logo from '../../data/logo.png';
 
 const DriverReport = () => {
   const {
@@ -56,6 +57,11 @@ const DriverReport = () => {
       pdf.save(`Drivers Report-${date}.pdf`);
     });
   };
+
+  const current = new Date();
+  const currentdate = `${current.getFullYear()}-${
+    current.getMonth() + 1
+  }-${current.getDate()}`;
 
   return (
     <div>
@@ -106,59 +112,72 @@ const DriverReport = () => {
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
                     <Header category="Report" title="Drivers" />
 
-                    <div className=" flex items-center mb-5 ">
-                      <div className="mr-0 ml-auto">
-                        <button
-                          onClick={createPDF}
-                          type="button"
-                          className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500"
-                        >
-                          Download Report
-                        </button>
-                      </div>
-                    </div>
-
-                    <div
-                      className="block w-full overflow-x-auto rounded-lg"
-                      id="tableContainer"
+                    <button
+                      onClick={createPDF}
+                      type="button"
+                      className="font-bold py-1 px-4 rounded-full m-3 text-white absolute top-40 right-20 hover:bg-slate-700 bg-slate-500"
                     >
-                      <table className="w-full rounded-lg">
-                        <thead>
-                          <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                            <TableHeader value="NIC" />
-                            <TableHeader value="Full Name" />
-                            <TableHeader value="Driving License No" />
-                            <TableHeader value="Contact No" />
-                            <TableHeader value="Vehicle Number" />
-                            <TableHeader value="Vehicle Model" />
-                            <TableHeader value="Status" />
-                          </tr>
-                        </thead>
+                      Download Report
+                    </button>
 
-                        <tbody>
-                          {driver.map((data, key) => (
-                            <tr
-                              className="text-sm h-10 border dark:border-slate-600"
-                              key={key}
-                            >
-                              {data.driverDetails.map((driverData) => (
-                                <TableData value={driverData.employeeNIC} />
-                              ))}
+                    <div id="tableContainer">
+                      <div className="block w-full overflow-x-auto rounded-lg">
+                        <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                          <img
+                            className="h-200 w-400 mb-5"
+                            src={logo}
+                            alt="logo"
+                          />
+                        </div>
 
-                              <TableData value={data.fullName} />
-                              <TableData value={data.drivingLicenseNo} />
-                              {data.driverDetails.map((driverData) => (
-                                <TableData
-                                  value={driverData.employeeContactNumber}
-                                />
-                              ))}
-                              <TableData value={data.vehicleNo} />
-                              <TableData value={data.vehicleModel} />
-                              <TableData value={data.status} />
+                        <div className="text-center mb-10">
+                          <p className="text-xl mt-2">
+                            Lanka MountCastle (Pvt) Ltd,
+                          </p>
+                          <p className="text-xl">No.124, Hendala, Wattala</p>
+                          <p>011 2942 672</p>
+                        </div>
+                        <p className="text-right text-xl mt-2 mb-3">
+                          Generated On : {currentdate}
+                        </p>
+                        <table className="w-full rounded-lg">
+                          <thead>
+                            <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                              <TableHeader value="NIC" />
+                              <TableHeader value="Full Name" />
+                              <TableHeader value="Driving License No" />
+                              <TableHeader value="Contact No" />
+                              <TableHeader value="Vehicle Number" />
+                              <TableHeader value="Vehicle Model" />
+                              <TableHeader value="Status" />
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                          </thead>
+
+                          <tbody>
+                            {driver.map((data, key) => (
+                              <tr
+                                className="text-sm h-10 border dark:border-slate-600"
+                                key={key}
+                              >
+                                {data.driverDetails.map((driverData) => (
+                                  <TableData value={driverData.employeeNIC} />
+                                ))}
+
+                                <TableData value={data.fullName} />
+                                <TableData value={data.drivingLicenseNo} />
+                                {data.driverDetails.map((driverData) => (
+                                  <TableData
+                                    value={driverData.employeeContactNumber}
+                                  />
+                                ))}
+                                <TableData value={data.vehicleNo} />
+                                <TableData value={data.vehicleModel} />
+                                <TableData value={data.status} />
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>

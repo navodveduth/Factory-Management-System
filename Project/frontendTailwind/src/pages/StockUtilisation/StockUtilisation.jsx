@@ -10,6 +10,7 @@ import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { DashTopBox, DashTopButton, } from '../../components';
 import Swal from 'sweetalert2';
+import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
 
 function StockUtilisation() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
@@ -17,8 +18,8 @@ function StockUtilisation() {
 
     const [stockUtil, setStockUtilisation] = useState([]); //stock is the state variable and setStock is the function to update the state variable
     const [searchTerm, setSearchTerm] = useState("");
-    const [dateStart,setDateStart] = useState('');
-    const [dateEnd,setDateEnd] = useState('');
+    const [dateStart, setDateStart] = useState('');
+    const [dateEnd, setDateEnd] = useState('');
     var totalAdditions = 0;
     var totalIssues = 0;
 
@@ -69,21 +70,21 @@ function StockUtilisation() {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 deleteStockUtil(id);
-              Swal.fire({  
-                icon: 'success',
-                title: 'Data Successfully Deleted',
-                color: '#f8f9fa',
-                background: '#6c757d',
-                showConfirmButton: false,
-                timer: 2000
-              })
-            }else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Data Successfully Deleted',
+                    color: '#f8f9fa',
+                    background: '#6c757d',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            } else {
                 navigate('/StockUtilisation');
             }
-          })
+        })
     }
 
     const formatter = new Intl.NumberFormat('en-US', {
@@ -92,6 +93,28 @@ function StockUtilisation() {
         minimumFractionDigits: 2,
         currencyDisplay: 'symbol'
     })
+
+    let dateRangeRef = (dateRange) => {
+        dateRangeRef = dateRange; // dateRangeRef is a reference to the DateRangePickerComponent
+      };
+    
+      const filterDate = () => {
+        if (dateRangeRef.value && dateRangeRef.value.length > 0) {
+    
+            const start = (dateRangeRef.value[0]);
+            const end = (dateRangeRef.value[1]);
+    
+            setDateStart(start);
+            setDateEnd(end);
+            navigate('/StockUtilisationDateRange',{state:{DS:start,DE:end}});
+    
+        } else {
+          alert("Please select a date range")
+          setDateStart('');
+          setDateEnd('');
+        }
+    
+    };
 
 
     return (
@@ -153,19 +176,6 @@ function StockUtilisation() {
                                                     setSearchTerm(e.target.value);
                                                 }} />
                                         </div>
-                                        <div>
-                                            <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date"
-                                                onChange={(e) => {
-                                                    setDateStart(e.target.value);
-                                                }} />
-                                        </div>
-
-                                        <div>
-                                            <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date"
-                                                onChange={(e) => {
-                                                    setDateEnd(e.target.value);
-                                                }} />
-                                        </div>
 
                                         <div className=" mx-1">
                                             <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => { toDateRange() }}  >filter</button>
@@ -178,6 +188,15 @@ function StockUtilisation() {
                                         </div>
 
                                     </div>
+
+                                    <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
+                                            <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
+                                                <DateRangePickerComponent ref={dateRangeRef} placeholder="Select a date range" />
+                                            </div>
+                                            <div className="ml-5">
+                                                <button type="button" className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => filterDate()}>Filter</button>
+                                            </div>
+                                        </div>
 
                                     <div className="block w-full overflow-x-auto rounded-lg">
                                         <table className="w-full rounded-lg">
@@ -207,21 +226,21 @@ function StockUtilisation() {
                                                 }).map((data, key) => {//map is used to iterate the array
                                                     const dbDate = new Date(data.date).toISOString().split('T')[0];
                                                     const pfDate = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
-                                                    var datacolor = "text-black";
+                                                    var datacolor = null;
                                                     if (data.type === "Additions") {
                                                         datacolor = "text-green-500 font-bold";
                                                     } else {
                                                         datacolor = "text-red-600 font-bold";
                                                     }
 
-                                                    if(data.type === "Additions"){
+                                                    if (data.type === "Additions") {
                                                         totalAdditions += parseInt(data.quantity)
-                                                    }else if (data.type === "Issues"){
-                                                        totalIssues += parseInt(data.quantity) 
+                                                    } else if (data.type === "Issues") {
+                                                        totalIssues += parseInt(data.quantity)
                                                     }
 
                                                     return (
-                        
+
                                                         <tr className="text-sm h-10 border dark:border-slate-600">
                                                             <TableData value={data.stockCode} />
                                                             <TableData value={data.stockName} />

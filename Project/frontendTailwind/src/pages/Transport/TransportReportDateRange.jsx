@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { jsPDF } from 'jspdf';
 import { FiSettings } from 'react-icons/fi';
+import { useLocation } from 'react-router-dom';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import {
   Header,
@@ -16,7 +17,7 @@ import logo from '../../data/logo.png';
 
 import { useStateContext } from '../../contexts/ContextProvider';
 
-const TransportReport = () => {
+const TransportReportDateRange = () => {
   const {
     setCurrentColor,
     setCurrentMode,
@@ -28,10 +29,13 @@ const TransportReport = () => {
   } = useStateContext();
 
   const [transport, setTransport] = useState([]);
+  const location = useLocation();
 
   const getTransport = async () => {
     axios
-      .get('http://localhost:8070/transport/')
+      .get(
+        `http://localhost:8070/transport/date/${location.state.DS}/${location.state.DE}`
+      )
       .then((res) => {
         setTransport(res.data);
       })
@@ -192,4 +196,4 @@ const TransportReport = () => {
   );
 };
 
-export default TransportReport;
+export default TransportReportDateRange;
