@@ -257,7 +257,7 @@ const StockInformation = () => {
                                             <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
                                                 <h1 className="text-2xl font-bold">Stock Valuation</h1>
                                                 <div className="text-md ml-12 pt-5">
-                                                    <div className="p-1"><span className={`${datacolor} font-bold`}> Quantity </span> :{quantity}</div>
+                                                    <div className="p-1"><span className="font-bold"> Quantity </span> :{quantity}</div>
                                                     <div className="p-1"><span className="font-bold">Unit price</span> : {formatter.format(price)}</div>
                                                     <div className="p-1"><span className="font-bold">Total value</span> :{formatter.format(quantity * price)}</div>
                                                 </div>

@@ -67,42 +67,45 @@ const MachMaintenanceHistory = () => {
     }, [machinery.machineID]);
 
     let dateRangeRef = (dateRange) => {
-        // dateRangeRef is a reference to the DateRangePickerComponent
         dateRangeRef = dateRange;
-      };
+        console.log(dateRange);
+        console.log("Date  : ", dateRangeRef) // dateRangeRef is a reference to the DateRangePickerComponent
+    };
+
     
-      const convertDate = (format) => {
-        function convert(s) {
-          return s < 10 ? `0${s}` : s;
-        }
-        const date = new Date(format);
-        return [
-          date.getFullYear(),
-          convert(date.getMonth() + 1),
-          convert(date.getDate()),
-        ].join('-');
-      };
+    //   const convertDate = (format) => {
+    //     function convert(s) {
+    //       return s < 10 ? `0${s}` : s;
+    //     }
+    //     const date = new Date(format);
+    //     return [
+    //       date.getFullYear(),
+    //       convert(date.getMonth() + 1),
+    //       convert(date.getDate()),
+    //     ].join('-');
+    //   };
     
       const filterDate = () => {
         if (dateRangeRef.value && dateRangeRef.value.length > 0) {
-          const start = convertDate(dateRangeRef.value[0]);
-          const end = convertDate(dateRangeRef.value[1]);
-    
-          let date1 = JSON.stringify(start);
-          date1 = date1.substring(1, 11);
-          setStartDate(date1);
-    
-          let date2 = JSON.stringify(end);
-          date2 = date2.substring(1, 11);
-          setEndDate(date2);
-    
-          console.log(startDate);
-          console.log(endDate);
+
+            const start = (dateRangeRef.value[0]);
+            const end = (dateRangeRef.value[1]);
+
+            let date1 = JSON.stringify(start);
+            date1 = date1.substring(1, 11);
+            setStartDate(date1);
+
+            let date2 = JSON.stringify(end);
+            date2 = date2.substring(1, 11);
+            setEndDate(date2);
+
         } else {
-          setStartDate('');
-          setEndDate('');
+            setStartDate('');
+            setEndDate('');
         }
-      };
+    };
+
+      
     
       const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -212,6 +215,15 @@ const MachMaintenanceHistory = () => {
                                     </Link>
                                     </div>
                                 </div>
+
+                                <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
+                                                <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
+                                                    <DateRangePickerComponent ref={dateRangeRef}  placeholder="Select a date range"/>
+                                                </div>
+                                                <div className="ml-5">
+                                                    <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={filterDate}>Filter</button>
+                                                </div>
+                                            </div>
 
                                         <div className="block w-full overflow-x-auto rounded-lg">
                                             <table className="w-full rounded-lg">
