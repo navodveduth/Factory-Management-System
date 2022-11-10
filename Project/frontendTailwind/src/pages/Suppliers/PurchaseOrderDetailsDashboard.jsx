@@ -1,17 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { FiUser } from 'react-icons/fi';
-import { DashTopBox, DashTopButton } from '../../components';
-
+import { AiOutlineFileDone } from "react-icons/ai";
+import { BsClipboardPlus  } from "react-icons/bs";
+import { DashTopBox, DashTopButton, PurchaseOrderStatusPieChart } from '../../components';
+import { MdPendingActions } from "react-icons/md";
 import { useStateContext } from '../../contexts/ContextProvider';
-import { FiSettings } from 'react-icons/fi';
+import { FiSettings, FiClipboard} from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 
 const PurchaseOrderDetailsDashboard = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
+
+  const [purchaseOrder, setPurchaseOrder] = useState([]);
+
+  const getPurchaseOrder = async () => {
+    axios.get("http://localhost:8070/purchaseOrder/")
+        .then((res) => {
+            setPurchaseOrder(res.data);
+        })
+        .catch((err) => {
+            alert(err.message);
+        })
+}
+
+useEffect(() => {
+    getPurchaseOrder();
+    const currentThemeColor = localStorage.getItem('colorMode');
+    const currentThemeMode = localStorage.getItem('themeMode');
+    if (currentThemeColor && currentThemeMode) {
+        setCurrentColor(currentThemeColor);
+        setCurrentMode(currentThemeMode);
+    }
+}, []);
+
+  const purOrder = purchaseOrder.length;
+  const placedOrders = purchaseOrder.filter((order) => order.orderStatus === 'Order Placed').length;
+  const completedOrders = purchaseOrder.filter((order) => order.orderStatus === 'Order Placed').length;
 
   return (
 
@@ -68,10 +95,10 @@ const PurchaseOrderDetailsDashboard = () => {
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* top buttons in the dashboard */} {/* use for navigation buttons*/}
           <Link to="/PurchaseOrderView">
-            <DashTopButton value="Purchase orders" />
+            <DashTopButton value="Purchase orders" icon={<FiClipboard />} />
           </Link>
           <Link to="/PurchaseOrderAdd">
-            <DashTopButton value="Place a new order" />
+            <DashTopButton value="Place a new order" icon={<BsClipboardPlus />} />
           </Link>
 
         </div>
@@ -80,10 +107,14 @@ const PurchaseOrderDetailsDashboard = () => {
       <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
-          <DashTopBox icon={<FiUser />} label="Total Supplier records" data="0" />      
-          
+          <DashTopBox icon={<FiClipboard />} label="Total Purchase Orders" data={purOrder} />     
+          <DashTopBox icon={<MdPendingActions />} label="Orders Placed" data={placedOrders} />  
+          <DashTopBox icon={<AiOutlineFileDone />} label="Orders Completed" data={completedOrders} />          
         </div>
       </div>
+      <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+                        <PurchaseOrderStatusPieChart />
+                      </div>
     </div>
     </div>
                         <Footer />
