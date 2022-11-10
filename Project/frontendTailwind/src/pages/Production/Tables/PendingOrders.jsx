@@ -6,6 +6,7 @@ import {jsPDF} from "jspdf";
 import { useStateContext } from '../../../contexts/ContextProvider';
 import TableData from '../../../components/Table/TableData';
 import TableHeader from '../../../components/Table/TableHeader';
+import Swal from 'sweetalert2';
 
 import { FiUser } from 'react-icons/fi';
 import { DashTopBox, DashTopButton,  } from '../../../components';
@@ -38,7 +39,7 @@ const PendingOrders = () => {
     await axios
       .delete(`http://localhost:8070/sales/delete/${id}`)
       .then((res) => {
-        alert('Deleted Successfully');
+        console.log('Deleted Successfully');
         getSale();
       })
       .catch((err) => {
@@ -46,15 +47,74 @@ const PendingOrders = () => {
       });
   };
 
-  const confirmFunc = (id)=>{
 
-		if (confirm("Do you want to delete?") == true) {
-        deleteSale(id);
-		} else {
-			  navigate('/SalesViewAll');
-		}
-
+  async function confirmFunc(id,stat){
+    if(stat == "Yeehaw"){
+        const { value: password } =  await Swal.fire({
+            title: 'Enter the Master Password',
+            input: 'password',
+            inputLabel: 'Password',
+            inputPlaceholder: 'Enter your password',
+            inputAttributes: {
+              maxlength: 10,
+              autocapitalize: 'off',
+              autocorrect: 'off'
+            }
+          })
+          if (password != "12345") {
+            Swal.fire(`Invalid Password`)
+            navigate('/costedOrders');
+          }else{
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Proceed'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  deleteSale(id)
+                  Swal.fire({  
+                    icon: 'success',
+                    title: 'Invoice Status Changed and Data Successfully Deleted',
+                    color: '#f8f9fa',
+                    background: '#6c757d',
+                    showConfirmButton: false,
+                    timer: 2000
+                  })
+                }else {
+                  navigate('/pendingOrders');
+                }
+              })
+          }
+    }else{
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                deleteSale(id)
+              Swal.fire({  
+                icon: 'success',
+                title: 'Data Succesfully deleted',
+                color: '#f8f9fa',
+                background: '#6c757d',
+                showConfirmButton: false,
+                timer: 2000
+              })
+            }else {
+              navigate('/pendingOrders');
+            }
+        })
     }
+  };
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -197,7 +257,7 @@ const PendingOrders = () => {
                                               type="button"
                                               className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
                                               onClick={() => {
-                                              confirmFunc(data._id);
+                                              confirmFunc(data._id,data.invoiceNo);
                                               }}
                                           >
                                               <p>Revert Order</p>
