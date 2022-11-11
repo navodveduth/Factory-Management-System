@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import {DateRangePickerComponent} from '@syncfusion/ej2-react-calendars'
 
 
 
@@ -22,10 +23,10 @@ function PurchaseOrderView() {
 
     const navigate = useNavigate();
 
+    
     const toDateRange=()=>{
         navigate('/PurchaseOrderDateRange',{state:{DS:dateStart,DE:dateEnd}});
     }
-
 
 
     const getPurchaseOrder = async () => {
@@ -61,12 +62,37 @@ function PurchaseOrderView() {
         }
     }, []);
 
+
+
+    let dateRangeRef = (dateRange) => {
+        dateRangeRef = dateRange; // dateRangeRef is a reference to the DateRangePickerComponent
+      };
+    
+      const filterDate = () => {
+        if (dateRangeRef.value && dateRangeRef.value.length > 0) {
+    
+            const start = (dateRangeRef.value[0]);
+            const end = (dateRangeRef.value[1]);
+    
+            setDateStart(start);
+            setDateEnd(end);
+            navigate('/PurchaseOrderDateRange',{state:{DS:start,DE:end}});
+    
+        } else {
+          alert("Please select a date range")
+          setDateStart('');
+          setDateEnd('');
+        }
+    
+    };
+
     const confirmFunc = (id) => {
 
         Swal.fire({
           title: 'Confirm Delete?',
           text: "You won't be able to revert this!",
           icon: 'warning',
+          color: '#f8f9fa',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
@@ -157,24 +183,6 @@ function PurchaseOrderView() {
 				  }} />
 				</div>
 
-                              <div>
-                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date" 
-                                onChange={(e) => {
-                                  setDateStart(e.target.value);
-                                }} />
-                              </div>
-
-                              <div>
-                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date" 
-                                onChange={(e) => {
-                                  setDateEnd(e.target.value);
-                                }} />
-                              </div>
-
-                              <div className=" mx-1">
-                                  <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}  >filter</button>
-                              </div>
-
 				<div className="mr-0 ml-auto">
 				  <Link to={"/PurchaseOrderPreview"}> 
 					<button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
@@ -182,6 +190,15 @@ function PurchaseOrderView() {
 				</div>
 	  
 				</div>
+
+                <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
+                                  <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
+                                      <DateRangePickerComponent ref={dateRangeRef}  placeholder="Select a date range"/>
+                                  </div>
+                                  <div className="ml-5">
+                                      <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => filterDate()}>Filter</button>
+                                  </div>
+                              </div>
 
                 <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
 							<table className="w-full rounded-lg">

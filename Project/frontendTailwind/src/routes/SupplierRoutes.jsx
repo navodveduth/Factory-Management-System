@@ -18,6 +18,7 @@ function SupplierRoutes() {
         <Route path="/PurchaseOrderUpdate/:id" element={<PurchaseOrderUpdate />} />
         <Route path="/PurchaseOrderView" element={<PurchaseOrderView />} />
         <Route path="/PurchaseOrderPreview" element={<PurchaseOrderPreview />} />
+        
 
       </Routes>
     </BrowserRouter>
