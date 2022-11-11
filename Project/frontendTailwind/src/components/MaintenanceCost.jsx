@@ -20,7 +20,7 @@ export default function MaintenanceCost() {
                            titleStyle: { 
                             color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
                             fontSize: '16px'},
-                           interval: 10000,
+                           interval: 50000,
                          };
                          
     const primaryXAxis = { valueType: 'Category', 
@@ -272,13 +272,15 @@ export default function MaintenanceCost() {
       { month: 'Nov', maintainenceVehi: parseInt(novTotal2) }, { month: 'Dec', maintainenceVehi: decTotal2 }
   ];
 
+  const colors = ['#1363DF', '#c40bde','#fffb00']
+
   return (
 
    
     <>
     
     <ChartsHeader category = "Chart" title = "Maintenance Cost Analysis" />
-        <ChartComponent primaryXAxis={primaryXAxis} primaryYAxis={primaryYAxis} tooltip={tooltip} 
+        <ChartComponent primaryXAxis={primaryXAxis} primaryYAxis={primaryYAxis} palettes={colors} tooltip={tooltip} 
         background={currentMode === 'Dark' ? '#33373E' : '#f3f4f6'}>
 
             <Inject services={[LineSeries, Tooltip, DataLabel, Category]} />

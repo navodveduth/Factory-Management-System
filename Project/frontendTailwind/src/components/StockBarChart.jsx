@@ -115,7 +115,7 @@ const barCustomSeries = [
   },
 ];
 
-const colors = ['#258EA6', '#c40bde', '#0bdeb8', '#FF8C00', '#4B0082'];
+const colors = ['#1363DF', '#F87474', '#47B5FF', '#FF8C00', '#4B0082'];
 
 return (
   <div className="m-0 md:m-10 mt-0 p-0 max-h-21 bg-white dark:bg-secondary-dark-bg rounded-3xl">
