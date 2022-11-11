@@ -5,6 +5,7 @@ import { Header } from '../../components';
 import { FiUser } from 'react-icons/fi';
 import { DashTopBox, DashTopButton, } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
+import Swal from 'sweetalert2';
 
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
@@ -37,16 +38,7 @@ function StockAdd() {
     var currentDate = new Date().toISOString().split('T')[0];
     console.log(currentDate)
 
-    // var displayM = true;
-    // if (stockCategory === ''){
-    //     displayM = true;
-    // }
-    // else if (stockCategory != "Finished goods") {
-    //     displayM = false;
-    // } else{
-    //     displayM = true;
-    //     supplier  = "-";
-    // }
+   
     useEffect(() => {
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
@@ -146,7 +138,14 @@ function StockAdd() {
 
                                             console.log(newStock)
                                             await axios.post("http://localhost:8070/stock/create", newStock).then(() => {
-                                                alert("Data saved successfully");
+                                                Swal.fire({  
+                                                    icon: 'success',
+                                                    title: 'Data Successfully Saved',
+                                                    color: '#f8f9fa',
+                                                    background: '#6c757d',
+                                                    showConfirmButton: false,
+                                                    timer: 2000
+                                                  })
                                                 navigate('/StockDashboard');
                                                 success = true;
 
@@ -159,7 +158,14 @@ function StockAdd() {
 
                                             if (success === true) {
                                                 await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
-                                                    alert("Data saved successfully");
+                                                    Swal.fire({  
+                                                        icon: 'success',
+                                                        title: 'Data Successfully Saved',
+                                                        color: '#f8f9fa',
+                                                        background: '#6c757d',
+                                                        showConfirmButton: false,
+                                                        timer: 2000
+                                                      })
                                                     navigate('/StockDashboard');
 
                                                 }).catch((err) => {
