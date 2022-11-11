@@ -9,12 +9,15 @@ import TableHeader from '../../components/Table/TableHeader';
 
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 
 const LeaveViewAll = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
   const [leave, setLeave] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");  //add this state to save filter word
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
 
   const getLeave = async () => {
     axios
@@ -74,6 +77,20 @@ const LeaveViewAll = () => {
         alert(err.message);
       });
   };
+
+  const handleDateChange = (e) => {
+    if(e.value) {
+        const date = e.target.value;
+        const month = date.getMonth();
+        const year = date.getFullYear();
+        setMonth(month);
+        setYear(year);
+    }
+    else {
+        setMonth("");
+        setYear("")
+    }
+}
 
   return (
     <div>
@@ -146,6 +163,14 @@ const LeaveViewAll = () => {
                                     </Link>
                                   </div>
                                 </div>
+                                <div className=" flex items-center mb-5 ">
+                                  <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
+                                    <DatePickerComponent  placeholder="Select a month " start="Year" depth="Year" format="MMM yyyy" onChange={handleDateChange} />
+                                  </div>
+                                  <div className="ml-5">
+                                    <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={handleDateChange}>Filter</button>
+                                  </div>
+                                </div>
 
                                 <div className="block w-full overflow-x-auto rounded-lg">
                                   <table className="w-full rounded-lg">
@@ -163,7 +188,14 @@ const LeaveViewAll = () => {
                                     </thead>
 
                                     <tbody>
-                                    {leave.filter((data) => {
+                                    {leave.filter((leaves) => {
+                                        if (month == "" && year == ""){
+                                            return leaves
+                                        }else if (month == new Date(leaves.leaveStartDate).getMonth() && year == new Date(leaves.leaveStartDate).getFullYear()){
+                                            return leaves
+                                        }
+                                    })
+                                    .filter((data) => {
                                       const startDate = new Date(data.leaveStartDate).toISOString().split('T')[0];
                                       const endDate = new Date(data.leaveEndDate).toISOString().split('T')[0];
                                       if(searchTerm == ""){
