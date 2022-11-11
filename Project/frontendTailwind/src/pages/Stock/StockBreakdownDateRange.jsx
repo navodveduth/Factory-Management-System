@@ -83,6 +83,8 @@ function StockBreakdownDateRange() {
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
             icon: 'warning',
+            color: '#f8f9fa',
+            background: '#6c757d',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
