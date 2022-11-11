@@ -5,3 +5,4 @@ export { default as SalesUpdate } from './SalesUpdate';
 export { default as SalesViewAll } from './SalesViewAll';
 export { default as SalesInvoice } from './SalesInvoice';
 export { default as SalesDateRange } from './SalesDateRange';
+export { default as SalesPreviewByDate } from './SalesPreviewByDate';

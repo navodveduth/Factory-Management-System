@@ -54,6 +54,8 @@ const CustomerViewAll = () => {
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
+      background: '#6c757d',
+      color: '#f8f9fa',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Delete it!'})

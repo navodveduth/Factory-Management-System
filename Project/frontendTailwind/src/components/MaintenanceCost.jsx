@@ -272,7 +272,7 @@ export default function MaintenanceCost() {
       { month: 'Nov', maintainenceVehi: parseInt(novTotal2) }, { month: 'Dec', maintainenceVehi: decTotal2 }
   ];
 
-  const colors = ['#1363DF', '#c40bde','#fffb00']
+  const colors = ['#258EA6', '#F3A738', '#FF5A5F', '#4B0082'];
 
   return (
 

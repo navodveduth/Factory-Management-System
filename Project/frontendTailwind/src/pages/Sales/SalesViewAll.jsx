@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
-import {jsPDF} from "jspdf";
+import {DateRangePickerComponent} from '@syncfusion/ej2-react-calendars' 
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import Swal from "sweetalert2";
+
 
 const SalesViewAll = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
@@ -51,9 +52,36 @@ const SalesViewAll = () => {
       })
   }
 
-  const toDateRange = () => {
-    navigate('/SalesDateRange',{state:{DS:dateStart,DE:dateEnd}});
+  const getSalesbyDate = async () => {
+    axios
+      .get('http://localhost:8070/sales/date/'+dateStart+'/'+dateEnd)
+      .then((res) => {
+        setSale(res.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   }
+
+  let dateRangeRef = (dateRange) => {
+    dateRangeRef = dateRange; // dateRangeRef is a reference to the DateRangePickerComponent
+  };
+
+  const filterDate = () => {
+    if (dateRangeRef.value && dateRangeRef.value.length > 0) {
+
+        const start = (dateRangeRef.value[0]);
+        const end = (dateRangeRef.value[1]);
+
+        setDateStart(start);
+        setDateEnd(end);
+        navigate('/SalesDateRange',{state:{DS:start,DE:end}});
+
+    } else {
+      alert("Please select a Date Range")
+      setDateStart('');
+      setDateEnd('');
+    }}
 
     const confirmFunc = (id) => {
 
@@ -62,9 +90,10 @@ const SalesViewAll = () => {
           text: "You won't be able to revert this!",
           icon: 'warning',
           showCancelButton: true,
+          background: '#6c757d',
+          color: '#f8f9fa',
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
-          //background: '#393E46',
           confirmButtonText: 'Yes, Delete it!'})
           .then((result) => {
             if (result.isConfirmed) {
@@ -142,42 +171,33 @@ const SalesViewAll = () => {
                       <div>
                       
                           <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                              <Header category="Table" title="Sales Invoices" />
+                              <Header title="Sales Invoices" />
                               
                               <div className=" flex items-center mb-5 ">
-                              <div>
-                                  <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
-                                  onChange={(e) => {
-                                  setSearchTerm(e.target.value);
-                                  }} />
-                              </div>
-
-                              <div>
-                                <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date" 
+                                <div>
+                                    <input type="text" className="block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
                                     onChange={(e) => {
-                                    setDateStart(e.target.value);
+                                    setSearchTerm(e.target.value);
                                     }} />
+                                </div>
+                                <div className="mr-0 ml-auto">
+                                    {/* change this link your preview page */}
+                                    <Link to={"/SalesPreview"}>
+                                    <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+                                    </Link>
+                                </div>
                               </div>
 
-                              <div>
-                                <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date" 
-                                    onChange={(e) => {
-                                    setDateEnd(e.target.value);
-                                    }} />
+                              <div className="flex items-center mb-5 "> {/* this code needed for the datesort function*/}
+                                  <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
+                                      <DateRangePickerComponent ref={dateRangeRef}  placeholder="Select a date range"/>
+                                  </div>
+                                  <div className="ml-5">
+                                      <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => filterDate()}>Filter by Date</button>
+                                  </div>
                               </div>
 
-                              <div className=" mx-1">
-                                  <button type="button" className = "py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}>Filter by Date</button>
-                              </div>
-
-                              <div className="mr-0 ml-auto">
-                                  {/* change this link your preview page */}
-                                  <Link to={"/SalesPreview"}>
-                                  <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
-                                  </Link>
-                              </div>
-
-                              </div>
+                              
 
                               
                               <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">

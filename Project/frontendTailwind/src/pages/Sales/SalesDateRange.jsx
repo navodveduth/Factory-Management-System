@@ -28,8 +28,9 @@ const SalesDateRange = () => {
   }
 
   const navigate = useNavigate();
-  const toDateRange=()=>{
-    navigate('/SalesViewAll');
+
+   const toGenerateReport=()=>{
+    navigate('/SalesPreviewByDate', {state: {DS: location.state.DS, DE: location.state.DE}});
   }
 
   useEffect(() => {
@@ -62,7 +63,8 @@ const confirmFunc = (id) => {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      //background: '#393E46',
+      color: '#f8f9fa',
+      background: '#6c757d',
       confirmButtonText: 'Yes, Delete it!'})
       .then((result) => {
         if (result.isConfirmed) {
@@ -156,10 +158,7 @@ const confirmFunc = (id) => {
                               </div>
 
                               <div className="mr-0 ml-auto">
-                                  {/* change this link your preview page */}
-                                  <Link to={"/SalesPreview"}>
-                                  <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
-                                  </Link>
+                                  <button type="button" onClick={() => toGenerateReport()} className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
                               </div>
 
                               </div>
@@ -171,7 +170,7 @@ const confirmFunc = (id) => {
                                   <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                                       <TableHeader value="Invoice No." />
                                       <TableHeader value="Date of Order" />
-                                      {/* <TableHeader value="Customer Name" /> */}
+                                      <TableHeader value="Customer ID" />
                                       <TableHeader value="Item Name" />
                                       <TableHeader value="Quantity" />
                                       <TableHeader value="Total Amount" />
@@ -199,14 +198,7 @@ const confirmFunc = (id) => {
 
                                                   <TableData value={data.invoiceNo} />
                                                   <TableData value={new Date(data.orderDate).toISOString().split('T')[0]} />
-                                                  {/* <TableData value={data.customerDetailss.map((data3) => {
-                                                      return (
-                                                      <div>
-                                                          {data3.customerName}
-                                                      </div>
-                                                      )
-                                                  
-                                                  })} /> */}
+                                                  <TableData value={data.customerID}/>
                                                   <TableData value={data.itemName} />
                                                   <TableData value={data.quantity} />
                                                   <TableData value={formattedAmount} />

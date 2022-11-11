@@ -11,6 +11,8 @@ import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import Swal from 'sweetalert2';
 import logo from '../../data/logo.png';
+import { jsPDF } from "jspdf";
+
 
 function StockBreakdownDateRangePDF() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();

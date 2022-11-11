@@ -34,7 +34,6 @@ function ResolvedRequest() {
     const deletePendingStock = async (id) => {
         await axios.delete('http://localhost:8070/pendingStock/delete/' + id)
             .then(() => {
-                alert("Data deleted successfully");
                 getPendingStock();
             })
             .catch((err) => {
@@ -58,6 +57,8 @@ function ResolvedRequest() {
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
             icon: 'warning',
+            color: '#f8f9fa',
+            background: '#6c757d',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',

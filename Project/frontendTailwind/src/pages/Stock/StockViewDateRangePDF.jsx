@@ -9,6 +9,9 @@ import Swal from 'sweetalert2';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import logo from '../../data/logo.png';
+import { jsPDF } from "jspdf";
+
 
 
 function StockViewDateRangePDF() {
@@ -20,20 +23,20 @@ function StockViewDateRangePDF() {
     var price = 0;
     var totRM = 0;
     var totWIP = 0;
-    var price =0;
+    var price = 0;
 
     const [dateStart, setDateStart] = useState("");
     const [dateEnd, setDateEnd] = useState("");
 
     const navigate = useNavigate();
     const location = useLocation();
-  
-  const toDateRange=()=>{
-    navigate('/StockView');
-  }
+
+    const toDateRange = () => {
+        navigate('/StockView');
+    }
 
     const getStock = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stock/date/"+ location.state.DS+"/"+location.state.DE)
+        axios.get("http://localhost:8070/stock/date/" + location.state.DS + "/" + location.state.DE)
             .then((res) => {
                 setStock(res.data); //setStock is used to update the state variable
                 console.log(res.data);
@@ -44,7 +47,7 @@ function StockViewDateRangePDF() {
     }
 
     const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-        axios.get('http://localhost:8070/stockUtilisation/date/'+location.state.DS+'/'+location.state.DE)
+        axios.get('http://localhost:8070/stockUtilisation/date/' + location.state.DS + '/' + location.state.DE)
             .then((res) => {
                 setStockUtil(res.data); //setStock is used to update the state variable
                 console.log(res.data);
@@ -65,6 +68,11 @@ function StockViewDateRangePDF() {
         });
     };
 
+    //getDAte
+    const current = new Date();
+    const currentdate = `${current.getFullYear()}-${current.getMonth() + 1}-${current.getDate()}`;
+
+
     useEffect(() => { //useEffect is used to call the function getStock
         getStock();
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
@@ -80,14 +88,14 @@ function StockViewDateRangePDF() {
     }, [])
 
 
-   
+
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'LKR',
         minimumFractionDigits: 2,
         currencyDisplay: 'symbol'
-      })
+    })
 
     return (
 
@@ -140,100 +148,114 @@ function StockViewDateRangePDF() {
                                     <Header category="Table" title="Stocks" />
 
                                     <div className=" flex items-center mb-5 ">
-                                       
-                                        
+
+
                                         <div className="mr-0 ml-auto">
                                             <button onClick={createPDF} type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
                                         </div>
-                                   
+
 
                                     </div>
 
-                                    <div className="block w-full overflow-x-auto rounded-lg">
-                                        <table className="w-full rounded-lg">
-                                            <thead>
-                                                <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                                    <TableHeader value="Code" />
-                                                    <TableHeader value="Bundle Name" />
-                                                    <TableHeader value="Category" />
-                                                    <TableHeader value="Initial Purchase" />
-                                                    <TableHeader value="Units" />
-                                                    <TableHeader value="Unit price" />
-                                                    <TableHeader value="Total value" />
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {stock.map((data, key) => {//map is used to iterate the array
-                                                    const date = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
-                                                    
-                                                    var totAdds = 0;
-                                                    var totIssues = 0;
-                                                    var quantity = 0;
-                                                    var totalValue = 0;
+                                    <div id="tblPDF">
+                                        <div className="block w-full overflow-x-auto rounded-lg">
+                                            <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                                                <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
+                                            </div>
 
-                                                    {
-                                                        stockUtil.filter((stockUtil) => stockUtil.type == "Additions" &&
-                                                            stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
-                                                                totAdds += stockUtil.quantity
-                                                                if (stockUtil.stockCategory === "Raw materials")
-                                                                    totRM += parseFloat((stockUtil.quantity * stockUtil.unitPrice));
-                                                                if (stockUtil.stockCategory === "Work in progress")
-                                                                    totWIP += parseFloat((stockUtil.quantity * stockUtil.unitPrice));
-                                                                price = stockUtil.unitPrice    
-                                                            })
-                                                    }
-                                                    {
-                                                        stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
-                                                            stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
-                                                                totIssues += stockUtil.quantity
-                                                                if (stockUtil.stockCategory === "Raw materials")
-                                                                    totRM -= parseFloat((stockUtil.quantity * stockUtil.unitPrice));
-                                                                if (stockUtil.stockCategory === "Work in progress")
-                                                                    totWIP -= parseFloat((stockUtil.quantity * stockUtil.unitPrice));
-                                                            })
-                                                    }
+                                            <div className="text-center mb-10">
 
-                                                    { quantity = totAdds - totIssues - data.damagedQty }
-                                                    { totalValue = price * quantity }
+                                                <p className="text-xl mt-2">Lanka MountCastle (Pvt) Ltd,</p>
+                                                <p className="text-xl">No.124, Hendala, Wattala</p>
+                                                <p>011 2942 672</p>
+                                            </div>
+                                            <p className="text-right text-xl mt-2 mb-3">Generated On : {currentdate}</p>
 
-                                                    if (quantity < 0) {
-                                                        { quantity = "No usable stocks left" }
-                                                        { totalValue = 0 }
-                                                    }
+                                            <table className="w-full rounded-lg">
+                                                <thead>
+                                                    <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
+                                                        <TableHeader value="Code" />
+                                                        <TableHeader value="Bundle Name" />
+                                                        <TableHeader value="Category" />
+                                                        <TableHeader value="Initial Purchase" />
+                                                        <TableHeader value="Units" />
+                                                        <TableHeader value="Unit price" />
+                                                        <TableHeader value="Total value" />
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {stock.map((data, key) => {//map is used to iterate the array
+                                                        const date = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
 
-                                                    var datacolor = null;
-                                                    if (quantity === "No usable stocks left") {
-                                                        datacolor = "text-red-600 font-bold";
-                                                    }
+                                                        var totAdds = 0;
+                                                        var totIssues = 0;
+                                                        var quantity = 0;
+                                                        var totalValue = 0;
 
-                                                    return (
-                                                        < tr className="text-sm h-10 border dark:border-slate-600" >
-                                                            <TableData value={data.stockCode} />
-                                                            <TableData value={data.stockName} />
-                                                            <TableData value={data.stockCategory} />
-                                                            <TableData value={date} />
-                                                            <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
-                                                            <TableData value={formatter.format(price)} />
-                                                            <TableData value={formatter.format(totalValue)} />
+                                                        {
+                                                            stockUtil.filter((stockUtil) => stockUtil.type == "Additions" &&
+                                                                stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
+                                                                    totAdds += stockUtil.quantity
+                                                                    if (stockUtil.stockCategory === "Raw materials")
+                                                                        totRM += (stockUtil.quantity * stockUtil.unitPrice);
+                                                                    if (stockUtil.stockCategory === "Work in progress")
+                                                                        totWIP += (stockUtil.quantity * stockUtil.unitPrice);
+                                                                    price = stockUtil.unitPrice
+                                                                })
+                                                        }
+                                                        {
+                                                            stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
+                                                                stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
+                                                                    totIssues += stockUtil.quantity
+                                                                    if (stockUtil.stockCategory === "Raw materials")
+                                                                        totRM -= (stockUtil.quantity * stockUtil.unitPrice);
+                                                                    if (stockUtil.stockCategory === "Work in progress")
+                                                                        totWIP -= (stockUtil.quantity * stockUtil.unitPrice);
+                                                                })
+                                                        }
 
-                                                            
-                                                        </tr>
-                                                    )
-                                                })}
-                                            </tbody>
-                                        </table>
+                                                        { quantity = totAdds - totIssues - data.damagedQty }
+                                                        { totalValue = price * quantity }
 
-                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-                                            Total Raw materials : {formatter.format(totRM)}
+                                                        if (quantity < 0) {
+                                                            { quantity = "No usable stocks left" }
+                                                            { totalValue = 0 }
+                                                        }
 
-                                        </span><br></br>
+                                                        var datacolor = null;
+                                                        if (quantity === "No usable stocks left") {
+                                                            datacolor = "text-red-600 font-bold";
+                                                        }
 
-                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+                                                        return (
+                                                            < tr className="text-sm h-10 border dark:border-slate-600" >
+                                                                <TableData value={data.stockCode} />
+                                                                <TableData value={data.stockName} />
+                                                                <TableData value={data.stockCategory} />
+                                                                <TableData value={date} />
+                                                                <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{quantity} </td>
+                                                                <TableData value={formatter.format(price)} />
+                                                                <TableData value={formatter.format(totalValue)} />
 
-                                            Total Work in Progress : {formatter.format(totWIP)}
-                                        </span>
-                                    </div>
-                                </div >
+
+                                                            </tr>
+                                                        )
+                                                    })}
+                                                </tbody>
+                                            </table>
+
+                                            <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+                                                Total Raw materials : {formatter.format(totRM)}
+
+                                            </span><br></br>
+
+                                            <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+
+                                                Total Work in Progress : {formatter.format(totWIP)}
+                                            </span>
+                                        </div>
+                                    </div >
+                                </div>
                             </div>
                             <Footer />
                         </div>

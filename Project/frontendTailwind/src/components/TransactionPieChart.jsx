@@ -45,10 +45,11 @@ const TransactionPieChart = () => {
                     type="Pie"
                     dataSource={
                         [
-                            { x: 'Revenue', y: (totalRev), text: (totalRev/total*100).toPrecision(2) + '%'},
-                            { x: 'Expenses', y: (totalExp), text: (totalExp/total*100).toPrecision(2) + '%'},
+                            { x: 'Revenue', y: (totalRev), text: (totalRev/total*100).toPrecision(2) + '%', color: '#457b9d' },
+                            { x: 'Expenses', y: (totalExp), text: (totalExp/total*100).toPrecision(2) + '%', color: '#e63946' },
                         ]
                     }
+                    pointColorMapping = "color"
                     xName="x"
                     yName="y"
                     innerRadius="40%"

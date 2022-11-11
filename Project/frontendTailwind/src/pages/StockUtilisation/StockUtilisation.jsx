@@ -43,7 +43,6 @@ function StockUtilisation() {
     const deleteStockUtil = async (id) => {
         await axios.delete('http://localhost:8070/stockUtilisation/delete/' + id)
             .then(() => {
-                alert("Data deleted successfully");
                 getStockUtil();
             })
             .catch((err) => {
@@ -66,6 +65,8 @@ function StockUtilisation() {
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
             icon: 'warning',
+            color: '#f8f9fa',
+            background: '#6c757d',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -176,11 +177,6 @@ function StockUtilisation() {
                                                     setSearchTerm(e.target.value);
                                                 }} />
                                         </div>
-
-                                        <div className=" mx-1">
-                                            <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => { toDateRange() }}  >filter</button>
-                                        </div>
-
                                         <div className="mr-0 ml-auto">
                                             <Link to={"/generateSUPDF"}> {/* change this link your preview page */}
                                                 <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
