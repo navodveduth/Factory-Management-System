@@ -25,7 +25,8 @@ export default function UpdateOrder(){
     const [member1,setMember1] = useState('');
     const [member2,setMember2] = useState('');
     const [budgetedoverHeadCost,setBudgetOH] = useState('');
-    const [status,setStatus] = useState('');    
+    //const [status,setStatus] = useState('');  
+    const status = "Stock Requested"  
     const [saleDate, setSaleDate] = useState('');
    // const [totalCost, setTotalCost] =useState('');
 
@@ -361,13 +362,13 @@ export default function UpdateOrder(){
                                             }} readOnly/>
                                         </div>
 
-                                        <div className="mb-3">
+                                        {/* <div className="mb-3">
                                             <label for="name" className="text-md">Set Status</label>
                                             <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" placeholder="Enter the Status" onChange={(e)=>{
                                                 setStatus(e.target.value);
                                             }}
                                             />
-                                        </div>
+                                        </div> */}
                                         
 
                                         <div>

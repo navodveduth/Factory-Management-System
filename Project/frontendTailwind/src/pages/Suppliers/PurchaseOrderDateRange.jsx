@@ -61,17 +61,41 @@ console.log(location.state.DS + " " + location.state.DE);
         }
     }, []);
 
-    
+    const generateReport = () => {
+        navigate('/PurchaseOrderPreviewDateRange', {state: {DS: location.state.DS, DE: location.state.DE}});
+      }    
 
+    
     const confirmFunc = (id) => {
 
-        if (confirm("Do you want to delete?") == true) {
-            deletePurchaseOrder(id);
-        } else {
-            navigate('/PurchaseOrderView');
-        }
+        Swal.fire({
+          title: 'Confirm Delete?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          color: '#f8f9fa',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          //background: '#393E46',
+          confirmButtonText: 'Yes, Delete it!'})
+          .then((result) => {
+            if (result.isConfirmed) {
+                deletePurchaseOrder(id);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Data Successfully Deleted!',
+                    color: '#f8f9fa',
+                    background: '#6c757d',
+                    showConfirmButton: false,
+                    timer: 2000
+                }   
+                )
+            } else {
+                navigate('/PurchaseOrderView');
+            }
+        })
+      }
 
-    }
     var purchasesTotal = 0;
 
     for(var i = 0; i < purchaseOrder.length; i++){
@@ -79,6 +103,14 @@ console.log(location.state.DS + " " + location.state.DE);
       }
 
       console.log(purchasesTotal);
+
+      const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+      })
+
     return (
         <div>
     
@@ -158,8 +190,8 @@ console.log(location.state.DS + " " + location.state.DE);
                               </div>
 
 				<div className="mr-0 ml-auto">
-				  <Link to={"/PurchaseOrderDetailsPreview"}> 
-					<button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+				  <Link to={"/PurchaseOrderPreviewDateRange"}> 
+					<button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick= {()=>generateReport()} >Generate Report</button>
 				  </Link>
 				</div>
 	  
@@ -194,14 +226,17 @@ console.log(location.state.DS + " " + location.state.DE);
                                         return data;
                                     }
                                 }).map((data, key) => {
+
+                                    let formattedAmount = formatter.format(data.cost)
+
                                     return (
                                         <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                                             <TableData value={data.orderID} />
                                             <TableData value={data.supplierID} />
                                             <TableData value={data.qty} />
                                             <TableData value={data.productDetails} />
-                                            <TableData value={data.deliveryDate} />
-                                            <TableData value={data.cost} />
+                                            <TableData value={new Date(data.deliveryDate).toISOString().split('T')[0]} />
+                                            <TableData value={formattedAmount} />
                                             <TableData value={data.orderStatus} />
 
 											<td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
