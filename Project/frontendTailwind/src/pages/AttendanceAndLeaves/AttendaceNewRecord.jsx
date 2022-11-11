@@ -208,10 +208,11 @@ function AttendanceNewRecord() {
                                         <div className="mb-3">
                                           <label htmlFor="attendanceStatus" className="form-label">Attendance Status : </label>
                                           <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                          id="attendanceStatus" aria-label="Default select example" title="Select the attendance status" defaultValue={"In"} required="required"
+                                          id="attendanceStatus" aria-label="Default select example" title="Select the attendance status" required="required"
                                           onChange={(e) =>{
                                             setAttendanceStatus(e.target.value);
                                           }}>
+                                              <option value = "">Select Status</option>
                                               <option value="In">In</option>
                                               <option value="Out">Out</option>
                                           </select>
