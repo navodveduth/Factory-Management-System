@@ -23,7 +23,7 @@ export default function StockUtilLineChart() {
             color: currentMode === 'Dark' ? '#e9ecef' : '#343a40',
             fontSize: '16px'
         },
-        interval: 1000000,
+        interval: 2000000,
     };
 
     const primaryXAxis = {
