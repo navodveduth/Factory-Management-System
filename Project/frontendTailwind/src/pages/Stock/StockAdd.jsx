@@ -151,7 +151,7 @@ function StockAdd() {
 
                                             }).catch((err) => {
                                                 console.log(err);
-                                                alert("ERROR: Stock code already exists");
+                                                alert("ERROR: Stock code or name already exists");
                                                 navigate('/StockView');
                                                 success = false;
                                             })
