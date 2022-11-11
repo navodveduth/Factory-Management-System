@@ -9,6 +9,7 @@ import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import logo from '../../data/logo.png';
+import Swal from "sweetalert2";
 
 function SalesInvoice() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
@@ -68,6 +69,20 @@ function SalesInvoice() {
           setCurrentMode(currentThemeMode);
         }
       }, [])
+
+      const downloadConf = ()=>{
+        Swal.fire({
+          title: 'Downloading!',
+          text: "Your download has begun!",
+          icon: 'success',
+          showCancelButton: false,
+          color: '#f8f9fa',
+          background: '#6c757d',
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK!'
+        })
+      };
 
       const createPDF = () => {
         const pdf = new jsPDF("portrait", "px", "b1", false)
@@ -155,7 +170,7 @@ function SalesInvoice() {
                                   return (
                                     <div>
                                       <div>
-                                        <p className="text-center text-4xl  dark:text-white">Invoice Preview    <button className="text-4xl right-4" onClick={createPDF} type="button" >
+                                        <p className="text-center text-4xl  dark:text-white">Invoice Preview    <button className="text-4xl right-4" onClick={()=>{createPDF(); downloadConf();}} type="button" >
                                           <i className="fa-solid fa-download"></i></button>
                                         </p>
                                       </div>
