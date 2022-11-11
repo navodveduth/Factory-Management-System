@@ -3,8 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Header } from '../../components';
 import { FiUser } from 'react-icons/fi';
-import { DashTopBox, DashTopButton,  } from '../../components';
+import { DashTopBox, DashTopButton, } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
+import Swal from 'sweetalert2';
 
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
@@ -28,11 +29,11 @@ function StockBreakdownUpdate() {
     const [type, setType] = useState('');
     const [date, setDate] = useState('');
     var [totalValue, setTotalValue] = useState('');
-    const [firstPurchaseDate,setfirstPurchaseDate] = useState('');
+    const [firstPurchaseDate, setfirstPurchaseDate] = useState('');
     var totAdds = 0;
     var totIssues = 0;
     var quantity = 0;
-    var price =0;
+    var price = 0;
 
     //const [supplier, setSupplier] = useState('');
     const [stockUtil, setStockUtilisation] = useState([]); //stock is the state variable and setStock is the function to update the state variable
@@ -72,8 +73,8 @@ function StockBreakdownUpdate() {
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
         if (currentThemeColor && currentThemeMode) {
-          setCurrentColor(currentThemeColor);
-          setCurrentMode(currentThemeMode);
+            setCurrentColor(currentThemeColor);
+            setCurrentMode(currentThemeMode);
         }
     }, []);
 
@@ -179,26 +180,23 @@ function StockBreakdownUpdate() {
 
                                             await axios.put("http://localhost:8070/stock/update/" + id, newStock)
                                                 .then((res) => {
-                                                    alert("Data updated successfully");
-                                                    console.log(newStock);
+                                                    Swal.fire({
+                                                        icon: 'success',
+                                                        title: 'Data Successfully Updated',
+                                                        color: '#f8f9fa',
+                                                        background: '#6c757d',
+                                                        showConfirmButton: false,
+                                                        timer: 2000
+                                                    })
                                                     //navigate to the stock view page
                                                     navigate('/StockBreakdown');
                                                 })
                                                 .catch((err) => {
                                                     console.log(err);
                                                     alert("ERROR: Could not update stock");
-                                                    navigate('/StockBreakdownUpdate' + id);
+                                                    navigate('/StockBreakdownUpdate/' + id);
                                                 })
 
-                                            //     await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
-                                            //         alert("Data saved successfully");
-                                            //         navigate('/Stock');
-
-                                            //     }).catch((err) => {
-                                            //         console.log(err);
-                                            //         alert("ERROR: Could not add stock");
-                                            //         navigate('/StockUpdate');
-                                            //     })
                                         }}>
 
                                             <div className="mb-3">

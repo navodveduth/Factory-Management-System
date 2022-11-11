@@ -5,6 +5,7 @@ import { Header } from '../../components';
 import { FiUser } from 'react-icons/fi';
 import { DashTopBox, DashTopButton, } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
+import Swal from 'sweetalert2';
 
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
@@ -122,15 +123,21 @@ function PendingStockUpdate() {
 
                                             await axios.put("http://localhost:8070/pendingStock/update/" + id, newStock)
                                                 .then((res) => {
-                                                    alert("Data updated successfully");
-                                                    console.log(newStock);
+                                                    Swal.fire({  
+                                                        icon: 'success',
+                                                        title: 'Data Successfully Updated',
+                                                        color: '#f8f9fa',
+                                                        background: '#6c757d',
+                                                        showConfirmButton: false,
+                                                        timer: 2000
+                                                      })
                                                     //navigate to the stock view page
                                                     navigate('/ProcessingRequest');
                                                 })
                                                 .catch((err) => {
                                                     console.log(err);
                                                     alert("ERROR: Could not update stock");
-                                                    navigate('/PendingStockUpdate'+ id);
+                                                    navigate('/PendingStockUpdate/'+ id);
                                                 })
                                         }}>
 
