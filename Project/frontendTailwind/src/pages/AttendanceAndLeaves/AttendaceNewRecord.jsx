@@ -56,6 +56,15 @@ function AttendanceNewRecord() {
     }
   }
 
+  const autoCompleteForm = () => {
+    setEmployeeNumber("0000");
+    setEmployeeInTime("2022-11-11T06:00:00");
+    setEmployeeOutTime("2022-11-11T14:00:00");
+    setEmployeeTotalHours(totalHoursInHours);
+    setEmployeeOTHours(otHours);
+    setAttendanceStatus("Out");
+  };
+
   return (
     <div>
 
@@ -151,6 +160,11 @@ function AttendanceNewRecord() {
                                               
                                           }
                                       }}>
+                                        <div className=" flex items-center mb-5 ">
+                                          <div className="mr-0 ml-auto">
+                                              <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={autoCompleteForm} >AutoComplete</button>
+                                          </div>
+                                        </div>
 
                                         <div className="mb-3">
                                           <label className="form-label">Employee Number : </label>
@@ -158,7 +172,7 @@ function AttendanceNewRecord() {
                                             id="employeeNumber"
                                             name="employeeNumber"
                                             className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                                            required = "required"
+                                            required = "required" value={employeeNumber}
                                             onChange={(e) => {
                                               setEmployeeNumber(e.target.value);
                                             }}
@@ -177,7 +191,7 @@ function AttendanceNewRecord() {
                                         <div className="mb-3">
                                           <label htmlFor="employeeInTime" className="form-label">Employee In Time : </label>
                                           <input type="datetime-local" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                          id="employeeInTime" placeholder="Enter the employee in time" required = "required"
+                                          id="employeeInTime" placeholder="Enter the employee in time" required = "required" value={employeeInTime}
                                           onChange={(e)=>{
                                               setEmployeeInTime(e.target.value);
                                           }}/>
@@ -186,7 +200,7 @@ function AttendanceNewRecord() {
                                         <div className="mb-3">
                                             <label htmlFor="employeeOutTime" className="form-label">Employee Out Time : </label>
                                             <input type="datetime-local" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                                            id="employeeOutTime" placeholder="Enter the employee out time"
+                                            id="employeeOutTime" placeholder="Enter the employee out time" value={employeeOutTime}
                                             onChange={(e)=>{
                                                 setEmployeeOutTime(e.target.value);
                                             }
@@ -208,7 +222,7 @@ function AttendanceNewRecord() {
                                         <div className="mb-3">
                                           <label htmlFor="attendanceStatus" className="form-label">Attendance Status : </label>
                                           <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                          id="attendanceStatus" aria-label="Default select example" title="Select the attendance status" required="required"
+                                          id="attendanceStatus" aria-label="Default select example" title="Select the attendance status" required="required" value={attendanceStatus}
                                           onChange={(e) =>{
                                             setAttendanceStatus(e.target.value);
                                           }}>

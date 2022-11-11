@@ -39,6 +39,23 @@ function EmployeeCreateForm() {
   const [employeeContactNumber, setEmployeeContactNumber] = useState('');
   const [employeeEmail, setEmployeeEmail] = useState('');
 
+  const autoCompleteForm = () => {
+    setEmployeeNumber("0023");
+    setEmployeeFullName("John Doe");
+    setEmployeeNameWithInitials("J Doe");
+    setEmployeeNIC("199015758932");
+    setEmployeeGender("Male")
+    setEmployeeDOB("1990-01-01");
+    setEmployeeDateOfJoin("2021-01-01");
+    setEmployeeDesignation("Driver");
+    setEmployeeDepartment("Transportation");
+    setEmployeeType("Non-Executive");
+    setEmployeeAddress("No. 144, Main Street, Colombo 01");
+    setEmployeeContactNumber("0714542369");
+    setEmployeeEmail("john@gmail.com");
+  }
+
+
   return (
     <div>
 
@@ -95,6 +112,7 @@ function EmployeeCreateForm() {
                           <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
                                     <Header category="Form" title=" Create New Employee" />
                                     <div className=" flex items-center justify-center"> 
+                                    
                                     <form onSubmit={async(e)=>{
                                         e.preventDefault();
                                         
@@ -133,12 +151,17 @@ function EmployeeCreateForm() {
                                             
                                         
                                     }}>
+                                    <div className=" flex items-center mb-5 ">
+                                      <div className="mr-0 ml-auto">
+                                          <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={autoCompleteForm} >AutoComplete</button>
+                                      </div>
+                                    </div>
 
                                       <div className="mb-3">
                                         <label for="employeeNumber" className="form-label">Employee Number : </label>
                                         <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
                                         id="employeeNumber" placeholder="Enter the employee number" 
-                                        pattern="[0-9]{4}" maxLength={4} title= {"The Employee Number requires a 4 digit number"} required 
+                                        pattern="[0-9]{4}" maxLength={4} title= {"The Employee Number requires a 4 digit number"} value={employeeNumber} required 
                                         onChange={(e)=>{
                                             setEmployeeNumber(e.target.value);
                                         }}/>
@@ -147,7 +170,7 @@ function EmployeeCreateForm() {
                                       <div className="mb-3">
                                         <label for="employeeFullName" className="form-label">Full name : </label>
                                         <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                        id="employeeFullName" placeholder="Enter your full name" required 
+                                        id="employeeFullName" placeholder="Enter your full name" required value={employeeFullName}
                                         onChange={(e)=>{
                                             setEmployeeFullName(e.target.value);
                                         }}
@@ -157,7 +180,7 @@ function EmployeeCreateForm() {
                                       <div className="mb-3">
                                         <label for="employeeNameWithInitials" className="form-label">Name with initials : </label>
                                         <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                        id="employeeNameWithInitials" placeholder="Enter your name with Initials" required 
+                                        id="employeeNameWithInitials" placeholder="Enter your name with Initials" required value={employeeNameWithInitials}
                                         onChange={(e) =>{
                                             setEmployeeNameWithInitials(e.target.value);
                                         }}
@@ -167,7 +190,7 @@ function EmployeeCreateForm() {
                                       <div className="mb-3">
                                         <label for="employeeNIC" className="form-label">NIC number : </label>
                                         <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                        id="employeeNIC" placeholder="Enter your NIC number" required 
+                                        id="employeeNIC" placeholder="Enter your NIC number" required  value={employeeNIC}
                                         onChange={(e) =>{
                                             setEmployeeNIC(e.target.value);
                                         }}
@@ -177,7 +200,7 @@ function EmployeeCreateForm() {
                                       <div className="mb-3">
                                         <label for="employeeGender" className="form-label">Gender : </label>
                                         <select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                        id="employeeGender" aria-label="Default select example" required="required"
+                                        id="employeeGender" aria-label="Default select example" required="required" value={employeeGender}
                                         onChange={(e) =>{
                                           setEmployeeGender(e.target.value);
                                         }}>
@@ -190,7 +213,7 @@ function EmployeeCreateForm() {
                                       <div className="mb-3">
                                         <label for="employeeDOB" className="form-label">Date of Birth : </label>
                                         <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                        id="employeeDOB" placeholder="Enter your birthday"required max={date}
+                                        id="employeeDOB" placeholder="Enter your birthday"required max={date} value={employeeDOB}
                                         onChange={(e) =>{
                                             setEmployeeDOB(e.target.value);
                                         }}/>
@@ -199,7 +222,7 @@ function EmployeeCreateForm() {
                                       <div className="mb-3">
                                         <label for="employeeDateOfJoin" className="form-label">Date joined : </label>
                                         <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                        id="employeeDateOfJoin" placeholder="Enter your date of join"required max={date}
+                                        id="employeeDateOfJoin" placeholder="Enter your date of join"required max={date} value={employeeDateOfJoin}
                                         onChange={(e) =>{
                                             setEmployeeDateOfJoin(e.target.value);
                                         }}/>
@@ -208,7 +231,7 @@ function EmployeeCreateForm() {
                                       <div className="mb-3">
                                         <label for="employeeDesignation" className="form-label">Designation : </label>
                                         <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                        id="employeeDesignation" placeholder="Enter your designation"required
+                                        id="employeeDesignation" placeholder="Enter your designation"required value={employeeDesignation}
                                         onChange={(e) =>{
                                             setEmployeeDesignation(e.target.value);
                                         }}
@@ -218,7 +241,7 @@ function EmployeeCreateForm() {
                                       <div className="mb-3">
                                         <label for="employeeDepartment" className="form-label">Department : </label>
                                         <select type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                        id="employeeDepartment" required="required"
+                                        id="employeeDepartment" required="required" value={employeeDepartment}
                                         onChange={(e) =>{
                                             setEmployeeDepartment(e.target.value);
                                         }}>
@@ -235,7 +258,7 @@ function EmployeeCreateForm() {
                                       <div className="mb-3">
                                         <label for="employeeType" className="form-label">Employee Type : </label>
                                         <select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                        id="employeeType" aria-label="Default select example" required="required"
+                                        id="employeeType" aria-label="Default select example" required="required" value={employeeType}
                                         onChange={(e) =>{
                                           setEmployeeType(e.target.value);
                                         }}>
@@ -248,7 +271,7 @@ function EmployeeCreateForm() {
                                       <div className="mb-3">
                                         <label for="employeeAddress" className="form-label">Address : </label>
                                         <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                        id="employeeAddress" placeholder="Enter your home address"required
+                                        id="employeeAddress" placeholder="Enter your home address"required value={employeeAddress}
                                         onChange={(e) =>{
                                             setEmployeeAddress(e.target.value);
                                         }}
@@ -258,7 +281,7 @@ function EmployeeCreateForm() {
                                       <div className="mb-3">
                                         <label for="employeeContactNumber" className="form-label">Contact Number : </label>
                                         <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                        id="employeeContactNumber" placeholder="Enter your contact number"required
+                                        id="employeeContactNumber" placeholder="Enter your contact number"required value={employeeContactNumber}
                                         onChange={(e) =>{
                                             setEmployeeContactNumber(e.target.value);
                                         }}
@@ -268,7 +291,7 @@ function EmployeeCreateForm() {
                                       <div className="mb-3">
                                         <label for="employeeEmail" className="form-label">Email : </label>
                                         <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                        id="employeeEmail" placeholder="Enter your email"required
+                                        id="employeeEmail" placeholder="Enter your email"required value={employeeEmail}
                                         onChange={(e) =>{
                                             setEmployeeEmail(e.target.value);
                                         }}

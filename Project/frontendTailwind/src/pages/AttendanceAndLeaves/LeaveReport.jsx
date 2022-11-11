@@ -4,16 +4,19 @@ import { jsPDF } from "jspdf";
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
-
+import Swal from "sweetalert2";
 import { useStateContext } from '../../contexts/ContextProvider';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import logo from '../../data/logo.png';
+import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 
 const LeaveReport = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
-    const[leave, setLeave] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
+  const[leave, setLeave] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
     
 
     const getLeave = async () => {
@@ -44,6 +47,34 @@ const LeaveReport = () => {
             pdf.save("Leave Report.pdf");
            });
     };
+
+    const downloadConf = ()=>{
+        Swal.fire({
+          title: 'Downloading!',
+          text: "Your download has begun!",
+          icon: 'success',
+          showCancelButton: false,
+          color: '#f8f9fa',
+          background: '#6c757d',
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK!'
+        })
+      };
+    
+    const handleDateChange = (e) => {
+      if(e.value) {
+          const date = e.target.value;
+          const month = date.getMonth();
+          const year = date.getFullYear();
+          setMonth(month);
+          setYear(year);
+      }
+      else {
+          setMonth("");
+          setYear("")
+      }
+  }
   return (
     <div>
 
@@ -109,8 +140,16 @@ const LeaveReport = () => {
                                     }} />
                                 </div>
                                 <div className="mr-0 ml-auto">
-                                    <button onClick={createPDF} type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download Report</button>
+                                    <button onClick={()=>{createPDF(); downloadConf();}} type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download Report</button>
                                 </div>
+                              </div>
+                              <div className=" flex items-center mb-5 ">
+                                  <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
+                                    <DatePickerComponent  placeholder="Select a month " start="Year" depth="Year" format="MMM yyyy" onChange={handleDateChange} />
+                                  </div>
+                                  <div className="ml-5">
+                                    <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={handleDateChange}>Filter</button>
+                                  </div>
                               </div>
                       
                               <div id="tableContainer">
@@ -147,7 +186,14 @@ const LeaveReport = () => {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {leave.filter((data) => {
+                                    {leave.filter((leaves) => {
+                                        if (month == "" && year == ""){
+                                            return leaves
+                                        }else if (month == new Date(leaves.leaveStartDate).getMonth() && year == new Date(leaves.leaveStartDate).getFullYear()){
+                                            return leaves
+                                        }
+                                    })
+                                    .filter((data) => {
                                       const startDate = new Date(data.leaveStartDate).toISOString().split('T')[0];
                                       const endDate = new Date(data.leaveEndDate).toISOString().split('T')[0];
                                       if(searchTerm == ""){
