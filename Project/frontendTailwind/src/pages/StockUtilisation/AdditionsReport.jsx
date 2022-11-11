@@ -10,6 +10,7 @@ import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import logo from '../../data/logo.png';
+import Swal from 'sweetalert2';
 
 function AdditionsReport() {
 
@@ -45,6 +46,20 @@ function AdditionsReport() {
             pdf.save("Additions_" + date + ".pdf");
         });
     };
+
+    const downloadConf = ()=>{
+        Swal.fire({
+          title: 'Downloading!',
+          text: "Your download has begun!",
+          icon: 'success',
+          showCancelButton: false,
+          color: '#f8f9fa',
+          background: '#6c757d',
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK!'
+        })
+      };
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -110,7 +125,7 @@ function AdditionsReport() {
 
                                     <div className=" flex items-center mb-5 ">
                                         <div className="mr-0 ml-auto">
-                                            <button onClick={createPDF} type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
+                                            <button onClick={()=>{createPDF(); downloadConf();}} type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
                                         </div>
                                     </div>
                                     <div id="tblPDF" >

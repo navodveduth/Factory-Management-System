@@ -218,7 +218,7 @@ function IssuesForm() {
                                                 const salesStatus = "Completed"
                                                 const statusPass = { salesStatus }
                                                 await axios.put('http://localhost:8070/stock/updateStatus/' + id, { "status": salesStatus }).then((res) => {
-                                                    alert("Production Status Changed");
+                                                    
                                                 }).catch((error) => {
                                                     Swal.fire({  
                                                         icon: 'success',
