@@ -8,10 +8,13 @@ import TableHeader from '../../components/Table/TableHeader';
 import { useStateContext } from '../../contexts/ContextProvider';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import logo from '../../data/logo.png';
 
 const LeaveReport = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
     const[leave, setLeave] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    
 
     const getLeave = async () => {
         axios
@@ -99,16 +102,43 @@ const LeaveReport = () => {
                               <Header category="Report" title="Leave" />
                       
                               <div className=" flex items-center mb-5 ">
-                              <div className="mr-0 ml-auto">
-                                  <button onClick={createPDF} type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download Report</button>
-                              </div>
+                                <div>
+                                    <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
+                                    onChange={(e) => {
+                                    setSearchTerm(e.target.value);
+                                    }} />
+                                </div>
+                                <div className="mr-0 ml-auto">
+                                    <button onClick={createPDF} type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download Report</button>
+                                </div>
                               </div>
                       
-                              <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
+                              <div id="tableContainer">
+                                <div className="block w-full overflow-x-auto rounded-lg">
+                                    <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                                    <img
+                                        className="h-200 w-400 mb-5"
+                                        src={logo}
+                                        alt="logo"
+                                    />
+                                    </div>
+
+                                    <div className="text-center mb-10">
+                                    <p className="text-xl mt-2">
+                                        Lanka MountCastle (Pvt) Ltd,
+                                    </p>
+                                    <p className="text-xl">No.124, Hendala, Wattala</p>
+                                    <p>011 2942 672</p>
+                                    </div>
+                                    <p className="text-right text-xl mt-2 mb-3">
+                                    Generated On : {new Date().toLocaleDateString()}
+                                    </p>
+
                                 <table className="w-full rounded-lg">
                                     <thead>
                                     <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                                         <TableHeader value="Employee ID" />
+                                        <TableHeader value="Employee Name" />
                                         <TableHeader value="Leave Type" />
                                         <TableHeader value="Start Date" />
                                         <TableHeader value="End Date" />
@@ -117,18 +147,42 @@ const LeaveReport = () => {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {leave.map((data, key) => (
+                                    {leave.filter((data) => {
+                                      const startDate = new Date(data.leaveStartDate).toISOString().split('T')[0];
+                                      const endDate = new Date(data.leaveEndDate).toISOString().split('T')[0];
+                                      if(searchTerm == ""){
+                                        return data;
+                                      }else if((data.employeeNumber.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                        (data.leaveType.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                        (startDate.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                        (endDate.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                        (data.leaveReason.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                        (data.leaveStatus.toLowerCase().includes(searchTerm.toLowerCase()))) 
+                                        {
+                                          return data;
+                                        }
+                                        }).map((data, key) => {
+                                          return(
                                         <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                                             <TableData value={data.employeeNumber} />
+                                            <TableData value={data.employeeDetails.map((data3) => {
+                                                    return (
+                                                    <div>
+                                                        {data3.employeeFullName} 
+                                                    </div>
+                                                    )
+                                                })} />
                                             <TableData value={data.leaveType} />
                                             <TableData value={new Date(data.leaveStartDate).toISOString().split('T')[0]} />
                                             <TableData value={new Date(data.leaveEndDate).toISOString().split('T')[0]} />
                                             <TableData value={data.leaveReason} />
                                             <TableData value={data.leaveStatus} />
                                         </tr>
-                                    ))}
+                                    )
+                                    })}
                                     </tbody>
                                 </table>
+                              </div>
                               </div>
                             </div> 
                         </div>
