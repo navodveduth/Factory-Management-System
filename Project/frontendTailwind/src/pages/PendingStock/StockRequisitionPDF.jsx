@@ -39,7 +39,7 @@ export default function PendingStockRequisition() {
     const createPDF = async () => {
         const date = new Date().toISOString().split('T')[0];
         const pdf = new jsPDF("landscape", "px", "a1", false);
-        const data = await document.querySelector("#tableContainer");
+        const data = await document.querySelector("#tblPDF");
         pdf.html(data).then(() => {
             pdf.save("stocks_" + date + ".pdf");
         });

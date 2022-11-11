@@ -5,6 +5,7 @@ import { Header } from '../../components';
 import { FiUser } from 'react-icons/fi';
 import { DashTopBox, DashTopButton, } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
+import Swal from 'sweetalert2';
 
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
@@ -22,6 +23,10 @@ function RequestedOrdersUpdate() {
     const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState('');
     const [date, setDate] = useState('');
+    const [unitPrice , setUnitPrice] = useState('');
+    const [ stock, setStock] = useState([]);
+    var totalValue = 0;
+    
     var status = null;
 
     const { id } = useParams();
@@ -40,8 +45,25 @@ function RequestedOrdersUpdate() {
         })
     }
 
+    const getStock =async  () => {
+        await axios.get(`http://localhost:8070/stock/ViewStock/${id}`).then((res) => {
+            console.log("data", res.data)
+            setStock(res.data);
+        }).catch(()=>{
+//
+        })
+        
+    }
+
+    stock.map((data) => {
+        minDate = data.firstPurchaseDate.split('T')[0];
+        
+    })
+
+
     useEffect(() => {
         getPendingStock()
+        getStock();
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
         if (currentThemeColor && currentThemeMode) {
@@ -51,6 +73,8 @@ function RequestedOrdersUpdate() {
     }, []);
 
     var currentDate = new Date().toISOString().split('T')[0];
+
+    var success = true;
 
     return (
 
@@ -113,7 +137,7 @@ function RequestedOrdersUpdate() {
                                                 status = "Resolved"
                                             }
 
-                                            const newStock = {
+                                            const newPStock = {
                                                 stockCode,
                                                 stockName,
                                                 stockCategory,
@@ -123,7 +147,53 @@ function RequestedOrdersUpdate() {
                                                 status
                                             }
 
-                                            await axios.put("http://localhost:8070/pendingStock/update/" + id, newStock)
+                                            { totalValue = quantity * unitPrice }
+
+                                            {
+                                                var sufficientStock = "-";
+                                                var reorderLevel = 0;
+                                                var damagedQty = 0;
+                                                var type = "Additions";
+                                                var additions = quantity
+                                            }
+
+                                            var firstPurchaseDate = null;
+
+                                            if(stock.length == 0){
+                                                success = false
+                                            }
+                                            if(success === false){
+                                                firstPurchaseDate = new Date().toISOString().split('T')[0];
+                                            }else{
+                                                firstPurchaseDate = minDate
+                                            }
+
+                                            const newStock = {
+                                                stockCode,
+                                                stockName,
+                                                stockCategory,
+                                                description,
+                                                firstPurchaseDate,
+                                                reorderLevel,
+                                                sufficientStock,
+                                                damagedQty
+                                            }
+
+                                            const newStockUtil = {
+                                                stockCode,
+                                                stockName,
+                                                stockCategory,
+                                                date,
+                                                firstPurchaseDate,
+                                                type,
+                                                unitPrice,
+                                                quantity,
+                                                totalValue
+                                            }
+                                            console.log('Stock:' ,stock)
+                                            console.log('util ', newStockUtil)
+
+                                            await axios.put("http://localhost:8070/pendingStock/update/" + id, newPStock)
                                                 .then((res) => {
                                                     alert("Data updated successfully");
                                                     console.log(newStock);
@@ -135,6 +205,45 @@ function RequestedOrdersUpdate() {
                                                     alert("ERROR: Could not update stock");
                                                     navigate(`/RequestedOrdersUpdate/${id}`);
                                                 })
+
+                                              if(success === false){
+                                            await axios.post("http://localhost:8070/stock/create", newStock).then(() => {
+                                                Swal.fire({  
+                                                    icon: 'success',
+                                                    title: 'Data Successfully Saved',
+                                                    color: '#f8f9fa',
+                                                    background: '#6c757d',
+                                                    showConfirmButton: false,
+                                                    timer: 2000
+                                                  })
+                                                navigate('/RequestedStock');
+
+                                            }).catch((err) => {
+                                                console.log(err);
+                                                alert(err);
+                                                navigate('/StockView');
+                                            })
+
+                                            console.log(newStock)
+                                        }
+                                            await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
+                                                Swal.fire({  
+                                                    icon: 'success',
+                                                    title: 'Data Successfully Saved',
+                                                    color: '#f8f9fa',
+                                                    background: '#6c757d',
+                                                    showConfirmButton: false,
+                                                    timer: 2000
+                                                  })
+                                                navigate('/RequestedStock');
+
+                                            }).catch((err) => {
+                                                console.log(err);
+                                                alert(err);
+                                                navigate('/StockView');
+                                            })
+
+                                
                                         }}>
 
                                             <div className="mb-3">
@@ -166,6 +275,14 @@ function RequestedOrdersUpdate() {
                                                 <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice" placeholder='Enter quantity...'
                                                     min="0" value={quantity} title="If the unit price is not avilable please enter 0" onChange={(e) => {
                                                         setQuantity(e.target.value);
+                                                    }} />
+                                            </div>
+
+                                            <div className="mb-3">
+                                                <label for="qty" className="form-label">Unit Price: </label>
+                                                <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="unitPrice" placeholder='Enter unit price...'
+                                                    min="0" title="If the unit price is not avilable please enter 0" onChange={(e) => {
+                                                        setUnitPrice(e.target.value);
                                                     }} />
                                             </div>
 
