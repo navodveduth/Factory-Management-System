@@ -27,6 +27,8 @@ const StockUtilPieChart = () => {
     const processing = pendingStock.filter((stk) => stk.status === 'Processing').length;
     const resolved= pendingStock.filter((stk) => stk.status === 'Resolved').length;
 
+    const colors = ['#258EA6', '#df9776']
+
   return (
     <div>
       <ChartsHeader category="Chart" title="Stock Utilisation Distribution By Requests" />
@@ -48,6 +50,7 @@ const StockUtilPieChart = () => {
                     startAngle={0}
                     endAngle={360}
                     radius="70%"
+                    palettes={colors}
                     explode
                     explodeOffset="10%"
                     explodeIndex={2}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
@@ -11,20 +11,32 @@ import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 
-function ViewAllWorkInProgress() {
+function StockViewDateRangePDF() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
     const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
     const [stockUtil, setStockUtil] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    var totWIP = 0;
     var price = 0;
+    var totRM = 0;
+    var totWIP = 0;
+    var price =0;
 
+    const [dateStart, setDateStart] = useState("");
+    const [dateEnd, setDateEnd] = useState("");
+
+    const navigate = useNavigate();
+    const location = useLocation();
+  
+  const toDateRange=()=>{
+    navigate('/StockView');
+  }
 
     const getStock = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stock/category/" + "Work")
+        axios.get("http://localhost:8070/stock/date/"+ location.state.DS+"/"+location.state.DE)
             .then((res) => {
                 setStock(res.data); //setStock is used to update the state variable
+                console.log(res.data);
             })
             .catch((err) => {
                 alert(err.message);
@@ -32,9 +44,10 @@ function ViewAllWorkInProgress() {
     }
 
     const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stockUtilisation/category/" + "Work")
+        axios.get('http://localhost:8070/stockUtilisation/date/'+location.state.DS+'/'+location.state.DE)
             .then((res) => {
                 setStockUtil(res.data); //setStock is used to update the state variable
+                console.log(res.data);
             })
             .catch((err) => {
                 alert(err.message);
@@ -43,16 +56,14 @@ function ViewAllWorkInProgress() {
 
     const id = useParams();
 
-    const deleteStock = async (id) => {
-        await axios.delete('http://localhost:8070/stock/delete/' + id)
-            .then(() => {
-                alert("Data deleted successfully");
-                getStock();
-            })
-            .catch((err) => {
-                alert(err.message);
-            })
-    }
+    const createPDF = async () => {
+        const date = new Date().toISOString().split('T')[0];
+        const pdf = new jsPDF("landscape", "px", "a1", false);
+        const data = await document.querySelector("#tblPDF");
+        pdf.html(data).then(() => {
+            pdf.save("stocksUtil_" + date + ".pdf");
+        });
+    };
 
     useEffect(() => { //useEffect is used to call the function getStock
         getStock();
@@ -69,39 +80,14 @@ function ViewAllWorkInProgress() {
     }, [])
 
 
-    const confirmFunc = (id) => {
-
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
-            if (result.isConfirmed) {
-                deleteStock(id);
-              Swal.fire({  
-                icon: 'success',
-                title: 'Data Successfully Deleted',
-                color: '#f8f9fa',
-                background: '#6c757d',
-                showConfirmButton: false,
-                timer: 2000
-              })
-            }else {
-                navigate('/ViewAllWorkInProgress');
-            }
-          })
-    }
+   
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'LKR',
         minimumFractionDigits: 2,
         currencyDisplay: 'symbol'
-    })
+      })
 
     return (
 
@@ -151,20 +137,15 @@ function ViewAllWorkInProgress() {
                             {themeSettings && <ThemeSettings />}
                             <div>
                                 <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                                    <Header category="Table" title="Work in Progress" />
+                                    <Header category="Table" title="Stocks" />
 
                                     <div className=" flex items-center mb-5 ">
-                                        <div>
-                                            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here"
-                                                onChange={(e) => {
-                                                    setSearchTerm(e.target.value);
-                                                }} />
-                                        </div>
+                                       
+                                        
                                         <div className="mr-0 ml-auto">
-                                            <Link to={"/generateWIPPDF"}> {/* change this link your preview page */}
-                                                <button type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
-                                            </Link>
+                                            <button onClick={createPDF} type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
                                         </div>
+                                   
 
                                     </div>
 
@@ -179,20 +160,12 @@ function ViewAllWorkInProgress() {
                                                     <TableHeader value="Units" />
                                                     <TableHeader value="Unit price" />
                                                     <TableHeader value="Total value" />
-                                                    <TableHeader value="Manage" />
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {stock.filter((data) => { 
-                                                    if (searchTerm == "") {
-                                                        return data;
-                                                    } else if ((data.stockCode.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                                                        (data.stockName.toLowerCase().includes(searchTerm.toLowerCase()))) {
-                                                        return data;
-                                                    }
-                                                }).map((data, key) => {//map is used to iterate the array
+                                                {stock.map((data, key) => {//map is used to iterate the array
                                                     const date = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
-
+                                                    
                                                     var totAdds = 0;
                                                     var totIssues = 0;
                                                     var quantity = 0;
@@ -202,20 +175,26 @@ function ViewAllWorkInProgress() {
                                                         stockUtil.filter((stockUtil) => stockUtil.type == "Additions" &&
                                                             stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totAdds += stockUtil.quantity
-                                                                totWIP += parseFloat((stockUtil.quantity * stockUtil.unitPrice));
-                                                                price = stockUtil.unitPrice
+                                                                if (stockUtil.stockCategory === "Raw materials")
+                                                                    totRM += parseFloat((stockUtil.quantity * stockUtil.unitPrice));
+                                                                if (stockUtil.stockCategory === "Work in progress")
+                                                                    totWIP += parseFloat((stockUtil.quantity * stockUtil.unitPrice));
+                                                                price = stockUtil.unitPrice    
                                                             })
                                                     }
                                                     {
                                                         stockUtil.filter((stockUtil) => stockUtil.type === "Issues" &&
                                                             stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                 totIssues += stockUtil.quantity
-                                                                totWIP -= parseFloat((stockUtil.quantity * stockUtil.unitPrice));
+                                                                if (stockUtil.stockCategory === "Raw materials")
+                                                                    totRM -= parseFloat((stockUtil.quantity * stockUtil.unitPrice));
+                                                                if (stockUtil.stockCategory === "Work in progress")
+                                                                    totWIP -= parseFloat((stockUtil.quantity * stockUtil.unitPrice));
                                                             })
                                                     }
 
                                                     { quantity = totAdds - totIssues - data.damagedQty }
-                                                    { totalValue = price* quantity }
+                                                    { totalValue = price * quantity }
 
                                                     if (quantity < 0) {
                                                         { quantity = "No usable stocks left" }
@@ -237,44 +216,21 @@ function ViewAllWorkInProgress() {
                                                             <TableData value={formatter.format(price)} />
                                                             <TableData value={formatter.format(totalValue)} />
 
-                                                            <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                                                <Link to={`/StockInformation/${data._id}`}>
-                                                                    <button
-                                                                        type="button"
-                                                                        className="bg-neutral-500 font-bold py-1 px-4 rounded-full mx-3 text-white"
-                                                                    >
-                                                                        <i className="fas fa-info-circle" />
-                                                                    </button>
-                                                                </Link>
-
-                                                                <Link to={`/StockUpdate/${data._id}`}>
-                                                                    <button
-                                                                        type="button"
-                                                                        className="font-bold py-1 px-4 rounded-full mx-3 text-white"
-                                                                        style={{ background: currentColor }}
-                                                                    >
-                                                                        <i className="fas fa-edit" />
-                                                                    </button>
-                                                                </Link>
-                                                                <button
-                                                                    type="button"
-                                                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
-                                                                    onClick={() => {
-                                                                        confirmFunc(data._id);
-                                                                    }}
-                                                                >
-                                                                    <i className="fas fa-trash" />
-                                                                </button>
-                                                            </td>
+                                                            
                                                         </tr>
                                                     )
                                                 })}
                                             </tbody>
                                         </table>
-                                        <br></br><br></br>
-                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
-                                            Total Work in progress : {formatter.format(totWIP)}
 
+                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+                                            Total Raw materials : {formatter.format(totRM)}
+
+                                        </span><br></br>
+
+                                        <span className="text-xs font-semibold inline-block py-2 px-2  rounded text-red-600 bg-white-200 uppercase last:mr-0 mr-1">
+
+                                            Total Work in Progress : {formatter.format(totWIP)}
                                         </span>
                                     </div>
                                 </div >
@@ -288,4 +244,4 @@ function ViewAllWorkInProgress() {
     );
 };
 
-export default ViewAllWorkInProgress
+export default StockViewDateRangePDF

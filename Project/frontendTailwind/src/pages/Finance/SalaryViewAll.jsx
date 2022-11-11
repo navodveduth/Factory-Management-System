@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 
+import Swal from 'sweetalert2';
 import { useStateContext } from '../../contexts/ContextProvider';
 import { FiSettings } from 'react-icons/fi';
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
@@ -40,7 +41,6 @@ const FinanceViewAll = () => {
     await axios
       .delete(`http://localhost:8070/salary/deleteSalary/${id}`)
       .then((res) => {
-        alert('Salary Data Deleted Sucessfully');
         getSalary();
       })
       .catch((err) => {
@@ -49,14 +49,33 @@ const FinanceViewAll = () => {
   };
 
   const confirmFunc = (id)=>{
-
-		if (confirm("Do you want to delete?") == true) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      color: '#f8f9fa',
+      background: '#6c757d',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
         deleteFinance(id);
-		} else {
-			navigate('/SalaryViewAll');
-		}
+        Swal.fire({  
+          icon: 'success',
+          title: 'Data Successfully Deleted',
+          color: '#f8f9fa',
+          background: '#6c757d',
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }else {
+        navigate('/SalaryViewAll');
+      }
+    })
+  };
 
-    }
 
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',

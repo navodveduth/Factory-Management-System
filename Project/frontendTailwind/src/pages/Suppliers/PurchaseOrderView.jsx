@@ -90,6 +90,13 @@ function PurchaseOrderView() {
         })
       }
 
+      const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'LKR',
+        minimumFractionDigits: 2,
+        currencyDisplay: 'symbol'
+      })
+
     return (
         <div>
     
@@ -195,16 +202,13 @@ function PurchaseOrderView() {
                                 {purchaseOrder.filter((data) => {
                                     if (searchTerm == "") {
                                         return data
-                                    } else if (data.orderID.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.supplierID.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.quantity.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.productDetails.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.deliveryDate.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.totalPrice.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.orderStatus.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                    } else if ((data.orderID.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                        (data.productDetails.toString().toLowerCase().includes(searchTerm.toLowerCase()))) {
                                         return data;
                                     }
                                 }).map((data, key) => {
+
+                                    let formattedAmount = formatter.format(data.cost)
 
 
                                     var datacolor = "text-black";
@@ -220,8 +224,8 @@ function PurchaseOrderView() {
                                             <TableData value={data.supplierID} />
                                             <TableData value={data.qty} />
                                             <TableData value={data.productDetails} />
-                                            <TableData value={data.deliveryDate} />
-                                            <TableData value={data.cost} />
+                                            <TableData value={new Date(data.deliveryDate).toISOString().split('T')[0]} />
+                                            <TableData value={formattedAmount} />
                                             <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.orderStatus} </td>                                    
 											<td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
 												
