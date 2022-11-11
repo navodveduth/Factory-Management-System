@@ -125,7 +125,7 @@ function LeaveNew() {
                                         showConfirmButton: false,
                                         timer: 2000
                                       })
-                                    navigate('/LeaveViewAll');
+                                    navigate('/AttendanceAndLeaveDashboard');
                                     })
                                     .catch((err)=>{
                                         console.log(err);

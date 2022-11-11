@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { jsPDF } from "jspdf";
+import Swal from "sweetalert2";
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
-
+import { jsPDF } from "jspdf";
 import { useStateContext } from '../../contexts/ContextProvider';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -65,6 +65,20 @@ const AttendanceReport = () => {
         setYear("")
     }
 }
+const downloadConf = ()=>{
+  Swal.fire({
+    title: 'Downloading!',
+    text: "Your download has begun!",
+    icon: 'success',
+    showCancelButton: false,
+    color: '#f8f9fa',
+    background: '#6c757d',
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'OK!'
+  })
+};
+
 
   return (
     <div>
@@ -131,7 +145,7 @@ const AttendanceReport = () => {
                                     }} />
                                   </div>
                                 <div className="mr-0 ml-auto">
-                                  <button onClick={createPDF} type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download Report</button>
+                                  <button onClick={()=>{createPDF(); downloadConf();}} type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download Report</button>
                                 </div>
                               </div>
                               <div className=" flex items-center mb-5 ">
