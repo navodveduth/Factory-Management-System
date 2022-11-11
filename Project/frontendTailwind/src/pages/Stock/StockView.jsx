@@ -58,7 +58,6 @@ function StockView() {
     const deleteStock = async (id) => {
         await axios.delete('http://localhost:8070/stock/delete/' + id)
             .then(() => {
-                alert("Data deleted successfully");
                 getStock();
             })
             .catch((err) => {

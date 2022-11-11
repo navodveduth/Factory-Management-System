@@ -42,7 +42,6 @@ function StockUtilisationDateRange() {
     const deleteStockUtil = async (id) => {
         await axios.delete('http://localhost:8070/stockUtilisation/delete/' + id)
             .then(() => {
-                alert("Data deleted successfully");
                 getStockUtil();
             })
             .catch((err) => {
@@ -153,6 +152,13 @@ function StockUtilisationDateRange() {
                                     <Header category="Table" title="Stocks Utilisation" />
 
                                     <div className=" flex items-center mb-5 ">
+
+                                        <div>
+                                            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here"
+                                                onChange={(e) => {
+                                                    setSearchTerm(e.target.value);
+                                                }} />
+                                        </div>
                                         
                                         <div className="mx-3">
                                             <Link to={"/StockUtilisation"}> {/* change this link your previous page */}
@@ -181,7 +187,15 @@ function StockUtilisationDateRange() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {stockUtil.map((data, key) => {//map is used to iterate the array
+                                            {stockUtil.filter((data) => {
+                                                    if (searchTerm == "") {
+                                                        return data;
+                                                    } else if ((data.stockCode.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                                        (data.type.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                                        (data.firstPurchaseDate.toLowerCase().includes(searchTerm.toLowerCase()))) {
+                                                        return data;
+                                                    }
+                                                }).map((data, key) => {//map is used to iterate the array
                                                     const dbDate = new Date(data.date).toISOString().split('T')[0];
                                                     const pfDate = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
 

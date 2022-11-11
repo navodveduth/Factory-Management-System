@@ -205,7 +205,6 @@ function IssuesForm() {
                                                         color: '#f8f9fa',
                                                         background: '#6c757d',
                                                         showConfirmButton: false,
-                                                        showCloseButton:true,
                                                         timer: 2000
                                                       })
                                                     navigate('/StockUtilisation');
@@ -227,7 +226,6 @@ function IssuesForm() {
                                                         color: '#f8f9fa',
                                                         background: '#6c757d',
                                                         showConfirmButton: false,
-                                                        showCloseButton:true,
                                                         timer: 2000
                                                       })
                                                 })
@@ -238,7 +236,6 @@ function IssuesForm() {
                                                     color: '#f8f9fa',
                                                     background: '#6c757d',
                                                     showConfirmButton: false,
-                                                    showCloseButton:true,
                                                     timer: 2000
                                                   })
                                                 navigate('/PendingStockAddReq/' + stockCode);
@@ -268,8 +265,8 @@ function IssuesForm() {
                                             <div className="mb-3">
                                                 <label for="date" className="form-label">Date: </label>
                                                 <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date"
-                                                    min={minDate}
-                                                    max={currentDate} required onChange={(e) => {
+                                                    value={currentDate} //min={minDate} max={currentDate} required 
+                                                    onChange={(e) => {
                                                         setDate(e.target.value);
                                                     }} />
                                             </div>

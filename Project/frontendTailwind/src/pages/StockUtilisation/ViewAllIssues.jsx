@@ -34,7 +34,6 @@ function ViewAllIssues() {
     const deleteStockUtil = async (id) => {
         await axios.delete('http://localhost:8070/stockUtilisation/delete/' + id)
             .then(() => {
-                alert("Data deleted successfully");
                 getStockUtil();
             })
             .catch((err) => {
