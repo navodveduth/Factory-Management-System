@@ -62,102 +62,18 @@ export default function SalesBarChart() {
         }
 
         const barChartData = [
-            [
-                {x:'Shirts', y: shirts },
-            ],
-            [
-                {x:'T-Shirts', y: tshirts },
-            ],
-            [
-                {x:'Caps', y: caps },
-            ],
-            [
-                {x:'Blouse', y: blouse },
-            ],
-            [
-                {x:'Pants', y: pants },
-            ],
-            [
-                {x:'Jeans', y: jeans },
-            ],
-            [
-              {x:'Shorts', y: shorts },
-          ],
-          [
-              {x:'Skirts', y:skirts },
-          ],
-          
-        ]
-        
-          const barCustomSeries = [
-            {
-              dataSource: barChartData[0],
-              xName: 'x',
-              yName: 'y',
-              name: 'Shirts',
-              type: 'Column',
-              
-            },
-            {
-              dataSource: barChartData[1],
-              xName: 'x',
-              yName: 'y',
-              name: 'T-Shirts',
-              type: 'Column',
-              
-            },
-            {
-              dataSource: barChartData[2],
-              xName: 'x',
-              yName: 'y',
-              name: 'Caps',
-              type: 'Column',
-              
-            },
-            {
-                dataSource: barChartData[3],
-                xName: 'x',
-                yName: 'y',
-                name: 'Blouse',
-                type: 'Column',
-                
-              },
-              {
-                dataSource: barChartData[4],
-                xName: 'x',
-                yName: 'y',
-                name: 'Pants',
-                type: 'Column',
-                
-              },
-              {
-                dataSource: barChartData[5],
-                xName: 'x',
-                yName: 'y',
-                name: 'Jeans',
-                type: 'Column',
-                
-              },
-              {
-                dataSource: barChartData[6],
-                xName: 'x',
-                yName: 'y',
-                name: 'Shorts',
-                type: 'Column',
-                
-              },
-              {
-                dataSource: barChartData[7],
-                xName: 'x',
-                yName: 'y',
-                name: 'Skirts',
-                type: 'Column',
-                
-              },          
+              {x:'Shirts', y: shirts, color: '#004777' },
+              {x:'T-Shirts', y: tshirts, color: '#a30000' },
+              {x:'Caps', y: caps, color: '#ff7700' },
+              {x:'Blouse', y: blouse, color: '#DC7F9B'},
+              {x:'Pants', y: pants, color: '#BD4089' },
+              {x:'Jeans', y: jeans, color: '#7FB7BE' },
+              {x:'Shorts', y: shorts, color: '#0DAB76' },
+              {x:'Skirts', y:skirts, color: '#74B3CE' },
           ];
   
   return (
-    <div className="m-0 md:m-10 mt-0 p-0 max-h-21 bg-white dark:bg-secondary-dark-bg rounded-3xl">
+    <div >
               <ChartsHeader category = "Chart" title = "Item Analysis"  />
               <div className=" w-full">
                 <ChartComponent
@@ -165,15 +81,13 @@ export default function SalesBarChart() {
                   id="charts"
                   primaryXAxis={barPrimaryXAxis}
                   primaryYAxis={barPrimaryYAxis}
-                  chartArea={{ border: { width: 2 } }}
                   tooltip={{ enable: true }}
-                  background={currentMode === 'Dark' ? '#33373E' : '#f3f4f6'}
                   legendSettings={{ background: '#f3f4f6' }}
+                  background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'}
                 >
                   <Inject services={[ColumnSeries, Legend, Tooltip, Category, DataLabel]} />
                   <SeriesCollectionDirective>
-                    {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-                    {barCustomSeries.map((item, index) => <SeriesDirective key={index} {...item} />)}
+                    <SeriesDirective dataSource={barChartData} xName="x" yName="y" name="Iteam Analysis" type="Column" pointColorMapping='color' columnWidth="0.5" marker={{ dataLabel: { visible: true, position: 'Top', font: { fontWeight: '600', color: '#ffffff' } } }} />
                   </SeriesCollectionDirective>
                 </ChartComponent>
               </div>

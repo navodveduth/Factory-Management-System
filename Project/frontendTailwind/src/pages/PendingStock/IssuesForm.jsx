@@ -5,6 +5,7 @@ import { Header } from '../../components';
 import { FiUser } from 'react-icons/fi';
 import { DashTopBox, DashTopButton, } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
+import Swal from 'sweetalert2';
 
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
@@ -198,7 +199,15 @@ function IssuesForm() {
 
                                             if (remaining >= quantity) {
                                                 await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
-                                                    alert("Data saved successfully");
+                                                    Swal.fire({  
+                                                        icon: 'success',
+                                                        title: 'Data Successfully saved',
+                                                        color: '#f8f9fa',
+                                                        background: '#6c757d',
+                                                        showConfirmButton: false,
+                                                        showCloseButton:true,
+                                                        timer: 2000
+                                                      })
                                                     navigate('/StockUtilisation');
 
                                                 }).catch((err) => {
@@ -212,11 +221,26 @@ function IssuesForm() {
                                                 await axios.put('http://localhost:8070/stock/updateStatus/' + id, { "status": salesStatus }).then((res) => {
                                                     alert("Production Status Changed");
                                                 }).catch((error) => {
-                                                    console.log(error)
-                                                    alert("Production Status Change Unsuccessful");
+                                                    Swal.fire({  
+                                                        icon: 'success',
+                                                        title: 'Production Status Updated',
+                                                        color: '#f8f9fa',
+                                                        background: '#6c757d',
+                                                        showConfirmButton: false,
+                                                        showCloseButton:true,
+                                                        timer: 2000
+                                                      })
                                                 })
                                             } else {
-                                                alert(`Not enough remaining quantity.Need ${quantity- remaining} ${name}. Place a Purchase request`);
+                                                Swal.fire({  
+                                                    icon: 'success',
+                                                    title: `Not enough remaining quantity. Need ${quantity- remaining} ${name}. Place a Purchase request`,
+                                                    color: '#f8f9fa',
+                                                    background: '#6c757d',
+                                                    showConfirmButton: false,
+                                                    showCloseButton:true,
+                                                    timer: 2000
+                                                  })
                                                 navigate('/PendingStockAddReq/' + stockCode);
                                             }
 

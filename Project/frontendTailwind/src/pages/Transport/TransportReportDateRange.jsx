@@ -149,7 +149,7 @@ const TransportReportDateRange = () => {
                         <table className="w-full rounded-lg">
                           <thead>
                             <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                              <TableHeader value="Type" />
+                              <TableHeader value="Type Info" />
                               <TableHeader value="Destination Address" />
                               <TableHeader value="Date" />
                               <TableHeader value="Time" />
@@ -167,7 +167,7 @@ const TransportReportDateRange = () => {
                                 className="text-sm h-10 border dark:border-slate-600"
                                 key={key}
                               >
-                                <TableData value={data.type} />
+                                <TableData value={data.typeInfo} />
                                 <TableData value={data.destinationAddress} />
                                 <TableData value={data.date.substring(0, 10)} />
                                 <TableData value={data.timeOfDispatch} />

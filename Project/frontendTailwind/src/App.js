@@ -28,6 +28,8 @@ import {
   InsightDashboard,
   UpdateStockRequest,
   CostedDateRange,
+  CostedFilteredPreview,
+  CostedPreview,
 } from './pages/Production/Index';
 
 import { StocksDashboard, StockView, StockInformation, StockViewDateRange,StockViewDateRangePDF, StockBreakdownDateRange,StockBreakdownDateRangePDF , StockAdd, StockUpdate, StockPDF, StockBreakdown, StockBreakdownUpdate, StockBreakdownPDF, ViewAllRawMaterials, RawMaterialsReport, ViewAllWorkInProgress, WorkInProgressReport } from './pages/Stock';
@@ -159,6 +161,10 @@ const App = () => {
         <Route path="/costedOrders" element={<CostedOrders />} />
         <Route path="/updateStockRequest/:id" element={<UpdateStockRequest />}/>
         <Route path="/costedDateRange" element={<CostedDateRange/>}/>
+        <Route path="/CostedFilteredPreview" element={<CostedFilteredPreview/>}/>
+        <Route path="/CostedPreview" element={< CostedPreview/>}/>
+        CostedPreview
+        
 
           {/* stock management  */}
           <Route path="/StockDashboard" element={<StocksDashboard />} />
