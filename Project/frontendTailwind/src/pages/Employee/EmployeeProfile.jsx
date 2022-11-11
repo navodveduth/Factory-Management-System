@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Navbar, Footer, Sidebar, ThemeSettings, Header, AttendanceChart } from '../../components';
+import jsPDF from 'jspdf';
+import { Navbar, Footer, Sidebar, ThemeSettings, Header, AttendanceChart, AttendanceInMonth } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
-import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars' // this code needed for the datesort function
+import { DatePickerComponent } from '@syncfusion/ej2-react-calendars' // this code needed for the datesort function
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
@@ -13,8 +14,8 @@ const EmployeeProfile = () => {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
     
     const [employee, setEmployee] = useState([]);
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+    const [month, setMonth] = useState("");
+    const [year, setYear] = useState("");
 
     const {id} = useParams();
 
@@ -44,11 +45,26 @@ const EmployeeProfile = () => {
         }
     }, []);
 
-    let dateRangeRef = (dateRange) => {
+    /*let dateRangeRef = (dateRange) => {
         dateRangeRef = dateRange;
         console.log(dateRange);
         console.log("Date  : ", dateRangeRef) // dateRangeRef is a reference to the DateRangePickerComponent
-    };
+    };*/
+
+    const handleDateChange = (e) => {
+        if(e.value) {
+            const date = e.target.value;
+            const month = date.getMonth();
+            const year = date.getFullYear();
+            setMonth(month);
+            setYear(year);
+        }
+        else {
+            setMonth("");
+            setYear("")
+        }
+    }
+
 
     /*const convertDate = (format) => {
         function convert(s) {
@@ -62,7 +78,7 @@ const EmployeeProfile = () => {
         ].join('-');
     };*/
 
-    const filterDate = () => {
+    /*const filterDate = () => {
         if (dateRangeRef.value && dateRangeRef.value.length > 0) {
 
             const start = (dateRangeRef.value[0]);
@@ -80,6 +96,22 @@ const EmployeeProfile = () => {
             setStartDate('');
             setEndDate('');
         }
+    };*/
+
+    const createPDF = () => {
+        const pdf = new jsPDF("landscape", "px", "a1",false);
+        const data = document.querySelector("#profile");
+        pdf.html(data).then(() => {
+            pdf.save("Employee Report.pdf");
+        });
+    };
+
+    const createPDFLeaves = () => {
+        const pdf = new jsPDF("landscape", "px", "a1",false);
+        const data = document.querySelector("#leavesTable");
+        pdf.html(data).then(() => {
+            pdf.save("Leaves Report.pdf");
+        });
     };
 
     return (
@@ -137,7 +169,12 @@ const EmployeeProfile = () => {
                                     <div key={key}>
                                         <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white '>
                                             <Header category="Report" title="Employee Profile" />
-                                            <div>
+                                            <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
+                                                <div className="ml-auto mr-5">
+                                                    <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={createPDF}>Generate Report</button>
+                                                </div>
+                                            </div>
+                                            <div id="profile">
                                                 <div className="bg-main-bg dark:bg-main-dark-bg rounded-3xl p-5 m-5">
                                                     <h1 className="text-2xl font-bold">Personal Details</h1>
                                                     <div className="text-md ml-12 pt-5">
@@ -186,15 +223,18 @@ const EmployeeProfile = () => {
                                             </div>
                                             <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
                                                 <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
-                                                    <DateRangePickerComponent ref={dateRangeRef}  placeholder="Select a date range"/>
+                                                    <DatePickerComponent  placeholder="Select a month " start="Year" depth="Year" format="MMM yyyy" onChange={handleDateChange} />
                                                 </div>
                                                 <div className="ml-5">
-                                                    <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={filterDate}>Filter</button>
+                                                    <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={handleDateChange}>Filter</button>
+                                                </div>
+                                                <div className="ml-auto mr-0">
+                                                    <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={createPDFLeaves}>Generate Report</button>
                                                 </div>
                                             </div>
 
                                             <div className="block w-full overflow-x-auto rounded-lg">
-                                                <table className="w-full rounded-lg">
+                                                <table className="w-full rounded-lg" id='leavesTable'>
                                                     <thead>
                                                         <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                                                             <TableHeader value="Leave Type" />
@@ -205,11 +245,11 @@ const EmployeeProfile = () => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                    {data.leavesDetails.filter((data3) => {
-                                                        if(startDate == "" && endDate == ""){
-                                                            return data3
-                                                        }else if(data3.leaveStartDate >= startDate && data3.leaveStartDate <= endDate){
-                                                            return data3
+                                                    {data.leavesDetails.filter((leave) => {
+                                                        if (month == "" && year == ""){
+                                                            return leave
+                                                        }else if (month == new Date(leave.leaveStartDate).getMonth() && year == new Date(leave.leaveStartDate).getFullYear()){
+                                                            return leave
                                                         }
                                                     }).map((data3, key) => {
                                                         return(
@@ -228,6 +268,9 @@ const EmployeeProfile = () => {
                                         </div>
                                         <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
                                                 <AttendanceChart employeeNumber={data.employeeNumber} />
+                                        </div>
+                                        <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+                                                <AttendanceInMonth employeeNumber={data.employeeNumber} />
                                         </div>
                                     </div>
                                 )

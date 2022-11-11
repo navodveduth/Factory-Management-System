@@ -11,7 +11,6 @@ const stockPendingSchema = new Schema({
     //backend validations are done here  
     stockCode: {
         type: String,
-        unique:true,
         min:5,
         max:8,
         required:true,
