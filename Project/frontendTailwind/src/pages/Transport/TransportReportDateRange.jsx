@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { jsPDF } from 'jspdf';
+import Swal from 'sweetalert2';
 import { FiSettings } from 'react-icons/fi';
 import { useLocation } from 'react-router-dom';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -42,6 +43,20 @@ const TransportReportDateRange = () => {
       .catch((err) => {
         alert(err.message);
       });
+  };
+
+  const downloadConf = () => {
+    Swal.fire({
+      title: 'Downloading!',
+      text: 'Your download has begun!',
+      icon: 'success',
+      showCancelButton: false,
+      color: '#f8f9fa',
+      background: '#6c757d',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'OK!',
+    });
   };
 
   useEffect(() => {
@@ -118,7 +133,10 @@ const TransportReportDateRange = () => {
                     <Header category="Report" title="Transport" />
 
                     <button
-                      onClick={createPDF}
+                      onClick={() => {
+                        createPDF();
+                        downloadConf();
+                      }}
                       type="button"
                       className="font-bold py-1 px-4 rounded-full m-3 text-white absolute top-40 right-20 hover:bg-slate-700 bg-slate-500"
                     >
