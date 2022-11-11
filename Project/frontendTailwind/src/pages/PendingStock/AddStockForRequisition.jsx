@@ -143,7 +143,7 @@ function AddStockForRequisition() {
                                             e.preventDefault();
 
                                             {status = "Processing"}
-                                            {date = currentDate}
+
                                             const newStock = {
                                                 stockCode,
                                                 stockName,
@@ -169,7 +169,7 @@ function AddStockForRequisition() {
                                             }).catch((err) => {
                                                 console.log(err);
                                                 alert("ERROR: Could not add stock");
-                                                navigate('/PendingStockRequisitions' );
+                                                navigate('/PendingStockAdd');
                                             })
                                         }}>
 
