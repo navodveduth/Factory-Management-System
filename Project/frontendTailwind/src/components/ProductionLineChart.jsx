@@ -135,18 +135,20 @@ export default function ProductionLineChart() {
       { month: 'Nov', Total: novTotal }, { month: 'Dec' }
     ]
 
+    const colors = ['#258EA6', '#F3A738', '#32CD32', '#FF8C00', '#4B0082'];
+  
   return (
     <>
     <ChartsHeader category = "Chart" title = "Production Cost Analysis" />
       <ChartComponent primaryXAxis={primaryXAxis} primaryYAxis={primaryYAxis} tooltip={tooltip} 
-        background={currentMode === 'Dark' ? '#33373E' : '#f3f4f6'}>
+        background={currentMode === 'Dark' ? '#33373E' : '#f3f4f6'} palettes={colors}>
           <Inject services={[LineSeries, Tooltip, DataLabel, Category]} />
             <SeriesCollectionDirective>
               <SeriesDirective type = "Line" dataSource={data} xName="month" yName="Total"
                 name = "Monthly Total Cost" marker = {{dataLable: {visible: true}, visible: true}}>
               </SeriesDirective>
               <SeriesDirective type = "Line" dataSource={material} xName="month" yName="Material"
-                name = "Monthly Material Cost" marker = {{dataLable: {visible: true}, visible: true}}>
+                name = "Monthly Budgeted Total Cost" marker = {{dataLable: {visible: true}, visible: true}}>
               </SeriesDirective>
             </SeriesCollectionDirective>
       </ChartComponent>

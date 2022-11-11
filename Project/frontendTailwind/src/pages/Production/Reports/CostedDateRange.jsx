@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link ,useNavigate,useLocation} from "react-router-dom";
 import {jsPDF} from "jspdf";
 import TableHeader from "../../../components/Table/TableHeader";
 import TableData from '../../../components/Table/TableData';
@@ -13,7 +13,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import Swal from 'sweetalert2';
 import {DateRangePickerComponent} from '@syncfusion/ej2-react-calendars' // this code needed for the datesort function
 
-export default function CostedOrders(){
+export default function CostedDateRange(){
     const navigate = useNavigate();
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings,  } = useStateContext();
     const [Order,setOrder] = useState([])
@@ -22,12 +22,18 @@ export default function CostedOrders(){
     const [dateStart, setDateStart] = useState("");
     const [dateEnd, setDateEnd] = useState("");
 
-    const toDateRange=()=>{
-        navigate('/CompletedOrdersDateRange',{state:{DS:dateStart,DE:dateEnd}});
+    const location = useLocation();
+
+    // const toDateRange=()=>{
+    //     navigate('/CompletedOrdersDateRange',{state:{DS:dateStart,DE:dateEnd}});
+    //   }
+
+      const toGenerateReport=()=>{
+        navigate('/CostedFilteredPreview', {state: {DS: location.state.DS, DE: location.state.DE}});
       }
 
         async function getOrders(){
-            await axios.get("http://localhost:8070/production/order/allOrders").then((res)=>{
+            await axios.get("http://localhost:8070/production/order/date/" + location.state.DS+'/'+location.state.DE).then((res)=>{
                 setOrder(res.data);
             }).catch((err)=>{
                 alert(err.message);
@@ -56,7 +62,7 @@ export default function CostedOrders(){
       
               setDateStart(start);
               setDateEnd(end);
-              navigate('/costedDateRange',{state:{DS:start,DE:end}});
+              navigate('/FinanceDateRange',{state:{DS:start,DE:end}});
       
           } else {
             alert("Please select a date range")
@@ -221,30 +227,25 @@ export default function CostedOrders(){
                     <div>
                         {themeSettings && <ThemeSettings />}
                         <div>
-                             <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                                    <Header category="Table" title="Costed Orders" />
-                                    <div className=" flex items-center mb-5 ">
-                                <div className="flex items-center mb-5" >
-                                    <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
-                                    onChange={(e) => {
-                                    setSearchTerm(e.target.value);
-                                    }} />
-                                </div>
-                                
-                                <div className=" flex items-center ml-5 mb-5 "> {/* this code needed for the datesort function*/}
-                                  <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
-                                      <DateRangePickerComponent ref={dateRangeRef}  placeholder="Select a date range"/>
-                                  </div>
-                                  <div className="ml-5">
-                                      <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => filterDate()}>Filter</button>
-                                  </div>
-                              </div>
-                                <div className="mr-0 ml-auto">
-                                    <Link to={"/CostedPreview"}> {/* change this link your preview page */}
-                                    <button type="button" value = "Generate Report" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" > Generate Report</button>
-                                    </Link>
-                                </div>
+                            <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
+                            <Header category="Table" title="Costed Orders" />
+                                <div className=" flex items-center mb-5 ">
+                                        <div className="flex items-center mb-5" >
+                                            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
+                                            onChange={(e) => {
+                                            setSearchTerm(e.target.value);
+                                            }} />
+                                        </div>
 
+                                <div className="mx-10 ml-auto">
+                                <Link to={"/costedOrders"}> {/* change this link your previous page */}
+                                  <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Reset Date</button>
+                                </Link>
+                              </div>
+                                
+                                <div className="mr-0 ml-auto">
+                                  <button type="button" onClick={() => toGenerateReport()} className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+                              </div>
 
                                 </div>
                                     <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
@@ -300,16 +301,15 @@ export default function CostedOrders(){
                                                             
                                                                 <button onClick={()=>{
                                                                 confirmFunc(data._id,data.invoiceNo,data.status);
-                                                                }}
-                                                                type="button" 
-                                                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full">
-                                                                <i className="fas fa-trash" />
-                                                                </button>
+                                                            }}
+                                                            type="button" 
+                                                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full">
+                                                            <i className="fas fa-trash" />
+                                                            </button>
                                                         </td>
                                                      </tr>
                                                     )
                                                 }
-
                                             })}
                                         </tbody>
                                     </table>

@@ -5,6 +5,7 @@ import { Header } from '../../components';
 import { FiUser } from 'react-icons/fi';
 import { DashTopBox, DashTopButton, } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
+import Swal from 'sweetalert2';
 
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
@@ -49,7 +50,14 @@ function AddStockForRequisition() {
     console.log(name)
 
     async function confirmNull(){
-        alert('Stock is unavailable. Please make a purchase order request');
+        Swal.fire({  
+            icon: 'success',
+            title: 'Stock is unavailable. Please make a purchase order request',
+            color: '#f8f9fa',
+            background: '#6c757d',
+            showConfirmButton: false,
+            timer: 2000
+          })
         navigate('/PendingStockAdd')
     }
 
@@ -147,7 +155,14 @@ function AddStockForRequisition() {
 
                                             console.log(newStock)
                                             await axios.post("http://localhost:8070/pendingStock/create", newStock).then(() => {
-                                                alert("Data saved successfully");
+                                                Swal.fire({  
+                                                    icon: 'success',
+                                                    title: 'Data Successfully Saved',
+                                                    color: '#f8f9fa',
+                                                    background: '#6c757d',
+                                                    showConfirmButton: false,
+                                                    timer: 2000
+                                                  })
                                                 navigate('/ProcessingRequest');
 
                                             }).catch((err) => {
@@ -179,9 +194,10 @@ function AddStockForRequisition() {
                                             <div className="mb-3">
                                                 <label for="date" className="form-label">Date: </label>
                                                 <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date"
-                                                    min={minDate} max={currentDate} required onChange={(e) => {
-                                                        setDate(e.target.value);
-                                                    }} />
+                                                    // min={minDate} max={currentDate} 
+                                                    value={currentDate} readOnly 
+                                                    // onChange={(e) => {setDate(e.target.value);}} 
+                                                    />
                                             </div>
 
                                             <div className="mb-3">

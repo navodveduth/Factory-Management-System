@@ -206,11 +206,11 @@ const AttendanceAndLeaveDashboard = () => {
                                 <Link to="/AttendanceViewAll">
                                   <DashTopButton value="All Attendance" icon={<BiCalendarEvent/>} />
                                 </Link>
-                                <Link to="/AttendanceCreate">
+                                {/*<Link to="/AttendanceCreate">
                                   <DashTopButton value="Record Attendance" icon={<BiCalendarCheck/>}/>
-                                </Link>
+                  </Link>*/}
                                 <Link to="/AttendanceNewRecord">
-                                  <DashTopButton value="Record Attendance 2" icon={<BiCalendarCheck/>}/>
+                                  <DashTopButton value="Record Attendance" icon={<BiCalendarCheck/>}/>
                                 </Link>
                                 <Link to="/LeaveViewAll">
                                   <DashTopButton value="All Leaves" icon={<BiCalendar/>}/>

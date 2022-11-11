@@ -122,8 +122,14 @@ function PendingStockUpdate() {
 
                                             await axios.put("http://localhost:8070/pendingStock/update/" + id, newStock)
                                                 .then((res) => {
-                                                    alert("Data updated successfully");
-                                                    console.log(newStock);
+                                                    Swal.fire({  
+                                                        icon: 'success',
+                                                        title: 'Data Successfully Updated',
+                                                        color: '#f8f9fa',
+                                                        background: '#6c757d',
+                                                        showConfirmButton: false,
+                                                        timer: 2000
+                                                      })
                                                     //navigate to the stock view page
                                                     navigate('/ProcessingRequest');
                                                 })

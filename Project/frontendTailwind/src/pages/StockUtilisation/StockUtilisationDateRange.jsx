@@ -66,6 +66,8 @@ function StockUtilisationDateRange() {
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
             icon: 'warning',
+            color: '#f8f9fa',
+            background: '#6c757d',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -208,7 +210,26 @@ function StockUtilisationDateRange() {
                                                             <TableData value={data.quantity} />
                                                             <TableData value={formatter.format(data.totalValue)} />
 
-
+                                                            <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                                                <Link to={`/StockUtilUpdate/${data._id}`}>
+                                                                    <button
+                                                                        type="button"
+                                                                        className="font-bold py-1 px-4 rounded-full mx-3 text-white"
+                                                                        style={{ background: currentColor }}
+                                                                    >
+                                                                        <i className="fas fa-edit" />
+                                                                    </button>
+                                                                </Link>
+                                                                <button
+                                                                    type="button"
+                                                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
+                                                                    onClick={() => {
+                                                                        confirmFunc(data._id);
+                                                                    }}
+                                                                >
+                                                                    <i className="fas fa-trash" />
+                                                                </button>
+                                                            </td>
                                                             
                                                         </tr>
                                                     )
