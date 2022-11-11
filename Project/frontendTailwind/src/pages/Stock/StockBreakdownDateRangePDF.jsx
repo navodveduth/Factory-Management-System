@@ -10,7 +10,9 @@ import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import Swal from 'sweetalert2';
-function StockBreakdownDateRange() {
+import logo from '../../data/logo.png';
+
+function StockBreakdownDateRangePDF() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
     const [stock, setStock] = useState([]); //stock is the state variable and setStock is the function to update the state variable
@@ -77,33 +79,16 @@ function StockBreakdownDateRange() {
         getStockUtil();
     }, [])
 
-    const confirmFunc = (id) => {
+    
 
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
-            if (result.isConfirmed) {
-                deleteStock(id);
-              Swal.fire({  
-                icon: 'success',
-                title: 'Data Successfully Deleted',
-                color: '#f8f9fa',
-                background: '#6c757d',
-                showConfirmButton: false,
-                timer: 2000
-              })
-            }else {
-                navigate('/StockBreakdown');
-            }
-          })
-
-    }
+    const createPDF = async () => {
+        const date = new Date().toISOString().split('T')[0];
+        const pdf = new jsPDF("landscape", "px", "a1", false);
+        const data = await document.querySelector("#tblPDF");
+        pdf.html(data).then(() => {
+            pdf.save("stocksUtil_" + date + ".pdf");
+        });
+    };
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -112,9 +97,10 @@ function StockBreakdownDateRange() {
         currencyDisplay: 'symbol'
     })
 
-    const toGenerateReport = () => {
-        navigate('/StockBreakdownDateRangePDF', { state: { DS: location.state.DS, DE: location.state.DE } });
-    }
+    //getDAte
+    const current = new Date();
+    const currentdate = `${current.getFullYear()}-${current.getMonth() + 1}-${current.getDate()}`;
+
 
     return (
 
@@ -168,24 +154,28 @@ function StockBreakdownDateRange() {
                                     <Header category="Table" title="Stocks Breakdown" />
 
                                     <div className=" flex items-center mb-5 ">
-                                        <div>
-                                            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here"
-                                                onChange={(e) => {
-                                                    setSearchTerm(e.target.value);
-                                                }} />
-                                        </div>
-                                        <div className="mx-3">
-                                            <Link to={"/StockBreakdown"}> {/* change this link your previous page */}
-                                            <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Reset Date</button>
-                                            </Link>
-                                        </div>
+                                        
+                                        
                                         <div className="mr-0 ml-auto">
-                                            <button type="button" onClick={() => toGenerateReport()} className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+                                            <button onClick={createPDF} type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
                                         </div>
 
                                     </div>
 
-                                    <div className="block w-full overflow-x-auto rounded-lg">
+                                    <div id="tblPDF">
+                                        <div className="block w-full overflow-x-auto rounded-lg">
+                                            <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                                                <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
+                                            </div>
+
+                                            <div className="text-center mb-10">
+
+                                                <p className="text-xl mt-2">Lanka MountCastle (Pvt) Ltd,</p>
+                                                <p className="text-xl">No.124, Hendala, Wattala</p>
+                                                <p>011 2942 672</p>
+                                                </div>
+                                                <p className="text-right text-xl mt-2 mb-3">Generated On : {currentdate}</p>
+
                                         <table className="w-full rounded-lg">
                                             <thead>
                                                 <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
@@ -198,7 +188,6 @@ function StockBreakdownDateRange() {
                                                     <TableHeader value="Unit price" />
                                                     <TableHeader value="Reorder Level" />
                                                     <TableHeader value="Buffer stock" />
-                                                    <TableHeader value="Manage" />
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -265,35 +254,7 @@ function StockBreakdownDateRange() {
                                                             <TableData value={data.reorderLevel} />
                                                             <td className={`${dcolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`} >{data.sufficientStock} </td>
 
-                                                            <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                                            <Link to={`/StockInformation/${data._id}`}>
-                                                                    <button
-                                                                        type="button"
-                                                                        className="bg-neutral-500 font-bold py-1 px-4 rounded-full mx-3 text-white"
-                                                                    >
-                                                                        <i className="fas fa-info-circle" />
-                                                                    </button>
-                                                                </Link>
-                                                                
-                                                                <Link to={`/StockBreakdownUpdate/${data._id}`}>
-                                                                    <button
-                                                                        type="button"
-                                                                        className="font-bold py-1 px-4 rounded-full mx-3 text-white"
-                                                                        style={{ background: currentColor }}
-                                                                    >
-                                                                        <i className="fas fa-edit" />
-                                                                    </button>
-                                                                </Link>
-                                                                <button
-                                                                    type="button"
-                                                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
-                                                                    onClick={() => {
-                                                                        confirmFunc(data._id);
-                                                                    }}
-                                                                >
-                                                                    <i className="fas fa-trash" />
-                                                                </button>
-                                                            </td>
+                                                           
                                                         </tr>
                                                     )
                                                 })}
@@ -301,7 +262,7 @@ function StockBreakdownDateRange() {
                                         </table>
                                     </div>
                                 </div>
-
+</div>
                             </div>
                             <Footer />
                         </div>
@@ -312,4 +273,4 @@ function StockBreakdownDateRange() {
     );
 };
 
-export default StockBreakdownDateRange
+export default StockBreakdownDateRangePDF

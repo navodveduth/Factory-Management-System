@@ -9,18 +9,20 @@ import { DashTopBox, DashTopButton, } from '../../components';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import {useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../data/logo.png';
 
-function StockUtilPDF() {
+function StockUtilDateRangePDF() {
 
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
+    const location = useLocation();
 
     const [stockUtil, setStockUtilisation] = useState([]); //stock is the state variable and setStock is the function to update the state variable
-    var totalAdditions = 0;
-    var totalIssues = 0;
-
+        var totalAdditions = 0;
+        var totalIssues = 0;
+    
     const getStockUtil = async () => {  //getStock is the function to get the data from the backend
-        axios.get("http://localhost:8070/stockUtilisation")
+        axios.get('http://localhost:8070/stockUtilisation/date/'+location.state.DS+'/'+location.state.DE)
             .then((res) => {
                 setStockUtilisation(res.data); //setStock is used to update the state variable
                 console.log(res.data);
@@ -112,13 +114,14 @@ function StockUtilPDF() {
                                     <Header category="Table" title="Stock Utilisation Report Preview" />
 
                                     <div className=" flex items-center mb-5 ">
+                                    
                                         <div className="mr-0 ml-auto">
                                             <button onClick={createPDF} type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
                                         </div>
                                     </div>
-<div id="tblPDF" >
-                                    <div className="block w-full overflow-x-auto rounded-lg">
-                                        <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+<div id="tblPDF">
+                                    <div  className="block w-full overflow-x-auto rounded-lg">
+                                    <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
                                             <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
                                         </div>
 
@@ -129,10 +132,11 @@ function StockUtilPDF() {
                                             <p>011 2942 672</p>
                                         </div>
                                         <p className="text-right text-xl mt-2 mb-3">Generated On : {currentdate}</p>
+
                                         <table className="w-full rounded-lg">
                                             <thead>
                                                 <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                                    <TableHeader value="Code" />
+                                                <TableHeader value="Code" />
                                                     <TableHeader value="Bundle Name" />
                                                     <TableHeader value="Category" />
                                                     <TableHeader value="Initial Purchase" />
@@ -155,10 +159,10 @@ function StockUtilPDF() {
                                                         datacolor = "text-red-600 font-bold";
                                                     }
 
-                                                    if (data.type === "Additions") {
+                                                    if(data.type === "Additions"){
                                                         totalAdditions += parseInt(data.quantity)
-                                                    } else if (data.type === "Issues") {
-                                                        totalIssues += parseInt(data.quantity)
+                                                    }else if (data.type === "Issues"){
+                                                        totalIssues += parseInt(data.quantity) 
                                                     }
 
                                                     return (
@@ -201,4 +205,4 @@ function StockUtilPDF() {
     );
 };
 
-export default StockUtilPDF
+export default StockUtilDateRangePDF

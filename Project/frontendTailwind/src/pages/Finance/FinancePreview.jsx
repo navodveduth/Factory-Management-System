@@ -11,6 +11,8 @@ import { DashTopBox, DashTopButton,  } from '../../components';
 import { FiSettings } from 'react-icons/fi';
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import logo from '../../data/logo.png';
+
 
 export default function PreviewOrder(){
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
@@ -33,6 +35,7 @@ export default function PreviewOrder(){
                 setCurrentMode(currentThemeMode);
             }
         })
+        
 
         const createPDF = () => {
             const date = new Date(Date.now()).toISOString().split('T')[0];
@@ -42,6 +45,10 @@ export default function PreviewOrder(){
                 pdf.save("CashTransactions-"+ date + ".pdf");
                });
         };
+
+        var currentDate = new Date();
+        currentDate = currentDate.toISOString().split('T')[0];
+
 
         return(
             <div>
@@ -99,7 +106,19 @@ export default function PreviewOrder(){
                                         <button onClick={createPDF} type="button"  className="font-bold py-1 px-4 rounded-full m-3 text-white absolute top-40 right-20 hover:bg-slate-700 bg-slate-500" >Download Report</button>
                                     {/* </div> */}
                             
-                                    <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
+                                    <div id="tableContainer">
+                                        <div className="block w-full overflow-x-auto rounded-lg" >
+                                            <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                                            <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
+                                            </div>
+                                            <div className="text-center mb-10">
+                                        
+                                            <p className="text-xl mt-2">Lanka MountCastle (Pvt) Ltd,</p>
+                                            <p className="text-xl">No.124, Hendala, Wattala</p>
+                                            <p>011 2942 672</p>
+                                            </div>
+                                            <p className="text-right text-xl mt-2 mb-3">Generated On : {currentDate}</p>
+                                        
                                     <table className="w-full rounded-lg">
                                         <thead>
                                             <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
@@ -125,6 +144,7 @@ export default function PreviewOrder(){
                                             
                                         </tbody>
                                     </table>
+                                    </div>
                                     </div>
                                 </div>
                                 {/* PART AFTER THE RETURN STATEMENT */}

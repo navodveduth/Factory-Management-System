@@ -18,6 +18,7 @@ const stockSchema = new Schema({
     },
     stockName: {
         type: String,
+        unique:true,
         required: true,
     },
     stockCategory: {

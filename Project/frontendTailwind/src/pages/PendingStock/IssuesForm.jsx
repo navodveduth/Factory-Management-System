@@ -172,7 +172,7 @@ function IssuesForm() {
                             <div>
 
                                 <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-                                    <Header category="Form" title=" Create New Stock" />
+                                    <Header category="Form" title="Issue Stock" />
                                     <div className=" flex items-center justify-center ">
 
                                         <form onSubmit={async (e) => {
@@ -216,7 +216,7 @@ function IssuesForm() {
                                                     alert("Production Status Change Unsuccessful");
                                                 })
                                             } else {
-                                                alert("Not enough remaining quantity. Place a Purchase request");
+                                                alert(`Not enough remaining quantity.Need ${quantity- remaining} ${name}. Place a Purchase request`);
                                                 navigate('/PendingStockAddReq/' + stockCode);
                                             }
 
