@@ -12,6 +12,7 @@ import { FiSettings } from 'react-icons/fi';
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import logo from '../../data/logo.png';
+import Swal from "sweetalert2";
 
 
 export default function PreviewOrder(){
@@ -35,7 +36,20 @@ export default function PreviewOrder(){
                 setCurrentMode(currentThemeMode);
             }
         })
-        
+
+        const downloadConf = ()=>{
+            Swal.fire({
+              title: 'Downloading!',
+              text: "Your download has begun!",
+              icon: 'success',
+              showCancelButton: false,
+              color: '#f8f9fa',
+              background: '#6c757d',
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'OK!'
+            })
+          };
 
         const createPDF = () => {
             const date = new Date(Date.now()).toISOString().split('T')[0];
@@ -43,12 +57,14 @@ export default function PreviewOrder(){
             const data = document.querySelector("#tableContainer");
             pdf.html(data).then(() => {
                 pdf.save("CashTransactions-"+ date + ".pdf");
-               });
+            });
         };
 
         var currentDate = new Date();
         currentDate = currentDate.toISOString().split('T')[0];
 
+
+        
 
         return(
             <div>
@@ -103,7 +119,7 @@ export default function PreviewOrder(){
                                 <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
                                     <Header category="Table" title="CashTransactions" />
                                     {/* <div className="w-full h-5"> */}
-                                        <button onClick={createPDF} type="button"  className="font-bold py-1 px-4 rounded-full m-3 text-white absolute top-40 right-20 hover:bg-slate-700 bg-slate-500" >Download Report</button>
+                                        <button onClick={()=>{createPDF(); downloadConf();}} type="button"  className="font-bold py-1 px-4 rounded-full m-3 text-white absolute top-40 right-20 hover:bg-slate-700 bg-slate-500" >Download Report</button>
                                     {/* </div> */}
                             
                                     <div id="tableContainer">

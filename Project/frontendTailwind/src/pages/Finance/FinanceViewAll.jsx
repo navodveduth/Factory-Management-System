@@ -72,7 +72,7 @@ const FinanceViewAll = () => {
         navigate('/FinanceDateRange',{state:{DS:start,DE:end}});
 
     } else {
-      alert("Please select a date range")
+      dateConf();
       setDateStart('');
       setDateEnd('');
     }
@@ -89,6 +89,20 @@ const FinanceViewAll = () => {
       .catch((err) => {
         alert(err.message);
       });
+  };
+
+  const dateConf = (id)=>{
+    Swal.fire({
+      title: 'No Date!',
+      text: "Please Enter a Date Range!",
+      icon: 'warning',
+      showCancelButton: false,
+      color: '#f8f9fa',
+      background: '#6c757d',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'OK!'
+    })
   };
 
   const confirmFunc = (id)=>{
