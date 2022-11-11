@@ -37,6 +37,15 @@ function LeaveNew() {
   const [leaveType, setLeaveType] = useState('');
   const [leaveReason, setLeaveReason] = useState('');
   const [leaveStatus, setLeaveStatus] = useState('');
+
+  const autoCompleteForm = () => {
+    setEmployeeNumber('0015');
+    setLeaveStartDate('2022-11-11');
+    setLeaveEndDate('2022-11-11');
+    setLeaveType('Regular');
+    setLeaveReason('Sick');
+    setLeaveStatus('Pending');
+  };
   
   return (
     <div>
@@ -125,6 +134,11 @@ function LeaveNew() {
                                     
                                 
                             }}>
+                              <div className=" flex items-center mb-5 ">
+                                <div className="mr-0 ml-auto">
+                                    <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={autoCompleteForm} >AutoComplete</button>
+                                </div>
+                              </div>
 
                               <div className="mb-3">
                                 <label className="form-label">Employee Number : </label>
@@ -132,7 +146,7 @@ function LeaveNew() {
                                   id="employeeNumber"
                                   name="employeeNumber"
                                   className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                                  required = "required"
+                                  required = "required" value={employeeNumber}
                                   onChange={(e) => {
                                     setEmployeeNumber(e.target.value);
                                   }}
@@ -181,7 +195,7 @@ function LeaveNew() {
                               <div className="mb-3">
                                 <label htmlFor="leaveStatus" className="form-label">Leave Status</label>
                                 <select className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" 
-                                id="leaveReason" aria-label="Default select example" required="required"
+                                id="leaveReason" aria-label="Default select example" required="required" value={leaveStatus}
                                 onChange={(e)=>{
                                   setLeaveStatus(e.target.value);
                                 }}>
