@@ -11,8 +11,6 @@ import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import logo from '../../data/logo.png';
 import { jsPDF } from "jspdf";
-import Swal from 'sweetalert2';
-
 
 
 function StockViewDateRangePDF() {
