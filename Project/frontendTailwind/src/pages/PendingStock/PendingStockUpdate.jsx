@@ -5,6 +5,7 @@ import { Header } from '../../components';
 import { FiUser } from 'react-icons/fi';
 import { DashTopBox, DashTopButton, } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
+import Swal from 'sweetalert2';
 
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
@@ -136,7 +137,7 @@ function PendingStockUpdate() {
                                                 .catch((err) => {
                                                     console.log(err);
                                                     alert("ERROR: Could not update stock");
-                                                    navigate('/PendingStockUpdate'+ id);
+                                                    navigate('/PendingStockUpdate/'+ id);
                                                 })
                                         }}>
 

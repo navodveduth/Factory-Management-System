@@ -5,7 +5,7 @@ import { Header,Navbar, Footer, Sidebar, ThemeSettings } from '../../components'
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { useStateContext } from '../../contexts/ContextProvider';
-
+import Swal from "sweetalert2";
 
 function SalesUpdate() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
@@ -118,7 +118,14 @@ function SalesUpdate() {
 
                                           await axios.put(`http://localhost:8070/sales/update/` + id, newOrder)
                                               .then((res)=>{
-                                                  alert("Order Details Updated!");
+                                                Swal.fire({  
+                                                    icon: 'success',
+                                                    title: 'Data Successfully Updated',
+                                                    color: '#f8f9fa',
+                                                    background: '#6c757d',
+                                                    showConfirmButton: false,
+                                                    timer: 2000
+                                                  })
                                               navigate('/SalesViewAll');
                                               })
                                               .catch((err)=>{
