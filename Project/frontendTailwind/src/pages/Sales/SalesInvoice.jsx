@@ -8,7 +8,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-//import { Link } from "react-router-dom"
+import logo from '../../data/logo.png';
 
 function SalesInvoice() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
@@ -164,8 +164,12 @@ function SalesInvoice() {
                                     
                                         <div id="invoiceView" className="border border-black w-3/4 mx-40 mt-8 px-12 bg-white  dark:bg-secondary-dark-bg dark:text-white">
 
+                                        <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                                          <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
+                                        </div>
+
                                           <div className="text-center">
-                                            <p className="pt-7 text-3xl">Lanka MountCastle (Pvt) Ltd</p>
+                                            {/* <p className="pt-7 text-3xl">Lanka MountCastle (Pvt) Ltd</p> */}
                                             <p className="text-xl mt-2">Lanka MountCastle (Pvt) Ltd,</p>
                                             <p className="text-xl">No.124, Hendala, Wattala</p>
                                             <p>011 2942 672</p>

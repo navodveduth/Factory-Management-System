@@ -5,7 +5,7 @@ import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings, Header } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { useStateContext } from '../../contexts/ContextProvider';
-
+import Swal from "sweetalert2";
 
 function CustomerUpdate() {
 
@@ -110,7 +110,14 @@ function CustomerUpdate() {
 
                         await axios.put(`http://localhost:8070/customer/update/` + id, newCustomer)
                             .then((res)=>{
-                                alert("Customer Details Updated!");
+                                Swal.fire({  
+                                    icon: 'success',
+                                    title: 'Data Successfully Updated',
+                                    color: '#f8f9fa',
+                                    background: '#6c757d',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                  })
                             navigate('/CustomerViewAll');
                             })
                             .catch((err)=>{

@@ -130,7 +130,6 @@ function StockUtilUpdate() {
 
                                             await axios.put("http://localhost:8070/stockUtilisation/update/" + id, newStockUtil)
                                                 .then((res) => {
-                                                    alert("Data updated successfully");
                                                     Swal.fire({  
                                                         icon: 'success',
                                                         title: 'Data Successfully Updated',

@@ -5,6 +5,7 @@ import { Header } from '../../components';
 import { FiUser } from 'react-icons/fi';
 import { DashTopBox, DashTopButton, } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
+import Swal from 'sweetalert2';
 
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
@@ -193,18 +194,9 @@ function StockBreakdownUpdate() {
                                                 .catch((err) => {
                                                     console.log(err);
                                                     alert("ERROR: Could not update stock");
-                                                    navigate('/StockBreakdownUpdate' + id);
+                                                    navigate('/StockBreakdownUpdate/' + id);
                                                 })
 
-                                            //     await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
-                                            //         alert("Data saved successfully");
-                                            //         navigate('/Stock');
-
-                                            //     }).catch((err) => {
-                                            //         console.log(err);
-                                            //         alert("ERROR: Could not add stock");
-                                            //         navigate('/StockUpdate');
-                                            //     })
                                         }}>
 
                                             <div className="mb-3">

@@ -9,6 +9,9 @@ import Swal from 'sweetalert2';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import logo from '../../data/logo.png';
+import { jsPDF } from "jspdf";
+
 
 
 function StockViewDateRangePDF() {
@@ -64,6 +67,11 @@ function StockViewDateRangePDF() {
             pdf.save("stocksUtil_" + date + ".pdf");
         });
     };
+
+    //getDAte
+    const current = new Date();
+    const currentdate = `${current.getFullYear()}-${current.getMonth() + 1}-${current.getDate()}`;
+
 
     useEffect(() => { //useEffect is used to call the function getStock
         getStock();
@@ -189,9 +197,9 @@ function StockViewDateRangePDF() {
                                                                 stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                     totAdds += stockUtil.quantity
                                                                     if (stockUtil.stockCategory === "Raw materials")
-                                                                        totRM += parseFloat((stockUtil.quantity * stockUtil.unitPrice));
+                                                                        totRM += (stockUtil.quantity * stockUtil.unitPrice);
                                                                     if (stockUtil.stockCategory === "Work in progress")
-                                                                        totWIP += parseFloat((stockUtil.quantity * stockUtil.unitPrice));
+                                                                        totWIP += (stockUtil.quantity * stockUtil.unitPrice);
                                                                     price = stockUtil.unitPrice
                                                                 })
                                                         }
@@ -200,9 +208,9 @@ function StockViewDateRangePDF() {
                                                                 stockUtil.stockCode == data.stockCode && stockUtil.firstPurchaseDate === data.firstPurchaseDate).map((stockUtil) => {
                                                                     totIssues += stockUtil.quantity
                                                                     if (stockUtil.stockCategory === "Raw materials")
-                                                                        totRM -= parseFloat((stockUtil.quantity * stockUtil.unitPrice));
+                                                                        totRM -= (stockUtil.quantity * stockUtil.unitPrice);
                                                                     if (stockUtil.stockCategory === "Work in progress")
-                                                                        totWIP -= parseFloat((stockUtil.quantity * stockUtil.unitPrice));
+                                                                        totWIP -= (stockUtil.quantity * stockUtil.unitPrice);
                                                                 })
                                                         }
 

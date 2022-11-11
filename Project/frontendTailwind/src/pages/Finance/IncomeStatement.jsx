@@ -11,6 +11,7 @@ import { FiSettings } from 'react-icons/fi';
 import {DateRangePickerComponent} from '@syncfusion/ej2-react-calendars' // this code needed for the datesort function
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import { IncomeStatementMonthly } from '../../components';
 
 const IncomeStatement = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
@@ -267,7 +268,7 @@ const IncomeStatement = () => {
   var totalRevenue = revenueTotal+saleTotal
   var grossProfit = formatter.format(saleTotal-productionTotal-purchasesTotal);
   var nettProfit = saleTotal-totalCost;
-  
+
   if(nettProfit < 0){
     nettProfit = nettProfit * (-1); 
     nettProfit = "("+formatter.format(nettProfit)+")";
@@ -360,7 +361,7 @@ const IncomeStatement = () => {
                                   </div>
                               </div>
                               
-                              <div className="block w-full overflow-x-auto rounded-lg">
+                            <div className="block w-full overflow-x-auto rounded-lg">
                               <table className="w-full rounded-lg">
                                 <thead>
                                   <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800 dark:text-white">
@@ -417,6 +418,9 @@ const IncomeStatement = () => {
                           </div>
                         </div>
                           {/* end */}                            
+                        </div>
+                        <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
+                        <IncomeStatementMonthly/>
                         </div>
                         <Footer />
                     </div>  
