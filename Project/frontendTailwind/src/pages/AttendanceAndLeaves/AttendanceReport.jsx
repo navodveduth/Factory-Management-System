@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { jsPDF } from "jspdf";
+import Swal from "sweetalert2";
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
-
+import { jsPDF } from "jspdf";
 import { useStateContext } from '../../contexts/ContextProvider';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import logo from '../../data/logo.png';
+import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 
 
 const AttendanceReport = () => {
 
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
   const [searchTerm, setSearchTerm] = useState("");
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
@@ -49,6 +52,33 @@ const AttendanceReport = () => {
         pdf.save("Attendance Report.pdf");
        });
   };
+  const handleDateChange = (e) => {
+    if(e.value) {
+        const date = e.target.value;
+        const month = date.getMonth();
+        const year = date.getFullYear();
+        setMonth(month);
+        setYear(year);
+    }
+    else {
+        setMonth("");
+        setYear("")
+    }
+}
+const downloadConf = ()=>{
+  Swal.fire({
+    title: 'Downloading!',
+    text: "Your download has begun!",
+    icon: 'success',
+    showCancelButton: false,
+    color: '#f8f9fa',
+    background: '#6c757d',
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'OK!'
+  })
+};
+
 
   return (
     <div>
@@ -115,8 +145,16 @@ const AttendanceReport = () => {
                                     }} />
                                   </div>
                                 <div className="mr-0 ml-auto">
-                                  <button onClick={createPDF} type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download Report</button>
+                                  <button onClick={()=>{createPDF(); downloadConf();}} type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download Report</button>
                                 </div>
+                              </div>
+                              <div className=" flex items-center mb-5 ">
+                                  <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
+                                    <DatePickerComponent  placeholder="Select a month " start="Year" depth="Year" format="MMM yyyy" onChange={handleDateChange} />
+                                  </div>
+                                  <div className="ml-5">
+                                    <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={handleDateChange}>Filter</button>
+                                  </div>
                               </div>
 
                               <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
@@ -153,7 +191,14 @@ const AttendanceReport = () => {
                                   </thead>
 
                                   <tbody>
-                                  {attendance.filter((data) => {
+                                  {attendance.filter((leaves) => {
+                                        if (month == "" && year == ""){
+                                            return leaves
+                                        }else if (month == new Date(leaves.employeeInTime).getMonth() && year == new Date(leaves.employeeInTime).getFullYear()){
+                                            return leaves
+                                        }
+                                    }).
+                                    filter((data) => {
                                       const date = new Date(data.employeeInTime).toISOString().split('T')[0];
                                       const inTime = new Date(data.employeeInTime).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
                                       const outTime = new Date(data.employeeOutTime).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });

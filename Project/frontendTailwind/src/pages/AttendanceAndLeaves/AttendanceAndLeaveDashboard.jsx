@@ -333,7 +333,18 @@ const AttendanceAndLeaveDashboard = () => {
                                       if(date == new Date().toISOString().split('T')[0]){
                                           return data;
                                     }
-                                    }).map((data, key) => (
+                                    }).map((data, key) =>  {
+                                      var datacolor = "text-black";
+                                        if (data.leaveStatus == "Approved") {
+                                            datacolor = "text-teal-600 font-semibold";
+                                        }
+                                        else if(data.leaveStatus == "Rejected"){
+                                            datacolor = "text-red-400 font-bold";
+                                        }
+                                        else {
+                                            datacolor = "text-yellow-400 font-bold";
+                                        }
+                                      return (
                                         <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                                             <TableData value={data.employeeNumber} />
                                             <TableData value={data.employeeDetails.map((data3) => {
@@ -347,7 +358,7 @@ const AttendanceAndLeaveDashboard = () => {
                                             <TableData value={new Date(data.leaveStartDate).toISOString().split('T')[0]} />
                                             <TableData value={new Date(data.leaveEndDate).toISOString().split('T')[0]} />
                                             <TableData value={data.leaveReason} />
-                                            <TableData value={data.leaveStatus} />
+                                            <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.leaveStatus} </td>
 
                                             <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
                                               <Link to={`/LeaveUpdate/${data._id}`}>
@@ -370,7 +381,8 @@ const AttendanceAndLeaveDashboard = () => {
                                               </button>
                                             </td>
                                         </tr>
-                                    ))}
+                                      )
+                                      })}
                                     </tbody>
                                 </table>
                               </div>

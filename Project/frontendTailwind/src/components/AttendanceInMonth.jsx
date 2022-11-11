@@ -14,7 +14,7 @@ const AttendanceInMonth = ({employeeNumber}) => {
   const tooltip = { enable: true, shared: false };
 
   const primaryYAxis = { labelFormat: '{value} Hours', 
-                          title: "Working Hours", 
+                          title: "Total Hours Worked", 
                           labelStyle: { 
                             color: currentMode === 'Dark' ? '#e9ecef' : '#343a40'}, 
                           titleStyle: { 
