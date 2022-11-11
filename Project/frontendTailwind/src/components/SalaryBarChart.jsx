@@ -30,80 +30,37 @@ const between50and150 = sal.filter((sal) => (sal.employeeIncentive + sal.employe
 const over150 = sal.filter((sal) => (sal.employeeIncentive + sal.employeeAllowance + sal.employeeBasicSalary) > 150000).length;
     
 const barPrimaryXAxis = {
-    valueType: 'Category',
-    interval: 1,
-    majorGridLines: { width: 0 },
+  valueType: 'Category', 
+  majorGridLines: { width: 0 } ,
+  title: 'Salary Range',
+  labelStyle: { 
+      color: currentMode === 'Dark' ? '#e9ecef' : '#343a40'}, 
+  titleStyle: { 
+      color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
+      fontSize: '16px',
+      fontWeight: 'bold'}
     };
     const barPrimaryYAxis = {
-    majorGridLines: { width: 0 },   
-    majorTickLines: { width: 0 },
-    lineStyle: { width: 0 },
-    labelStyle: { color: 'transparent' },
+      labelFormat: '{value} employees', 
+      title : "No. of Employees",
+      interval: 1,
+      labelStyle: { 
+          color: currentMode === 'Dark' ? '#e9ecef' : '#343a40'}, 
+      titleStyle: { 
+          color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
+          fontSize: '16px',
+          fontWeight: 'bold'},
     };
 
     const barChartData = [
-        [
-          { x: 'Under 50,000 LKR ', y: under50 },
-        ],
-        [
-          { x: 'Between 50,001 LKR & 250,000 LKR', y: between50and150 },
-        ],
-        [
-          { x: 'Between 250,001 LKR & 500,000 LKR', y: over150 },
-        ],
-        [
-          { x: 'Over 500,001 LKR', y: over150 },
-        ],
-      ]
-    
-      const barCustomSeries = [
-        {
-          dataSource: barChartData[0],
-          xName: 'x',
-          yName: 'y',
-          name: ' < 50,000 LKR',
-          type: 'Column',
-          marker: {
-            dataLabel: {
-              visible: false,
-              position: 'Top',
-              font: { fontWeight: '600', color: '#ffffff' },
-            },
-          },
-        },
-        {
-          dataSource: barChartData[1],
-          xName: 'x',
-          yName: 'y',
-          name: '50,000 LKR - 150,000 LKR',
-          type: 'Column',
-          marker: {
-            dataLabel: {
-              visible: false,
-              position: 'Top',
-              font: { fontWeight: '600', color: '#ffffff' },
-            },
-          },
-        },
-        {
-          dataSource: barChartData[2],
-          xName: 'x',
-          yName: 'y',
-          name: '> 150,000 LKR',
-          type: 'Column',
-          marker: {
-            dataLabel: {
-              visible: false,
-              position: 'Top',
-              font: { fontWeight: '600', color: '#ffffff' },
-            },
-          },
-        },
+          { x: 'Under 50,000 LKR ', y: under50, color: '#004777' },
+          { x: 'Between 50,001 LKR & 250,000 LKR', y: between50and150, color: '#A30000' },
+          { x: 'Between 250,001 LKR & 500,000 LKR', y: over150, color: '#FF7700' },
+          { x: 'Over 500,001 LKR', y: over150, color: '#EAD94C' },
       ];
-    
-    
+
       return (
-        <div className="m-0 md:m-10 mt-0 p-0 max-h-21 bg-white dark:bg-secondary-dark-bg rounded-3xl">
+        <div>
           <ChartsHeader category="Salary Ranges of Employees"  />
           <div className=" w-full">
             <ChartComponent
@@ -111,15 +68,13 @@ const barPrimaryXAxis = {
               id="charts"
               primaryXAxis={barPrimaryXAxis}
               primaryYAxis={barPrimaryYAxis}
-              chartArea={{ border: { width: 0 } }}
               tooltip={{ enable: true }}
-              background={currentMode === 'Dark' ? '#33373E' : '#f3f4f6'}
+              background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'}
               legendSettings={{ background: '#f3f4f6' }}
             >
               <Inject services={[ColumnSeries, Legend, Tooltip, Category, DataLabel]} />
               <SeriesCollectionDirective>
-                {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-                {barCustomSeries.map((item, index) => <SeriesDirective key={index} {...item} />)}
+                <SeriesDirective dataSource={barChartData} xName="x" yName="y" name="Salary Ranges" type="Column" pointColorMapping='color' marker={{ dataLabel: { visible: true, position: 'Top', font: { fontWeight: '600', color: '#ffffff' } } }} />
               </SeriesCollectionDirective>
             </ChartComponent>
           </div>
