@@ -21,7 +21,7 @@ const AttendanceInMonth = ({employeeNumber}) => {
                           color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
                           fontSize: '16px',
                           fontWeight: 'bold'},
-                          interval: 2,
+                          interval: 5,
                         };
                         
   const primaryXAxis = { valueType: 'Category', 
@@ -57,14 +57,10 @@ const AttendanceInMonth = ({employeeNumber}) => {
         setMonth(months);
         setYear(years);
     }
-    else {
-        setMonth('');
-        setYear('');
-    }
   }
 
   const employeeAttendaceByMonth = attendance.filter((item) => {
-    return new Date(item.employeeInTime).getFullYear() == year && new Date(item.employeeInTime).getMonth() == (month);
+    return new Date(item.employeeInTime).getFullYear() == year && new Date(item.employeeInTime).getMonth() == month;
   });
 
   const arrayOfDatesforMonth = month => {
@@ -79,8 +75,6 @@ const AttendanceInMonth = ({employeeNumber}) => {
 
   //assign working hours to each date
   const workingHoursWithDate = arrayOfDatesforMonth(month).map((date) => {
-    const dateInTime = new Date(year, month, date).getTime();
-    const dateOutTime = new Date(year, month, date + 1).getTime();
     const employeeAttendanceByDate = employeeAttendaceByMonth.filter((item) => {
       return new Date(item.employeeInTime).getDate() == date;
     });
@@ -105,13 +99,13 @@ const AttendanceInMonth = ({employeeNumber}) => {
 
   return (
     <div>
-      <ChartsHeader category="Chart" title="Attendance vs Leaves" />
+      <ChartsHeader category="Chart" title="Working hours distribution" />
       <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
         <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
           <DatePickerComponent  placeholder="Select a month " start="Year" depth="Year" format="MMM yyyy" onChange={handleDateChange} />
         </div>
         <div className="ml-5">
-            <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={handleDateChange}>Filter</button>
+            <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500">Filter</button>
         </div>
       </div>
       <div id='chart'>
