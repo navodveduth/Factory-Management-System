@@ -8,11 +8,14 @@ import TableHeader from '../../components/Table/TableHeader';
 import { useStateContext } from '../../contexts/ContextProvider';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import logo from '../../data/logo.png';
+
 
 
 const EmployeeReport = () => {
 
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
+    const [searchTerm, setSearchTerm] = useState("");
 
     const [employee, setEmployee] = useState([]);
 
@@ -44,6 +47,7 @@ const EmployeeReport = () => {
             pdf.save("Employees Report.pdf");
         });
     };
+    
 
     return (
     <div>
@@ -103,12 +107,37 @@ const EmployeeReport = () => {
                                     <Header category="Report" title="Employees" />
 
                                     <div className=" flex items-center mb-5 ">
+                                        <div>
+                                            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
+                                            onChange={(e) => {
+                                                setSearchTerm(e.target.value);
+                                            }} />
+                                        </div>
                                         <div className="mr-0 ml-auto">
                                             <button onClick={createPDF} type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download Report</button>
                                         </div>
                                     </div>
 
-                                    <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
+                                    <div id="tableContainer">
+                                        <div className="block w-full overflow-x-auto rounded-lg">
+                                            <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                                            <img
+                                                className="h-200 w-400 mb-5"
+                                                src={logo}
+                                                alt="logo"
+                                            />
+                                            </div>
+
+                                            <div className="text-center mb-10">
+                                            <p className="text-xl mt-2">
+                                                Lanka MountCastle (Pvt) Ltd,
+                                            </p>
+                                            <p className="text-xl">No.124, Hendala, Wattala</p>
+                                            <p>011 2942 672</p>
+                                            </div>
+                                            <p className="text-right text-xl mt-2 mb-3">
+                                            Generated On : {new Date().toLocaleDateString()}
+                                            </p>
                                         <table className="w-full rounded-lg">
                                             <thead>
                                                 <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
@@ -122,7 +151,19 @@ const EmployeeReport = () => {
                                             </thead>
 
                                             <tbody>
-                                                {employee.map((data, key) => {
+                                            {employee.filter((data) => {
+                                                    if(searchTerm == ""){
+                                                        return data;
+                                                    }else if((data.employeeNumber.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                                        (data.employeeFullName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                                        (data.employeeNIC.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                                        (data.employeeGender.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                                        (data.employeeDesignation.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                                        (data.employeeDepartment.toLowerCase().includes(searchTerm.toLowerCase()))) 
+                                                    {
+                                                        return data;
+                                                            }
+                                                    }).map((data, key) => {
                                                     return(
                                                         <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
                                                             <TableData value={data.employeeNumber} />
@@ -137,6 +178,7 @@ const EmployeeReport = () => {
                                                 })}
                                             </tbody>
                                         </table>
+                                    </div>
                                     </div>
                                 </div>      
                             </div>

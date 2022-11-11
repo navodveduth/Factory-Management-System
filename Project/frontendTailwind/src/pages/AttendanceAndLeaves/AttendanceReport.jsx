@@ -8,10 +8,13 @@ import TableHeader from '../../components/Table/TableHeader';
 import { useStateContext } from '../../contexts/ContextProvider';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import logo from '../../data/logo.png';
+
 
 const AttendanceReport = () => {
 
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
@@ -40,7 +43,7 @@ const AttendanceReport = () => {
   }, []);
 
   const createPDF = () => {
-    const pdf = new jsPDF("landscape", "px", "a1",false);
+    const pdf = new jsPDF("landscape", "px", "a1",false); // 
     const data = document.querySelector("#tableContainer");
     pdf.html(data).then(() => {
         pdf.save("Attendance Report.pdf");
@@ -105,31 +108,82 @@ const AttendanceReport = () => {
                               <Header category="Report" title="Attendance" />
 
                               <div className=" flex items-center mb-5 ">
+                                  <div>
+                                    <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
+                                    onChange={(e) => {
+                                      setSearchTerm(e.target.value);
+                                    }} />
+                                  </div>
                                 <div className="mr-0 ml-auto">
                                   <button onClick={createPDF} type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download Report</button>
                                 </div>
                               </div>
 
                               <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
+                              <div id="tableContainer">
+                                <div className="block w-full overflow-x-auto rounded-lg">
+                                  <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                                    <img
+                                      className="h-200 w-400 mb-5"
+                                      src={logo}
+                                      alt="logo"
+                                    />
+                                  </div>
+
+                                  <div className="text-center mb-10">
+                                    <p className="text-xl mt-2">
+                                      Lanka MountCastle (Pvt) Ltd,
+                                    </p>
+                                    <p className="text-xl">No.124, Hendala, Wattala</p>
+                                    <p>011 2942 672</p>
+                                  </div>
+                                  <p className="text-right text-xl mt-2 mb-3">
+                                    Generated On : {new Date().toLocaleDateString()}
+                                  </p>
                                 <table className="w-full rounded-lg">
                                   <thead>
                                     <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                                      <TableHeader value="Employee ID" />
-                                      <TableHeader value="Date" />
-                                      <TableHeader value="In-Time" />
-                                      <TableHeader value="Out-Time" />
-                                      <TableHeader value="Status" />
+                                        <TableHeader value="Employee ID" />
+                                        <TableHeader value="Date" />
+                                        <TableHeader value="In-Time" />
+                                        <TableHeader value="Out-Time" />
+                                        <TableHeader value="Total Hours" />
+                                        <TableHeader value="Status" />
                                       </tr>
                                   </thead>
 
                                   <tbody>
-                                    {attendance.map((data, key) => {
+                                  {attendance.filter((data) => {
+                                      const date = new Date(data.employeeInTime).toISOString().split('T')[0];
+                                      const inTime = new Date(data.employeeInTime).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+                                      const outTime = new Date(data.employeeOutTime).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+                                        if(searchTerm == ""){
+                                          return data;
+                                        }else if((data.employeeNumber.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                          (date.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                          (inTime.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                          (outTime.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                          (data.attendanceStatus.toLowerCase().includes(searchTerm.toLowerCase()))) 
+                                        {
+                                          return data;
+                                              }
+                                      }).map((data, key) => {
+
+                                        var datacolor = "text-black";
+                                        if (data.employeeTotalHours >= 8) {
+                                            datacolor = "text-teal-600 font-semibold";
+                                        }
+                                        else {
+                                            datacolor = "text-red-400 font-bold";
+                                        }
+
                                       return (
                                         <tr key={key} className="text-sm h-10 border dark:border-slate-600">
                                           <TableData value={data.employeeNumber} />
                                           <TableData value={new Date(data.employeeInTime).toISOString().split('T')[0]} />
                                           <TableData value={new Date(data.employeeInTime).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })} />
                                           <TableData value={new Date(data.employeeOutTime).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })} />
+                                          <td className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.employeeTotalHours} </td>
                                           <TableData value={data.attendanceStatus} />
                                         </tr>
                                       )
@@ -138,6 +192,8 @@ const AttendanceReport = () => {
                                 </table>
                               </div>
                             </div>
+                          </div>
+                          </div>
                         </div>
                         <Footer />
                     </div>  

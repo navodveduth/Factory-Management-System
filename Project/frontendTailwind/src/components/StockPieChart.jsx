@@ -7,6 +7,18 @@ import { useStateContext } from '../contexts/ContextProvider';
 const StockPieChart = () => {
     const { currentMode } = useStateContext();
     const [stock, setStock] = useState([]);
+    const [stockUtil,setStockUtil] = useState([]);
+
+    const getStockUtil = async () => {
+      axios
+        .get('http://localhost:8070/stockUtilisation')
+        .then((res) => {
+          setStockUtil(res.data);
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    };
 
     const getStock = async () => {
       axios
@@ -21,17 +33,21 @@ const StockPieChart = () => {
   
     useEffect(() => {
       getStock();
+      getStockUtil();
     }, []);
+
+    const currentDate = new Date().toISOString().split('T')[0];
+    console.log(currentDate);
   
-    const stockCnt = stock.length;
-    const shirts= stock.filter((stk) => stk.stockName === 'Shirts').length;
-    const tshirts= stock.filter((stk) => stk.stockName === 'T-Shirts').length;
-    const caps= stock.filter((stk) => stk.stockName === 'Caps').length;
-    const blouse= stock.filter((stk) => stk.stockName === 'Blouse').length;
-    const pants= stock.filter((stk) => stk.stockName === 'Pants').length;
-    const jeans= stock.filter((stk) => stk.stockName === 'Jeans').length;
-    const shorts= stock.filter((stk) => stk.stockName === 'Shorts').length;
-    const skirts= stock.filter((stk) => stk.stockName === 'Skirts').length;
+    const stockCnt = stockUtil.length;
+    const shirts= stockUtil.filter((stk) => stk.stockName === 'Shirts' && new Date(stk.date).toISOString().split('T')[0] === currentDate).length;
+    const tshirts= stockUtil.filter((stk) => stk.stockName === 'T-Shirts' && new Date(stk.date).toISOString().split('T')[0] === currentDate).length;
+    const caps= stockUtil.filter((stk) => stk.stockName === 'Caps' && new Date(stk.date).toISOString().split('T')[0] === currentDate).length;
+    const blouse= stockUtil.filter((stk) => stk.stockName === 'Blouse' && new Date(stk.date).toISOString().split('T')[0] === currentDate).length;
+    const pants= stockUtil.filter((stk) => stk.stockName === 'Pants' && new Date(stk.date).toISOString().split('T')[0] === currentDate).length;
+    const jeans= stockUtil.filter((stk) => stk.stockName === 'Jeans' && new Date(stk.date).toISOString().split('T')[0] === currentDate).length;
+    const shorts= stockUtil.filter((stk) => stk.stockName === 'Shorts' && new Date(stk.date).toISOString().split('T')[0] === currentDate).length;
+    const skirts= stockUtil.filter((stk) => stk.stockName === 'Skirts' && new Date(stk.date).toISOString().split('T')[0] === currentDate).length;
 
     const colors = ['#258EA6', '#c40bde', '#0bdeb8', '#FF8C00', '#4B0082','#ded90b','#df9776', '#94e1ab'];
 
