@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {jsPDF} from "jspdf";
 import TableHeader from "../../components/Table/TableHeader";
 import TableData from '../../components/Table/TableData';
@@ -10,22 +10,22 @@ import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import logo from '../../data/logo.png';
 
-export default function SalesPreview(){
-  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
+export default function SalesPreviewByDate(){
+    const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
-const [sales, setSale] = useState([]);
+    const [sales, setSale] = useState([]);
+    const location = useLocation();
 
-
-const getSale = async () => {
-  axios
-    .get(`http://localhost:8070/sales/`)
-    .then((res) => {
-      setSale(res.data);
-    })
-    .catch((err) => {
-      alert(err.message);
-    });
-};
+    const getSale = async () => {
+    axios
+        .get('http://localhost:8070/sales/date/'+location.state.DS+'/'+location.state.DE)
+        .then((res) => {
+        setSale(res.data)
+        })
+        .catch((err) => {
+        alert(err.message)
+        })
+    }
 
 useEffect(() => {
   getSale();
@@ -53,7 +53,8 @@ const formatter = new Intl.NumberFormat('en-US', {
   currencyDisplay: 'symbol'
 })
 
-//getDate
+
+//getDAte
       const current = new Date();
       const currentdate = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}`;
 
@@ -106,7 +107,7 @@ return (
                       
                       
                     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                      <Header title="Sales Invoices Report" />
+                      <Header title="Sales Invoices" />
                       
                       <button onClick={createPDF} type="button"  className="font-bold py-1 px-4 rounded-full m-3 text-white absolute top-40 right-20 hover:bg-slate-700 bg-slate-500" >Download Report</button>
 
@@ -125,7 +126,6 @@ return (
                           <p className="text-xl">No.124, Hendala, Wattala</p>
                           <p>011 2942 672</p>
                         </div>
-
                         <p className="text-right text-xl mt-2 mb-3">Generated On : {currentdate}</p>
                           <table className="w-full rounded-lg">
                             <thead>
@@ -133,7 +133,7 @@ return (
                               <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
                                 <TableHeader value="Invoice No." />
                                 <TableHeader value="Date of Order" />
-                                <TableHeader value="Customer Name" />
+                                <TableHeader value="Customer ID" />
                                 <TableHeader value="Item Name" />
                                 <TableHeader value="Quantity" />
                                 <TableHeader value="Total Amount" />
@@ -143,22 +143,13 @@ return (
                             <tbody>
 
                           {sales.map((data) => {
-                                let formattedAmount = formatter.format(data.totalAmount)
-
+                            let formattedAmount = formatter.format(data.totalAmount)
                                     return(
-
                                 <tr className="text-sm h-10 border dark:border-slate-600" >
 
                                   <TableData value={data.invoiceNo} />
                                   <TableData value={new Date(data.orderDate).toISOString().split('T')[0]} />
-                                  <TableData value={data.customerDetailss.map((data3) => {
-                                                return (
-                                                  <div>
-                                                    {data3.customerName}
-                                                  </div>
-                                                )
-                                              
-                                            })} />
+                                  <TableData value={data.customerID}/>
                                   <TableData value={data.itemName} />
                                   <TableData value={data.quantity} />
                                   <TableData value={formattedAmount} />
@@ -168,6 +159,7 @@ return (
                               )})}
                             </tbody>
                           </table>
+                          <br></br>
                     </div>
 
                   </div>
