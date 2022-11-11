@@ -26,7 +26,7 @@ function AddStockForRequisition() {
     const [quantity, setQuantity] = useState('');
     var [date, setDate] = useState('');
     var [status, setStatus] = useState('');
-    const [ stock, setStock] = useState([]);
+    const [stock, setStock] = useState([]);
     //gets the current date
     var currentDate = new Date().toISOString().split('T')[0];
     console.log(currentDate)
@@ -34,36 +34,36 @@ function AddStockForRequisition() {
     const { id } = useParams();
 
     var minDate = null;
- 
+
     console.log("id", id)
     //stock request
-    const getStock =async  () => {
+    const getStock = async () => {
         await axios.get(`http://localhost:8070/stock/ViewStock/${id}`).then((res) => {
             console.log("data", res.data)
             setStock(res.data);
-        }).catch(()=>{
-//
+        }).catch(() => {
+            //
         })
-        
+
     }
     const name = stockName;
     console.log(name)
 
-    async function confirmNull(){
-        Swal.fire({  
+    async function confirmNull() {
+        Swal.fire({
             icon: 'success',
             title: 'Stock is unavailable. Please make a purchase order request',
             color: '#f8f9fa',
             background: '#6c757d',
             showConfirmButton: false,
             timer: 2000
-          })
+        })
         navigate('/PendingStockAdd')
     }
 
     useEffect(() => { //useEffect is used to call the function getStock
-        if (id === "null"){
-        confirmNull();
+        if (id === "null") {
+            confirmNull();
         }
         getStock();
     }, [id])
@@ -135,15 +135,15 @@ function AddStockForRequisition() {
                             {themeSettings && <ThemeSettings />}
                             <div>
 
-                            <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+                                <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
                                     <Header category="Form" title="Stock Purchase Request" />
                                     <div className=" flex items-center justify-center ">
 
                                         <form onSubmit={async (e) => {
                                             e.preventDefault();
 
-                                            {status = "Processing"}
-
+                                            { status = "Processing" }
+                                            { date = currentDate}
                                             const newStock = {
                                                 stockCode,
                                                 stockName,
@@ -156,14 +156,14 @@ function AddStockForRequisition() {
 
                                             console.log(newStock)
                                             await axios.post("http://localhost:8070/pendingStock/create", newStock).then(() => {
-                                                Swal.fire({  
+                                                Swal.fire({
                                                     icon: 'success',
                                                     title: 'Data Successfully Saved',
                                                     color: '#f8f9fa',
                                                     background: '#6c757d',
                                                     showConfirmButton: false,
                                                     timer: 2000
-                                                  })
+                                                })
                                                 navigate('/ProcessingRequest');
 
                                             }).catch((err) => {
@@ -175,20 +175,20 @@ function AddStockForRequisition() {
 
                                             <div className="mb-3">
                                                 <label for="stockCode" className="form-label">Stock Code: </label>
-                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="code" 
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="code"
                                                     value={stockCode} readOnly />
                                             </div>
 
                                             <div className="mb-3">
                                                 <label for="stockName" className="form-label">Stock Name: </label>
-                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name" 
-                                                   value={stockName} readOnly />
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="name"
+                                                    value={stockName} readOnly />
                                             </div>
 
                                             <div className="mb-3">
                                                 <label for="stockCategory" className="form-label">Category: </label>
-                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="cat" 
-                                                   value={stockCategory} readOnly />
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="cat"
+                                                    value={stockCategory} readOnly />
                                             </div>
 
                                             {/* max uses the above date variable and sets the max date to select from*/}
@@ -196,9 +196,9 @@ function AddStockForRequisition() {
                                                 <label for="date" className="form-label">Date: </label>
                                                 <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date"
                                                     // min={minDate} max={currentDate} 
-                                                    value={currentDate} readOnly 
-                                                    //onChange={(e) => {setDate(e.target.value);}} 
-                                                    />
+                                                    value={currentDate} readOnly
+                                                //onChange={(e) => {setDate(e.target.value);}} 
+                                                />
                                             </div>
 
                                             <div className="mb-3">
@@ -211,8 +211,8 @@ function AddStockForRequisition() {
 
                                             <div className="mb-3">
                                                 <label for="status" className="form-label">Status: </label>
-                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="stat" 
-                                                   value={"Processing"} readOnly />
+                                                <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="stat"
+                                                    value={"Processing"} readOnly />
                                             </div>
 
                                             <button type="submit" className="bg-red-800 text-lg text-white left-10 p-3 my-4 rounded-lg hover:bg-red-600">Add stock request</button>
