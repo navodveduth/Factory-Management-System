@@ -44,7 +44,7 @@ export default function SalesMonthlyChart() {
     var salesLen = sales.length;
 
     for (let index = 0; index < salesLen; index++) {
-      console.log(new Date(sales[index].orderDate).getMonth());
+      
       switch(new Date(sales[index].orderDate).getMonth()){
       case(0):
         janTotal = janTotal + sales[index].totalAmount;
