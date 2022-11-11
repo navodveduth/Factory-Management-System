@@ -24,7 +24,7 @@ function AddStockForRequisition() {
     var description = null;
 
     const [quantity, setQuantity] = useState('');
-    const [date, setDate] = useState('');
+    var [date, setDate] = useState('');
     var [status, setStatus] = useState('');
     const [ stock, setStock] = useState([]);
     //gets the current date
@@ -143,6 +143,7 @@ function AddStockForRequisition() {
                                             e.preventDefault();
 
                                             {status = "Processing"}
+                                            {date = currentDate}
                                             const newStock = {
                                                 stockCode,
                                                 stockName,
@@ -196,7 +197,7 @@ function AddStockForRequisition() {
                                                 <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black" id="date"
                                                     // min={minDate} max={currentDate} 
                                                     value={currentDate} readOnly 
-                                                    // onChange={(e) => {setDate(e.target.value);}} 
+                                                    //onChange={(e) => {setDate(e.target.value);}} 
                                                     />
                                             </div>
 

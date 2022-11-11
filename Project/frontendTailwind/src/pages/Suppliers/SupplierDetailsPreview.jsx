@@ -5,7 +5,7 @@ import { Header } from '../../components';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
 import {jsPDF} from "jspdf";
-
+import logo from '../../data/logo.png';
 
 import { useStateContext } from '../../contexts/ContextProvider';
 import { FiSettings } from 'react-icons/fi';
@@ -47,12 +47,16 @@ const SupplierDetailsPreview = () => {
 
 
 		const createPDF = () => {
+			const toDayte = new Date(Date.now()).toISOString().split('T')[0];
             const pdf = new jsPDF("landscape", "px", "a1",false);
             const data = document.querySelector("#tableContainer");
             pdf.html(data).then(() => {
                 pdf.save("SupplierDetails.pdf");
                });
         };
+
+		const current = new Date();
+		const currentdate = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}`;		
 
 		return (
 			<div>
@@ -99,9 +103,7 @@ const SupplierDetailsPreview = () => {
 		
 					<div>
 					  {themeSettings && <ThemeSettings />}
-					  <div>
 
-					  <div>
 			<div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
 				<Header category="Table" title="Supplier Details" />
 
@@ -110,9 +112,24 @@ const SupplierDetailsPreview = () => {
 				 {/* </div> */}
 
 	  
-				<div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
-							<table className="w-full rounded-lg">
-								<thead>
+				 <div id="tableContainer">
+
+<div className="block w-full overflow-x-auto rounded-lg" >
+
+<div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+  <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
+</div>
+
+<div className="text-center mb-10">
+  
+  <p className="text-xl mt-2">Lanka MountCastle (Pvt) Ltd,</p>
+  <p className="text-xl">No.124, Hendala, Wattala</p>
+  <p>011 2942 672</p>
+</div>
+
+<p className="text-right text-xl mt-2 mb-3">Generated On : {currentdate}</p>
+  <table className="w-full rounded-lg">
+	<thead>
 									<tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
 										<TableHeader value="Supplier ID"/>
 										<TableHeader value="Company Name" />
@@ -149,7 +166,7 @@ const SupplierDetailsPreview = () => {
 			  </div>
 			</div>
 		  </div>
-		  	</div>
+
                         <Footer />
                     </div>  
                 </div>
