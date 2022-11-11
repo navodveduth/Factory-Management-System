@@ -125,6 +125,7 @@ return (
                           <p className="text-xl">No.124, Hendala, Wattala</p>
                           <p>011 2942 672</p>
                         </div>
+                        
                         <p className="text-right text-xl mt-2 mb-3">Generated On : {currentdate}</p>
                           <table className="w-full rounded-lg">
                             <thead>

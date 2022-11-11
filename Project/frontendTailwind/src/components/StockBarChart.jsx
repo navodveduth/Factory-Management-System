@@ -59,66 +59,13 @@ const barPrimaryYAxis = {
 }
 
 const barChartData = [
-  [
-    { x: 'Total stock', y: itemCount },
-  ],
-  [
-    { x: 'Raw Materials', y: countRM },
-  ],
-  [
-    { x: 'Work in Progress', y: countWIP },
-  ],
-]
-
-const barCustomSeries = [
-  {
-    dataSource: barChartData[0],
-    xName: 'x',
-    yName: 'y',
-    name: 'Total',
-    type: 'Column',
-    marker: {
-      dataLabel: {
-        visible: false,
-        position: 'Top',
-        font: { fontWeight: '600', color: '#ffffff' },
-      },
-    },
-  },
-  {
-    dataSource: barChartData[1],
-    xName: 'x',
-    yName: 'y',
-    name: 'Raw Materials',
-    type: 'Column',
-    marker: {
-      dataLabel: {
-        visible: false,
-        position: 'Top',
-        font: { fontWeight: '600', color: '#ffffff' },
-      },
-    },
-  },
-  {
-    dataSource: barChartData[2],
-    xName: 'x',
-    yName: 'y',
-    name: 'Work in Progress',
-    type: 'Column',
-    marker: {
-      dataLabel: {
-        visible: false,
-        position: 'Top',
-        font: { fontWeight: '600', color: '#ffffff' },
-      },
-    },
-  },
+    { x: 'Total stock', y: itemCount, color: "#258EA6"},
+    { x: 'Raw Materials', y: countRM, color: "#F3A738" },
+    { x: 'Work in Progress', y: countWIP, color: "#FF5A5F" },
 ];
 
-const colors = ['#258EA6', '#c40bde', '#0bdeb8', '#FF8C00', '#4B0082'];
-
 return (
-  <div className="m-0 md:m-10 mt-0 p-0 max-h-21 bg-white dark:bg-secondary-dark-bg rounded-3xl">
+  <div>
     <ChartsHeader category="Stocks Analysis" />
     <div className=" w-full">
       <ChartComponent
@@ -126,16 +73,13 @@ return (
         id="charts"
         primaryXAxis={barPrimaryXAxis}
         primaryYAxis={barPrimaryYAxis}
-        chartArea={{ border: { width: 2 } }}
         tooltip={{ enable: true }}
-        background={currentMode === 'Dark' ? '#33373E' : '#f3f4f6'}
-        palettes={colors}
+        background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'}
         legendSettings={{ background: '#f3f4f6' }}
       >
         <Inject services={[ColumnSeries, Legend, Tooltip, Category, DataLabel]} />
         <SeriesCollectionDirective>
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-          {barCustomSeries.map((item, index) => <SeriesDirective key={index} {...item} />)}
+          <SeriesDirective dataSource={barChartData} xName='x' yName='y' name='Stock Analysis' type='Column' columnWidth="0.5" pointColorMapping ="color" marker={{ dataLabel: { visible: true, position: 'Top', font: { fontWeight: '600', color: '#ffffff' } } }}/>
         </SeriesCollectionDirective>
       </ChartComponent>
     </div>
