@@ -11,6 +11,7 @@ import { FiSettings } from 'react-icons/fi';
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import Swal from "sweetalert2";
+import logo from '../../data/logo.png';
 
 
 export default function PreviewOrderDateRange(){
@@ -32,6 +33,11 @@ export default function PreviewOrderDateRange(){
           confirmButtonText: 'OK!'
         })
       };
+
+
+      var currentDate = new Date();
+      currentDate = currentDate.toISOString().split('T')[0];
+
 
     const getFinance = async () => {
     axios
@@ -119,6 +125,18 @@ export default function PreviewOrderDateRange(){
                                     {/* </div> */}
                             
                                     <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
+                                    <div id="tableContainer">
+                                        <div className="block w-full overflow-x-auto rounded-lg" >
+                                            <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                                            <img className="h-200 w-400 mb-5" src={logo} alt="logo" />
+                                            </div>
+                                            <div className="text-center mb-10">
+                                        
+                                            <p className="text-xl mt-2">Lanka MountCastle (Pvt) Ltd,</p>
+                                            <p className="text-xl">No.124, Hendala, Wattala</p>
+                                            <p>011 2942 672</p>
+                                            </div>
+                                            <p className="text-right text-xl mt-2 mb-3">Generated On : {currentDate}</p>
                                     <table className="w-full rounded-lg">
                                         <thead>
                                             <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
@@ -144,6 +162,8 @@ export default function PreviewOrderDateRange(){
                                             
                                         </tbody>
                                     </table>
+                                    </div>
+                                    </div>
                                     </div>
                                 </div>
                                 {/* PART AFTER THE RETURN STATEMENT */}

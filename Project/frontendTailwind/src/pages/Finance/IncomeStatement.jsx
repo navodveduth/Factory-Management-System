@@ -345,13 +345,6 @@ const IncomeStatement = () => {
                           <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
 
                             <Header title={`Income Statement from `+dateEnd+` to ` + dateStart} />
-                            <div className=" flex items-center mb-5 ">
-                              <div className="mr-0 ml-auto">
-                                <Link to={"/IncomeStatementPreview"}> {/* change this link your preview page */}
-                                  <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
-                                </Link>
-                              </div>
-                            </div>
                             <div className=" flex items-center mb-5 "> {/* this code needed for the datesort function*/}
                                   <div className=" bg-slate-100 pt-1 rounded-lg px-5 w-56">
                                       <DateRangePickerComponent ref={dateRangeRef}  placeholder="Select a date range"/>
@@ -359,6 +352,11 @@ const IncomeStatement = () => {
                                   <div className="ml-5">
                                       <button type="button"  className="py-2 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={() => filterDate()}>Filter</button>
                                   </div>
+                                <div className="mr-0 ml-auto">
+                                  <Link to={"/IncomeStatementPreview"}> {/* change this link your preview page */}
+                                    <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Generate Report</button>
+                                  </Link>
+                                </div>
                               </div>
                               
                             <div className="block w-full overflow-x-auto rounded-lg">

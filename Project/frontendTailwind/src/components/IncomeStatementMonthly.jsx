@@ -176,6 +176,7 @@ export default function SalesMonthlyChart() {
     var prodLen = prod.length;
 
     for (let index = 0; index < prodLen; index++) {
+      if(prod[index].status === "Costed"){
       switch(new Date(prod[index].requestDate).getMonth()){
       case(0):
         janTotalProduction = janTotalProduction + prod[index].totalCost;
@@ -215,6 +216,7 @@ export default function SalesMonthlyChart() {
         break;
       default:
         break;
+      }
     }
     }
 
@@ -272,7 +274,6 @@ let gross = [
   { month: 'Nov', gross: novTotalGross }, { month: 'Dec', }
 ]
 
-
 const colors = ['#ef476f', '#ffd166', '#06d6a0', '#118ab2', '#e36414'];
 return (
   <>
@@ -280,6 +281,7 @@ return (
   <ChartComponent primaryXAxis={primaryXAxis} primaryYAxis={primaryYAxis} tooltip={tooltip} 
         background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'} palettes={colors} legendSettings={{background: "white"}}>
         <Inject services={[LineSeries, Tooltip, DataLabel, Category, Legend]} />
+
           <SeriesCollectionDirective>
             <SeriesDirective type = "Line" dataSource={data} xName="month" yName="sales"
               name = "Monthly Sales" marker = {{dataLable: {visible: true}, visible: true}}>
