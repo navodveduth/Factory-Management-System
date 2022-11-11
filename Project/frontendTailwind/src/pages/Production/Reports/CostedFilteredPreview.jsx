@@ -51,6 +51,20 @@ export default function CostedFilteredPreview(){
                });
         };
 
+        const downloadConf = ()=>{
+            Swal.fire({
+              title: 'Downloading!',
+              text: "Your download has begun!",
+              icon: 'success',
+              showCancelButton: false,
+              color: '#f8f9fa',
+              background: '#6c757d',
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'OK!'
+            })
+          };
+
         let dateRangeRef = (dateRange) => {
           dateRangeRef = dateRange; // dateRangeRef is a reference to the DateRangePickerComponent
         };
@@ -119,7 +133,7 @@ export default function CostedFilteredPreview(){
                                 <div className=" flex items-center mb-5 ">
                                 
                                 <div className="mr-0 ml-auto">
-                                  <button type="button" onClick={() => createPDF()} className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
+                                  <button type="button" onClick={() =>  {downloadConf(); createPDF();}} className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
                               </div>
 
                                 </div>

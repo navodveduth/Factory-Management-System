@@ -126,6 +126,11 @@ function AttendanceNew() {
                                               
                                           
                                       }}>
+                                        <div className=" flex items-center mb-5 ">
+                                          <div className="mr-0 ml-auto">
+                                              <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={autoCompleteForm} >AutoComplete</button>
+                                          </div>
+                                        </div>
 
                                         <div className="mb-3">
                                           <label className="form-label">Employee Number : </label>
