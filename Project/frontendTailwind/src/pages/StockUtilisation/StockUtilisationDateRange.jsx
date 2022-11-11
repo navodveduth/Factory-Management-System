@@ -42,7 +42,6 @@ function StockUtilisationDateRange() {
     const deleteStockUtil = async (id) => {
         await axios.delete('http://localhost:8070/stockUtilisation/delete/' + id)
             .then(() => {
-                alert("Data deleted successfully");
                 getStockUtil();
             })
             .catch((err) => {
@@ -66,6 +65,8 @@ function StockUtilisationDateRange() {
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
             icon: 'warning',
+            color: '#f8f9fa',
+            background: '#6c757d',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -151,6 +152,13 @@ function StockUtilisationDateRange() {
                                     <Header category="Table" title="Stocks Utilisation" />
 
                                     <div className=" flex items-center mb-5 ">
+
+                                        <div>
+                                            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here"
+                                                onChange={(e) => {
+                                                    setSearchTerm(e.target.value);
+                                                }} />
+                                        </div>
                                         
                                         <div className="mx-3">
                                             <Link to={"/StockUtilisation"}> {/* change this link your previous page */}
@@ -179,7 +187,15 @@ function StockUtilisationDateRange() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {stockUtil.map((data, key) => {//map is used to iterate the array
+                                            {stockUtil.filter((data) => {
+                                                    if (searchTerm == "") {
+                                                        return data;
+                                                    } else if ((data.stockCode.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                                        (data.type.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                                        (data.firstPurchaseDate.toLowerCase().includes(searchTerm.toLowerCase()))) {
+                                                        return data;
+                                                    }
+                                                }).map((data, key) => {//map is used to iterate the array
                                                     const dbDate = new Date(data.date).toISOString().split('T')[0];
                                                     const pfDate = new Date(data.firstPurchaseDate).toISOString().split('T')[0];
 
@@ -208,7 +224,26 @@ function StockUtilisationDateRange() {
                                                             <TableData value={data.quantity} />
                                                             <TableData value={formatter.format(data.totalValue)} />
 
-
+                                                            <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                                                <Link to={`/StockUtilUpdate/${data._id}`}>
+                                                                    <button
+                                                                        type="button"
+                                                                        className="font-bold py-1 px-4 rounded-full mx-3 text-white"
+                                                                        style={{ background: currentColor }}
+                                                                    >
+                                                                        <i className="fas fa-edit" />
+                                                                    </button>
+                                                                </Link>
+                                                                <button
+                                                                    type="button"
+                                                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
+                                                                    onClick={() => {
+                                                                        confirmFunc(data._id);
+                                                                    }}
+                                                                >
+                                                                    <i className="fas fa-trash" />
+                                                                </button>
+                                                            </td>
                                                             
                                                         </tr>
                                                     )

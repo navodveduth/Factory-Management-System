@@ -5,6 +5,7 @@ import { Header } from '../../components';
 import { FiUser } from 'react-icons/fi';
 import { DashTopBox, DashTopButton, } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
+import Swal from 'sweetalert2';
 
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
@@ -134,27 +135,7 @@ function StockAddExisting() {
                                         <form onSubmit={async (e) => {
                                             e.preventDefault();
 
-                                            // var checkExists = "";
-                                            // var checkAddition = 0;
-                                            // var checkIssues = 0;
-
-                                            // {
-                                            //     stock.filter((stock) => stock.stockCode === stockCode).map((stock) => {
-                                            //         checkExists = stock.stockCode,
-                                            //             stockName = stock.stockName,
-                                            //             stockCategory = stock.stockCategory,
-                                            //             firstPurchaseDate = stock.firstPurchaseDate
-
-                                            //         {
-                                            //             if (stock.type === "Additions") {
-                                            //                 { checkAddition = 1 }
-                                            //             } else if (stock.type === "Issues") {
-                                            //                 { checkIssues = 1 }
-                                            //             }
-                                            //         }
-
-                                            //     })
-                                            // }
+                                        
                                            
                                             { totalValue = quantity * unitPrice }
                                             {type = "Additions"}
@@ -171,42 +152,16 @@ function StockAddExisting() {
                                                 totalValue
                                             }
 
-                                            // console.log(newStock)
-                                            // await axios.post("http://localhost:8070/stock/create", newStock).then(() => {
-                                            //     alert("Data saved successfully");
-                                            //     navigate('/StockDashboard');
-
-                                            // }).catch((err) => {
-                                            //     console.log(err);
-                                            //     alert("ERROR: Could not add stock");
-                                            //     navigate('/StockAdd');
-                                            // })
-
-                                            // {
-                                            //     if (checkExists === "") {
-                                            //         alert('Entry does not exist in stock information.For non existing stocks addition, please add from stock information page');
-                                            //         navigate('/StockDashboard')
-                                            //     } else {
-                                            //         // if (checkExists === stockCode && date === currentDate && checkAddition === 1 && checkIssues ===1) {
-
-                                            //         //     alert("An entry with " + stockCode + " and additions and issues already exists for today's date");
-                                            //         //     navigate('/StockUtilisation')
-
-                                            //         // } 
-                                            //         // else if (checkExists === stockCode && date === currentDate && checkAddition === 1) {
-
-                                            //         //     alert("An entry with " + stockCode + " and " + type + " already exists for today's date");
-                                            //         //     navigate('/StockUtilisation')
-
-                                            //         // }
-                                            //         // else if (checkExists === stockCode && date === currentDate && checkIssues === 1) {
-
-                                            //         //     alert("An entry with " + stockCode + " and " + type + " already exists for today's date");
-                                            //         //     navigate('/StockUtilisation')
-
-                                            //         // }else {
+                                           
                                             await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
-                                                alert("Data saved successfully");
+                                                Swal.fire({  
+                                                    icon: 'success',
+                                                    title: 'Data Successfully Saved',
+                                                    color: '#f8f9fa',
+                                                    background: '#6c757d',
+                                                    showConfirmButton: false,
+                                                    timer: 2000
+                                                  })
                                                 navigate('/StockUtilisation');
 
                                             }).catch((err) => {
@@ -214,9 +169,6 @@ function StockAddExisting() {
                                                 alert("ERROR: Could not add stock");
                                                 navigate('/StockAddExisting/' + id);
                                             })
-                                            //     }
-                                            // }
-
 
                                         }}>
 

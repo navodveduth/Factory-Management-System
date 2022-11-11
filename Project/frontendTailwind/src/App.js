@@ -12,7 +12,7 @@ import { FinanceDashboard, FinanceViewAll, FinanceNew, FinanceUpdate, FinancePre
 import {  MaintenanceDashboard,MachMaintenancePreDateRange, MaintenanceNew, MaintenanceUpdate, MaintenanceViewAll, MaintainenceTask, MaintainenceReport,MaintainenceDateRange, MachMaintenanceViewAll,MachMaintenanceNew,MachMaintenanceUpdate,MachManitenanceDateRange,MachMaintenanceReport,VehiMaintenanceViewAll,VehiMaintenanceNew, VehiMaintenanceUpdate, VehiMaintenanceReport,VehiMaintenanceDateRange} from './pages/Maintenance';
 import {MachineryDashboard, MachineryPreviewDateRange,MachineryNew, MachineryUpdate, MachineryViewAll, MachineryReport, MachineryDateRange, MachMaintenanceHistory} from './pages//Machinery';
 
-import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice, SalesDateRange } from './pages/Sales';
+import { SalesDashboard, SalesPreview, SalesViewAll, SalesUpdate, SalesNew, SalesInvoice, SalesDateRange, SalesPreviewByDate } from './pages/Sales';
 
 import {
   RequestedStocks,
@@ -36,7 +36,7 @@ import { StocksDashboard, StockView, StockInformation, StockViewDateRange,StockV
 import { AddStockForRequisition,IssuesForm, PendingStockAdd, PendingStockUpdate, StockRequisitionPDF, ProcessingRequest, ProcessingRequestPDF, ResolvedRequest, ResolvedRequestPDF, PendingStockRequisition } from './pages/PendingStock';
 import { StockUtilisationDashboard, StockUtilPDF,StockUtilisationDateRange ,StockUtilDateRangePDF,StockUtilisation, StockAddExisting, StockUtilAddOption, StockUtilUpdate, ViewAllAdditions, AdditionsReport, ViewAllIssues, IssuesReport } from './pages/StockUtilisation';
 
-import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview, PurchaseOrderAdd, PurchaseOrderUpdate, PurchaseOrderPreview, PurchaseOrderView, RequestedOrdersUpdate, RequestedStock, PurchaseOrderDateRange } from './pages/Suppliers';
+import { SupplierDashboard, SupplierViewAll, SupplierUpdate, SupplierNew, PurchaseOrderDetailsDashboard, SupplierDetailsPreview, PurchaseOrderAdd, PurchaseOrderUpdate, PurchaseOrderPreview, PurchaseOrderView, RequestedOrdersUpdate, RequestedStock, PurchaseOrderDateRange, PurchaseOrderPreviewDateRange } from './pages/Suppliers';
 
 import { DriverDashboard, DriverViewAll, DriverNew, DriverUpdate, DriverReport } from './pages/Driver';
 import { TransportDashboard, TransportViewAll, TransportDateRange, TransportReportDateRange, TransportNew, TransportUpdate, TransportRecord, TransportReport } from './pages/Transport';
@@ -145,6 +145,7 @@ const App = () => {
           <Route path="/SalesInvoice/:id" element={<SalesInvoice />} />
           <Route path="/SalesPreview" element={<SalesPreview />} />
           <Route path="/SalesDateRange" element={<SalesDateRange />} />
+          <Route path="/SalesPreviewByDate" element={<SalesPreviewByDate />} />
 
         {/* production management  */}
         <Route path="/viewRequested" element={<RequestedStocks />} />
@@ -226,6 +227,7 @@ const App = () => {
         <Route path="/RequestedStock" element={<RequestedStock />} />
         <Route path="/RequestedOrdersUpdate/:id" element={<RequestedOrdersUpdate />} />
         <Route path="/PurchaseOrderDateRange/" element={<PurchaseOrderDateRange />} />
+        <Route path="/PurchaseOrderPreviewDateRange" element={<PurchaseOrderPreviewDateRange />} />
         
 
           {/* Transport management  */}

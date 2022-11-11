@@ -27,3 +27,4 @@ export { default as PurchaseOrderStatusPieChart } from './PurchaseOrderStatusPie
 export { default as AttendanceBarChart } from './AttendanceBarChart'
 export { default as AttendanceInMonth } from './AttendanceInMonth'
 export {default as ProductionLineChart} from './ProductionLineChart'
+export {default as IncomeStatementMonthly} from './IncomeStatementMonthly'

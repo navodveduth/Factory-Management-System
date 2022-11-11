@@ -34,7 +34,6 @@ function ProcessingRequest() {
     const deletePendingStock = async (id) => {
         await axios.delete('http://localhost:8070/pendingStock/delete/' + id)
             .then(() => {
-                alert("Data deleted successfully");
                 getPendingStock();
             })
             .catch((err) => {
@@ -54,15 +53,17 @@ function ProcessingRequest() {
 
     const confirmFunc = (id) => {
 
-    Swal.fire({
+        Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
             icon: 'warning',
+            color: '#f8f9fa',
+            background: '#6c757d',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 deletePendingStock(id);
               Swal.fire({  
