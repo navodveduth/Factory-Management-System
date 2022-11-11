@@ -168,6 +168,7 @@ export default function SalesMonthlyChart() {
     var prodLen = prod.length;
 
     for (let index = 0; index < prodLen; index++) {
+      if(prod[index].status === "Costed"){
       switch(new Date(prod[index].requestDate).getMonth()){
       case(0):
         janTotalProduction = janTotalProduction + prod[index].totalCost;
@@ -207,6 +208,7 @@ export default function SalesMonthlyChart() {
         break;
       default:
         break;
+      }
     }
     }
 
@@ -264,12 +266,13 @@ let gross = [
   { month: 'Nov', gross: novTotalGross }, { month: 'Dec', }
 ]
 
+const colors = ['#258EA6', '#F3A738', '#FF5A5F', '#4B0082'];
 
 
 return (
   <>
   <ChartsHeader title = "Gross Profit Analysis" />
-    <ChartComponent primaryXAxis={primaryXAxis} primaryYAxis={primaryYAxis} tooltip={tooltip} 
+    <ChartComponent primaryXAxis={primaryXAxis} primaryYAxis={primaryYAxis} tooltip={tooltip} palettes={colors}
       background={currentMode === 'Dark' ? '#33373E' : '#f3f4f6'}>
         <Inject services={[LineSeries, Tooltip, DataLabel, Category]} />
           <SeriesCollectionDirective>
