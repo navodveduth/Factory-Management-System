@@ -13,7 +13,6 @@ import logo from '../../data/logo.png';
 import { jsPDF } from "jspdf";
 
 
-
 function StockViewDateRangePDF() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
 
@@ -88,7 +87,19 @@ function StockViewDateRangePDF() {
     }, [])
 
 
-
+    const downloadConf = ()=>{
+        Swal.fire({
+          title: 'Downloading!',
+          text: "Your download has begun!",
+          icon: 'success',
+          showCancelButton: false,
+          color: '#f8f9fa',
+          background: '#6c757d',
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK!'
+        })
+      };
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -151,7 +162,7 @@ function StockViewDateRangePDF() {
 
 
                                         <div className="mr-0 ml-auto">
-                                            <button onClick={createPDF} type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
+                                            <button onClick={()=>{createPDF(); downloadConf();}} type="button" className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Download</button>
                                         </div>
 
 

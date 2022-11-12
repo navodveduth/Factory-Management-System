@@ -9,6 +9,7 @@ import { FiSettings } from 'react-icons/fi';
 import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import logo from '../../data/logo.png';
+import  Swal from 'sweetalert2';
 
 export default function MachineryPreviewDateRange() {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
@@ -20,6 +21,19 @@ export default function MachineryPreviewDateRange() {
     var total = 0;
     var totalDep = 0;
 
+    const downloadConf = ()=>{
+        Swal.fire({
+          title: 'Downloading!',
+          text: "Your download has begun!",
+          icon: 'success',
+          showCancelButton: false,
+          color: '#f8f9fa',
+          background: '#6c757d',
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK!'
+        })
+      };
 
     const getMachinery = async () => {  //getMachinery is the function to get the data from the backend
         axios.get("http://localhost:8070/machinery/date/"+location.state.DS+"/"+location.state.DE)
@@ -114,7 +128,7 @@ export default function MachineryPreviewDateRange() {
                             <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
                                 <Header category="Report" title="Machinery" />
 
-                                <button onClick={createPDF} type="button" className="font-bold py-1 px-4 rounded-full m-3 text-white absolute top-40 right-20 hover:bg-slate-700 bg-slate-500" >Download Report</button>
+                                <button onClick={()=>{createPDF(); downloadConf();}} type="button" className="font-bold py-1 px-4 rounded-full m-3 text-white absolute top-40 right-20 hover:bg-slate-700 bg-slate-500" >Download Report</button>
 
 
                                 <div id="tableContainer">
