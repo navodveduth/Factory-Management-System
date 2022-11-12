@@ -22,11 +22,12 @@ function RequestedOrdersUpdate() {
     const [stockCategory, setStockCategory] = useState('');
     const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState('');
-    const [date, setDate] = useState('');
+    var [date, setDate] = useState('');
     const [unitPrice , setUnitPrice] = useState('');
     const [ stock, setStock] = useState([]);
+    var firstPurchaseDate = null;
     var totalValue = 0;
-    
+    var minDate = null;
     var status = null;
 
     const { id } = useParams();
@@ -45,10 +46,13 @@ function RequestedOrdersUpdate() {
         })
     }
 
+    const code = stockCode;
+
     const getStock =async  () => {
-        await axios.get(`http://localhost:8070/stock/ViewStock/${id}`).then((res) => {
+        await axios.get("http://localhost:8070/stock/ViewStock/" + code).then((res) => {
             console.log("data", res.data)
             setStock(res.data);
+            setFirstPurchaseDate(res.data.firstPurchaseDate)
         }).catch(()=>{
 //
         })
@@ -58,10 +62,13 @@ function RequestedOrdersUpdate() {
     stock.map((data) => {
         minDate = data.firstPurchaseDate.split('T')[0];  
     })
-
+console.log(minDate)
 
     useEffect(() => {
-        getPendingStock()
+        getPendingStock();  
+    }, [id]);
+
+    useEffect(() => {
         getStock();
         const currentThemeColor = localStorage.getItem('colorMode'); // KEEP THESE LINES
         const currentThemeMode = localStorage.getItem('themeMode');
@@ -69,7 +76,7 @@ function RequestedOrdersUpdate() {
             setCurrentColor(currentThemeColor);
             setCurrentMode(currentThemeMode);
         }
-    }, []);
+    }, [code])
 
     var currentDate = new Date().toISOString().split('T')[0];
 
@@ -156,14 +163,14 @@ function RequestedOrdersUpdate() {
                                                 var additions = quantity
                                             }
 
-                                            var firstPurchaseDate = null;
+                                            {date = currentDate}
 
-                                            if(stock.length == 0){
+                                            if(stock.length === 0){
                                                 success = false
                                             }
                                             
                                             if(success === false){
-                                                firstPurchaseDate = new Date().toISOString().split('T')[0];
+                                                {firstPurchaseDate = currentDate;}
                                             }else{
                                                 {firstPurchaseDate = minDate}
                                             }
