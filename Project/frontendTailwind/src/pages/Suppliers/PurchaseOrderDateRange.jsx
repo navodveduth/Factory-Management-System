@@ -5,7 +5,7 @@ import { Header } from '../../components';
 import { useStateContext } from '../../contexts/ContextProvider';
 import TableData from '../../components/Table/TableData';
 import TableHeader from '../../components/Table/TableHeader';
-
+import Swal from 'sweetalert2';
 import { FiSettings } from 'react-icons/fi';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -171,22 +171,10 @@ console.log(location.state.DS + " " + location.state.DE);
 				  }} />
 				</div>
 
-                              <div>
-                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mx-3" placeholder="Start Date" 
-                                onChange={(e) => {
-                                  setDateStart(e.target.value);
-                                }} />
-                              </div>
-
-                              <div>
-                              <input type="date" className=" block w-100 rounded-md bg-gray-100 focus:bg-white dark:text-black mr-3" placeholder="End Date" 
-                                onChange={(e) => {
-                                  setDateEnd(e.target.value);
-                                }} />
-                              </div>
-
-                              <div className=" mx-1">
-                                  <button type="button" className=" rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={()=>{toDateRange()}}  >filter</button>
+                <div className="mx-3">
+                                <Link to={"/MachineryViewAll"}> {/* change this link your previous page */}
+                                  <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" >Reset Date</button>
+                                </Link>
                               </div>
 
 				<div className="mr-0 ml-auto">
@@ -216,13 +204,8 @@ console.log(location.state.DS + " " + location.state.DE);
                                 {purchaseOrder.filter((data) => {
                                     if (searchTerm == "") {
                                         return data
-                                    } else if (data.orderID.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.supplierID.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.quantity.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.productDetails.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.deliveryDate.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.totalPrice.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                        data.orderStatus.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                    } else if ((data.orderID.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                        (data.productDetails.toString().toLowerCase().includes(searchTerm.toLowerCase()))) {
                                         return data;
                                     }
                                 }).map((data, key) => {
