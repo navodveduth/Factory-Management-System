@@ -26,7 +26,7 @@ function IssuesForm() {
     const [stock, setStock] = useState([]);
     // var [stockCategory, setStockCategory] = useState("");
     const [quantity, setQuantity] = useState('');
-    const [date, setDate] = useState('');
+    var [date, setDate] = useState('');
     // const [firstPurchaseDate, setFirstPurchaseDate] = useState("");
     var [type, setType] = useState('');
     var [unitPrice, setUnitPrice] = useState('');
@@ -184,6 +184,7 @@ function IssuesForm() {
                                             { totalValue = quantity * unitPrice }
                                             { type = "Issues" }
                                             { firstPurchaseDate = minDate }
+                                            {date = currentDate}
 
                                             const newStockUtil = {
                                                 stockCode,
