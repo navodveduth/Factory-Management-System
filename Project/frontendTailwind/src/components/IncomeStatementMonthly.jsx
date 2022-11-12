@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react'
 import { useStateContext } from '../contexts/ContextProvider';
 import ChartsHeader from './ChartsHeader'
 import axios from 'axios'
-import { ChartComponent, LineSeries, Tooltip, DataLabel, Category, Inject, SeriesCollectionDirective, SeriesDirective } from '@syncfusion/ej2-react-charts';
+import { ChartComponent, LineSeries, Tooltip, DataLabel, Category, Inject, SeriesCollectionDirective, SeriesDirective, Legend } from '@syncfusion/ej2-react-charts';
 
 export default function SalesMonthlyChart() {
 
@@ -16,14 +16,22 @@ export default function SalesMonthlyChart() {
 
     const primaryYAxis = { labelFormat: '{value}', 
                            title: "Revenue, Expenses, and Profit by Amount (LKR)", 
-                           labelStyle: { color: currentMode === 'Dark' ? '#e9ecef' : '#343a40' },
-                           titleStyle: { color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', fontSize: '16px'}, interval: 50000,
+                           labelStyle: { 
+                            color: currentMode === 'Dark' ? '#e9ecef' : '#343a40'}, 
+                          titleStyle: { 
+                          color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
+                          fontSize: '16px',
+                          fontWeight: 'bold'}, interval: 100000,
                          };
                          
     const primaryXAxis = { valueType: 'Category', 
                            title: "Month",
-                           labelStyle: { color: currentMode === 'Dark' ? '#e9ecef' : '#343a40' }, 
-                           titleStyle: { color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', fontSize: '16px' } 
+                           labelStyle: { 
+                            color: currentMode === 'Dark' ? '#e9ecef' : '#343a40'}, 
+                            titleStyle: { 
+                            color: currentMode === 'Dark' ? '#e9ecef' : '#343a40', 
+                            fontSize: '16px',
+                            fontWeight: 'bold'}  
                          };
 
       const getSales = async () => {
@@ -168,6 +176,7 @@ export default function SalesMonthlyChart() {
     var prodLen = prod.length;
 
     for (let index = 0; index < prodLen; index++) {
+      if(prod[index].status === "Costed"){
       switch(new Date(prod[index].requestDate).getMonth()){
       case(0):
         janTotalProduction = janTotalProduction + prod[index].totalCost;
@@ -207,6 +216,7 @@ export default function SalesMonthlyChart() {
         break;
       default:
         break;
+      }
     }
     }
 
@@ -264,14 +274,14 @@ let gross = [
   { month: 'Nov', gross: novTotalGross }, { month: 'Dec', }
 ]
 
-
-
+const colors = ['#ef476f', '#ffd166', '#06d6a0', '#118ab2', '#e36414'];
 return (
   <>
-  <ChartsHeader title = "Gross Profit Analysis" />
-    <ChartComponent primaryXAxis={primaryXAxis} primaryYAxis={primaryYAxis} tooltip={tooltip} 
-      background={currentMode === 'Dark' ? '#33373E' : '#f3f4f6'}>
-        <Inject services={[LineSeries, Tooltip, DataLabel, Category]} />
+  <ChartsHeader category = "Gross Profit Analysis" />
+  <ChartComponent primaryXAxis={primaryXAxis} primaryYAxis={primaryYAxis} tooltip={tooltip} 
+        background={currentMode === 'Dark' ? '#3f434c' : '#f2f2f2'} palettes={colors} legendSettings={{background: "white"}}>
+        <Inject services={[LineSeries, Tooltip, DataLabel, Category, Legend]} />
+
           <SeriesCollectionDirective>
             <SeriesDirective type = "Line" dataSource={data} xName="month" yName="sales"
               name = "Monthly Sales" marker = {{dataLable: {visible: true}, visible: true}}>

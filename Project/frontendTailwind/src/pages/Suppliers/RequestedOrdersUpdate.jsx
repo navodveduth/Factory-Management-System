@@ -56,8 +56,7 @@ function RequestedOrdersUpdate() {
     }
 
     stock.map((data) => {
-        minDate = data.firstPurchaseDate.split('T')[0];
-        
+        minDate = data.firstPurchaseDate.split('T')[0];  
     })
 
 
@@ -162,10 +161,11 @@ function RequestedOrdersUpdate() {
                                             if(stock.length == 0){
                                                 success = false
                                             }
+                                            
                                             if(success === false){
                                                 firstPurchaseDate = new Date().toISOString().split('T')[0];
                                             }else{
-                                                firstPurchaseDate = minDate
+                                                {firstPurchaseDate = minDate}
                                             }
 
                                             const newStock = {

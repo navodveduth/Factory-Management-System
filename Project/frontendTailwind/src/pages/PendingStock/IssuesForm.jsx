@@ -201,7 +201,7 @@ function IssuesForm() {
                                                 await axios.post("http://localhost:8070/stockUtilisation/create", newStockUtil).then(() => {
                                                     Swal.fire({  
                                                         icon: 'success',
-                                                        title: 'Data Successfully saved',
+                                                        title: 'Stock issued',
                                                         color: '#f8f9fa',
                                                         background: '#6c757d',
                                                         showConfirmButton: false,
@@ -218,7 +218,7 @@ function IssuesForm() {
                                                 const salesStatus = "Completed"
                                                 const statusPass = { salesStatus }
                                                 await axios.put('http://localhost:8070/stock/updateStatus/' + id, { "status": salesStatus }).then((res) => {
-                                                    alert("Production Status Changed");
+                                                    
                                                 }).catch((error) => {
                                                     Swal.fire({  
                                                         icon: 'success',

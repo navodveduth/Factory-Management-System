@@ -27,7 +27,18 @@ function MachMaintenanceCreateForm() {
     const [contactNo, setContactNo] = useState("");
     const [others, setOthers] = useState('');
 
-
+    const autoCompleteForm = () => {
+        setmid("0006");
+        setmachineID("M115");
+        setDescription("Few Fixtures");
+        setLastMaintainedDate("2022-11-09");
+        setNextServiceDate("2022-12-10")
+        setStatus("In progress");
+        setLocation("Singer");
+        setContactNo("0711275243");
+        setOthers("5000");
+       
+      }
 
 
 
@@ -126,11 +137,16 @@ function MachMaintenanceCreateForm() {
 
 
                                         }}>
+                                             <div className=" flex items-center mb-5 ">
+                                      <div className="mr-0 ml-auto">
+                                          <button type="button"  className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500" onClick={autoCompleteForm} >AutoComplete</button>
+                                      </div>
+                                    </div>
 
                                             <div className="mb-3">
                                                 <label htmlFor="employeeFullName" className="form-label">Maintainence Id: </label>
                                                 <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                                                    id="employeeFullName" required
+                                                    id="employeeFullName" value={mid} required
                                                     onChange={(e) => {
                                                         setmid(e.target.value);
                                                     }} />
@@ -140,7 +156,7 @@ function MachMaintenanceCreateForm() {
                                             <div className="mb-3">
                                                 <label htmlFor="employeeFullName" className="form-label">Id: </label>
                                                 <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                                                    id="employeeFullName" required
+                                                    id="employeeFullName" value={machineID} required
                                                     onChange={(e) => {
                                                         setmachineID(e.target.value);
                                                     }} />
@@ -150,7 +166,7 @@ function MachMaintenanceCreateForm() {
                                             <div className="mb-3">
                                                 <label htmlFor="employeeFullName" className="form-label">Repair needed: </label>
                                                 <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                                                    id="employeeFullName" required
+                                                    id="employeeFullName" value={Description} required
                                                     onChange={(e) => {
                                                         setDescription(e.target.value);
                                                     }} />
@@ -163,7 +179,7 @@ function MachMaintenanceCreateForm() {
                                             <div className="mb-3">
                                                 <label htmlFor="employeeDOB" className="form-label">Last Maintained Date : </label>
                                                 <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                                                    id="employeeDOB" min="2010-01-01" max={date} required
+                                                    id="employeeDOB" min="2010-01-01" max={date} value={lastMaintainedDate} required
                                                     onChange={(e) => {
                                                         setLastMaintainedDate(e.target.value);
                                                     }} />
@@ -172,7 +188,7 @@ function MachMaintenanceCreateForm() {
                                             <div className="mb-3">
                                                 <label htmlFor="employeeDOB" className="form-label">Next Due : </label>
                                                 <input type="date" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                                                    id="employeeDOB" min={date} required
+                                                    id="employeeDOB" min={date} value={nextServiceDate} required
                                                     onChange={(e) => {
                                                         setNextServiceDate(e.target.value);
                                                     }} />
@@ -180,7 +196,7 @@ function MachMaintenanceCreateForm() {
                                             <div className="mb-3">
                                                 <label for="employeeType" className="form-label">Status : </label>
                                                 <select class="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                                                    id="employeeType" aria-label="Default select example" required
+                                                    id="employeeType" aria-label="Default select example" value={status} required
                                                     onChange={(e) => {
                                                         setStatus(e.target.value);
                                                     }}>
@@ -195,7 +211,7 @@ function MachMaintenanceCreateForm() {
                                             <div className="mb-3">
                                                 <label htmlFor="employeeNumber" className="text-md">Repair company: </label>
                                                 <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                                                    id="employeeNumber" required
+                                                    id="employeeNumber"  value={Location} required
                                                     onChange={(e) => {
                                                         setLocation(e.target.value);
                                                     }} />
@@ -207,7 +223,7 @@ function MachMaintenanceCreateForm() {
                                                 <label htmlFor="employeeNumber" className="text-md">Repair contact No: </label>
                                                 <input type="text" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
                                                     pattern="[0-9]{10}" maxLength={10} title={"The Contact Number requires a 10 digit number"}
-                                                    id="employeeNumber" required
+                                                    id="employeeNumber" value={contactNo} required
                                                     onChange={(e) => {
                                                         setContactNo(e.target.value);
                                                     }} />
@@ -218,7 +234,7 @@ function MachMaintenanceCreateForm() {
                                             <div className="mb-3">
                                                 <label htmlFor="employeeNameWithInitials" className="form-label">Cost of maintenance : </label>
                                                 <input type="number" className="mt-1 block w-800 rounded-md bg-gray-100 focus:bg-white dark:text-black"
-                                                    id="employeeNameWithInitials" min={0} required
+                                                    id="employeeNameWithInitials" min={0} value={others} required
                                                     onChange={(e) => {
                                                         setOthers(e.target.value);
                                                     }} />
