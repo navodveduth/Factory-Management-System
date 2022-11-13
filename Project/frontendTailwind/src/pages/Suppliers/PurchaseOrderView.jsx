@@ -44,7 +44,7 @@ function PurchaseOrderView() {
     const deletePurchaseOrder = async (id) => {
         await axios.delete(`http://localhost:8070/purchaseOrder/delete/${id}`)
             .then((res) => {
-                alert("Data deleted successfully");
+                
                 getPurchaseOrder();
             })
             .catch((err) => {
