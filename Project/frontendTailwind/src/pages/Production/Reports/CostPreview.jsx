@@ -6,6 +6,7 @@ import TableHeader from "../../../components/Table/TableHeader";
 import TableData from '../../../components/Table/TableData';
 import Header from "../../../components/Header";
 import { useStateContext } from '../../../contexts/ContextProvider';
+import Swal from 'sweetalert2';
 
 export default function PreviewOrder(){
     const { currentColor } = useStateContext();
